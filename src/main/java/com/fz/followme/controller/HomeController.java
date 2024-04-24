@@ -8,6 +8,6 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String mainPage() {
-		return "member/mypage";
+		return "loginMain";
 	}
 }
