@@ -8,6 +8,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String mainPage() {
-		return "loginMain";
+
+		return "calendar/calendar";
 	}
 }
