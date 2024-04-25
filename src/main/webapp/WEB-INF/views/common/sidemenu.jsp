@@ -34,7 +34,7 @@
 <div class="app-menu">  
 
     <!-- Brand Logo -->
-    <div class="logo-box" style="background-color: #FFBE98;">
+    <div class="logo-box">
         <!-- Brand Logo Light -->
         <a href="index.html" class="logo-light">
             <img src="assets/images/logo-light.png" alt="logo" class="logo-lg">
@@ -49,7 +49,7 @@
     </div>
 
     <!-- menu-left -->
-    <div class="scrollbar" style="background-color: #FFBE98;">
+    <div class="scrollbar">
 
         <!-- User box -->
         <div class="user-box text-center">
@@ -138,8 +138,8 @@
             </li>
             <li class="menu-item">
                 <a href="apps-chat.html" class="menu-link">
-                    <span class="menu-icon"><i data-feather="file-text"></i></span>
-                    <span class="menu-text"> 채팅 </span>
+                    <span class="menu-icon"><i data-feather="user"></i></span>
+                    <span class="menu-text"> 인사관리 </span>
                 </a>
             </li>
             <li class="menu-item">
