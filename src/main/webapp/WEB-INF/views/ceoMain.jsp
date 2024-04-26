@@ -56,20 +56,7 @@
                             <div class="col-12">
                                 <div class="page-title-box">
                                     <div class="page-title-right">
-                                        <form class="d-flex align-items-center mb-3">
-                                            <div class="input-group input-group-sm">
-                                                <input type="text" class="form-control border" id="dash-daterange">
-                                                <span class="input-group-text bg-blue border-blue text-white">
-                                                    <i class="mdi mdi-calendar-range"></i>
-                                                </span>
-                                            </div>
-                                            <a href="javascript: void(0);" class="btn btn-blue btn-sm ms-2">
-                                                <i class="mdi mdi-autorenew"></i>
-                                            </a>
-                                            <a href="javascript: void(0);" class="btn btn-blue btn-sm ms-1">
-                                                <i class="mdi mdi-filter-variant"></i>
-                                            </a>
-                                        </form>
+                                        
                                     </div>
                                     <h4 class="page-title"></h4>
                                 </div>
@@ -82,8 +69,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
-                                                    <i class="fe-heart font-22 avatar-title text-primary"></i>
+                                                <div class="avatar-lg rounded-circle" style="background-color:#febe98; border-color:#febe98;">
+                                                    <i class="fe-heart font-22 avatar-title"></i>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -102,8 +89,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="avatar-lg rounded-circle bg-soft-success border-success border">
-                                                    <i class="fe-shopping-cart font-22 avatar-title text-success"></i>
+                                                <div class="avatar-lg rounded-circle" style="background-color:#de8286; border-color:#de8286;">
+                                                    <i class="fe-shopping-cart font-22 avatar-title"></i>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -122,8 +109,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                                                    <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+                                                <div class="avatar-lg rounded-circle" style="background-color:#fa9a85; border-color:#fa9a85;">
+                                                    <i class="fe-bar-chart-line- font-22 avatar-title"></i>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -142,8 +129,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
-                                                <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
-                                                    <i class="fe-eye font-22 avatar-title text-warning"></i>
+                                                <div class="avatar-lg rounded-circle" style="background-color:#ffb2a5; border-color:#ffb2a5;">
+                                                    <i class="fe-eye font-22 avatar-title"></i>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -168,21 +155,10 @@
                                         </div>
                                         <h4 class="header-title">일별 매출 현황</h4>
                                         <div class="row mt-4 text-center">
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Target</p>
-                                                <h4><i class="fe-arrow-down text-danger me-1"></i>$7.8k</h4>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Last week</p>
-                                                <h4><i class="fe-arrow-up text-success me-1"></i>$1.4k</h4>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="text-muted font-15 mb-1 text-truncate">Last Month</p>
-                                                <h4><i class="fe-arrow-down text-danger me-1"></i>$15k</h4>
-                                            </div>
+                                            
                                         </div>
                                         <div class="mt-3 chartjs-chart">
-                                            <canvas id="revenue-chart" data-colors="#1fa083,#f1556c" height="300"></canvas>
+                                            <canvas id="revenue-chart" data-colors="#febe98,#f1556c" height="300"></canvas>
                                         </div>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
@@ -195,11 +171,12 @@
                                         <h4 class="header-title mb-3">월별 매출 현황</h4>
     
                                         <div dir="ltr">
-                                            <div id="sales-analytics" class="mt-4" data-colors="#1abc9c,#4a81d4"></div>
+                                            <div id="sales-analytics" class="mt-4" data-colors="#febe98,#f1556c"></div>
                                         </div>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col-->
+                            
 
                             <div class="col-xl-6">
                                 <div class="card">
@@ -208,7 +185,7 @@
                                         <h4 class="header-title">입•퇴사자 현황</h4>
                                         
                                         <div class="mt-3 chartjs-chart">
-                                            <canvas id="projections-actuals-chart" data-colors="#4a81d4,#e3eaef" height="300"></canvas>
+                                            <canvas id="projections-actuals-chart" data-colors="#febe98,#e3eaef" height="300"></canvas>
                                         </div>
                                     </div>
                                 </div> <!-- end card-->
