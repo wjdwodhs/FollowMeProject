@@ -7,7 +7,7 @@
 
 <head>
 <meta charset="utf-8" />
-<title>임직원 메인페이지 | Follow me</title>
+<title>예약페이지 | Follow me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -49,7 +49,253 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			
+	<div class="content-page">
+	
+
+	
+	    <div class="content" style="background-color: #F2E8DA;">
+	
+	        <!-- Start Content-->
+	        <div class="container-fluid" style="background-color: #F2E8DA;">
+	            
+	            <!-- start page title -->
+	            <div class="row">
+	                <div class="col-12">
+	                    <div class="page-title-box">
+	                        <div class="page-title-right">
+	                            <ol class="breadcrumb m-0">
+	                                <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
+	                                <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+	                                <li class="breadcrumb-item active">Add / Edit Product</li>
+	                            </ol>
+	                        </div>
+	                        <h4 class="page-title"><b>시설예약 / 사무실 좌석</b></h4>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- end page title -->
+	
+	
+	            <div class="row">
+	                <div class="col-lg-6">
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>사무실 좌석배치도</b> | <small> Seating Chart</small></h5>
+	                            
+	                            <div style="border: 1px solid lightgray; width: 100%; height: 700px; box-sizing:border-box;">
+	
+	                                <div style=" height: 10%; display: flex; align-items: center; justify-content: space-evenly; box-sizing:border-box;">
+	                                    <div style="border: 3px solid black; width: 40%; height: 30%; "></div>
+	                                    <div style="border: 3px solid black; width: 40%; height: 30%;"></div>
+	                                </div>
+	                            
+	                                <div style="height: 90%; display: flex; box-sizing:border-box;">
+	                                    <div style=" width: 40%; box-sizing:border-box;">
+	                                        <div style="height: 80%; box-sizing:border-box; ">
+	                                            <div style="border: 3px solid black; height: 300px; width: 200px; margin: auto; margin-top: 20%; ">
+	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                                    <tr>
+	                                                        <td>01</td>
+	                                                        <td>02</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>03</td>
+	                                                        <td>04</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>05</td>
+	                                                        <td>06</td>
+	                                                    </tr>
+	                                                </table>                    
+	                                            </div>
+	                                        </div>
+	                            
+	                                        <div style="height: 20%; box-sizing:border-box;">
+	                                            <div style="border: 3px solid black; height: 20%; width: 80%; margin: auto; margin-top: 10%; box-sizing:border-box; text-align: center;"><b>입구</b></div>
+	                                        </div>
+	                                    </div>
+	                            
+	                                    <div style="width: 40%; box-sizing:border-box;">
+	                                        <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%;" >
+	                                            <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                                <tr>
+	                                                    <td>07</td>
+	                                                    <td>08</td>
+	                                                </tr>
+	                                                <tr>
+	                                                    <td>09</td>
+	                                                    <td>10</td>
+	                                                </tr>
+	                                            </table>  
+	                                        </div>
+	                                    </div>
+	                            
+	                                    <div style=" width: 40% ">
+	                                        <div style=" height: 50%; box-sizing:border-box;">
+	                                            <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%; ">         
+	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered" >
+	                                                    <tr>
+	                                                        <td>11</td>
+	                                                        <td>12</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>13</td>
+	                                                        <td>14</td>
+	                                                    </tr>
+	                                                </table>  </div>    
+	                                        </div>
+	                            
+	                                        <div style="height: 50% ">
+	                                            <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%; ">
+	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                                    <tr>
+	                                                        <td>15</td>
+	                                                        <td>16</td>
+	                                                    </tr>
+	                                                    <tr>
+	                                                        <td>17</td>
+	                                                        <td>18</td>
+	                                                    </tr>
+	                                                </table>  
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                            
+	                                </div>
+	                            
+	                            </div>
+	
+	
+	                        </div>
+	                    </div> <!-- end card -->
+	                </div> <!-- end col -->
+	
+	                <div class="col-lg-6">
+	                    
+	                    <!-- 예약 조회-->
+	                <form action="">
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회</b></h5>
+	
+	                                    <label style="margin-left: 25%; margin-right: 5px;">희망예약일</label>
+	                                    <input type="date" style="border: 0.5px solid lightgray; border-radius: 3px;">
+	                                    <!-- Preview -->
+	                                    <div class="dropzone-previews mt-3" id="file-previews">
+	
+	                                        <div style="display: flex; justify-content: center;">
+	
+	                                            <div style="border:none; background-color: #6EA1D4; width: 50px; height: 50px; margin-right: 15px;"> </div> 
+	                                            <label style="margin-top: 12px;">이용가능</label>
+	                                            <div style="border:none; background-color: lightgray; width: 50px; height: 50px; margin-right: 15px; margin-left: 60px;"></div>
+	                                            <label style="margin-top: 12px;"">이용불가</label>
+	
+	                                        </div>
+	                                        <br><br>
+	                                    </div>
+	
+	                                    <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
+	                            
+	                        </div>
+	                    </div> <!-- end col-->
+	
+	
+	                    <!-- 예약 신청 -->
+	                    <div class="card">
+	                        <div class="card-body">
+	                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b></h5>
+	
+	                            <div class="mb-3">
+	                                <label for="product-meta-title" class="form-label">예약자명</label>
+	                                <input type="text" class="form-control" id="product-meta-title" readonly>
+	                            </div>
+	
+	                            <div class="mb-3">
+	                                <label for="product-meta-keywords" class="form-label">선택 좌석</label>
+	                                <input type="text" class="form-control" id="product-meta-keywords" required>
+	                            </div>
+	
+	                            <div class="mb-3">
+	                                <label for="product-meta-keywords" class="form-label">이용시간</label> <br>
+	                                <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; margin-bottom: 20px; color: gray;">
+	                                    <option value="writer">종일 [ 09 : 00 ~ 18 : 00 ]</option>
+	                                    <option value="title">오전 [ 09 : 00 ~ 14 : 00 ]</option>
+	                                    <option value="content">오후 [ 14 : 00 ~ 18 : 00 ]</option>
+	                            </div>
+	
+	                            <br><br><br>
+	
+	                                    <div class="mb-3">
+	                                        <label for="product-meta-keywords" class="form-label">코멘트</label>
+	                                        <input type="text" class="form-control" id="product-meta-keywords" placeholder="(선택) 특이사항이 있을시 작성해주세요.">
+	                                    </div>
+	                                </div>
+	                                <div class="text-center mb-3">
+	                                    <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
+	                                    <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+	                                </div>
+	                            
+	                            </div> <!-- end card -->
+	                            
+	                
+	                        </div> <!-- end col-->
+	                    </div>
+	                    <!-- end row -->
+	
+	                    </div>
+	                </form>     
+	
+	            <!-- end row -->
+	
+	
+	            <!-- file preview template -->
+	            <div class="d-none" id="uploadPreviewTemplate">
+	                <div class="card mt-1 mb-0 shadow-none border">
+	                    <div class="p-2">
+	                        <div class="row align-items-center">
+	                            <div class="col-auto">
+	                                <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+	                            </div>
+	                            <div class="col ps-0">
+	                                <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
+	                                <p class="mb-0" data-dz-size></p>
+	                            </div>
+	                            <div class="col-auto">
+	                                <!-- Button -->
+	                                <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+	                                    <i class="dripicons-cross"></i>
+	                                </a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	
+	            
+	        </div> <!-- container -->
+	
+	    </div> <!-- content -->
+	
+	    <!-- Footer Start -->
+	    <footer class="footer">
+	        <div class="container-fluid">
+	            <div class="row">
+	                <div class="col-md-6">
+	                    <div><script>document.write(new Date().getFullYear())</script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a></div>
+	                </div>
+	                <div class="col-md-6">
+	                    <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+	                        <a href="javascript: void(0);">About</a>
+	                        <a href="javascript: void(0);">Support</a>
+	                        <a href="javascript: void(0);">Contact Us</a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </footer>
+	    <!-- end Footer -->
+	
+	</div>
 
 
 

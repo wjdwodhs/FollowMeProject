@@ -9,6 +9,6 @@ public class HomeController {
 	@RequestMapping("/")
 	public String mainPage() {
 
-		return "calendar/calendar";
+		return "assetManagement/seatReservation";
 	}
 }
