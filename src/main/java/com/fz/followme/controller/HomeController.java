@@ -16,4 +16,9 @@ public class HomeController {
 	public String employeeMainPage() {
 		return "employeeMain";
 	}
+	
+	@RequestMapping("/ceoMain.page")
+	public String ceoMainPage() {
+		return "ceoMain";
+	}
 }
