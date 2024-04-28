@@ -74,7 +74,7 @@
 		                            <div class="col-lg-4 col-xl-4">
 		                                <div class="card text-center">
 		                                    <div class="card-body">
-		                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
+		                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
 		                                        alt="profile-image">
 		
 		                                        <h4 class="mb-0">김춘식</h4>
