@@ -44,7 +44,7 @@
 			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
 			 	 authorization_level, status
 			from tb_mem
-		 where status in ('Y', 'A')
+		 where status = 'Y'
 		   and mem_no = ${memNo}
 	</select>
   

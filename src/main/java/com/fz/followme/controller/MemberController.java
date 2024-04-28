@@ -3,11 +3,13 @@ package com.fz.followme.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fz.followme.dto.MemberDto;
@@ -28,7 +30,7 @@ public class MemberController {
 	private final FileUtil fileUtil;
 
 	// 로그인
-	@RequestMapping("/login.do")
+	@PostMapping("/login.do")
 	public void login(MemberDto m,
 						HttpServletRequest request,
 						HttpServletResponse response) throws IOException {
@@ -37,6 +39,7 @@ public class MemberController {
 		log.debug("m: {}", m);
 		MemberDto loginUser = memberService.selectMember(m);
 		
+		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
@@ -44,8 +47,28 @@ public class MemberController {
 		
 		if(loginUser != null && bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
 			request.getSession().setAttribute("loginUser", loginUser);
+			
+			// 로그인 시 사번 저장 (쿠키 저장)
+			if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {
+				Cookie cookie = new Cookie("savedMemNo", String.valueOf(loginUser.getMemNo()));
+				cookie.setMaxAge(30*24*60*60); // 30일 저장 유효기간
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			} else {
+				Cookie cookie = new Cookie("savedMemNo", String.valueOf(loginUser.getMemNo()));
+				cookie.setMaxAge(0);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			}
+			
 			out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
-			out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
+			
+			if(loginUser.getAuthLevel().equals("3")) {
+				out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
+			} else {
+				out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
+			}
+			
 		} else {
 			out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
 			out.println("history.back();");
@@ -53,4 +76,5 @@ public class MemberController {
 		out.println("</script>");
 		
 	}
+	
 }

@@ -7,7 +7,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Log In | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Log In | Follow Me</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -27,6 +27,7 @@
 		<!-- Icons css -->
 		<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <style>
    .p-3{
        display: flex;
@@ -67,7 +68,7 @@
                         <form action="${ contextPath }/member/login.do" method="post">
                             <div class="mb-3">
                                 <label for="memNo" class="form-label" style="color:white; font-weight: bold;">사번</label>
-                                <input class="form-control" type="text" id="memNo" name="memNo" required placeholder="사번을 입력하세요">
+                                <input class="form-control" type="text" id="memNo" name="memNo" value="${not empty cookie.savedMemNo ? cookie.savedMemNo.value : ''}" required placeholder="사번을 입력하세요">
                             </div>
                             <div class="mb-3">
                                 <a href="auth-recoverpw-2.html" class="text-muted float-end"><small>비밀번호 재설정</small></a>
@@ -82,13 +83,26 @@
                             
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                    <label class="form-check-label" for="checkbox-signin">사번 저장</label>
+                                    <input type="checkbox" name="memNoSaveCheck" class="form-check-input" id="memNoSaveCheck" value="SAVE">
+                                    <label class="form-check-label" for="memNoSaveCheck">사번 저장</label>
                                 </div>
                             </div>
                             <div class="text-center d-grid">
                                 <button class="btn btn-primary" type="submit" style="background-color: #f2e8da; border: none; color: black;" >로그인 </button>
                             </div>
+                           
+                           <script>
+													    $(document).ready(function() {
+													    	var savedMemNo = "${not empty cookie.savedMemNo ? 'true' : 'false'}";
+													    	if (savedMemNo !== 'false') {
+													    	    $('#memNoSaveCheck').prop('checked', true);
+													    	} else {
+													    	    $('#memNoSaveCheck').prop('checked', false);
+													    	}
+
+													    });
+													</script>
+
                             
                         </form>
                         <!-- end form-->
