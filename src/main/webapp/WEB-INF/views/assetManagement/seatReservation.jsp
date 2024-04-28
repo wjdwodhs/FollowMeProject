@@ -178,8 +178,8 @@
 	                        <div class="card-body">
 	                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회</b></h5>
 	
-	                                    <label style="margin-left: 25%; margin-right: 5px;">희망예약일</label>
-	                                    <input type="date" style="border: 0.5px solid lightgray; border-radius: 3px;">
+	                                    <label for="reservationDate" style="margin-left: 25%; margin-right: 5px;">희망예약일</label>
+	                                    <input type="date" id="reservationDate" min="" style="border: 0.5px solid lightgray; border-radius: 3px;">
 	                                    <!-- Preview -->
 	                                    <div class="dropzone-previews mt-3" id="file-previews">
 	
@@ -218,9 +218,9 @@
 	                            <div class="mb-3">
 	                                <label for="product-meta-keywords" class="form-label">이용시간</label> <br>
 	                                <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; margin-bottom: 20px; color: gray;">
-	                                    <option value="writer">종일 [ 09 : 00 ~ 18 : 00 ]</option>
-	                                    <option value="title">오전 [ 09 : 00 ~ 14 : 00 ]</option>
-	                                    <option value="content">오후 [ 14 : 00 ~ 18 : 00 ]</option>
+	                                    <option value="all">종일 [ 09 : 00 ~ 18 : 00 ]</option>
+	                                    <option value="am">오전 [ 09 : 00 ~ 14 : 00 ]</option>
+	                                    <option value="pm">오후 [ 14 : 00 ~ 18 : 00 ]</option>
 	                            </div>
 	
 	                            <br><br><br>
@@ -270,9 +270,10 @@
 	                    </div>
 	                </div>
 	            </div>
-	
-	            
 	        </div> <!-- container -->
+
+	        
+	        
 	
 	    </div> <!-- content -->
 	
