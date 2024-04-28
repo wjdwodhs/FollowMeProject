@@ -9,6 +9,11 @@ public class HomeController {
 	@RequestMapping("/")
 	public String mainPage() {
 
-		return "assetManagement/seatReservation";
+		return "loginMain";
+	}
+	
+	@RequestMapping("/employeeMain.page")
+	public String employeeMainPage() {
+		return "employeeMain";
 	}
 }

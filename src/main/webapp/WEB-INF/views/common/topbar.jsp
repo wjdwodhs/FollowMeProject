@@ -33,6 +33,18 @@
     </head>
 <body>
 
+	<script>
+			if("${alertMsg}" != ""){ 
+				alertify.alert("${alertTitle}", "${alertMsg}", function(){
+					if("${historyBackYN}" == "Y"){
+						history.back();
+					}
+				});
+			}
+			
+			
+		</script>
+
 	<!-- ========== Topbar Start ========== -->
 <div class="navbar-custom">
     <div class="topbar" style="background-color: #FFBE98;">

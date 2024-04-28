@@ -9,9 +9,11 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.fz.followme.dto.MemberDto" alias="MemberDto"/>
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -64,16 +64,16 @@
                         -->
                         
                         <!-- form -->
-                        <form action="#">
+                        <form action="${ contextPath }/member/login.do" method="post">
                             <div class="mb-3">
-                                <label for="emailaddress" class="form-label" style="color:white; font-weight: bold;">사번</label>
-                                <input class="form-control" type="email" id="emailaddress" required="" placeholder="사번을 입력하세요">
+                                <label for="memNo" class="form-label" style="color:white; font-weight: bold;">사번</label>
+                                <input class="form-control" type="text" id="memNo" name="memNo" required placeholder="사번을 입력하세요">
                             </div>
                             <div class="mb-3">
                                 <a href="auth-recoverpw-2.html" class="text-muted float-end"><small>비밀번호 재설정</small></a>
-                                <label for="password" class="form-label" style="color: white; font-weight: bold;">비밀번호</label>
+                                <label for="memPwd" class="form-label" style="color: white; font-weight: bold;">비밀번호</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력하세요">
+                                    <input type="password" id="memPwd" name="memPwd" class="form-control" placeholder="비밀번호를 입력하세요">
                                     <div class="input-group-text" data-password="false">
                                         <span class="password-eye"></span>
                                     </div>
@@ -89,25 +89,7 @@
                             <div class="text-center d-grid">
                                 <button class="btn btn-primary" type="submit" style="background-color: #f2e8da; border: none; color: black;" >로그인 </button>
                             </div>
-                            <!-- social
-                            <div class="text-center mt-4">
-                                <p class="text-muted font-16">Sign in with</p>
-                                <ul class="social-list list-inline mt-3">
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            -->
+                            
                         </form>
                         <!-- end form-->
 
