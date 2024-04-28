@@ -8,7 +8,7 @@
 	</appender>
 	
 	<logger name="org.springframework" 	level="info"/>
-	<logger name="com.br.spring"				level="debug" />
+	<logger name="com.fz.followme"				level="debug" />
 	
 	<logger name="jdbc.sqlonly" 				level="info" /> 	<!-- 쿼리문 -->
 	<logger name="jdbc.sqltiming" 			level="off" /> 		<!-- 쿼리문 + 실행시간 -->
