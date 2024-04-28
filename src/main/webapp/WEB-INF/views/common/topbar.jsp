@@ -16,20 +16,20 @@
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
         <!-- Plugins css -->
-        <link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
         
         <!-- Theme Config Js -->
-        <script src="assets/js/head.js"></script>
+        <script src="${ contextPath }/assets/js/head.js"></script>
 
         <!-- Bootstrap css -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+        <link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
         <!-- App css -->
-        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
         <!-- Icons css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
@@ -56,14 +56,14 @@
             <div class="logo-box">
                 <!-- Brand Logo Light -->
                 <a href="index.html" class="logo-light">
-                    <img src="assets/images/logo-follow.png" alt="logo" class="logo-lg">
-                    <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+                    <img src="${ contextPath }/assets/images/logo-follow.png" alt="logo" class="logo-lg">
+                    <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
                 </a>
 
                 <!-- Brand Logo Dark -->
                 <a href="index.html" class="logo-dark">
-                    <img src="assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
-                    <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+                    <img src="${ contextPath }/assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
+                    <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
                 </a>
             </div>
 
@@ -117,7 +117,7 @@
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="d-flex align-items-start">
-                                <img class="d-flex me-2 rounded-circle" src="assets/images/users/user-2.jpg" alt="Generic placeholder image" height="32">
+                                <img class="d-flex me-2 rounded-circle" src="${ contextPath }/assets/images/users/user-2.jpg" alt="Generic placeholder image" height="32">
                                 <div class="w-100">
                                     <h5 class="m-0 font-14">Erwin E. Brown</h5>
                                     <span class="font-12 mb-0">UI Designer</span>
@@ -128,7 +128,7 @@
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <div class="d-flex align-items-start">
-                                <img class="d-flex me-2 rounded-circle" src="assets/images/users/user-5.jpg" alt="Generic placeholder image" height="32">
+                                <img class="d-flex me-2 rounded-circle" src="${ contextPath }/assets/images/users/user-5.jpg" alt="Generic placeholder image" height="32">
                                 <div class="w-100">
                                     <h5 class="m-0 font-14">Jacob Deo</h5>
                                     <span class="font-12 mb-0">Developer</span>
@@ -214,28 +214,28 @@
             <!-- Language flag dropdown  -->
             <li class="dropdown d-none d-md-inline-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
+                    <img src="${ contextPath }/assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                        <img src="${ contextPath }/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                        <img src="${ contextPath }/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                        <img src="${ contextPath }/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                     </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                        <img src="${ contextPath }/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
 
                 </div>
@@ -310,7 +310,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                            <img src="${ contextPath }/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 text-truncate ms-2">
@@ -348,7 +348,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                            <img src="${ contextPath }/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 text-truncate ms-2">
@@ -382,52 +382,38 @@
             <!-- User Dropdown -->
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="${ contextPath }/assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                     <span class="ms-1 d-none d-md-inline-block">
                         최강재온 <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                    
                     <!-- item-->
-                    <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
-                    </div>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="${ contextPath }/member/mypage.page" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
-                        <span>My Account</span>
+                        <span>마이페이지</span>
                     </a>
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-lock"></i>
-                        <span>Lock Screen</span>
-                    </a>
 
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="${ contextPath }/member/logout.do" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
-                        <span>Logout</span>
+                        <span>로그아웃</span>
                     </a>
 
                 </div>
             </li>
 
-            <!-- Right Bar offcanvas button (Theme Customization Panel) -->
+            <!-- Right Bar offcanvas button (Theme Customization Panel) 
             <li>
                 <a class="nav-link waves-effect waves-light" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
                     <i class="fe-settings font-22"></i>
                 </a>
             </li>
+            -->
         </ul>
     </div>
 </div>

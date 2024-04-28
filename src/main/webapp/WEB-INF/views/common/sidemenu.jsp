@@ -15,19 +15,19 @@
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
         <!-- Plugin css -->
-        <link href="assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
 
         <!-- Theme Config Js -->
-        <script src="assets/js/head.js"></script>
+        <script src="${ contextPath }/assets/js/head.js"></script>
 
         <!-- Bootstrap css -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+        <link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
         <!-- App css -->
-        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
         <!-- Icons css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         
@@ -41,14 +41,14 @@
     <div class="logo-box">
         <!-- Brand Logo Light -->
         <a href="index.html" class="logo-light">
-            <img src="assets/images/logo-light.png" alt="logo" class="logo-lg">
-            <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+            <img src="${ contextPath }/assets/images/logo-light.png" alt="logo" class="logo-lg">
+            <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
 
         <!-- Brand Logo Dark -->
         <a href="index.html" class="logo-dark">
-            <img src="assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
-            <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+            <img src="${ contextPath }/assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
+            <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
     </div>
 
@@ -57,7 +57,7 @@
 
         <!-- User box -->
         <div class="user-box text-center">
-            <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
+            <img src="${ contextPath }/assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
             <div class="dropdown">
                 <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">Geneva Kennedy</a>
                 <div class="dropdown-menu user-pro-dropdown">
