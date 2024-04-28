@@ -32,16 +32,11 @@
 <body>
 	<!-- Begin page -->
         <div id="wrapper">
-
            <!-- sidemenu include -->
            <jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
-            
-
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
-
-            <div class="content-page">
 
                <!-- topbar include -->
                <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
@@ -62,7 +57,7 @@
                                             <li class="breadcrumb-item active">Calendar</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Calendar</h4>
+                                    <h4 class="page-title">일정관리</h4>
                                 </div>
                             </div>
                         </div>
@@ -75,19 +70,18 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-3">
-                                                <button class="btn btn-lg font-16 btn-primary w-100" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> New Event</button>
+                                                <button class="btn btn-lg font-16 btn-primary w-100" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> 일정 추가</button>
                                                 
                                                 <div id="external-events">
                                                     <br>
-                                                    <p class="text-muted">Drag and drop your event or click in the calendar</p>
                                                     <div class="external-event bg-success" data-class="bg-success">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Employee
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>직원
                                                     </div>
                                                     <div class="external-event bg-info" data-class="bg-info">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Department
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>부서
                                                     </div>
                                                     <div class="external-event bg-warning" data-class="bg-warning">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>Company
+                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>회사
                                                     </div>
                                                     
                                                 </div>
@@ -108,31 +102,38 @@
                                         <div class="modal-content">
                                             <div class="modal-header py-3 px-4 border-bottom-0 d-block">
                                                 <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                <h5 class="modal-title" id="modal-title">Event</h5>
+                                                <h5 class="modal-title" id="modal-title">event</h5>
                                             </div>
                                             <div class="modal-body px-4 pb-4 pt-0">
                                                 <form class="needs-validation" name="event-form" id="form-event" novalidate>
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Event Name</label>
-                                                                <input class="form-control" placeholder="Insert Event Name"
+                                                                <label class="form-label">제목</label>
+                                                                <input class="form-control" placeholder="제목을 입력하세요"
                                                                     type="text" name="title" id="event-title" required />
-                                                                <div class="invalid-feedback">Please provide a valid event name</div>
+                                                                <div class="invalid-feedback">제목을 입력해주세요</div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Category</label>
+                                                                <label class="form-label">내용</label>
+                                                                <textarea class="form-control" placeholder="내용을 입력하세요"
+                                                                     name="content" id="event-content" style="resize:none;">
+                                                                 </textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">카테고리</label>
                                                                 <select class="form-select" name="category" id="event-category" required>
                                                                     <!-- <option value="bg-danger" selected>Danger</option> -->
-                                                                    <option value="bg-success">Employee</option>
+                                                                    <option value="bg-success">직원</option>
                                                                     <!-- <option value="bg-primary">Primary</option> -->
-                                                                    <option value="bg-info">Department</option>
+                                                                    <option value="bg-info">부서</option>
                                                                     <!-- <option value="bg-dark">Dark</option> -->
-                                                                    <option value="bg-warning">Company</option>
+                                                                    <option value="bg-warning">일정</option>
                                                                 </select>
-                                                                <div class="invalid-feedback">Please select a valid event category</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -159,9 +160,7 @@
 
                 </div> <!-- content -->
 
-				<!-- footer include -->
-                <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
+		
             </div>
 
             <!-- ============================================================== -->
