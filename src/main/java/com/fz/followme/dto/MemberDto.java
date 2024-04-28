@@ -43,4 +43,6 @@ public class MemberDto {
 	private String authLevel;
 	private String status;
 	
+	private String deptName;
+	
 }

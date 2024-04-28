@@ -6,6 +6,7 @@
 		<id column="mem_no" property="memNo"/>
 		<result column="mem_pwd" property="memPwd"/>
 		<result column="dept_no" property="deptNo"/>
+		<result column="dept_name" property="deptName"/>
 		<result column="profile_img_path" property="profilImgPath"/>
 		<result column="mem_gender" property="gender"/>
 		<result column="mem_name" property="memName"/>
@@ -33,7 +34,7 @@
   <!-- 로그인용 (암호화 적용)-->
   <select id="selectMember" resultMap="memberResult">
 		select
-			 	 mem_no, mem_pwd, dept_no,
+			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, mem_address_detail, 
@@ -44,6 +45,7 @@
 			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
 			 	 authorization_level, status
 			from tb_mem
+			join tb_department on (tb_mem.dept_no = tb_department.dept_no)
 		 where status = 'Y'
 		   and mem_no = ${memNo}
 	</select>

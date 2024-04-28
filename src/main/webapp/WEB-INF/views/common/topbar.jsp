@@ -390,7 +390,7 @@
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                     
                     <!-- item-->
-                    <a href="${ contextPath }/member/mypage.page" class="dropdown-item notify-item">
+                    <a href="${ contextPath }/member/mypage.do" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>마이페이지</span>
                     </a>

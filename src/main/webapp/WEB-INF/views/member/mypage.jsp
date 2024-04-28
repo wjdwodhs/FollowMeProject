@@ -8,7 +8,7 @@
 
 <head>
 <meta charset="utf-8" />
-<title>Profile | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+<title>마이페이지 | Follow Me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -17,19 +17,20 @@
 <link rel="shortcut icon" href="assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${ contextPath }/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
+	
 </style>
 
 </head>
@@ -77,20 +78,20 @@
 		                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
 		                                        alt="profile-image">
 		
-		                                        <h4 class="mb-0">김춘식</h4>
+		                                        <h4 class="mb-0">${ mypageUser.memName }</h4>
 		                                        <p class="text-muted">@181112</p>
 		
 		                                        <div class="text-start mt-3">
 		                                            
-		                                            <p class="text-muted mb-2 font-13"><strong>소속부서 :</strong> <span class="ms-2">경영지원팀</span></p>
+		                                            <p class="text-muted mb-2 font-13"><strong>소속부서 :</strong> <span class="ms-2">${ mypageUser.deptName }</span></p>
 		
-		                                            <p class="text-muted mb-2 font-13"><strong>직급 :</strong> <span class="ms-2">매니저</span></p>
+		                                            <p class="text-muted mb-2 font-13"><strong>직급 :</strong> <span class="ms-2">${ mypageUser.memGrade }</span></p>
 		                                        
-		                                            <p class="text-muted mb-2 font-13"><strong>내선번호 :</strong><span class="ms-2">02-1234-1234</span></p>
+		                                            <p class="text-muted mb-2 font-13"><strong>내선번호 :</strong><span class="ms-2">${ mypageUser.extensionNumber }</span></p>
 		
-		                                            <p class="text-muted mb-2 font-13"><strong>휴대폰번호 :</strong><span class="ms-2">010-1234-1234</span></p>
+		                                            <p class="text-muted mb-2 font-13"><strong>휴대폰번호 :</strong><span class="ms-2">${ mypageUser.phone }</span></p>
 		                                        
-		                                            <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2">cs123@gmail.com</span></p>
+		                                            <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2">${ mypageUser.memEmail }</span></p>
 		                                        </div>                                    
 		
 		                                        
@@ -98,7 +99,7 @@
 		                                </div> <!-- end card -->
 		
 		                                <div class="card">
-		                                    <div class="card-body">
+		                                    <div class="card-body" style="height: 472px;">
 		                                        <h4 class="header-title mb-3">쪽지함</h4>
 		
 		                                        <div class="inbox-widget" data-simplebar style="max-height: 350px;">
@@ -257,14 +258,14 @@
 		                                                    <div class="row">
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
-		                                                                <label for="firstname" class="form-label">성</label>
-		                                                                <input type="text" class="form-control" id="firstname">
+		                                                                <label for="memName" class="form-label">이름</label>
+		                                                                <input type="text" class="form-control" id="memName" value="${mypageUser.memName}">
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
-		                                                                <label for="lastname" class="form-label">이름</label>
-		                                                                <input type="text" class="form-control" id="lastname">
+		                                                                <label for="memGender" class="form-label">성별</label>
+		                                                                <input type="text" class="form-control" id="memGender" value="${mypageUser.gender}">
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -273,13 +274,13 @@
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="phone" class="form-label">휴대폰 번호</label>
-		                                                                <input type="text" class="form-control" id="phone">
+		                                                                <input type="text" class="form-control" id="phone" value="${mypageUser.phone}">
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="address" class="form-label">주소</label>
-		                                                                <input type="text" class="form-control" id="address">
+		                                                                <input type="text" class="form-control" id="address" value="${mypageUser.address}">
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -290,14 +291,14 @@
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="useremail" class="form-label">이메일</label>
-		                                                                <input type="email" class="form-control" id="useremail">
+		                                                                <input type="email" class="form-control" id="useremail" value="${mypageUser.memEmail}">
 		                                                                <span class="form-text text-muted"><small>이메일 변경 <a href="javascript: void(0);">click</a> here.</small></span>
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="userpassword" class="form-label">비밀번호</label>
-		                                                                <input type="password" class="form-control" id="userpassword">
+		                                                                <input type="password" class="form-control" id="userpassword" placeholder="비밀번호는 아래 링크를 클릭해 변경해주세요" readonly>
 		                                                                <span class="form-text text-muted"><small>비밀번호 변경 <a href="javascript: void(0);">click</a> here.</small></span>
 		                                                            </div>
 		                                                        </div> <!-- end col -->
@@ -307,8 +308,29 @@
 		                                                    <div class="row">
 		                                                        <div class="col-md-2">
 		                                                            <div class="mb-3">
-		                                                                <label for="bankName" class="form-label">은행명</label>
-		                                                                <input type="text" class="form-control" id="bankName">
+		                                                               <div class="bankselect">
+		                                                               		<label for="bankselect" class="form-label">은행명</label>
+																								                    	<select class="form-select" id="bankselect" v-model="bankname" aria-label="Default select example">
+																								                        <option value="">은행선택</option>
+																								                        <option value="004">국민은행</option>
+																								                        <option value="020">우리은행</option>
+																								                        <option value="088">신한은행</option>
+																								                        <option value="003">기업은행</option>
+																								                        <option value="023">SC제일은행</option>
+																								                        <option value="011">농협은행</option>
+																								                        <option value="005">외환은행</option>
+																								                        <option value="090">카카오뱅크</option>
+																								                        <option value="032">부산은행</option>
+																								                        <option value="071">우체국</option>
+																								                        <option value="031">대구은행</option>
+																								                        <option value="037">전북은행</option>
+																								                        <option value="035">제주은행</option>
+																								                        <option value="007">수협은행</option>
+																								                        <option value="027">씨티은행</option>
+																								                        <option value="039">경남은행</option>
+																								                    </select>
+																								                    
+																								                	</div> 
 		                                                            </div>
 		                                                        </div>
 		
@@ -328,11 +350,16 @@
 		                                                        
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
-		                                                                <label for="certificate" class="form-label">계좌증빙</label>
-		                                                                <input type="file" class="form-control" id="certificate">
+		                                                                <label for="accountAuthentication" class="form-label">계좌인증</label>
+		                                                                <button class="form-control" id="accountAuthentication" onclick="checkAccount();">계좌 실명 인증</button>
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
+		                                                    
+		                                                
+		                                                    
+		                                                    
+		                                                    
 		    
 		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-earth me-1"></i> SNS</h5>
 		                                                    
@@ -460,7 +487,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -475,7 +502,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -490,7 +517,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -509,7 +536,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -524,7 +551,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -539,7 +566,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -554,7 +581,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -569,7 +596,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -584,7 +611,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -858,10 +885,10 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
 
     </body>
 

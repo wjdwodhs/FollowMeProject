@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -80,8 +80,14 @@ public class MemberController {
 	}
 	
 	// 마이페이지로 이동
-	@RequestMapping("/mypage.page")
-	public String mypage() {
+	@RequestMapping("/mypage.do")
+	public String mypage(HttpServletRequest request, Model model) {
+		
+		MemberDto m = (MemberDto)request.getSession().getAttribute("loginUser");
+		MemberDto mypageUser = memberService.selectMember(m);
+		
+		model.addAttribute("mypageUser", mypageUser);
+		
 		return "member/mypage";
 	}
 	
@@ -92,4 +98,13 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	// 마이페이지 계좌실명인증
+	
+	
+	
+	
+	
+	
+
 }
