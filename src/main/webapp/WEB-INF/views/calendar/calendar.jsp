@@ -6,7 +6,7 @@
 <html lang="en" data-topbar-color="dark">
 <head>
         <meta charset="utf-8" />
-        <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>일정관리 | FollowMe</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -37,11 +37,11 @@
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
-
+			<div class="content-page">
                <!-- topbar include -->
                <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
                
-                <div class="content" style="background-color: #F2E8DA;">
+                <div class="content" style="background-color: #F2F3F5;">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -52,9 +52,9 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">Calendar</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">일정관리</a></li>
+                                            <li class="breadcrumb-item active">일정관리</li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title">일정관리</h4>
@@ -150,17 +150,15 @@
                                             </div>
                                         </div> <!-- end modal-content-->
                                     </div> <!-- end modal dialog-->
-                                </div>
-                                <!-- end modal-->
-                            </div>
-                            <!-- end col-12 -->
+                                </div><!-- end modal-->
+                                
+                            </div><!-- end col-12 -->
+                            
                         </div> <!-- end row -->
                         
                     </div> <!-- container -->
 
                 </div> <!-- content -->
-
-		
             </div>
 
             <!-- ============================================================== -->
@@ -168,8 +166,8 @@
             <!-- ============================================================== -->
 
 
-        </div>
-        <!-- END wrapper -->
+        </div><!-- END wrapper -->
+        
 
         <!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">

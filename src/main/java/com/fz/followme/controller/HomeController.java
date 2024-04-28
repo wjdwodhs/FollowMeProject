@@ -21,4 +21,14 @@ public class HomeController {
 	public String ceoMainPage() {
 		return "ceoMain";
 	}
+	
+	@RequestMapping("/calendar.page")
+	public String calendarPage() {
+		return "calendar/calendar";
+	}
+	
+	@RequestMapping("/attendance.page")
+	public String attendancePage() {
+		return "attendance/attendance";
+	}
 }
