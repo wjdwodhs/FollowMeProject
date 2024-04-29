@@ -12,7 +12,6 @@
 		<result column="mem_name" property="memName"/>
 		<result column="mem_securityno" property="securityNo"/>
 		<result column="mem_address" property="address"/>
-		<result column="mem_address_detail" property="addressDetail"/>
 		<result column="mem_email" property="memEmail"/>
 		<result column="mem_grade" property="memGrade"/>
 		<result column="mem_role" property="memRole"/>
@@ -37,7 +36,7 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, mem_address_detail, 
+			 	 mem_address, 
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
@@ -45,9 +44,9 @@
 			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
 			 	 authorization_level, status
 			from tb_mem
-			join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
 		 where status = 'Y'
-		   and mem_no = ${memNo}
+		   and mem_no = #{memNo}
 	</select>
   
 </mapper>

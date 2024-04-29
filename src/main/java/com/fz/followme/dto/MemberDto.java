@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder
 public class MemberDto {
 	
-	private int memNo;
+	private String memNo;
 	private String memPwd;
 	private int deptNo;
 	private String profilImgPath;

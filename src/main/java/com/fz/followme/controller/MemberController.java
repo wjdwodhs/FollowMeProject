@@ -52,12 +52,12 @@ public class MemberController {
 			
 			// 로그인 시 사번 저장 (쿠키 저장)
 			if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {
-				Cookie cookie = new Cookie("savedMemNo", String.valueOf(loginUser.getMemNo()));
+				Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
 				cookie.setMaxAge(30*24*60*60); // 30일 저장 유효기간
 				cookie.setPath("/");
 				response.addCookie(cookie);
 			} else {
-				Cookie cookie = new Cookie("savedMemNo", String.valueOf(loginUser.getMemNo()));
+				Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
 				cookie.setMaxAge(0);
 				cookie.setPath("/");
 				response.addCookie(cookie);
