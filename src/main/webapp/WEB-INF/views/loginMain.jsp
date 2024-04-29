@@ -37,6 +37,16 @@
        margin:auto;
    }
 </style>
+<script>
+    
+    if ("${alertMsg}" !== "") {
+        alert("${alertMsg}");
+       
+        if ("${historyBackYN}" === "Y") {
+            history.back();
+        }
+    }
+</script>
 </head>
 
     <body class="auth-fluid-pages pb-0">
@@ -71,7 +81,7 @@
                                 <input class="form-control" type="text" id="memNo" name="memNo" value="${not empty cookie.savedMemNo ? cookie.savedMemNo.value : ''}" required placeholder="사번을 입력하세요">
                             </div>
                             <div class="mb-3">
-                                <a href="auth-recoverpw-2.html" class="text-muted float-end"><small>비밀번호 재설정</small></a>
+                                <a href="${ contextPath }/member/resetPwd.page" class="text-muted float-end"><small>비밀번호 재설정</small></a>
                                 <label for="memPwd" class="form-label" style="color: white; font-weight: bold;">비밀번호</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="memPwd" name="memPwd" class="form-control" placeholder="비밀번호를 입력하세요">

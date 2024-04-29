@@ -2,6 +2,7 @@ package com.fz.followme.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.service.EmailSender;
 import com.fz.followme.service.MemberService;
 import com.fz.followme.util.FileUtil;
 
@@ -30,6 +34,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final FileUtil fileUtil;
+	private final EmailSender emailSender;
 
 	// 로그인
 	@PostMapping("/login.do")
@@ -99,12 +104,61 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	// 마이페이지 계좌실명인증
-	
-	
-	
-	
-	
-	
+	// 비밀번호 재설정 페이지로 이동
+	@RequestMapping("/resetPwd.page")
+	public String resetPwdPage() {
+		return "member/resetPwd";
+	} 
+
+	// 임시 비밀번호 발급 및 입력한 이메일로 발송
+	@PostMapping("/resetPwd.do")
+	public String resetPwd(String memEmail, RedirectAttributes redirectAttributes) {
+
+		
+	    // 사용자가 입력한 이메일로 존재하는 사용자인지 확인
+	    MemberDto isMember = memberService.memEmailCheck(memEmail);
+
+	    if (isMember != null) {
+
+	        Random r = new Random();
+	        int tempPwd = r.nextInt(900000)+100000; // 랜덤 난수
+
+	        if (isMember.getMemEmail().equals(memEmail)) {
+
+	            EmailDto email = EmailDto.builder()
+	                    .fromEmail("chennychat@gmail.com")
+	                    .toEmail(memEmail)
+	                    .title("[Follow Me] 임시 비밀번호가 발급되었습니다.")
+	                    .content(String.format("안녕하세요 %s님\n 발급된 임시 비밀번호는 %d입니다.", isMember.getMemName(), tempPwd))
+	                    .build();
+
+	            // 새로운 임시 비밀번호(암호화 필요)를 DB에 업데이트
+	            String hashedPassword = bcryptPwdEncoder.encode(String.valueOf(tempPwd)); // 비밀번호 해싱
+	            
+	            isMember.setHashedPassword(hashedPassword);
+	            
+	            memberService.updateTempPwd(isMember);
+	            
+	            // 임시 비밀번호 발급 이메일 발송
+	            emailSender.sendMail(email);
+	            redirectAttributes.addFlashAttribute("alertMsg", "임시 비밀번호가 발급되었습니다. 이메일을 확인해주세요.");
+	            return "redirect:/";
+
+	        } else {
+	        	redirectAttributes.addFlashAttribute("alertMsg", "이메일 주소가 일치하지 않습니다.");
+	        }
+	    } else {
+	    	redirectAttributes.addFlashAttribute("alertMsg", "존재하지 않는 이메일입니다.");
+	    
+	    }
+
+	    return "redirect:/member/resetPwd.page"; 
+	}
 
 }
+
+
+
+
+	
+	

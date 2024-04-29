@@ -18,4 +18,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMember(m);
 	}
 
+	@Override
+	public MemberDto memEmailCheck(String memEmail) {
+		return memberDao.memEmailCheck(memEmail);
+	}
+
+	@Override
+	public int updateTempPwd(MemberDto isMember) {
+		return memberDao.updateTempPwd(isMember);
+	}
+
 }

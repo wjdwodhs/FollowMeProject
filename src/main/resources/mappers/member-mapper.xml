@@ -48,5 +48,34 @@
 		 where status = 'Y'
 		   and mem_no = #{memNo}
 	</select>
+	
+	<select id="memEmailCheck" resultMap="memberResult">
+		select
+			 	 mem_no, mem_pwd, dept_name,
+			 	 profile_img_path, mem_gender, 
+			 	 mem_name, mem_securityno,
+			 	 mem_address, 
+			 	 mem_email, mem_grade, mem_role,
+			 	 extension_number, phone, 
+			 	 enroll_Date, quit_date, mem_salary,
+			 	 account_no, sig_no, 
+			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
+			 	 authorization_level, status
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		 where status = 'Y'
+		   and mem_email = #{memEmail}
+	</select>
+	
+	<!-- 임시 비밀번호(암호화된 것) 발급 후 사원정보 업데이트 (임시 로그인용) -->
+  <update id="updateTempPwd">
+  	update
+  				tb_mem
+  		 set
+  		 		mem_pwd = #{hashedPassword}
+  	 where
+  	 			mem_no = #{memNo}
+  </update>
+  
   
 </mapper>
