@@ -28,7 +28,11 @@
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
-	.a.nav-link.active{backgroun-color:#FEBE98;}
+.a.nav-link.active{backgroun-color:#FEBE98;}
+#seatingNum td:hover {
+  background-color: #FFA74F !important;
+  cursor: pointer; 
+}
 </style>
 
 </head>
@@ -93,7 +97,7 @@
 	                                    <div style=" width: 40%; box-sizing:border-box;">
 	                                        <div style="height: 80%; box-sizing:border-box; ">
 	                                            <div style="border: 3px solid black; height: 300px; width: 200px; margin: auto; margin-top: 20%; ">
-	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                                <table id="seatingNum" style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
 	                                                    <tr>
 	                                                        <td>01</td>
 	                                                        <td>02</td>
@@ -117,7 +121,7 @@
 	                            
 	                                    <div style="width: 40%; box-sizing:border-box;">
 	                                        <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%;" >
-	                                            <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                            <table id="seatingNum" style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
 	                                                <tr>
 	                                                    <td>07</td>
 	                                                    <td>08</td>
@@ -133,7 +137,7 @@
 	                                    <div style=" width: 40% ">
 	                                        <div style=" height: 50%; box-sizing:border-box;">
 	                                            <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%; ">         
-	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered" >
+	                                                <table id="seatingNum" style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered" >
 	                                                    <tr>
 	                                                        <td>11</td>
 	                                                        <td>12</td>
@@ -147,7 +151,7 @@
 	                            
 	                                        <div style="height: 50% ">
 	                                            <div style="border: 3px solid black; height: 200px; width: 80%; margin: auto; margin-top: 20%; ">
-	                                                <table style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
+	                                                <table id="seatingNum" style="width: 100%; height: 100%; border: 1px solid black; text-align: center; color: black; font-size: large;" class="table table-bordered">
 	                                                    <tr>
 	                                                        <td>15</td>
 	                                                        <td>16</td>
@@ -271,6 +275,13 @@
 	                </div>
 	            </div>
 	        </div> <!-- container -->
+			
+         <script>
+           let today = new Date();
+           let todaystr = today.toISOString().split('T')[0];
+
+           document.getElementById("reservationDate").min = todaystr;
+         </script>
 
 	        
 	        
