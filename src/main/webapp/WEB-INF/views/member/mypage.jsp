@@ -79,7 +79,7 @@
 		                                        alt="profile-image">
 		
 		                                        <h4 class="mb-0">${ mypageUser.memName }</h4>
-		                                        <p class="text-muted">@181112</p>
+		                                        <p class="text-muted">@${ mypageUser.memNo }</p>
 		
 		                                        <div class="text-start mt-3">
 		                                            
