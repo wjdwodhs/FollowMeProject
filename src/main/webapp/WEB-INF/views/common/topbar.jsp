@@ -35,17 +35,16 @@
     </head>
 <body>
 
-	<script>
-			if("${alertMsg}" != ""){ 
-				alertify.alert("${alertTitle}", "${alertMsg}", function(){
-					if("${historyBackYN}" == "Y"){
-						history.back();
-					}
-				});
-			}
-			
-			
-		</script>
+<script>
+    
+    if ("${alertMsg}" !== "") {
+        alert("${alertMsg}");
+       
+        if ("${historyBackYN}" === "Y") {
+            history.back();
+        }
+    }
+</script>
 
 	<!-- ========== Topbar Start ========== -->
 <div class="navbar-custom">
