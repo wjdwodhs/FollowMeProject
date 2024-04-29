@@ -140,11 +140,11 @@
             </li>
 
             <!-- Fullscreen Button -->
-            <li class="d-none d-md-inline-block">
+            <!-- <li class="d-none d-md-inline-block">
                 <a class="nav-link waves-effect waves-light" href="" data-toggle="fullscreen">
                     <i class="fe-maximize font-22"></i>
                 </a>
-            </li>
+            </li> -->
 
             <!-- Search Dropdown (for Mobile/Tablet) -->
             <li class="dropdown d-lg-none">
@@ -159,7 +159,7 @@
             </li>
 
             <!-- App Dropdown -->
-            <li class="dropdown d-none d-md-inline-block">
+            <!-- <li class="dropdown d-none d-md-inline-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-grid font-22"></i>
                 </a>
@@ -206,10 +206,10 @@
                                     <span>G Suite</span>
                                 </a>
                             </div>
-                        </div> <!-- end row-->
+                        </div> end row
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Language flag dropdown  -->
             <li class="dropdown d-none d-md-inline-block">
@@ -242,7 +242,7 @@
             </li>
 
             <!-- Notofication dropdown -->
-            <li class="dropdown notification-list">
+            <%-- <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="fe-bell font-22"></i>
                     <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
@@ -370,7 +370,7 @@
                     </a>
 
                 </div>
-            </li>
+            </li> --%>
 
             <!-- Light/Dark Mode Toggle Button -->
             <li class="d-none d-sm-inline-block">
