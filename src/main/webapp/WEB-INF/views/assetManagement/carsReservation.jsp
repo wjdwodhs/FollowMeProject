@@ -271,31 +271,15 @@
 
                 </div> <!-- content -->
 
-                <script>
-                    let today = new Date();
-                    let yesterday = new Date(today);
-                    yesterday.setDate(today.getDate() - 1);
+         <script>
+           let today = new Date();
+           let todaystr = today.toISOString().split('T')[0];
 
-                    let ysterdaystr = yesterday.toISOString().split('T')[0];
-
-                    document.getElementById("reservationDate").max = ysterdaystr;
-
-
-                </script>
+           document.getElementById("reservationDate").min = todaystr;
+         </script>
 
 
             </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -19,13 +19,13 @@
 <script src="assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
@@ -174,68 +174,86 @@
 
                             <div class="col-lg-6">
                                 
-                                <!-- 예약 조회-->
+                            <!-- 예약 조회-->
                             <form action="">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회</b></h5>
+                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>자리 상태 설정</b></h5>
+                                        <br>
+                                        <form action="">
+                                            <table align="center">
+                                                <tr>
+                                                    <th>선택 좌석 </th>
+                                                    <td><input type="text" class="form-control" id="product-meta-title" style="width: 90px; margin-right: 15px;  margin-left: 10px;"></td>
+                                                    <th>이용상태</th>
+                                                    <td>
+                                                        <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray; margin-left: 10px;">
+                                                            <option value="writer">이용가능</option>
+                                                            <option value="title">이용불가</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
 
-                                                <label label for="reservationDate" style="margin-left: 25%; margin-right: 5px;">희망예약일</label>
-                                                <input type="date" id="reservationDate" min="" style="border: 0.5px solid lightgray; border-radius: 3px;">
-                                                <!-- Preview -->
-                                                <div class="dropzone-previews mt-3" id="file-previews">
+                                        <br><br>
 
-                                                    <div style="display: flex; justify-content: center;">
-
-                                                        <div style="border:none; background-color: #6EA1D4; width: 50px; height: 50px; margin-right: 15px;"> </div> 
-                                                        <label style="margin-top: 12px;">이용가능</label>
-                                                        <div style="border:none; background-color: lightgray; width: 50px; height: 50px; margin-right: 15px; margin-left: 60px;"></div>
-                                                        <label style="margin-top: 12px;"">이용불가</label>
-
-                                                    </div>
-                                                    <br><br>
-                                                </div>
-
-                                                <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
-                                        
+                                        <div class="text-center mb-3">
+                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">변경</button>
+                                        <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+                                        </div>
                                     </div>
                                 </div> <!-- end col-->
 
 
-                                <!-- 예약 신청 -->
+                                <!-- 예약 상세조회 -->
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 상세조회</b></h5>
 
                                         <div class="mb-3">
-                                            <label for="product-meta-title" class="form-label">예약자명</label>
-                                            <input type="text" class="form-control" id="product-meta-title" readonly>
+                                            <form action="">
+                                                <table class="table-sm">
+                                                    <tr>
+                                                        <th>예약자명</th>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="width: 170px;" readonly>
+                                                        </td>
+                                                        <th>소속부서</th>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="width: 170px;" readonly>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>선택 좌석</th>
+                                                        <td>
+                                                            <input type="text" class="form-control" style="width: 170px;" readonly>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>이용시간</th>
+                                                        <td>
+                                                            <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
+                                                                <option value="writer">종일 [ 09 : 00 ~ 18 : 00 ]</option>
+                                                                <option value="title">오전 [ 09 : 00 ~ 14 : 00 ]</option>
+                                                                <option value="content">오후 [ 14 : 00 ~ 18 : 00 ]</option>
+                                                            </select>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>코멘트</th>
+                                                        <td colspan="3">
+                                                            <input type="text" class="form-control">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </form>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label for="product-meta-keywords" class="form-label">선택 좌석</label>
-                                            <input type="text" class="form-control" id="product-meta-keywords" required>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="product-meta-keywords" class="form-label">이용시간</label> <br>
-                                            <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; margin-bottom: 20px; color: gray;">
-                                                <option value="writer">종일 [ 09 : 00 ~ 18 : 00 ]</option>
-                                                <option value="title">오전 [ 09 : 00 ~ 14 : 00 ]</option>
-                                                <option value="content">오후 [ 14 : 00 ~ 18 : 00 ]</option>
-                                        </div>
-
-                                   
-
-                                                <div class="mb-3">
-                                                    <label for="product-meta-keywords" class="form-label">코멘트</label> 
-                                                    <input type="text" class="form-control" id="product-meta-keywords" placeholder="(선택) 특이사항이 있을시 작성해주세요.">
-                                                </div>
-                                            </div>
-                                            <div class="text-center mb-3">
-                                                <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
-                                                <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
-                                            </div>
                                         
                                         </div> <!-- end card -->
                                         
@@ -277,15 +295,6 @@
                     </div> <!-- container -->
 
                 </div> <!-- content -->
-
-         <script>
-           let today = new Date();
-           let todaystr = today.toISOString().split('T')[0];
-
-           document.getElementById("reservationDate").min = todaystr;
-         </script>
-
-
 
 
 
@@ -804,12 +813,12 @@
         <script src="assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
+        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>
