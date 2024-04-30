@@ -141,7 +141,7 @@
                 </div>
             </li>
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="${ contextPath }/member/empManagement.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="user"></i></span>
                     <span class="menu-text"> 인사관리 </span>
                 </a>
@@ -160,7 +160,7 @@
             </li>
 
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="${ contextPath }/board/socialFeed.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="rss"></i></span>
                     <span class="menu-text"> 소셜피드 </span>
                 </a>
