@@ -52,6 +52,17 @@ public class HomeController {
 	
 	//----------------------------------------------
 	
+	// * 전자게시판 관련
+	
+	@RequestMapping("/boardInsert.page")
+	public String boardInsert() {
+		return "board/boardInsert";
+	}
+	
+	@RequestMapping("/boardList.page")
+	public String boardList() {
+		return "board/boardList";
+	}
 	
 	
 	

@@ -12,31 +12,11 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
   
+  
 
 
 
-<!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
-
-<!-- Plugin css -->
-<link href="assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
-
-<!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
-
-<!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-<!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
-
-<!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
-<script src="/js/summernote/summernote-lite.js"></script>
-<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
-
-<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+<link rel="stylesheet" href="${contextPath }/assets/summernote-0.8.18/summernote.min.css">
 
 
 <style>
@@ -189,20 +169,14 @@
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
-                                    <script type="text/javascript">
+									<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                                    <script src="${contextPath }/assets/summernote-0.8.18/summernote.min.js"></script>
+                                    <script>
                                     $(document).ready(function() {
 										//여기 아래 부분
-										$('#summernote').summernote({
-											  height: 300,                 // 에디터 높이
-											  minHeight: null,             // 최소 높이
-											  maxHeight: null,             // 최대 높이
-											  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-											  lang: "ko-KR",					// 한글 설정
-											  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-									          
-										});
+										$('#summernote').summernote();
 									});
-                                    
+                                    /* 
                                  // 서머노트에 text 쓰기
                                     $('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
 
@@ -222,7 +196,7 @@
                                     $('#summernote').summernote('undo');
                                     // 앞으로가기
                                     $('#summernote').summernote('redo');
-                                    
+                                     */
                                     </script>
                                 </div> <!-- end card -->
 
@@ -777,19 +751,6 @@
         </div>
         
         
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
-
-        <!-- plugin js -->
-        <script src="assets/libs/moment/min/moment.min.js"></script>
-        <script src="assets/libs/fullcalendar/main.min.js"></script>
-
-        <!-- Calendar init -->
-        <script src="assets/js/pages/calendar.init.js"></script>
-
     </body>
 </html>
     

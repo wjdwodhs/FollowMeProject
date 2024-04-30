@@ -9,5 +9,6 @@ public class BoardController {
 	
 	@RequestMapping("/socialFeed.page")
 	public void socialFeedPage() {}
-
+	
+	
 }
