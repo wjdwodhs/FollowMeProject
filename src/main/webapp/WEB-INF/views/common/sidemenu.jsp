@@ -12,7 +12,7 @@
         <meta content="Coderthemes" name="author" />
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
         <!-- Plugin css -->
         <link href="${ contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
@@ -119,7 +119,7 @@
                 </a>
             </li>
             
-			<li class="menu-item">
+						<li class="menu-item">
                 <a href="#menuCrm" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="layers"></i></span>
                     <span class="menu-text"> 자산관리 </span>
@@ -140,6 +140,13 @@
                     </ul>
                 </div>
             </li>
+            <li class="menu-item">
+                <a href="${ contextPath }/electronicDocument/documentList.page" class="menu-link">
+                    <span class="menu-icon"><i data-feather="file-text"></i></span>
+                    <span class="menu-text"> 전자결재 </span>
+                </a>
+            </li>
+            
             <li class="menu-item">
                 <a href="${ contextPath }/member/empManagement.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="user"></i></span>
