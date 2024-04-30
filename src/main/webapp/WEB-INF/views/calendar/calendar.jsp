@@ -70,7 +70,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-lg-3">
-                                                <button class="btn btn-lg font-16 btn-primary w-100" id="btn-new-event"><i class="mdi mdi-plus-circle-outline"></i> 일정 추가</button>
+                                                <button class="btn btn-lg font-16 w-100" id="btn-new-event" style="background-color: #FFBE98; color: white;"><i class="mdi mdi-plus-circle-outline"></i> 일정 추가</button>
                                                 
                                                 <div id="external-events">
                                                     <br>
