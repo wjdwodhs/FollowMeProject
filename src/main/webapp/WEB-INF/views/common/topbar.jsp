@@ -371,12 +371,7 @@
                 </div>
             </li> --%>
 
-            <!-- Light/Dark Mode Toggle Button -->
-            <li class="d-none d-sm-inline-block">
-                <div class="nav-link waves-effect waves-light" id="light-dark-mode">
-                    <i class="ri-moon-line font-22"></i>
-                </div>
-            </li>
+            
 
             <!-- User Dropdown -->
             <li class="dropdown">
