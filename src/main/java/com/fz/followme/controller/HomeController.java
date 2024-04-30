@@ -52,18 +52,21 @@ public class HomeController {
 	
 	//----------------------------------------------
 	
-	// * 전자게시판 관련
-	
-	@RequestMapping("/boardInsert.page")
-	public String boardInsert() {
-		return "board/boardInsert";
+
+	// * 전자결재페이지 관련 ---------------------------
+	@RequestMapping("/documentList.page")
+	public String selectDocumentList() {
+		return "electronicDocument/documentList";
+
 	}
 	
-	@RequestMapping("/boardList.page")
-	public String boardList() {
-		return "board/boardList";
+	@RequestMapping("/insertDocu.page")
+	public String insertDocument() {
+		return "electronicDocument/insertDocument";
 	}
-	
+
+	//----------------------------------------------
+
 	
 	
 }

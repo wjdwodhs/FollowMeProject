@@ -28,7 +28,7 @@
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
-	.a.nav-link.active{backgroun-color:#FEBE98;}
+	.a.nav-link.active{background-color:#FEBE98;}
 </style>
 
 </head>
