@@ -52,7 +52,19 @@ public class HomeController {
 	
 	//----------------------------------------------
 	
+	// * 전자결재페이지 관련 ---------------------------
+	@RequestMapping("/documentList.page")
+	public String selectDocumentList() {
+		return "electronicDocument/documentList";
+	}
 	
+	@RequestMapping("/insertDocu.page")
+	public String insertDocument() {
+		return "electronicDocument/insertDocument";
+	}
+
+	//----------------------------------------------
+
 	
 	
 }

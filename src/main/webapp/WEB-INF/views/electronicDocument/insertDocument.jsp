@@ -27,65 +27,100 @@
 <!-- Icons css -->
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<style>
-	.a.nav-link.active{background-color:#FEBE98;}
+<!-- Plugins css -->
+<link href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
+        
+<!-- Plugins css -->
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
 
-	.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* 세로 가운데 정렬 */
-  align-items: center; /* 가로 가운데 정렬 */
-  height: 100vh; /* 화면 전체를 채우도록 설정 */
-  }
-  
-  .top-row, .bottom-row {
-	display: flex;
-  width: 100%; /* 가로 너비를 100%로 설정 */
+    <style>
+        .a.nav-link.active{background-color:#FEBE98;}
 
-	}
-	
-	.box, .box2 {
-	
-	background-color: white;
-  width:400px;
-  text-align: center;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  margin-top: 25px;
-  }
-  
-  
-  .box2 > div { 
-  width: 50%; /* 가로 공간을 반씩 차지하도록 설정 */
-  text-align: center;
-  }
-  
-  
-  #calendarBox > div {
-  width: 100%; /* 부모 요소에 꽉 차도록 설정 */
-  text-align: center;
-  }
-  
-	.calendar {
-  border-collapse: collapse;
-  width: 400px;
-  height: 320px;
-  margin: 0 auto;
-	}
-	
-  .calendar th,
-  .calendar td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-  }
-  .calendar th {
-  background-color: #f2f2f2;
-  }
-  .today {
-  background-color: #FFDAB9;
-  }
-</style>
+        .card{
+            align-items: center;
+            width: 80%;
+        }
+        
+        .document-info{ 
+            display: flex; 
+        }
+        
+        .top-document{
+            justify-content: space-between;
+            display: flex;
+            align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */     
+        }
+
+        .document-title{
+            margin-bottom: 60px; margin-left: 100px;
+        }
+        
+        .sign-table{
+            text-align: right;
+            margin-bottom: px;
+        }
+        
+        .table-sign{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .table-sign tr>th, .table-sign tr>td{
+            text-align: center; 
+            width: 100px;
+            height: 25px;
+            font-size: 11px;
+            font-weight: lighter;
+        }
+
+        .sign{
+            height:75px;
+        }
+
+        .table-info-1, .table-info-2{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .table-info-2{
+            margin-left: 2px;
+        }
+        
+        .table-2-1{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-bottom: 15px; 
+        }
+        
+        .table-sign th, .table-sign td, .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td{
+            border: 1px solid rgb(102, 88, 221);
+            padding: 8px;
+            text-align: left;
+            
+        }
+        
+        .table-2-1 th, .table-2-1 td{
+            border: 1px solid rgb(102, 88, 221);
+            padding: 8px;
+            text-align: left;
+            height: 40px;
+        }
+
+        #snow-editor {
+            flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
+        }
+
+        input:focus ,td>textarea:focus{
+            outline: none;
+        }
+
+    </style>
 
 </head>
 
@@ -106,271 +141,147 @@
       <!-- ============================================================== -->
 
 			
-                <div class="content" style="background-color: #F2E8DA;">
+                <div class="content">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
                         
-                        <div class="top-row">
-                            <div class="box" style="height: 400px;">
-                                <div class="card" style="width: 500px;">
-                                    <img class="card-img-top img-fluid" src="assets/images/small/iu.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title" style="text-align: left;"><b>5월 판매왕은 나야 나!</b></h5>
-                                        <p class="card-text">
-                                            <div style="display: flex;">
-                                                <div class="col-sm-2 text-center">
-                                                    <img src="assets/images/users/user-5.jpg" alt="image" class="img-fluid rounded" width="120"/>   
-                                                    <p class="mb-0" >
-                                                        <code>마케팅팀</code><br>
-                                                        <code>김민혁 대리</code>
-                                                    </p>
-                                                </div>
-                                                <div style="margin-left: 40px; text-align: left;">
-                                                    <h3>odd one out</h3>
-                                                    <h4 style="color: rebeccapurple;">patch work damage knit</h4>
-                                                </div>
-                                            </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="top-document">
+                                    <div class="document-title">
+                                        <h1>품의서</h1>
                                     </div>
-                                </div>
-                            </div>
+                                    <div class="sign-table">
+                                        <table class="table-sign">
+                                            <tr>
+                                                <th rowspan="5" style="width: 20px;">결 재 선</th>
+                                            </tr>
+                                            <tr>
+                                                <th>작 성 자</th>
+                                                <th>결 재 자</th>
+                                                <th>결 재 자</th>
+                                            </tr>
+                                            <tr class="sign">
+                                                <td><img src="${contextPath}/assets/images/chan_sign_test.png"></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>  
 
-                            <div class="box" style="margin-left: 150px; background-color: #F2E8DA;">
-                                <div class="card ribbon-box" style="background-color: white;">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-danger float-end"><i class="mdi mdi-access-point me-1"></i>Today</div>
-                                        <h5 class="text-danger float-start mt-0">오늘의 결재</h5>
-                                        <div class="ribbon-content">
-                                            <p class="mb-0">- 결재 완료 1건</p>
-                                            <p class="mb-0">- 결재 진행중 1건</p>
-                                            <p class="mb-0">- 반려 문서 1건</p>
-                                        </div>
-                                    </div>
-                                </div>    
-                                
-                                <div class="card ribbon-box" style="margin-top: 20px; background-color: white;">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-warning float-end"><i class="mdi mdi-access-point me-1"></i> Employee</div>
-                                        <h5 class="text-warning float-start mt-0">임직원 알림</h5>
-                                        <div class="ribbon-content">
-                                            <p class="mb-0">물류팀 김재원(출장)</p>
-                                            <p class="mb-0">영업팀 나성범(결근)</p>
-                                            <p class="mb-0">마케팅팀 김미정(재택)</p>
-                                            <p class="mb-0">마케팅팀 유재석(재택)</p>
-                                            <p class="mb-0">경영지원팀 이솔아(재택)</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
+                                <div class="document-info">
 
-                            <div class="box" style="margin-left: 50px;">
-                                
-                                
-                                <div style="display: flex; justify-content: center; margin-top: 20px;">
-                                    <h4 style="margin-right: 20px;">04월 28일 <br> 오전 7:47:03</h4>
-                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
-                                </div>
-                                <div style="margin-top: 20px;">
-                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
-                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
-                                </div>
-                                <div style="margin-top: 30px;"> 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="외출">외출</button>&nbsp &nbsp 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;">외근</button>
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;">근무</button>&nbsp &nbsp 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;">뭐가있을까</button>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <!-- 출근하기 버튼 모달 -->
-                        <div id="in-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-top">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>출근하시겠습니까?</h5>
-                                        <p>확인을 누르시면 근무형태가 '출근'으로 변경됩니다.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-                                        <button type="button" class="btn btn-primary">확인</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-                        <!-- 퇴근하기 버튼 모달 -->
-                        <div id="out-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-top">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>퇴근하시겠습니까?</h5>
-                                        <p>확인을 누르시면 근무형태가 '퇴근'으로 변경됩니다.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-                                        <button type="button" class="btn btn-primary">확인</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-                        <!-- 근무변경 modal content -->
-                        <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <form action="#" class="px-3">
-                                            <p><br>근무 변경을 위한 본인확인 절차가 필요합니다. <br></p>
-                                            <div class="mb-3">
-                                                <label for="checkPwd" class="form-label">비밀번호</label>
-                                                <input class="form-control" type="password" required="" id="checkPwd" placeholder="비밀번호를 입력해주세요.">
-                                            </div>
-
-                                            <div class="mb-2 text-center">
-                                                <button class="btn rounded-pill btn-primary" type="submit">확인</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->                        
-
-
-                    
-                        <div class="bottom-row">
-                            <div class="box2" style="width: 500px; margin-top: 140px;">
-                                <div>
-                                    <img class="card-img-top img-fluid" src="assets/images/small/iu.jpg" alt="Card image cap" style="width:50%; height:50%">
-                                </div>
-                                <div>   
-                                    <h5 class="card-title"><b>From the Blog</b></h5>
-                                    <p class="card-text">유명블로그 상품후기글입니다.</p>    
-                                </div>
-                            </div>
-                            
-                            <div class="box" style="margin-left: 50px;"> 
-                                <!-- Todo-->
-                                <div class="card ribbon-box">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-dark float-start"><i class="mdi mdi-access-point me-1"></i>Todo</div>
-                                        <div class="dropdown float-end">
-                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                            </div>
-                                        </div>
-                                        <h4 class="header-title mb-3">오늘의 일정 리스트</h4>
+                                    <div class="info-1">
+                                        <table class="table-info-1">
+                                            <tr>
+                                                <th width="35%;">기안부서</th>
+                                                <td width="250px;">경영지원</td>    
+                                            </tr>
+                                            <tr>
+                                                <th>직급</th>
+                                                <td>대리</td>
+                                            </tr>
+                                            <tr>
+                                                <th>기안자</th>
+                                                <td>유주찬</td>
+                                            </tr>
+                                            <tr>
+                                                <th>기안일</th>
+                                                <td>2024-05-13 (월)</td>
+                                            </tr>
+                                        </table>
                                         
-                                        <div class="todoapp">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h5>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <a href="" class="float-end btn btn-light btn-sm" id="btn-archive">Archive</a>
-                                                </div>
-                                                </div>
-    
-                                                <div style="max-height: 310px;" data-simplebar>
-                                                    <ul class="list-group list-group-flush todo-list" id="todo-list"></ul>
-                                                </div>
-    
-                                                <form name="todo-form" id="todo-form" class="needs-validation mt-3" novalidate>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" 
-                                                                placeholder="Add new todo" required>
-                                                            <div class="invalid-feedback">
-                                                                Please enter your task name
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <button class="btn-primary btn-md btn waves-effect waves-light w-100" type="submit" id="todo-btn-submit">Add</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div> <!-- end .todoapp-->
-    
-                                        </div> <!-- end card-body -->
-                                    </div> <!-- end card-->
-                            </div> 
-                            
-                            <div class="box" id="calendarBox" style="margin-left: 50px;">
-                                <div>
-                                    <h3>2024년 4월</h3>
+                                    </div>
+                                    <div class="info-2">
+                                        <table class="table-info-2">
+                                            <tr>
+                                                <th width="35%;">참조인</th>
+                                                <td width="250px;">경영지원 김성한 팀장</td>
+                                            </tr>
+                                            <tr>
+                                                <th>보존연한</th>
+                                                <td>기안일로부터 5년</td>
+                                            </tr>
+                                            <tr>
+                                                <th>중간결재일</th>
+                                                <td>2024-05-13 (월)</td>
+                                            </tr>
+                                            <tr>
+                                                <th>최종결재일</th>
+                                                <td>2024-05-14 (화)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
                                 </div>
-                                <div>
-                                    <table class="calendar" style="margin-top: 33px;">
-                                        <thead>
-                                        <tr>
-                                            <th>일</th>
-                                            <th>월</th>
-                                            <th>화</th>
-                                            <th>수</th>
-                                            <th>목</th>
-                                            <th>금</th>
-                                            <th>토</th>
-                                        </tr>
-                                        </thead>
+
+                                    <div class="table-2">
+                                        <table class="table-2-1">
+                                            <tr>
+                                                <th width="113px;">제목</th>
+                                                <td width="550px;">전자결재 01.품의서 제목입니다. 기안자 작성란</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    
+                                <!-- 내용 작성하기 -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border-primary mb-0">
+
                                         <tbody>
-                                        <!-- 달력일자 동적생성 -->
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">
+                                                    품의사유 <br>및<br>상세내용
+                                                </th>
+                                                <td style="height: 250px; width: 350px;">
+                                                    <div id="snow-editor" style="height: 250px;">
+                                                        기안자 작성란
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;"> 비 용 </th>
+                                                <td>
+                                                    <input type="text" name="text" size="20" style="width:100%; border: 0;"> 기안자 작성란
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;"> 비 고 </th>
+                                                <td>
+                                                    <input type="text" name="text" size="20" style="width:100%; border: 0;"> 기안자 작성란
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                    
-                                    <script>
-                                        function createCalendar() {
-                                        const today = new Date();
-                                        const year = today.getFullYear();
-                                        const month = today.getMonth();
-                                        const firstDayOfMonth = new Date(year, month, 1);
-                                        const lastDayOfMonth = new Date(year, month + 1, 0);
-                                        const daysInMonth = lastDayOfMonth.getDate();
-                                        const startingDay = firstDayOfMonth.getDay(); // 0 (Sunday) to 6 (Saturday)
-                                    
-                                        const tableBody = document.querySelector('.calendar tbody');
-                                        let date = 1;
-                                        let html = '';
-                                    
-                                        for (let i = 0; i < 6; i++) { // 6 weeks
-                                            html += '<tr>';
-                                    
-                                            for (let j = 0; j < 7; j++) { // 7 days
-                                            if (i === 0 && j < startingDay) {
-                                                html += '<td></td>'; // empty cells before first day
-                                            } else if (date > daysInMonth) {
-                                                break; // exit loop if all days are filled
-                                            } else {
-                                                html += '<td' + (date === today.getDate() && month === today.getMonth() ? ' class="today"' : '') + '>' + date + '</td>';
-                                                date++;
-                                            }
-                                            }
-                                    
-                                            html += '</tr>';
-                                        }
-                                    
-                                        tableBody.innerHTML = html;
-                                        }
-                                    
-                                        createCalendar();
-                                    </script>
-                                </div>
+                                </div> <!-- 내용 작성하기 끝-->
+
+                                <!--결재 처리사유-->
+                                <div class="opinion-box" style="margin-top:20px;">
+                                    <table class="table table-bordered border-primary mb-0">      
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">
+                                                    처 리 <br> 사 유
+                                                </th>
+                                                <td>
+                                                    <textarea rows="5" style="border:0; width:100%; resize: none;">결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                    </table>
+                                </div> <!-- 결재 처리사유 끝-->
                             </div>
                         </div>
+                    </div>
+          
+
 
                         
                     </div> <!-- container -->
@@ -380,26 +291,10 @@
             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       <!-- ============================================================== -->
       <!-- <-- End Page Content
       <!-- ============================================================== -->
       
-      
-
-		</div>
 
 	
 	<!-- Theme Settings -->
@@ -877,6 +772,12 @@
 
         <!-- Dashboar 1 init js-->
         <script src="assets/js/pages/dashboard-1.init.js"></script>
+        
+        <!-- Plugins js -->
+        <script src="assets/libs/quill/quill.min.js"></script>
+
+        <!-- Init js-->
+        <script src="assets/js/pages/form-quilljs.init.js"></script>
 	
 </body>
 </html>

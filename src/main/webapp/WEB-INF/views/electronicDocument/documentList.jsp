@@ -27,65 +27,72 @@
 <!-- Icons css -->
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<style>
-	.a.nav-link.active{background-color:#FEBE98;}
+    <style>
+        .a.nav-link.active{background-color:#FEBE98;}
 
-	.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* 세로 가운데 정렬 */
-  align-items: center; /* 가로 가운데 정렬 */
-  height: 100vh; /* 화면 전체를 채우도록 설정 */
-  }
-  
-  .top-row, .bottom-row {
-	display: flex;
-  width: 100%; /* 가로 너비를 100%로 설정 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 세로 가운데 정렬 */
+            align-items: center; /* 가로 가운데 정렬 */
+            height: 100vh; /* 화면 전체를 채우도록 설정 */
+        }
 
-	}
-	
-	.box, .box2 {
-	
-	background-color: white;
-  width:400px;
-  text-align: center;
-  justify-content: center; /* 수평 가운데 정렬 */
-  align-items: center; /* 수직 가운데 정렬 */
-  margin-top: 25px;
-  }
-  
-  
-  .box2 > div { 
-  width: 50%; /* 가로 공간을 반씩 차지하도록 설정 */
-  text-align: center;
-  }
-  
-  
-  #calendarBox > div {
-  width: 100%; /* 부모 요소에 꽉 차도록 설정 */
-  text-align: center;
-  }
-  
-	.calendar {
-  border-collapse: collapse;
-  width: 400px;
-  height: 320px;
-  margin: 0 auto;
-	}
-	
-  .calendar th,
-  .calendar td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-  }
-  .calendar th {
-  background-color: #f2f2f2;
-  }
-  .today {
-  background-color: #FFDAB9;
-  }
-</style>
+        .top-row, .bottom-row {
+        display: flex;
+         /* 내부 아이템을 일정한 간격으로 배치 */
+        }
+
+        .box, .box2 {
+        background-color: white;
+        width:400px;
+        text-align: center;
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        margin-top: 25px;
+        }
+
+        .box2 > div {
+        background-color: white;
+        width: 50%; /* 가로 공간을 반씩 차지하도록 설정 */
+        text-align: center;
+        }
+
+
+        #calendarBox > div {
+        width: 100%; /* 부모 요소에 꽉 차도록 설정 */
+        text-align: center;
+   		  }
+
+        .calendar {
+            border-collapse: collapse;
+            width: 400px;
+            height: 320px;
+            margin: 0 auto;
+
+        }
+        .calendar th,
+        .calendar td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .calendar th {
+            background-color: #f2f2f2;
+        }
+        .today {
+            background-color: #FFDAB9;
+        }
+
+        .badge.label-table {
+            font-size: 13px; /* 뱃지의 텍스트 크기를 조절합니다. */
+            padding: 10px 20px; /* 뱃지의 내부 여백을 조절합니다. */
+        }
+
+        .text-center{
+            text-align: center;
+        }
+    </style>
 
 </head>
 
@@ -105,293 +112,140 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			
-                <div class="content" style="background-color: #F2E8DA;">
+                <div class="content">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
                         
-                        <div class="top-row">
-                            <div class="box" style="height: 400px;">
-                                <div class="card" style="width: 500px;">
-                                    <img class="card-img-top img-fluid" src="assets/images/small/iu.jpg" alt="Card image cap">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="text-align: left;"><b>5월 판매왕은 나야 나!</b></h5>
-                                        <p class="card-text">
-                                            <div style="display: flex;">
-                                                <div class="col-sm-2 text-center">
-                                                    <img src="assets/images/users/user-5.jpg" alt="image" class="img-fluid rounded" width="120"/>   
-                                                    <p class="mb-0" >
-                                                        <code>마케팅팀</code><br>
-                                                        <code>김민혁 대리</code>
-                                                    </p>
+                                        <h4 class="header-title">전자결재 문서 열람</h4>
+                                        <p class="sub-header">
+                                            Access electronic payment documents                                     
+                                        </p>
+    
+                                        <div class="mb-2">
+                                            <div class="row row-cols-sm-auto g-2 align-items-center">
+                                                <div class="col-12 text-sm-center">
+                                                    <select id="demo-foo-filter-status" class="form-select form-select-sm">
+                                                        <option value="">모든 문서</option>
+                                                        <option value="결재 대기">결재 대기</option>
+                                                        <option value="결재 승인">결재 승인</option>
+                                                        <option value="결재 반려">결재 반려</option>
+                                                        <option value="회수된 문서">회수된 문서</option>
+                                                    </select>
                                                 </div>
-                                                <div style="margin-left: 40px; text-align: left;">
-                                                    <h3>odd one out</h3>
-                                                    <h4 style="color: rebeccapurple;">patch work damage knit</h4>
+                                                <div class="col-12">
+                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
                                                 </div>
                                             </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="box" style="margin-left: 150px; background-color: #F2E8DA;">
-                                <div class="card ribbon-box" style="background-color: white;">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-danger float-end"><i class="mdi mdi-access-point me-1"></i>Today</div>
-                                        <h5 class="text-danger float-start mt-0">오늘의 결재</h5>
-                                        <div class="ribbon-content">
-                                            <p class="mb-0">- 결재 완료 1건</p>
-                                            <p class="mb-0">- 결재 진행중 1건</p>
-                                            <p class="mb-0">- 반려 문서 1건</p>
                                         </div>
-                                    </div>
-                                </div>    
-                                
-                                <div class="card ribbon-box" style="margin-top: 20px; background-color: white;">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-warning float-end"><i class="mdi mdi-access-point me-1"></i> Employee</div>
-                                        <h5 class="text-warning float-start mt-0">임직원 알림</h5>
-                                        <div class="ribbon-content">
-                                            <p class="mb-0">물류팀 김재원(출장)</p>
-                                            <p class="mb-0">영업팀 나성범(결근)</p>
-                                            <p class="mb-0">마케팅팀 김미정(재택)</p>
-                                            <p class="mb-0">마케팅팀 유재석(재택)</p>
-                                            <p class="mb-0">경영지원팀 이솔아(재택)</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
-
-                            <div class="box" style="margin-left: 50px;">
-                                
-                                
-                                <div style="display: flex; justify-content: center; margin-top: 20px;">
-                                    <h4 style="margin-right: 20px;">04월 28일 <br> 오전 7:47:03</h4>
-                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
-                                </div>
-                                <div style="margin-top: 20px;">
-                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
-                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
-                                </div>
-                                <div style="margin-top: 30px;"> 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="외출">외출</button>&nbsp &nbsp 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;">외근</button>
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;">근무</button>&nbsp &nbsp 
-                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;">뭐가있을까</button>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <!-- 출근하기 버튼 모달 -->
-                        <div id="in-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-top">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>출근하시겠습니까?</h5>
-                                        <p>확인을 누르시면 근무형태가 '출근'으로 변경됩니다.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-                                        <button type="button" class="btn btn-primary">확인</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-                        <!-- 퇴근하기 버튼 모달 -->
-                        <div id="out-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog modal-top">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h5>퇴근하시겠습니까?</h5>
-                                        <p>확인을 누르시면 근무형태가 '퇴근'으로 변경됩니다.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-                                        <button type="button" class="btn btn-primary">확인</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-
-                        <!-- 근무변경 modal content -->
-                        <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <form action="#" class="px-3">
-                                            <p><br>근무 변경을 위한 본인확인 절차가 필요합니다. <br></p>
-                                            <div class="mb-3">
-                                                <label for="checkPwd" class="form-label">비밀번호</label>
-                                                <input class="form-control" type="password" required="" id="checkPwd" placeholder="비밀번호를 입력해주세요.">
-                                            </div>
-
-                                            <div class="mb-2 text-center">
-                                                <button class="btn rounded-pill btn-primary" type="submit">확인</button>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->                        
-
-
-                    
-                        <div class="bottom-row">
-                            <div class="box2" style="width: 500px; margin-top: 140px;">
-                                <div>
-                                    <img class="card-img-top img-fluid" src="assets/images/small/iu.jpg" alt="Card image cap" style="width:50%; height:50%">
-                                </div>
-                                <div>   
-                                    <h5 class="card-title"><b>From the Blog</b></h5>
-                                    <p class="card-text">유명블로그 상품후기글입니다.</p>    
-                                </div>
-                            </div>
-                            
-                            <div class="box" style="margin-left: 50px;"> 
-                                <!-- Todo-->
-                                <div class="card ribbon-box">
-                                    <div class="card-body">
-                                        <div class="ribbon ribbon-dark float-start"><i class="mdi mdi-access-point me-1"></i>Todo</div>
-                                        <div class="dropdown float-end">
-                                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                            </div>
-                                        </div>
-                                        <h4 class="header-title mb-3">오늘의 일정 리스트</h4>
                                         
-                                        <div class="todoapp">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5 id="todo-message"><span id="todo-remaining"></span> of <span id="todo-total"></span> remaining</h5>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <a href="" class="float-end btn btn-light btn-sm" id="btn-archive">Archive</a>
-                                                </div>
-                                                </div>
-    
-                                                <div style="max-height: 310px;" data-simplebar>
-                                                    <ul class="list-group list-group-flush todo-list" id="todo-list"></ul>
-                                                </div>
-    
-                                                <form name="todo-form" id="todo-form" class="needs-validation mt-3" novalidate>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" 
-                                                                placeholder="Add new todo" required>
-                                                            <div class="invalid-feedback">
-                                                                Please enter your task name
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <button class="btn-primary btn-md btn waves-effect waves-light w-100" type="submit" id="todo-btn-submit">Add</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div> <!-- end .todoapp-->
-    
-                                        </div> <!-- end card-body -->
-                                    </div> <!-- end card-->
-                            </div> 
-                            
-                            <div class="box" id="calendarBox" style="margin-left: 50px;">
-                                <div>
-                                    <h3>2024년 4월</h3>
-                                </div>
-                                <div>
-                                    <table class="calendar" style="margin-top: 33px;">
-                                        <thead>
-                                        <tr>
-                                            <th>일</th>
-                                            <th>월</th>
-                                            <th>화</th>
-                                            <th>수</th>
-                                            <th>목</th>
-                                            <th>금</th>
-                                            <th>토</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <!-- 달력일자 동적생성 -->
-                                        </tbody>
-                                    </table>
-                                    
-                                    <script>
-                                        function createCalendar() {
-                                        const today = new Date();
-                                        const year = today.getFullYear();
-                                        const month = today.getMonth();
-                                        const firstDayOfMonth = new Date(year, month, 1);
-                                        const lastDayOfMonth = new Date(year, month + 1, 0);
-                                        const daysInMonth = lastDayOfMonth.getDate();
-                                        const startingDay = firstDayOfMonth.getDay(); // 0 (Sunday) to 6 (Saturday)
-                                    
-                                        const tableBody = document.querySelector('.calendar tbody');
-                                        let date = 1;
-                                        let html = '';
-                                    
-                                        for (let i = 0; i < 6; i++) { // 6 weeks
-                                            html += '<tr>';
-                                    
-                                            for (let j = 0; j < 7; j++) { // 7 days
-                                            if (i === 0 && j < startingDay) {
-                                                html += '<td></td>'; // empty cells before first day
-                                            } else if (date > daysInMonth) {
-                                                break; // exit loop if all days are filled
-                                            } else {
-                                                html += '<td' + (date === today.getDate() && month === today.getMonth() ? ' class="today"' : '') + '>' + date + '</td>';
-                                                date++;
-                                            }
-                                            }
-                                    
-                                            html += '</tr>';
-                                        }
-                                    
-                                        tableBody.innerHTML = html;
-                                        }
-                                    
-                                        createCalendar();
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
+                                        <div class="table-responsive">
+                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                <thead>
+                                                <tr>
+                                                    <th data-toggle="true" class="text-center">NO</th>
+                                                    <th class="text-center">문서유형</th>
+                                                    <th data-hide="phone" class="text-center">문서제목</th>
+                                                    <th data-hide="phone, tablet" class="text-center">기안자</th>
+                                                    <th data-hide="phone, tablet" class="text-center">기안부서</th>
+                                                    <th data-hide="phone, tablet" class="text-center">기안일</th>
+                                                    <th data-hide="phone, tablet" class="text-center">결재상태</th>
+                                                    <th data-hide="phone, tablet" class="text-center">결재일</th>
 
-                        
-                    </div> <!-- container -->
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="text-center">6</td>
+                                                    <td>지출결의서</td>
+                                                    <td>사무용품 지출결의서</td>
+                                                    <td class="text-center">임수희</td>
+                                                    <td class="text-center">경영지원</td>
+                                                    <td class="text-center">2024-05-09</td>
+                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td class="text-center">2024-05-09</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="text-center">5</td>
+                                                    <td>재택근무신청서</td>
+                                                    <td>2024년 5월 9일 재택 근무 신청합니다.</td>
+                                                    <td class="text-center">이미리</td>
+                                                    <td class="text-center">마케팅</td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                    <td class="text-center"><span class="badge label-table bg-danger">결재 반려</span></td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="text-center">4</td>
+                                                    <td>구매신청서</td>
+                                                    <td>경영지원팀 태블릿PC 2대 구매 신청의 건</td>
+                                                    <td class="text-center">임수희</td>
+                                                    <td class="text-center">경영지원</td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                    <td class="text-center"><span class="badge label-table bg-success">결재 대기</span></td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="text-center">3</td>
+                                                    <td>재택근무신청서</td>
+                                                    <td>2024년 5월 9일 재택근무 신청의 건</td>
+                                                    <td class="text-center">이미리</td>
+                                                    <td class="text-center">마케팅</td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td class="text-center">2024-05-08</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="text-center">2</td>
+                                                    <td>휴가신청서</td>
+                                                    <td>2024년 5월 13일~14일 휴가 신청의 건</td>
+                                                    <td class="text-center">박대기</td>
+                                                    <td class="text-center">영업</td>
+                                                    <td class="text-center">2024-05-07</td>
+                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td class="text-center">2024-05-07</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="text-center">1</td>
+                                                    <td>지출결의서</td>
+                                                    <td>2024년 5월 4일 법인카드 지출결의서입니다.</td>
+                                                    <td class="text-center">김우영</td>
+                                                    <td class="text-center">경영지원</td>
+                                                    <td class="text-center">2024-05-07</td>
+                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td class="text-center">2024-05-07</td>
+                                                </tr>
+    
+                                                </tbody>
+                                                <tfoot>
+                                                <tr class="active">
+                                                    <td colspan="5">
+                                                        <div class="text-end">
+                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div> <!-- end .table-responsive-->
+                                    </div>
+                                </div> <!-- end card -->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
 
                 </div> <!-- content -->
 
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>			
 
       <!-- ============================================================== -->
       <!-- <-- End Page Content
@@ -400,7 +254,7 @@
       
 
 		</div>
-
+	</div>
 	
 	<!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
