@@ -40,13 +40,13 @@
     <!-- Brand Logo -->
     <div class="logo-box">
         <!-- Brand Logo Light -->
-        <a href="index.html" class="logo-light">
+        <a href="${contextPath }/employeeMain.page" class="logo-light">
             <img src="${ contextPath }/assets/images/logo-light.png" alt="logo" class="logo-lg">
             <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
 
         <!-- Brand Logo Dark -->
-        <a href="index.html" class="logo-dark">
+        <a href="${contextPath }/employeeMain.page" class="logo-dark">
             <img src="${ contextPath }/assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
             <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
@@ -101,19 +101,19 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#menuTasks" data-bs-toggle="collapse" class="menu-link">
+                <a href="#" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="clipboard"></i></span>
                     <span class="menu-text"> 게시판 </span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="apps-calendar.html" class="menu-link">
+                <a href="${contextPath}/calendar.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="calendar"></i></span>
                     <span class="menu-text"> 일정관리 </span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#menuProjects" data-bs-toggle="collapse" class="menu-link">
+                <a href="#" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="briefcase"></i></span>
                     <span class="menu-text"> 프로젝트관리 </span>
                 </a>
@@ -128,12 +128,12 @@
                 <div class="collapse" id="menuCrm">
                     <ul class="sub-menu">
                         <li class="menu-item">
-                            <a href="crm-dashboard.html" class="menu-link">
+                            <a href="${contextPath }/carsReservation.page" class="menu-link">
                                 <span class="menu-text">차량</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="crm-contacts.html" class="menu-link">
+                            <a href="${contextPath }/seatReservation.page" class="menu-link">
                                 <span class="menu-text">좌석</span>
                             </a>
                         </li>
@@ -141,26 +141,26 @@
                 </div>
             </li>
             <li class="menu-item">
-                <a href="apps-chat.html" class="menu-link">
+                <a href="${ contextPath }/member/empManagement.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="user"></i></span>
                     <span class="menu-text"> 인사관리 </span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="apps-chat.html" class="menu-link">
+                <a href="#" class="menu-link">
                     <span class="menu-icon"><i data-feather="message-square"></i></span>
                     <span class="menu-text"> 채팅 </span>
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#menuEmail" data-bs-toggle="collapse" class="menu-link">
+                <a href="#" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="mail"></i></span>
                     <span class="menu-text"> 이메일 </span>
                 </a>
             </li>
 
             <li class="menu-item">
-                <a href="apps-social-feed.html" class="menu-link">
+                <a href="${ contextPath }/board/socialFeed.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="rss"></i></span>
                     <span class="menu-text"> 소셜피드 </span>
                 </a>

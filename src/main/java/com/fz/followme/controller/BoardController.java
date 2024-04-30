@@ -3,18 +3,11 @@ package com.fz.followme.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/board")
 @Controller
 public class BoardController {
+	
+	@RequestMapping("/socialFeed.page")
+	public void socialFeedPage() {}
 
-	@RequestMapping("/insert.do")
-	public String boardInsert() {
-		return "/board/boardInsert";
-	}
-	
-	@RequestMapping("/list.do")
-	public String boardList() {
-		return "/board/boardList";
-	}
-	
-	
 }
