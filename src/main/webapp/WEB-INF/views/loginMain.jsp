@@ -36,6 +36,10 @@
        justify-content: center;
        margin:auto;
    }
+   .form-check-input:checked {
+    background-color: #f97272;
+    border-color: #f97272;
+}
 </style>
 <script>
     

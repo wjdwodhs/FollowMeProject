@@ -29,8 +29,7 @@
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
-	.a.nav-link.active{backgroun-color:#FEBE98;}
-	
+	.a.nav-link.active{backgroun-color:#febe98;}
 </style>
 
 </head>
@@ -178,7 +177,10 @@
 		                                                        <span class="timeline-sm-date">2015 - 18</span>
 		                                                        <h5 class="mt-0 mb-1">경영지원팀</h5>
 		                                                        <p>websitename.com</p>
-		                                                        <p class="text-muted mt-2">고객 지원 및 문서 처리 분야에서 다양한 경험을 쌓아왔습니다. 
+		                                                        <p class="mt-2" style="overflow-y: auto; max-height: 100px;">고객 지원 및 문서 처리 분야에서 다양한 경험을 쌓아왔습니다. 
+		                                                            고객들의 요구를 신속하게 처리하고, 정확한 문서 작성 및 관리를 통해 팀의 생산성을 높이는 데
+		                                                            주력하고 있습니다. 또한, 효율적인 업무 프로세스를 개선하고 팀원들 간의 원활한 커뮤니케이션을
+		                                                             촉진하여 팀의 목표를 달성하는 데 기여하고 있습니다.고객 지원 및 문서 처리 분야에서 다양한 경험을 쌓아왔습니다. 
 		                                                            고객들의 요구를 신속하게 처리하고, 정확한 문서 작성 및 관리를 통해 팀의 생산성을 높이는 데
 		                                                            주력하고 있습니다. 또한, 효율적인 업무 프로세스를 개선하고 팀원들 간의 원활한 커뮤니케이션을
 		                                                             촉진하여 팀의 목표를 달성하는 데 기여하고 있습니다.</p>
@@ -188,7 +190,11 @@
 		                                                        <span class="timeline-sm-date">2012 - 15</span>
 		                                                        <h5 class="mt-0 mb-1">경영기획팀</h5>
 		                                                        <p>Software Inc.</p>
-		                                                        <p class="text-muted mt-2">다양한 전략적 프로젝트를 수행했습니다. 
+		                                                        <p class="mt-2" style="overflow-y: auto; max-height: 100px;">다양한 전략적 프로젝트를 수행했습니다. 
+		                                                            수치 분석 및 예산 관리에 능숙하며, 비즈니스 목표를 달성하기 위한 전략을 개발하는 데에 주력해 왔습니다. 
+		                                                            또한, 팀원들과의 긴밀한 협업을 통해 조직의 성장과 발전을 위한 전략을 수립하고 실행했습니다.다양한 전략적 프로젝트를 수행했습니다. 
+		                                                            수치 분석 및 예산 관리에 능숙하며, 비즈니스 목표를 달성하기 위한 전략을 개발하는 데에 주력해 왔습니다. 
+		                                                            또한, 팀원들과의 긴밀한 협업을 통해 조직의 성장과 발전을 위한 전략을 수립하고 실행했습니다.다양한 전략적 프로젝트를 수행했습니다. 
 		                                                            수치 분석 및 예산 관리에 능숙하며, 비즈니스 목표를 달성하기 위한 전략을 개발하는 데에 주력해 왔습니다. 
 		                                                            또한, 팀원들과의 긴밀한 협업을 통해 조직의 성장과 발전을 위한 전략을 수립하고 실행했습니다.</p>
 		                                                    </li>
@@ -200,7 +206,7 @@
 		                                                <div class="table-responsive">
 		                                                    <table class="table table-borderless mb-10">
 		                                                        <thead class="table-light">
-		                                                            <tr>
+		                                                            <tr style="background-color:#febe98;">
 		                                                                <th>#</th>
 		                                                                <th>자격증</th>
 		                                                                <th>발급번호</th>
@@ -344,7 +350,7 @@
 		                                                        <div class="col-md-2">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountHolder" class="form-label">예금주</label>
-		                                                                <input type="text" class="form-control" id="accountHolder">
+		                                                                <input type="text" class="form-control" id="accountHolder" value="${mypageUser.memName}">
 		                                                            </div>
 		                                                        </div>
 		                                                        
@@ -385,7 +391,7 @@
 		                                                    </div> <!-- end row -->
 		    
 		                                                    <div class="text-end">
-		                                                        <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#febe98; color:white;"><i class="mdi mdi-content-save"></i> Save</button>
 		                                                    </div>
 		                                                </form>
 		                                            </div>

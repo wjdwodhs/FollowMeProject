@@ -92,7 +92,7 @@
                                                                 <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-image-outline"></i></a>
                                                                 <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-attachment"></i></a>
                                                             </div>
-                                                            <button type="submit" class="btn btn-sm btn-success"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
+                                                            <button type="submit" class="btn btn-sm" style="background-color:#febe98; color:white;"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
                                                         </div>
                                                     </form>
                                                 </div> <!-- end .border-->

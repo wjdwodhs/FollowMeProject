@@ -29,6 +29,8 @@
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
+	.active>.page-link, .page-link.active {
+    --ct-pagination-active-bg: #febe98;
 </style>
 
 </head>
@@ -505,22 +507,30 @@
                     </div>
                     <div class="modal-body p-4">
                         <form>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">이름</label>
-                                <input type="text" class="form-control" id="name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="identificationNumber" class="form-label">사원번호(그룹웨어 아이디)</label>
-                                <input type="email" class="form-control" id="identificationNumber">
-                            </div>
-                            <div class="mb-3">
-                                <label for="tempPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-                                <input type="text" class="form-control" id="tempPwd">
-                            </div>
-                            <div class="mb-3">
-                                <label for="authLevel" class="form-label">권한레벨</label>
-                                <input type="text" class="form-control" id="authLevel">
-                            </div>
+                            <div class="row">
+                            		<div class="col-md-6">
+														        <div class="mb-3">
+														            <label for="identificationNumber" class="form-label">사원번호(그룹웨어 아이디)</label>
+														            <input type="email" class="form-control" id="identificationNumber">
+														        </div>
+														        <div class="mb-3">
+														            <label for="name" class="form-label">이름</label>
+														            <input type="text" class="form-control" id="name">
+														        </div>
+														        
+														    </div>
+														    <div class="col-md-6">
+														        <div class="mb-3">
+														            <label for="tempPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
+														            <input type="text" class="form-control" id="tempPwd">
+														        </div>
+														        <div class="mb-3">
+														            <label for="authLevel" class="form-label">권한레벨</label>
+														            <input type="text" class="form-control" id="authLevel">
+														        </div>
+														    </div>
+														    
+														</div>
         
                             <div class="text-end">
                                 <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">추가</button>
