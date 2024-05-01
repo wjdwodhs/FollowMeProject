@@ -52,12 +52,6 @@ public class HomeController {
 	
 	//----------------------------------------------
 	
-	// * 이메일 -------------------
-	@RequestMapping("/email.page")
-	public String emailIndob() {
-		return "email/emailInbox";
-	}
-	// --------------------------
 
 	
 	
