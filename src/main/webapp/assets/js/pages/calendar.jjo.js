@@ -1,114 +1,132 @@
-  (function(){
-    $(function(){
-      // calendar element 취득
-      var calendarEl = $('#calendar')[0];
-      // full-calendar 생성하기
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo',
-        height: '700px', // calendar 높이 설정
-        expandRows: true, // 화면에 맞게 높이 재설정
-        slotMinTime: '08:00', // Day 캘린더에서 시작 시간
-        slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
-        // 해더에 표시할 툴바
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-        //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-        editable: true, // 수정 가능?
-        selectable: true, // 달력 일자 드래그 설정가능
-        nowIndicator: true, // 현재 시간 마크
-        dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-        locale: 'ko', // 한국어 설정
-        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
-          console.log(obj);
-        },
-        eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
-          console.log(obj);
-        },
-        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
-          console.log(obj);
-        },
-        select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-          var title = prompt('Event Title:');
-          if (title) {
-            calendar.addEvent({
-              title: title,
-              start: arg.start,
-              end: arg.end,
-              allDay: arg.allDay
-            })
-          }
-          calendar.unselect()
-        },
-        // 이벤트 
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2021-07-01',
-          },
-          {
-            title: 'Long Event',
-            start: '2021-07-07',
-            end: '2021-07-10'
-          },
-          {
-            groupId: 999,
-            title: 'Repeating Event',
-            start: '2021-07-09T16:00:00'
-          },
-          {
-            groupId: 999,
-            title: 'Repeating Event',
-            start: '2021-07-16T16:00:00'
-          },
-          {
-            title: 'Conference',
-            start: '2021-07-11',
-            end: '2021-07-13'
-          },
-          {
-            title: 'Meeting',
-            start: '2021-07-12T10:30:00',
-            end: '2021-07-12T12:30:00'
-          },
-          {
-            title: 'Lunch',
-            start: '2021-07-12T12:00:00'
-          },
-          {
-            title: 'Meeting',
-            start: '2021-07-12T14:30:00'
-          },
-          {
-            title: 'Happy Hour',
-            start: '2021-07-12T17:30:00'
-          },
-          {
-            title: 'Dinner',
-            start: '2021-07-12T20:00:00'
-          },
-          {
-            title: 'Birthday Party',
-            start: '2021-07-13T07:00:00'
-          },
-          {
-            title: 'Click for Google',
-            url: 'http://google.com/', // 클릭시 해당 url로 이동
-            start: '2021-07-28'
-          }
-        ],
-        eventSources:[
-            {
-              googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com',
-              backgroundColor: 'red',
-            }
-        ]
-      });
-      // 캘린더 랜더링
-      calendar.render();
+(function($) {
+    "use strict";
+
+    var CalendarApp = {
+        $body: $("body"),
+        $modal: $("#event-modal"),
+        $calendar: $("#calendar"),
+        $formEvent: $("#form-event"),
+        $btnNewEvent: $("#btn-new-event"),
+        $btnDeleteEvent: $("#btn-delete-event"),
+        $btnSaveEvent: $("#btn-save-event"),
+        $modalTitle: $("#modal-title"),
+        $calendarObj: null,
+        $selectedEvent: null,
+        $newEventData: null,
+
+        init: function() {
+            var self = this;
+
+            self.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {
+                keyboard: false
+            });
+
+            var now = new Date($.now());
+
+            new FullCalendar.Draggable(document.getElementById("external-events"), {
+                itemSelector: ".external-event",
+                eventData: function(eventEl) {
+                    return {
+                        title: eventEl.innerText,
+                        className: $(eventEl).data("class")
+                    };
+                }
+            });
+
+            var initialEvents = [ // 데이터 들어가는 영역
+            
+            ];
+
+            var holidaySource = {
+                googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+                backgroundColor: 'red'
+            };
+
+            self.$calendarObj = new FullCalendar.Calendar(self.$calendar[0], {
+                slotDuration: "00:15:00",
+                slotMinTime: "08:00:00",
+                slotMaxTime: "19:00:00",
+                themeSystem: "bootstrap",
+                bootstrapFontAwesome: false,
+                buttonText: {
+                    today: "이번달",
+                    month: "월별",
+                    week: "주간",
+                    day: "일별",
+                    list: "오늘의 일정",
+                    prev: "이전",
+                    next: "다음"
+                },
+                initialView: "dayGridMonth",
+                handleWindowResize: true,
+                height: $(window).height() - 200,
+                headerToolbar: {
+                    left: "prev today",
+                    center: "title",
+                    right: "next"
+                },
+                initialEvents: initialEvents,
+                eventSources: [holidaySource], // 공휴일 추가
+                editable: true,
+                droppable: true,
+                selectable: true,
+                dateClick: function(info) {
+                    self.onSelect(info);
+                },
+                eventClick: function(info) {
+                    self.onEventClick(info);
+                },
+                googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo' // Google Calendar API 키 추가
+            });
+
+            self.$calendarObj.render();
+
+            self.$btnNewEvent.on("click", function() {
+                self.onSelect({
+                    date: new Date(),
+                    allDay: true
+                });
+            });
+
+            self.$formEvent.on("submit", function(e) {
+                e.preventDefault();
+                var formData = self.$formEvent[0];
+                if (formData.checkValidity()) {
+                    if (self.$selectedEvent) {
+                        self.$selectedEvent.setProp("title", $("#event-title").val());
+                        self.$selectedEvent.setProp("classNames", [$("#event-category").val()]);
+                    } else {
+                        var eventData = {
+                            title: $("#event-title").val(),
+                            start: self.$newEventData.date,
+                            allDay: self.$newEventData.allDay,
+                            className: $("#event-category").val()
+                        };
+                        self.$calendarObj.addEvent(eventData);
+                    }
+                    self.$modal.hide();
+                } else {
+                    e.stopPropagation();
+                    formData.classList.add("was-validated");
+                }
+            });
+
+            self.$btnDeleteEvent.on("click", function() {
+                if (self.$selectedEvent) {
+                    self.$selectedEvent.remove();
+                    self.$selectedEvent = null;
+                    self.$modal.hide();
+                }
+            });
+        }
+
+        
+
+        
+    };
+
+    $(document).ready(function() {
+        CalendarApp.init();
     });
-  })();
+
+})(window.jQuery);

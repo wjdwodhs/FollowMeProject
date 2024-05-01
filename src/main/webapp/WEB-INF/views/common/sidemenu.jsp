@@ -172,6 +172,12 @@
                     <span class="menu-text"> 소셜피드 </span>
                 </a>
             </li>
+            <li class="menu-item">
+                <a href="${ contextPath }/attendance.page" class="menu-link">
+                    <span class="menu-icon"><i data-feather="check-square"></i></span>
+                    <span class="menu-text"> 근태관리 </span>
+                </a>
+            </li>
 
         </ul>
         <!--- End Menu -->
