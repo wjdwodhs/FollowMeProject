@@ -80,7 +80,8 @@
 	                              <!-- Left sidebar -->
 	                              <div class="inbox-leftbar">
 	
-	                                  <a href="email-inbox.html" class="btn btn-danger w-100 waves-effect waves-light">전체메일</a>
+	                                  <a href="${contextPath }/email/email.page" class="btn btn-danger w-100 waves-effect waves-light"
+	                                     style="background-color: #FFBE98; border: 1px solid #FFBE98;">전체메일</a>
 	
 	                                  <div class="mail-list mt-4">
 	                                      <a href="javascript: void(0);" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
@@ -128,7 +129,7 @@
 	                                              <input type="text" class="form-control" placeholder="Subject">
 	                                          </div>
 	                                          <div class="mb-3 card border-0">
-	                                              <div id="snow-editor" style="min-height: 500px;">
+	                                              <div id="" style="min-height: 500px;">
 	                                                  <h3><span class="ql-size-large">Hello World!</span></h3>
 	                                                  <p><br></p>
 	                                                  <h3>This is an simple editable area.</h3>
@@ -150,8 +151,11 @@
 	  
 	                                          <div>
 	                                              <div class="text-end">
-	                                                  <button type="button" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-delete"></i></button>
-	                                                  <button class="btn btn-primary waves-effect waves-light"> <span>보내기</span> <i class="mdi mdi-send ms-2"></i> </button>
+	                                                  <button type="reset" class="btn btn-success waves-effect waves-light" style="background-color:lightgray; border: none;"><i class="mdi mdi-delete"></i></button>
+	                                                  <button class="btn btn-primary waves-effect waves-light"
+	                                                  				style="background-color: #FFBE98; border: 1px solid #FFBE98;">
+	                                                  	<span>보내기</span> <i class="mdi mdi-send ms-2"></i> 
+	                                                 	</button>
 	                                              </div>
 	                                          </div>
 	  
