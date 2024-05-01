@@ -16,16 +16,16 @@
 <link rel="shortcut icon" href="assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${ contextPath }/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
@@ -74,7 +74,7 @@
                                     <div class="card-body" style="height: 700px;">
 
                                         <div class="d-flex align-items-start mb-3">
-                                            <img src="assets/images/users/user-1.jpg" class="me-2 rounded-circle" height="42" alt="Brandon Smith">
+                                            <img src="${ contextPath }/assets/images/users/user-1.jpg" class="me-2 rounded-circle" height="42" alt="Brandon Smith">
                                             <div class="w-100">
                                                 <h5 class="mt-0 mb-0 font-15">
                                                     <a href="contacts-profile.html" class="text-reset">김춘식</a>
@@ -106,7 +106,7 @@
                                                 <div data-simplebar style="max-height: 500px;">
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-2.jpg" class="me-2 rounded-circle" height="42" alt="Brandon Smith" />
+                                                            <img src="${ contextPath }/assets/images/users/user-2.jpg" class="me-2 rounded-circle" height="42" alt="Brandon Smith" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">4:30pm</span>
@@ -122,7 +122,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start bg-light p-2">
-                                                            <img src="assets/images/users/user-5.jpg" class="me-2 rounded-circle" height="42" alt="James Z" />
+                                                            <img src="${ contextPath }/assets/images/users/user-5.jpg" class="me-2 rounded-circle" height="42" alt="James Z" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">5:30pm</span>
@@ -137,7 +137,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-7.jpg" class="me-2 rounded-circle" height="42" alt="Maria C" />
+                                                            <img src="${ contextPath }/assets/images/users/user-7.jpg" class="me-2 rounded-circle" height="42" alt="Maria C" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Thu</span>
@@ -153,7 +153,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-10.jpg" class="me-2 rounded-circle" height="42" alt="Rhonda D" />
+                                                            <img src="${ contextPath }/assets/images/users/user-10.jpg" class="me-2 rounded-circle" height="42" alt="Rhonda D" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Wed</span>
@@ -168,7 +168,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-3.jpg" class="me-2 rounded-circle" height="42" alt="Michael H" />
+                                                            <img src="${ contextPath }/assets/images/users/user-3.jpg" class="me-2 rounded-circle" height="42" alt="Michael H" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Tue</span>
@@ -183,7 +183,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-6.jpg" class="me-2 rounded-circle" height="42" alt="Thomas R" />
+                                                            <img src="${ contextPath }/assets/images/users/user-6.jpg" class="me-2 rounded-circle" height="42" alt="Thomas R" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Tue</span>
@@ -198,7 +198,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-8.jpg" class="me-2 rounded-circle" height="42" alt="Thomas J" />
+                                                            <img src="${ contextPath }/assets/images/users/user-8.jpg" class="me-2 rounded-circle" height="42" alt="Thomas J" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Tue</span>
@@ -213,7 +213,7 @@
                                         
                                                     <a href="javascript:void(0);" class="text-body">
                                                         <div class="d-flex align-items-start p-2">
-                                                            <img src="assets/images/users/user-4.jpg" class="me-2 rounded-circle" height="42" alt="Ricky J" />
+                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" class="me-2 rounded-circle" height="42" alt="Ricky J" />
                                                             <div class="w-100">
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span class="float-end text-muted fw-normal font-12">Mon</span>
@@ -244,7 +244,7 @@
                                         <div class="row justify-content-between py-1">
                                             <div class="col-sm-7">
                                                 <div class="d-flex align-items-start">
-                                                    <img src="assets/images/users/user-5.jpg" class="me-2 rounded-circle" height="36" alt="Brandon Smith">
+                                                    <img src="${ contextPath }/assets/images/users/user-5.jpg" class="me-2 rounded-circle" height="36" alt="Brandon Smith">
                                                     <div>
                                                         <h5 class="mt-0 mb-0 font-15">
                                                             <a href="contacts-profile.html" class="text-reset">무지</a>
@@ -268,7 +268,7 @@
                                         <ul class="conversation-list" data-simplebar style="max-height: 460px;">
                                             <li class="clearfix">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-5.jpg" class="rounded" alt="James Z" />
+                                                    <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded" alt="James Z" />
                                                     <i>10:00</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -285,7 +285,7 @@
                                             </li>
                                             <li class="clearfix odd">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-1.jpg" class="rounded" alt="Geneva M" />
+                                                    <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded" alt="Geneva M" />
                                                     <i>10:01</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -302,7 +302,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-5.jpg" class="rounded" alt="James Z" />
+                                                    <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded" alt="James Z" />
                                                     <i>10:01</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -319,7 +319,7 @@
                                             </li>
                                             <li class="clearfix odd">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-1.jpg" class="rounded" alt="Geneva M" />
+                                                    <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded" alt="Geneva M" />
                                                     <i>10:02</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -336,7 +336,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-5.jpg" alt="James Z" class="rounded" />
+                                                    <img src="${ contextPath }/assets/images/users/user-5.jpg" alt="James Z" class="rounded" />
                                                     <i>10:02</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -353,7 +353,7 @@
                                             </li>
                                             <li class="clearfix odd">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-1.jpg" alt="Geneva M" class="rounded" />
+                                                    <img src="${ contextPath }/assets/images/users/user-1.jpg" alt="Geneva M" class="rounded" />
                                                     <i>10:03</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -370,7 +370,7 @@
                                             </li>
                                             <li class="clearfix">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-5.jpg" alt="James Z" class="rounded" />
+                                                    <img src="${ contextPath }/assets/images/users/user-5.jpg" alt="James Z" class="rounded" />
                                                     <i>10:04</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -388,7 +388,7 @@
                                             
                                             <li class="clearfix odd">
                                                 <div class="chat-avatar">
-                                                    <img src="assets/images/users/user-1.jpg" alt="Geneva M" class="rounded" />
+                                                    <img src="${ contextPath }/assets/images/users/user-1.jpg" alt="Geneva M" class="rounded" />
                                                     <i>10:05</i>
                                                 </div>
                                                 <div class="conversation-text">
@@ -948,10 +948,10 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
 			
 
       <!-- ============================================================== -->
