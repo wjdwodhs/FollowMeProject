@@ -15,7 +15,9 @@
         <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
         <!-- Plugin css -->
-        <link href="${ contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+  		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+       
 
         <!-- Theme Config Js -->
         <script src="${ contextPath }/assets/js/head.js"></script>
@@ -32,7 +34,15 @@
 <style>
 .btn-group>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
 .fc-toolbar-chunk>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
+ .fc-day-sun  {
+  color: red;
+  text-decoration: none;
+}
 
+.fc-day-sat  {
+  color: blue;
+  text-decoration: none;
+}
 </style>
     </head>
 <body>
@@ -645,7 +655,7 @@
 
         <!-- plugin js -->
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${ contextPath }/assets/libs/fullcalendar/main.min.js"></script>
+        
 
         <!-- Calendar init -->
         <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
