@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CEO Main Page</title>
+<title>대표 메인페이지 | Follow Me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -15,20 +15,23 @@
 <link rel="shortcut icon" href="assets/images/favicon.ico">
 
 <!-- Plugins css -->
-<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${ contextPath }/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+
+
 </head>
 <body>
 <!-- Begin page -->
@@ -47,7 +50,7 @@
          <!-- topbar include -->
          <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
          
-         <div class="content">
+         <div class="content" style="background-color:#F2E8DA;">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -116,7 +119,7 @@
                                             <div class="col-6">
                                                 <div class="text-end">
                                                     <h3 class="text-dark mt-1"><span data-plugin="counterup">10</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">이달의 신규 고객</p>
+                                                    <p class="text-muted mb-1 text-truncate">오늘의 결재</p>
                                                 </div>
                                             </div>
                                         </div> <!-- end row-->
@@ -135,8 +138,8 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="text-end">
-                                                    <h3 class="text-dark mt-1">₩<span data-plugin="counterup">8,894,000</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">이달의 매출액</p>
+                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">5</span></h3>
+                                                    <p class="text-muted mb-1 text-truncate">오늘의 일정</p>
                                                 </div>
                                             </div>
                                         </div> <!-- end row-->
@@ -147,69 +150,72 @@
                         <!-- end row-->
 
                         <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 500px;">
-                                        <div class="float-end d-none d-md-inline-block">
-                                          
-                                        </div>
-                                        <h4 class="header-title">일별 매출 현황</h4>
-                                        <div class="row mt-4 text-center">
-                                            
-                                        </div>
-                                        <div class="mt-3 chartjs-chart">
-                                            <canvas id="revenue-chart" data-colors="#febe98,#f1556c" height="300"></canvas>
-                                        </div>
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
+                            
 
                             <div class="col-lg-6">
                                 <div class="card">
-                                    <div class="card-body" style="height: 500px;">
-                                            
-                                        <h4 class="header-title mb-3">월별 매출 현황</h4>
-    
-                                        <div dir="ltr">
-                                            <div id="sales-analytics" class="mt-4" data-colors="#febe98,#f1556c"></div>
+                                    <div class="card-body" style="height: 450px;">
+                                        <h4 class="header-title">베스트 상품</h4>
+                                        <p class="sub-header"> </p>
+                                        
+                                        <!--  추후 기능 구현 시 판매량 높은 순으로 정렬 -->
+                                        <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner" role="listbox">
+                                                <div class="carousel-item active">
+                                                    <img src="${ contextPath }/assets/images/small/img-8.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3 class="text-white"></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img src="${ contextPath }/assets/images/small/img-9.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3 class="text-white"></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img src="${ contextPath }/assets/images/small/img-10.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3 class="text-white"></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img src="${ contextPath }/assets/images/small/img-11.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3 class="text-white"></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img src="${ contextPath }/assets/images/small/img-12.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3 class="text-white"></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </a>
                                         </div>
+
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col-->
                             
-
                             <div class="col-xl-6">
                                 <div class="card">
-                                    <div class="card-body" style="height: 400px;">
+                                    <div class="card-body" style="height: 450px;">
                                         
-                                        <h4 class="header-title">입•퇴사자 현황</h4>
-                                        
-                                        <div class="mt-3 chartjs-chart">
-                                            <canvas id="projections-actuals-chart" data-colors="#febe98,#e3eaef" height="300"></canvas>
-                                        </div>
-                                    </div>
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 400px;">
-                                        
-                                        <h4 class="header-title mb-0">베스트 상품</h4>
+                                        <h4 class="header-title mb-0">베스트 상품 현황</h4>
                                         
                                         <div class="row justify-content-end">
-                                            <div class="col-auto d-none d-md-inline-block">
-                                                <div class="btn-group mb-2">
-                                                    <button type="button" class="btn btn-xs btn-secondary">Today</button>
-                                                    <button type="button" class="btn btn-xs btn-light">Weekly</button>
-                                                    <button type="button" class="btn btn-xs btn-light">Monthly</button>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
-
-
                                         
-
                                         <div id="cardCollpase5" class="collapse show">
                                             <div class="table-responsive pt-3">
                                                 <table class="table table-hover table-centered mb-0">
@@ -246,6 +252,12 @@
                                                             <td>1</td>
                                                             <td>₩33,000</td>
                                                         </tr>
+                                                        <tr>
+                                                            <td>LANVIN 텐셀 더블 버튼 블레이저</td>
+                                                            <td>₩30,000</td>
+                                                            <td>1</td>
+                                                            <td>₩30,000</td>
+                                                        </tr>
                                                                                                                 
                                                     </tbody>
                                                 </table>
@@ -254,12 +266,88 @@
                                     </div> <!-- end card-body -->
                                 </div> <!-- end card-->
                             </div> <!-- end col -->
+                            
+														<div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body" style="height: 400px;">
+                                        
+                                        <h4 class="header-title">일별 판매 현황</h4>
+                                        
+                                        <div>
+																				  <canvas id="myChart" style="border: none !important;outline: none !important;"></canvas>
+																				</div>
+																				
+																				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+																				
+																				<script>
+																			    $(document).ready(function(){
+																			        $.ajax({
+																			            url: '${contextPath}/chart/revenue.do',
+																			            method: 'GET',
+																			            success: function(data){
+																			                
+																			                var dates = data.map(function(item) {
+																			                		var orderDate = new Date(item.orderDate);
+																			                    return orderDate.toLocaleDateString();
+																			                });
+																			                var orderAmount = data.map(function(item) {
+																			                    return item.orderAmount
+																			                });
+																			
+																			                var ctx = document.getElementById('myChart').getContext('2d');
+																			                var myChart = new Chart(ctx, {
+																			                    type: 'bar',
+																			                    data: {
+																			                        labels: dates,
+																			                        datasets: [{
+																			                            label: '총 판매량',
+																			                            data: orderAmount,
+																			                            backgroundColor: '#febe98', 
+																			                            borderWidth: 0
+																			                        }]
+																			                    },
+																			                    options: {
+																			                        scales: {
+																			                            yAxes: [{
+																			                                ticks: {
+																			                                    beginAtZero: true,
+																			                                    max: 10 // 최대 값 설정
+																			                                }
+																			                            }]
+																			                        }
+																			                    }
+																			                });
+																			            },
+																			            error: function(xhr, status, error){
+																			                console.error(error);
+																			            }
+																			        });
+																			    });
+																			</script>
 
+                                        
+                                        
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
 
+                            <div class="col-xl-6">
+                                <div class="card">
+                                    <div class="card-body" style="height: 400px;">
+                                        
+                                        <h4 class="header-title">메뉴 뭘로 할지 고민중</h4>
+                                        
+                                        <div class="mt-3 chartjs-chart">
+                                            <canvas id="bar-chart-grouped"></canvas>
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
 
-
-
-
+                            
                         </div>
                         <!-- end row -->
 
@@ -744,33 +832,35 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
+        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
 
         <!-- Chart JS -->
-        <script src="assets/libs/chart.js/Chart.bundle.min.js"></script>
+        <script src="${ contextPath }/assets/libs/chart.js/Chart.bundle.min.js"></script>
 
-        <script src="assets/libs/moment/min/moment.min.js"></script>
-        <script src="assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
+        <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
+        <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
 
         <!-- Chat app -->
-        <script src="assets/js/pages/jquery.chat.js"></script>
+        <script src="${ contextPath }/assets/js/pages/jquery.chat.js"></script>
 
         <!-- Todo app -->
-        <script src="assets/js/pages/jquery.todo.js"></script>
+        <script src="${ contextPath }/assets/js/pages/jquery.todo.js"></script>
 
         <!-- Dashboard init JS -->
-        <script src="assets/js/pages/dashboard-3.init.js"></script>
+        <script src="${ contextPath }/assets/js/pages/dashboard-3.init.js"></script>
+        
+        
        
 
 </body>
