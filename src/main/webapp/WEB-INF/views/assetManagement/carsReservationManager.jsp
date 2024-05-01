@@ -13,19 +13,19 @@
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${contextPath}/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
@@ -66,12 +66,12 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Add / Edit Product</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">차량</a></li>
+                                            <li class="breadcrumb-item active">법인차량 예약</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"><b>시설예약 / 법인차량</b></h4>
+                                    <h4 class="page-title"><b>법인차량 예약</b></h4>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +89,9 @@
                                             <br>
 
                                             <button type="button" class="btn w-sm btn-success waves-effect waves-light btn btn-primary" 
-                                            style="background-color: #FFBE98; border: none; margin-left: 80%;">.xls다운로드</button>
+                                            style="background-color: #FFBE98; border: none; margin-left: 80%;">.xls 다운로드</button>
                                            <br><br>
-                                            <table class="table table-sm">
+                                            <table class="table table-sm table-bordered">
                                                 <tr>
                                                     <th>사용일</th>
                                                     <th>사용시간</th>
@@ -783,18 +783,18 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${contextPath}/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
+        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>

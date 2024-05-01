@@ -13,19 +13,19 @@
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${contextPath}/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
@@ -49,237 +49,215 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			            <div class="content-page">
+			<div class="content-page">
 
-                <!-- ========== Topbar Start ========== -->
+      <!-- ========== Topbar Start ========== -->
 
-                <!-- ========== Topbar End ========== -->
+      <!-- ========== Topbar End ========== -->
 
-                <div class="content" style="background-color: #F2E8DA;">
+      <div class="content" style="background-color: #F2E8DA;">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid" style="background-color: #F2E8DA;">
-                        
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Add / Edit Product</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title"><b>시설예약 / 법인차량</b></h4>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
-
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
-                                        
-                                        <div style="border: 1px solid none; width: 100%; height: 770px; box-sizing:border-box;">
-
-                                            <br>
-                                            <!-- 관리자에게만 보여지도록 -->
-                                            <!--
-                                            <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 89%;">추가</button>
-                                           
-                                            <br><br>
-                                             -->
-                                            <table class="table table-striped table-hover">
-                                                <tr align="center">
-                                                    <th>차종</th>
-                                                    <th>차량번호</th>
-                                                    <th>탑승인원(명)</th>
-                                                    <th>비고</th>
-                                                </tr>
-                                                <tr  align="center">
-                                                    <td>캐스퍼</td>
-                                                    <td>111가1234</td>
-                                                    <td>4</td>
-                                                    <td>이용가능</td>
-                                                </tr>
-                                                <tr  align="center">
-                                                    <td>아반떼</td>
-                                                    <td>222나6789</td>
-                                                    <td>5</td>
-                                                    <td>이용가능</td>
-                                                </tr>
-                                                <tr  align="center">
-                                                    <td>스타렉스</td>
-                                                    <td>333다4321</td>
-                                                    <td>9</td>
-                                                    <td>이용가능</td>
-                                                </tr>
-                                              </table>
-                                        
-                                        </div>
+          <!-- Start Content-->
+          <div class="container-fluid" style="background-color: #F2E8DA;">
+              
+              <!-- start page title -->
+              <div class="row">
+                  <div class="col-12">
+                      <div class="page-title-box">
+                          <div class="page-title-right">
+                              <ol class="breadcrumb m-0">
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">차량</a></li>
+                                  <li class="breadcrumb-item active">법인차량 관리</li>
+                              </ol>
+                          </div>
+                          <h4 class="page-title"><b>법인차량 관리</b></h4>
+                      </div>
+                  </div>
+              </div>
+              <!-- end page title -->
 
 
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col -->
+              <div class="row">
+                  <div class="col-lg-6">
+                      <div class="card">
+                          <div class="card-body">
+                              <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
+                              
+                              <div style="border: 1px solid none; width: 100%; height: 770px; box-sizing:border-box;">
 
-                            <div class="col-lg-6">
-                                
-                                <!-- 예약 조회-->
-                            <form action="">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회 / 취소</b> | <small>RESERVAION INQUIRY / CANCE</small></h5>
-                                            
-                                        <label style="margin-left: 1%; margin-right: 5px;"><b>희망예약일</b></label>
-                                        <input type="date" style="border: 0.5px solid lightgray; border-radius: 3px;">
-                                        <br><br>
-                                            <table class="table-sm">
-                                                <tr>
-                                                    <th>차종</th>
-                                                    <td></td>
-                                                    <td colspan="2">아반떼</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>차량번호</th>
-                                                    <td></td>
-                                                    <td colspan="2">222나6789</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>예약상태</th>
-                                                    <td></td>
-                                                    <td colspan="2"><b>사용중</b></td>  <!--글씨색상 다르게 설정-->
-                                                </tr>
-                                                <tr>
-                                                    <th>예약시간</th>
-                                                    <td></td>
-                                                    <td>11:00</td>
-                                                    <td> ~ </td>
-                                                    <td>15:00</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>이용목적</th>
-                                                    <td></td>
-                                                    <td colspan="2">외근</td>
-                                                </tr>
-                                            </table> 
-                                            <br>
-                                            <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
-                                            
-                                            <!--예약한 사원번호가 일치할 시 표시-->
-                                            <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
-
-                                        </div>
-                                </div> <!-- end col-->
+                                  <br>
+                                  <!-- 관리자에게만 보여지도록 -->
+                                  <!--
+                                  <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 89%;">추가</button>
+                                 
+                                  <br><br>
+                                   -->
+                                  <table class="table table-striped table-hover">
+                                      <tr align="center">
+                                          <th>차종</th>
+                                          <th>차량번호</th>
+                                          <th>탑승인원(명)</th>
+                                          <th>비고</th>
+                                      </tr>
+                                      <tr  align="center">
+                                          <td>캐스퍼</td>
+                                          <td>111가1234</td>
+                                          <td>4</td>
+                                          <td>이용가능</td>
+                                      </tr>
+                                      <tr  align="center">
+                                          <td>아반떼</td>
+                                          <td>222나6789</td>
+                                          <td>5</td>
+                                          <td>이용가능</td>
+                                      </tr>
+                                      <tr  align="center">
+                                          <td>스타렉스</td>
+                                          <td>333다4321</td>
+                                          <td>9</td>
+                                          <td>이용가능</td>
+                                      </tr>
+                                    </table>
+                              
+                              </div>
 
 
-                                <!-- 예약 신청 -->
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b> | <small>RESERVAIONL</small></h5>
+                          </div>
+                      </div> <!-- end card -->
+                  </div> <!-- end col -->
 
-                                        <table class="table-sm">
-                                            <tr>
-                                                <th>예약자</th>
-                                                <td style="width: 150px;">
-                                                    <input type="text" value="ㅇㅇㅇ" class="form-control" readonly>    
-                                                </td>
-                                                <td></td>
-                                                <th>소속부서</th>
-                                                <td  style="width: 150px;">
-                                                    <input type="text" value="xxxx" class="form-control" readonly  >     
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>예약차종</th>
-                                                <td colspan="4">
-                                                    <input type="text" value="캐스퍼" class="form-control">         
-                                                </td>
-                                            </tr>
-                                            <tr> 
-                                                <th>예약날짜</th>
-                                                <td colspan="4">
-                                                    <input type="text" value="2024-05-06" class="form-control">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>예약시간</th>
-                                                <td>
-                                                    <input type="text" value="14:00" class="form-control">
-                                                </td>
-                                                <td>~</td>
-                                                <td colspan="2"  style="width: 150px;">
-                                                    <input type="text" value="16:00" class="form-control">
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <th>이용목적</th>
-                                                <td colspan="4">
-                                                    <input type="text" value="외근" class="form-control">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <br>
+                  <div class="col-lg-6">
+                      
+                      <!-- 예약 조회-->
+                  <form action="">
+                      <div class="card">
+                          <div class="card-body">
+                              <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회 / 취소</b> | <small>RESERVAION INQUIRY / CANCE</small></h5>
+                                  
+                              <label style="margin-left: 25px; margin-right: 10px;"><b>희망예약일</b></label>
+                              <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; 
+                                                 border-radius: 3px; color: gray; height: 30px;">
+                              <br><br>
+                                  <table class="table-sm" style="margin-left: 20px;">
+                                      <tr>
+                                          <th>차종</th>
+                                          <td></td>
+                                          <td colspan="2">아반떼</td>
+                                      </tr>
+                                      <tr>
+                                          <th>차량번호</th>
+                                          <td></td>
+                                          <td colspan="2">222나6789</td>
+                                      </tr>
+                                      <tr>
+                                          <th>예약상태</th>
+                                          <td></td>
+                                          <td colspan="2"><b>사용중</b></td>  <!--글씨색상 다르게 설정-->
+                                      </tr>
+                                      <tr>
+                                          <th>예약시간</th>
+                                          <td></td>
+                                          <td>11:00</td>
+                                          <td> ~ </td>
+                                          <td>15:00</td>
+                                      </tr>
+                                      <tr>
+                                          <th>이용목적</th>
+                                          <td></td>
+                                          <td colspan="2">외근</td>
+                                      </tr>
+                                  </table> 
+                                  <br>
+                                  <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
+                                  
+                                  <!--예약한 사원번호가 일치할 시 표시-->
+                                  <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
 
-                                            <div class="text-center mb-3">
-                                                <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
-                                            </div>
-                                        
-                                        </div> <!-- end card -->
-                                        
-                            
-                                    </div> <!-- end col-->
-                                </div>
-                                <!-- end row -->
-
-                                </div>
-                            </form>     
-
-                        <!-- end row -->
+                              </div>
+                      </div> <!-- end col-->
 
 
-                        <!-- file preview template -->
-                        <div class="d-none" id="uploadPreviewTemplate">
-                            <div class="card mt-1 mb-0 shadow-none border">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                        </div>
-                                        <div class="col ps-0">
-                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                            <p class="mb-0" data-dz-size></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Button -->
-                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                <i class="dripicons-cross"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <!-- 예약 신청 -->
+                      <div class="card">
+                          <div class="card-body">
+                              <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b> | <small>RESERVAIONL</small></h5>
 
-                        
-                    </div> <!-- container -->
+                              <table class="table-sm" style="margin-left: 20px;">
+                                  <tr>
+                                      <th>예약자</th>
+                                      <td style="width: 150px;">
+                                          <input type="text" value="ㅇㅇㅇ" class="form-control" readonly>    
+                                      </td>
+                                      <td></td>
+                                      <th>소속부서</th>
+                                      <td  style="width: 150px;">
+                                          <input type="text" value="xxxx" class="form-control" readonly  >     
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <th>예약차종</th>
+                                      <td colspan="4">
+                                          <input type="text" value="캐스퍼" class="form-control">         
+                                      </td>
+                                  </tr>
+                                  <tr> 
+                                      <th>예약날짜</th>
+                                      <td colspan="4">
+                                          <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; 
+                                                 border-radius: 3px; color: gray; height: 30px;">
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <th>예약시간</th>
+                                      <td>
+                                          <input type="time" value="14:00" class="form-control">
+                                      </td>
+                                      <td>~</td>
+                                      <td colspan="2"  style="width: 150px;">
+                                          <input type="time" value="16:00" class="form-control">
+                                      </td>
+                                      <td></td>
+                                  </tr>
+                                  <tr>
+                                      <th>이용목적</th>
+                                      <td colspan="4">
+                                          <input type="text" value="외근" class="form-control">
+                                      </td>
+                                  </tr>
+                              </table>
+                              <br>
 
-                </div> <!-- content -->
+                                  <div class="text-center mb-3">
+                                      <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
+                                  </div>
+                              
+                              </div> <!-- end card -->
+                              
+                  
+                          </div> <!-- end col-->
+                      </div>
+                      <!-- end row -->
 
-         <script>
-           let today = new Date();
-           let todaystr = today.toISOString().split('T')[0];
+                      </div>
+                  </form>     
 
-           document.getElementById("reservationDate").min = todaystr;
-         </script>
+              <!-- end row -->
+
+          </div> <!-- container -->
+
+      </div> <!-- content -->
+  </div>
 
 
-            </div>
+
+
+
+   <script>
+   	document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
+   </script>
+
+
 
 
 
@@ -757,18 +735,18 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${contextPath}/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
+        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>
