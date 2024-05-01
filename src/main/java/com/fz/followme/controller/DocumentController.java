@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DocumentController {
 
 	// * 전자결재페이지 관련 ---------------------------
-	@RequestMapping("/documentList.page")
+	@RequestMapping("/list.page")
 	public void documentList() {
 		
 	}

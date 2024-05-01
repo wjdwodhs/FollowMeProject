@@ -141,7 +141,7 @@
                 </div>
             </li>
             <li class="menu-item">
-                <a href="${ contextPath }/document/documentList.page" class="menu-link">
+                <a href="${ contextPath }/document/list.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="file-text"></i></span>
                     <span class="menu-text"> 전자결재 </span>
                 </a>

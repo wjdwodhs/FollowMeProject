@@ -7,7 +7,7 @@
 
 <head>
 <meta charset="utf-8" />
-<title>임직원 메인페이지 | Follow me</title>
+<title>전자결재 | Follow me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
@@ -27,73 +27,65 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-    <style>
-        .a.nav-link.active{background-color:#FEBE98;}
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* 세로 가운데 정렬 */
-            align-items: center; /* 가로 가운데 정렬 */
-            height: 100vh; /* 화면 전체를 채우도록 설정 */
-            background-color:#
-        }
-
-        .top-row, .bottom-row {
+<style>
+    .a.nav-link.active{background-color:#FEBE98;}
+    
+    .container {
         display: flex;
-         /* 내부 아이템을 일정한 간격으로 배치 */
-        }
+        flex-direction: column;
+        justify-content: center; /* 세로 가운데 정렬 */
+        align-items: center; /* 가로 가운데 정렬 */
+        height: 100vh; /* 화면 전체를 채우도록 설정 */
+    }
+    
+    .top-row, .bottom-row {
+    display: flex;
+     /* 내부 아이템을 일정한 간격으로 배치 */
+    }
+    
+    .box, .box2 {
+    background-color: white;
+    width:400px;
+    text-align: center;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-top: 25px;
+    }
+    
+    .box2 > div {
+    background-color: white;
+    width: 50%; /* 가로 공간을 반씩 차지하도록 설정 */
+    text-align: center;
+    }
+    
+    .badge.label-table {
+        font-size: 12px; /* 뱃지의 텍스트 크기를 조절합니다. */
+        padding: 5px; /* 뱃지의 내부 여백을 조절합니다. */
+    }
+    tr>th, tr>td{
+        text-align:center;
+    }
+    
+    #top-middle{
+        text-align:left;
+    }
+    
+    #top-list{
+        justify-content: space-between;
+        display: flex;
+        align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */ 
+    }
+    
+    .btn-group>button{
+    	background-color: #FFBE98;
+        border: 1px solid #FFBE98; /* 테두리 */
+        --ct-btn-active-bg:#FA9A85;    
+        --ct-btn-active-border-color:#FA9A85;
+        --ct-btn-hover-bg:#FA9A85;
+        --ct-btn-hover-border-color:#FA9A85;   
+    }	
 
-        .box, .box2 {
-        background-color: white;
-        width:400px;
-        text-align: center;
-        justify-content: center; /* 수평 가운데 정렬 */
-        align-items: center; /* 수직 가운데 정렬 */
-        margin-top: 25px;
-        }
-
-        .box2 > div {
-        background-color: white;
-        width: 50%; /* 가로 공간을 반씩 차지하도록 설정 */
-        text-align: center;
-        }
-
-
-        #calendarBox > div {
-        width: 100%; /* 부모 요소에 꽉 차도록 설정 */
-        text-align: center;
-   		  }
-
-        .calendar {
-            border-collapse: collapse;
-            width: 400px;
-            height: 320px;
-            margin: 0 auto;
-
-        }
-        .calendar th,
-        .calendar td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        .calendar th {
-            background-color: #f2f2f2;
-        }
-        .today {
-            background-color: #FFDAB9;
-        }
-
-        .badge.label-table {
-            font-size: 13px; /* 뱃지의 텍스트 크기를 조절합니다. */
-            padding: 10px 20px; /* 뱃지의 내부 여백을 조절합니다. */
-        }
-
-        .text-center{
-            text-align: center;
-        }
-    </style>
+</style>
 
 </head>
 
@@ -113,117 +105,189 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			<div class="content" style="background-color: #F2E8DA;">
+			<div class="content" style="background-color: #F2E8DA; display:flex;">
+                
+                <div style="margin-top:50px;">
+                    <ul class="menu">
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="edit-3"></i></span>
+                                <span class="menu-text"> 문서 작성하기 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item" style="margin-top:50px;">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="archive"></i></span>
+                                <span class="menu-text"> 전체 문서함 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="refresh-cw"></i></span>
+                                <span class="menu-text"> 진행중인 문서 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                                <span class="menu-text"> 승인 문서함 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="x"></i></span>
+                                <span class="menu-text"> 반려 문서함 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="trash-2"></i></span>
+                                <span class="menu-text"> 회수 문서함 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="link"></i></span>
+                                <span class="menu-text"> 참조 문서함 </span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span class="menu-icon"><i data-feather="user-x"></i></span>
+                                <span class="menu-text"> 미처리 결재함 </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card" style="margin-top: 50px;">
+
+                
+                <!-- Start Content-->
+                <div class="container-fluid" style="width:87%;">
+       
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="margin-top: 50px;">
                                     <div class="card-body">
-                                        <h4 class="header-title">전자결재 문서 열람</h4>
-                                        <p class="sub-header">
-                                            Access electronic payment documents                                     
-                                        </p>
+                                        <div>
+                                            <h4 class="header-title">전자결재 문서 열람</h4>
+                                            <p class="sub-header">
+                                                Access electronic payment documents                                     
+                                            </p>
+                                        </div>
     
                                         <div class="mb-2">
-                                            <div class="row row-cols-sm-auto g-2 align-items-center">
-                                                <div class="col-12 text-sm-center">
-                                                    <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                        <option value="">모든 문서</option>
-                                                        <option value="결재 대기">결재 대기</option>
-                                                        <option value="결재 승인">결재 승인</option>
-                                                        <option value="결재 반려">결재 반려</option>
-                                                        <option value="회수된 문서">회수된 문서</option>
-                                                    </select>
+                                            <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
+                                                <div style="display:flex;">
+                                                    <div class="col-12 text-sm-center" style="width:auto;">
+                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
+                                                            <option value="">전체</option>
+                                                            <option value="문서유형">문서유형</option>
+                                                            <option value="문서제목">문서제목</option>
+                                                        </select>
+                                                        <!-- 결재권한 있을 경우 -->
+                                                        <!--
+                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
+                                                            <option value="">전체</option>
+                                                            <option value="문서유형">문서유형</option>
+                                                            <option value="문서제목">문서제목</option>
+                                                            <option value="기안자">기안자</option>
+                                                            <option value="기안부서">기안부서</option>
+                                                        </select>
+                                                        -->
+                                                        
+                                                    </div>
+                                                    <div class="col-12" id="top-middle" style="width:auto;">
+                                                        <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+                                                    </div>
                                                 </div>
-                                                <div class="col-12">
-                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary"> 작성하기 </button>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         
                                         <div class="table-responsive">
                                             <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                 <thead>
                                                 <tr>
-                                                    <th data-toggle="true" class="text-center">NO</th>
-                                                    <th class="text-center">문서유형</th>
-                                                    <th data-hide="phone" class="text-center">문서제목</th>
-                                                    <th data-hide="phone, tablet" class="text-center">기안자</th>
-                                                    <th data-hide="phone, tablet" class="text-center">기안부서</th>
-                                                    <th data-hide="phone, tablet" class="text-center">기안일</th>
-                                                    <th data-hide="phone, tablet" class="text-center">결재상태</th>
-                                                    <th data-hide="phone, tablet" class="text-center">결재일</th>
+                                                    <th>NO</th>
+                                                    <th>문서유형</th>
+                                                    <th>문서제목</th>
+                                                    <th>기안자</th>
+                                                    <th>기안부서</th>
+                                                    <th>기안일</th>
+                                                    <th>결재상태</th>
+                                                    <th>결재일</th>
 
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td class="text-center">6</td>
-                                                    <td>지출결의서</td>
-                                                    <td>사무용품 지출결의서</td>
-                                                    <td class="text-center">임수희</td>
-                                                    <td class="text-center">경영지원</td>
-                                                    <td class="text-center">2024-05-09</td>
-                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td class="text-center">2024-05-09</td>
+                                                    <td>6</td>
+                                                    <td style="text-align: left;">지출결의서</td>
+                                                    <td style="text-align: left;">사무용품 지출결의서</td>
+                                                    <td>임수희</td>
+                                                    <td>경영지원</td>
+                                                    <td>2024-05-09</td>
+                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td>2024-05-09</td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">5</td>
-                                                    <td>재택근무신청서</td>
-                                                    <td>2024년 5월 9일 재택 근무 신청합니다.</td>
-                                                    <td class="text-center">이미리</td>
-                                                    <td class="text-center">마케팅</td>
-                                                    <td class="text-center">2024-05-08</td>
-                                                    <td class="text-center"><span class="badge label-table bg-danger">결재 반려</span></td>
-                                                    <td class="text-center">2024-05-08</td>
+                                                    <td>5</td>
+                                                    <td style="text-align: left;">재택근무신청서</td>
+                                                    <td style="text-align: left;">2024년 5월 9일 재택 근무 신청합니다.</td>
+                                                    <td>이미리</td>
+                                                    <td>마케팅</td>
+                                                    <td>2024-05-08</td>
+                                                    <td><span class="badge label-table bg-danger">결재 반려</span></td>
+                                                    <td>2024-05-08</td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">4</td>
-                                                    <td>구매신청서</td>
-                                                    <td>경영지원팀 태블릿PC 2대 구매 신청의 건</td>
-                                                    <td class="text-center">임수희</td>
-                                                    <td class="text-center">경영지원</td>
-                                                    <td class="text-center">2024-05-08</td>
-                                                    <td class="text-center"><span class="badge label-table bg-success">결재 대기</span></td>
-                                                    <td class="text-center">2024-05-08</td>
+                                                    <td>4</td>
+                                                    <td style="text-align: left;">구매신청서</td>
+                                                    <td style="text-align: left;">경영지원팀 태블릿PC 2대 구매 신청의 건</td>
+                                                    <td>임수희</td>
+                                                    <td>경영지원</td>
+                                                    <td>2024-05-08</td>
+                                                    <td><span class="badge label-table bg-warning">결재 대기</span></td>
+                                                    <td></td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">3</td>
-                                                    <td>재택근무신청서</td>
-                                                    <td>2024년 5월 9일 재택근무 신청의 건</td>
-                                                    <td class="text-center">이미리</td>
-                                                    <td class="text-center">마케팅</td>
-                                                    <td class="text-center">2024-05-08</td>
-                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td class="text-center">2024-05-08</td>
+                                                    <td>3</td>
+                                                    <td style="text-align: left;">재택근무신청서</td>
+                                                    <td style="text-align: left;">2024년 5월 9일 재택근무 신청의 건</td>
+                                                    <td>이미리</td>
+                                                    <td>마케팅</td>
+                                                    <td>2024-05-08</td>
+                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td>2024-05-08</td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">2</td>
-                                                    <td>휴가신청서</td>
-                                                    <td>2024년 5월 13일~14일 휴가 신청의 건</td>
-                                                    <td class="text-center">박대기</td>
-                                                    <td class="text-center">영업</td>
-                                                    <td class="text-center">2024-05-07</td>
-                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td class="text-center">2024-05-07</td>
+                                                    <td>2</td>
+                                                    <td style="text-align: left;">휴가신청서</td>
+                                                    <td style="text-align: left;">2024년 5월 13일~14일 휴가 신청의 건</td>
+                                                    <td>박대기</td>
+                                                    <td>영업</td>
+                                                    <td>2024-05-07</td>
+                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td>2024-05-07</td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td>지출결의서</td>
-                                                    <td>2024년 5월 4일 법인카드 지출결의서입니다.</td>
-                                                    <td class="text-center">김우영</td>
-                                                    <td class="text-center">경영지원</td>
-                                                    <td class="text-center">2024-05-07</td>
-                                                    <td class="text-center"><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td class="text-center">2024-05-07</td>
+                                                    <td>1</td>
+                                                    <td style="text-align: left;">지출결의서</td>
+                                                    <td style="text-align: left;">2024년 5월 4일 법인카드 지출결의서입니다.</td>
+                                                    <td>김우영</td>
+                                                    <td>경영지원</td>
+                                                    <td>2024-05-07</td>
+                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
+                                                    <td>2024-05-07</td>
                                                 </tr>
     
                                                 </tbody>
@@ -244,10 +308,14 @@
                         </div>
                         <!-- end row -->
 
+
+
+                        
+                    </div> <!-- container -->
+
                 </div> <!-- content -->
 
-            </div>			
-
+            </div>
       <!-- ============================================================== -->
       <!-- <-- End Page Content
       <!-- ============================================================== -->
@@ -255,7 +323,6 @@
       
 
 		</div>
-	</div>
 	
 				<!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
