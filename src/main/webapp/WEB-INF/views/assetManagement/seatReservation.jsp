@@ -352,6 +352,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" 
                                         style="background-color: #FFBE98; border: none;">확인</button>
+                                 <!-- 예약한 직원 본인일 경우 보일 버튼 -->
                                 <button type="button" class="btn w-sm btn-light waves-effect">예약취소</button>
                             </div>
                         </div>
