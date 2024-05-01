@@ -18,7 +18,10 @@ public class EmailController {
 		return "email/emailComposeForm";
 	}
 	
-	
-	
+	// 메일 상세내용 수정해야함
+	@RequestMapping("/readMail.do")
+	public String emailRead() {
+		return "email/emailRead";
+	}
 	
 }
