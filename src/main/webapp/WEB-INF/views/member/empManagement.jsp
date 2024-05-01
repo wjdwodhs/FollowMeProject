@@ -509,24 +509,44 @@
                         <form>
                             <div class="row">
                             		<div class="col-md-6">
-														        <div class="mb-3">
-														            <label for="identificationNumber" class="form-label">사원번호(그룹웨어 아이디)</label>
-														            <input type="email" class="form-control" id="identificationNumber">
+                            			  <div class="mb-3">
+														            <label for="name" class="form-label">이름</label>
+														            <input type="text" class="form-control" id="name" required>
 														        </div>
 														        <div class="mb-3">
-														            <label for="name" class="form-label">이름</label>
-														            <input type="text" class="form-control" id="name">
+														            <label for="identificationNumber" class="form-label">사원번호(그룹웨어 아이디)</label>
+														            <input type="email" class="form-control" id="identificationNumber" required>
+														        </div>
+														    </div>
+														    <div class="col-md-6">
+														    		<div class="mb-3">
+														            <label for="authLevel" class="form-label">권한레벨</label>
+														            <input type="text" class="form-control" id="authLevel" required>
+														        </div>
+														        <div class="mb-3">
+														            <label for="tempPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
+														            <input type="text" class="form-control" id="tempPwd" required>
 														        </div>
 														        
 														    </div>
 														    <div class="col-md-6">
 														        <div class="mb-3">
-														            <label for="tempPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-														            <input type="text" class="form-control" id="tempPwd">
+														            <label for="deptName" class="form-label">부서</label>
+														            <input type="text" class="form-control" id="deptName" required>
 														        </div>
 														        <div class="mb-3">
-														            <label for="authLevel" class="form-label">권한레벨</label>
-														            <input type="text" class="form-control" id="authLevel">
+														            <label for="memSalary" class="form-label">계약연봉</label>
+														            <input type="text" class="form-control" id="memSalary" required>
+														        </div>
+														    </div>
+														    <div class="col-md-6">
+														        <div class="mb-3">
+														            <label for="memGrade" class="form-label">직급</label>
+														            <input type="text" class="form-control" id="memGrade" required>
+														        </div>
+														        <div class="mb-3">
+														            <label for="enrollDate" class="form-label">입사일</label>
+														            <input type="text" class="form-control" id="enrollDate" required>
 														        </div>
 														    </div>
 														    
