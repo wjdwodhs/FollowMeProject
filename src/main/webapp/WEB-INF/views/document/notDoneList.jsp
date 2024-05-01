@@ -118,7 +118,7 @@
                         <li class="menu-item" style="margin-top:50px;">
                             <a href="${ contextPath }/document/list.page" class="menu-link">
                                 <span class="menu-icon"><i data-feather="archive"></i></span>
-                                <span class="menu-text"> <b>전체 문서함</b> </span>
+                                <span class="menu-text"> 전체 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
@@ -155,7 +155,7 @@
                         <li class="menu-item">
                             <a href="${ contextPath }/document/notDoneList.page" class="menu-link">
                                 <span class="menu-icon"><i data-feather="user-x"></i></span>
-                                <span class="menu-text"> 미처리 결재함 </span>
+                                <span class="menu-text"> <b>미처리 결재함</b> </span>
                             </a>
                         </li>
                     </ul>
@@ -171,9 +171,9 @@
                             <div class="card" style="margin-top: 50px;">
                                     <div class="card-body">
                                         <div>
-                                            <h4 class="header-title">전자결재 문서 열람</h4>
+                                            <h4 class="header-title">미처리 결재 문서</h4>
                                             <p class="sub-header">
-                                                Access Electronic documents                                     
+                                                Access electronic documents that I have not processed                                     
                                             </p>
                                         </div>
     
@@ -225,38 +225,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td style="text-align: left;">휴가신청서</td>
-                                                    <td style="text-align: left;">휴가ㅅ신청합니다</td>
-                                                    <td>장영근</td>
-                                                    <td>물류</td>
-                                                    <td>2024-05-10</td>
-                                                    <td><span class="badge label-table bg-secondary">문서 회수</span></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td style="text-align: left;">지출결의서</td>
-                                                    <td style="text-align: left;">사무용품 지출결의서</td>
-                                                    <td>임수희</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-09</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-09</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td style="text-align: left;">재택근무신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 9일 재택 근무 신청합니다.</td>
-                                                    <td>이미리</td>
-                                                    <td>마케팅</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-danger">결재 반려</span></td>
-                                                    <td>2024-05-08</td>
-                                                </tr>
-
+                                                
                                                 <tr>
                                                     <td>4</td>
                                                     <td style="text-align: left;">구매신청서</td>
@@ -268,39 +237,6 @@
                                                     <td></td>
                                                 </tr>
 
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td style="text-align: left;">재택근무신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 9일 재택근무 신청의 건</td>
-                                                    <td>이미리</td>
-                                                    <td>마케팅</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-08</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td style="text-align: left;">휴가신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 13일~14일 휴가 신청의 건</td>
-                                                    <td>박대기</td>
-                                                    <td>영업</td>
-                                                    <td>2024-05-07</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-07</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td style="text-align: left;">지출결의서</td>
-                                                    <td style="text-align: left;">2024년 5월 4일 법인카드 지출결의서입니다.</td>
-                                                    <td>김우영</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-07</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-07</td>
-                                                </tr>
-    
                                                 </tbody>
                                                 <tfoot>
                                                 <tr class="active">
