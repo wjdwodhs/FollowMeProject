@@ -49,270 +49,131 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 			
-      <!-- content start-------------------------------------------------------------------------------------- -->
-
-      <div class="content" style="background-color: #F2E8DA;">
-
-      <!-- Start Content-->
-      <div class="container-fluid">
-          
-          <!-- start page title -->
-          <div class="row">
-              <div class="col-12">
-                  <div class="page-title-box">
-                      <div class="page-title-right">
-                          <ol class="breadcrumb m-0">
-                              <li class="breadcrumb-item"><a href="javascript: void(0);">이메일</a></li>
-                              <li class="breadcrumb-item active">메일함</li>
-                          </ol>
-                      </div>
-                      <h4 class="page-title">이메일</h4>
-                  </div>
-              </div>
-          </div>
-          <!-- end page title -->
-
-
-          <div class="row">
-
-              <!-- Right Sidebar -->
-              <div class="col-12">
-                  <div class="card">
-                      <div class="card-body">
-                          <!-- Left sidebar -->
-                      <div class="inbox-leftbar">
-
-                          <a href="${ contextPath }/email/composeForm.do" class="btn btn-danger w-100 waves-effect waves-light"
-                             style="background-color: #FFBE98; border: 1px solid #FFBE98;">메일작성</a>
-
-                          <div class="mail-list mt-4">
-                              <a href="javascript: void(0);" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
-                              <a href="javascript: void(0);"><i class="dripicons-star me-2"></i>중요</a>
-                              <a href="javascript: void(0);"><i class="dripicons-document me-2"></i>임시보관함<span class="badge badge-soft-info float-end ms-2">32</span></a>
-                              <a href="javascript: void(0);"><i class="dripicons-exit me-2"></i>보낸메일</a>
-                              <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
-                          </div>
-
-                          <h6 class="mt-4">Labels</h6>
-
-                          <div class="list-group b-0 mail-list">
-                              <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-info me-2"></span>Web App</a>
-                              <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-warning me-2"></span>Recharge</a>
-                              <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-dark me-2"></span>Wallet Balance</a>
-                              <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-primary me-2"></span>Friends</a>
-                              <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-success me-2"></span>Family</a>
-                          </div>
-
-                      </div>
-                      <!-- End Left sidebar -->
-
-                      <div class="inbox-rightbar">
-
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
-                          </div>
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-light dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="mdi mdi-folder font-18"></i>
-                                  <i class="mdi mdi-chevron-down"></i>
-                              </button>
-                              <div class="dropdown-menu">
-                                  <span class="dropdown-header">이동</span>
-                                  <a class="dropdown-item" href="javascript: void(0);">임시보관함</a>
-                              </div>
-                          </div>
-
-                          <div class="mt-3">
-                              <ul class="message-list">
-                                  <li class="unread">
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk1">
-                                              <label for="chk1" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star text-warning"></span>
-                                          <a href="" class="title">정수진</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">이번 주 업무 일정 및 우선 순위 확인 요청
-                                          </a>
-                                          <div class="date">11:49 am</div>
-                                      </div>
-                                  </li>
-
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk3">
-                                              <label for="chk3" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">무신사</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">고객님을 위한 VIP 프리뷰: 신상 빈티지 아이템 미리보기
-                                          </a>
-                                          <div class="date">5:01 am</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk4">
-                                              <label for="chk4" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star text-warning"></span>
-                                          <a href="" class="title">거래처</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              [거래처] 3월 청구금액 및 거래명세표 요청 件
-                                          </a>
-                                          <div class="date">Mar 8</div>
-                                      </div>
-                                  </li>
-                                  <li class="unread">
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk5">
-                                              <label for="chk5" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">국세청</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              ㅇㅇㅇ에서 FOLLOW ME님께 세금계산서가 발행되었습니다.
-                                          </a>
-                                          <div class="date">Mar 8</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk6">
-                                              <label for="chk6" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">거래처</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              [거래처] 사업자등록증 송부
-                                          </a>
-                                          <div class="date">Mar 7</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk7">
-                                              <label for="chk7" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star text-warning"></span>
-                                          <a href="" class="title">최정호</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              회의록 작성 및 토의사항 정리 요청: 우선 처리 부탁드립니다
-                                          </a>
-                                          <div class="date">Mar 4</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk8">
-                                              <label for="chk8" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">이민수</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              출장 일정 및 예약 확인 요청
-                                          </a>
-                                          <div class="date">Feb 28</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk9">
-                                              <label for="chk9" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star text-warning"></span>
-                                          <a href="" class="title">FollowME</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              임시 비밀번호 안내
-                                          </a>
-                                          <div class="date">Feb 28</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk10">
-                                              <label for="chk10" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">한지민</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              거래처 발주 확인요청
-                                          </a>
-                                          <div class="date">Feb 27</div>
-                                      </div>
-                                  </li>
-                                  <li>
-                                      <div class="col-mail col-mail-1">
-                                          <div class="checkbox-wrapper-mail">
-                                              <input type="checkbox" id="chk11">
-                                              <label for="chk11" class="toggle"></label>
-                                          </div>
-                                          <span class="star-toggle far fa-star"></span>
-                                          <a href="" class="title">정수진</a>
-                                      </div>
-                                      <div class="col-mail col-mail-2">
-                                          <a href="" class="subject">
-                                              재고 상태 업데이트 및 재주문 안내
-                                          </a>
-                                          <div class="date">Feb 24</div>
-                                      </div>
-                                  </li>
-                              </ul>
-                          </div>
-                          <!-- end .mt-4 -->
-                          <br><br>
-                          <div class="row">
-                              <div class="col-7 mt-1">
-                                  Showing 1 - 10 of 89
-                              </div> <!-- end col-->
-                              <div class="col-5">
-                                  <div class="btn-group float-end" style="align-content: center;">
-                                      <button type="button" class="btn btn-light btn-sm"><i class="mdi mdi-chevron-left"></i></button>
-                                      <button type="button" class="btn btn-info btn-sm"><i class="mdi mdi-chevron-right"></i></button>
-                                  </div>
-                              </div> <!-- end col-->
-                          </div>
-                          <!-- end row-->
-                      </div> 
-                      <!-- end inbox-rightbar-->
-
-                      <div class="clearfix"></div>
-                      </div>
-                  </div> <!-- end card -->
-
-              </div> <!-- end Col -->
-          </div><!-- End row -->
-          
-      </div> <!-- container -->
-
-      </div> <!-- content -->
+			<div class="content" style="background-color: #F2E8DA;">
+			
+	      <div class="content" style="background-color: #F2E8DA;">
 	
+	          <!-- Start Content-->
+	          <div class="container-fluid">
+	              
+	              <!-- start page title -->
+	              <div class="row">
+	                  <div class="col-12">
+	                      <div class="page-title-box">
+	                          <div class="page-title-right">
+	                              <ol class="breadcrumb m-0">
+	                                  <li class="breadcrumb-item"><a href="javascript: void(0);">이메일</a></li>
+	                                  <li class="breadcrumb-item active">메일작성</li>
+	                              </ol>
+	                          </div>
+	                          <h4 class="page-title">메일작성</h4>
+	                      </div>
+	                  </div>
+	              </div>
+	              <!-- end page title -->
+	
+	              <!-- Right Sidebar -->
+	              <div class="row">
+	                  <div class="col-lg-12">
+	                      <div class="card">
+	                          <div class="card-body">
+	                              <!-- Left sidebar -->
+	                              <div class="inbox-leftbar">
+	
+	                                  <a href="email-inbox.html" class="btn btn-danger w-100 waves-effect waves-light">전체메일</a>
+	
+	                                  <div class="mail-list mt-4">
+	                                      <a href="javascript: void(0);" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
+	                                      <a href="javascript: void(0);"><i class="dripicons-star me-2"></i>중요</a>
+	                                      <a href="javascript: void(0);"><i class="dripicons-document me-2"></i>임시보관함<span class="badge badge-soft-info float-end ms-2">32</span></a>
+	                                      <a href="javascript: void(0);"><i class="dripicons-exit me-2"></i>보낸메일</a>
+	                                      <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
+	                                  </div>
+	
+	                                  <h6 class="mt-4">Labels</h6>
+	
+	                                  <div class="list-group b-0 mail-list">
+	                                      <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-info me-2"></span>Web App</a>
+	                                      <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-warning me-2"></span>Recharge</a>
+	                                      <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-dark me-2"></span>Wallet Balance</a>
+	                                      <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-primary me-2"></span>Friends</a>
+	                                      <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-success me-2"></span>Family</a>
+	                                  </div>
+	
+	                              </div>
+	                              <!-- End Left sidebar -->
+	
+	                              <div class="inbox-rightbar">
+	
+	                                  <div class="btn-group">
+	                                      <button type="button" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
+	                                  </div>
+	                                  <div class="btn-group">
+	                                      <button type="button" class="btn btn-sm btn-light dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
+	                                          <i class="mdi mdi-folder font-18"></i>
+	                                          <i class="mdi mdi-chevron-down"></i>
+	                                      </button>
+	                                      <div class="dropdown-menu">
+	                                          <span class="dropdown-header">이동</span>
+	                                          <a class="dropdown-item" href="javascript: void(0);">임시보관함</a>
+	                                      </div>
+	                                  </div>
+	                                  <div class="mt-4" >
+	                                      <form>
+	                                          <div class="mb-3">
+	                                              <input type="email" class="form-control" placeholder="To">
+	                                          </div>
+	  
+	                                          <div class="mb-3">
+	                                              <input type="text" class="form-control" placeholder="Subject">
+	                                          </div>
+	                                          <div class="mb-3 card border-0">
+	                                              <div id="snow-editor" style="min-height: 500px;">
+	                                                  <h3><span class="ql-size-large">Hello World!</span></h3>
+	                                                  <p><br></p>
+	                                                  <h3>This is an simple editable area.</h3>
+	                                                  <p><br></p>
+	                                                  <ul>
+	                                                      <li>
+	                                                          Select a text to reveal the toolbar.
+	                                                      </li>
+	                                                      <li>
+	                                                          Edit rich document on-the-fly, so elastic!
+	                                                      </li>
+	                                                  </ul>
+	                                                  <p><br></p>
+	                                                  <p>
+	                                                      End of simple area
+	                                                  </p>
+	                                              </div> <!-- end Snow-editor-->
+	                                          </div>
+	  
+	                                          <div>
+	                                              <div class="text-end">
+	                                                  <button type="button" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-delete"></i></button>
+	                                                  <button class="btn btn-primary waves-effect waves-light"> <span>보내기</span> <i class="mdi mdi-send ms-2"></i> </button>
+	                                              </div>
+	                                          </div>
+	  
+	                                      </form>
+	                                  </div> <!-- end card-->
+	      
+	                              </div> 
+	                              <!-- end inbox-rightbar-->
+	
+	                              <div class="clearfix"></div>
+	                          </div>
+	                      </div>
+	                  </div> <!-- end Col -->
+	
+	              </div><!-- End row -->
+	              
+	          </div> <!-- container -->
+	
+	      </div> <!-- content -->			
+			
+
+
 
 			</div>
 
@@ -321,6 +182,7 @@
       <!-- ============================================================== -->
       
 	</div>
+</div>
       
 
 	

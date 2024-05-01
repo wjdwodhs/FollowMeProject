@@ -160,7 +160,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#" data-bs-toggle="collapse" class="menu-link">
+                <a href="${ contextPath }/email/email.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="mail"></i></span>
                     <span class="menu-text"> 이메일 </span>
                 </a>
