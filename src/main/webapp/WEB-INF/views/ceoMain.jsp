@@ -332,20 +332,54 @@
                             </div> <!-- end col -->
 
                             <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 400px;">
-                                        
-                                        <h4 class="header-title">메뉴 뭘로 할지 고민중</h4>
-                                        
-                                        <div class="mt-3 chartjs-chart">
-                                            <canvas id="bar-chart-grouped"></canvas>
-                                        </div>
-                                        
-                                        
-                                        
-                                    </div>
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
+													    <div class="card">
+													        <div class="card-body" style="height: 400px;">
+													            <h4 class="header-title">오늘의 패션 뉴스</h4>
+													            <div id="news-container" style="height: 330px; overflow-y:auto;"></div> <!-- 뉴스를 보여줄 영역 -->
+													             <script>
+													                $(document).ready(function() {
+													                    $.ajax({
+													                        url: '${contextPath}/chart/naverNews.do', 
+													                        method: 'GET',
+													                        success: function(response) {
+													                            displayNews(response); 
+													                        },
+													                        error: function(xhr, status, error) {
+													                            console.error('Error fetching news:', error);
+													                        }
+													                    });
+													                });
+													                
+													                // 받은 데이터를 웹사이트에 표시하는 함수
+													                function displayNews(newsData) {
+													                    var newsContainer = document.getElementById('news-container');
+													                    var newsHtml = '';
+													
+													                    // 만약 newsData가 배열이 아니라면, 배열로 변환
+													                    if (!Array.isArray(newsData.items)) {
+													                        newsData.items = [newsData.items];
+													                    }
+													
+													                    // JSON 데이터를 순회하며 HTML로 변환
+													                    newsData.items.forEach(function(item) {
+													                    	if (item.title.includes('패션')) { // 패션 키워드로 검색
+													                            newsHtml += '<div class="news-item">' +
+													                                            '<h5><a href="' + item.link + '" target="_blank">' + item.title + '</a></h5>' +
+													                                            '<p>' + item.description + '</p>' +
+													                                        '</div>';
+													                        }
+													                    });
+													
+													                    // 변환된 HTML을 뉴스 컨테이너에 추가
+													                    newsContainer.innerHTML = newsHtml;
+													                }
+													            </script>
+													            
+													        </div>
+													    </div> <!-- end card-->
+													</div> <!-- end col -->
+
+
 
                             
                         </div>
