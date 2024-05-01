@@ -68,7 +68,7 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">좌석</a></li>
-                                            <li class="breadcrumb-item active">조회 / 설정</li>
+                                            <li class="breadcrumb-item active">사무실 좌석 예약</li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title"><b>사무실 좌석</b></h4>

@@ -68,12 +68,12 @@
 	                    <div class="page-title-box">
 	                        <div class="page-title-right">
 	                            <ol class="breadcrumb m-0">
-	                                <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-	                                <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-	                                <li class="breadcrumb-item active">Add / Edit Product</li>
-	                            </ol>
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">좌석</a></li>
+                                  <li class="breadcrumb-item active">사무실 좌석 예약</li>
+                              </ol>
 	                        </div>
-	                        <h4 class="page-title"><b>시설예약 / 사무실 좌석</b></h4>
+	                        <h4 class="page-title"><b>사무실 좌석 예약</b></h4>
 	                    </div>
 	                </div>
 	            </div>
@@ -210,7 +210,7 @@
                                 <!-- 예약 신청 -->
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b> | <small> RESERVATION INQUIRY</small></h5>
+                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b> | <small> RESERVATION</small></h5>
 
                                         <div class="mb-3">
                                             <form action="">
