@@ -27,5 +27,4 @@ public class MemberServiceImpl implements MemberService {
 	public int updateTempPwd(MemberDto isMember) {
 		return memberDao.updateTempPwd(isMember);
 	}
-
 }

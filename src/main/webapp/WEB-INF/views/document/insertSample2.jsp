@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${ pageContext.request.contextPath}" />
+<c:set var="contextPath" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
-<html>
+<html lang="en" data-topbar-color="dark">
+
 <head>
-<meta charset="UTF-8">
-<title>대표 메인페이지 | Follow Me</title>
+<meta charset="utf-8" />
+<title>전자결재 양식 2. 자택근무신청서 | Follow me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
-
-<!-- Plugins css -->
-<link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-<link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
 <script src="${ contextPath }/assets/js/head.js"></script>
@@ -30,346 +27,316 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+<!-- Plugins css -->
+<link href="${ contextPath }/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        .a.nav-link.active{background-color:#FEBE98;}
+
+        .card{
+            align-items: center;
+            width: 80%;
+        }
+        
+        .document-info{ 
+            display: flex; 
+        }
+        
+        .top-document{
+            justify-content: space-between;
+            display: flex;
+            align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */     
+        }
+
+        .document-title{
+            margin-bottom: 60px; margin-left: 70px;
+        }
+        
+        .sign-table{
+            text-align: right;
+            margin-bottom: px;
+        }
+        
+        .table-sign{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .table-sign tr>th, .table-sign tr>td{
+            text-align: center; 
+            width: 100px;
+            height: 25px;
+            font-size: 11px;
+            font-weight: lighter;
+        }
+
+        .sign{
+            height:75px;
+        }
+
+        .table-info-1, .table-info-2{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        
+        .table-info-2{
+            margin-left: 2px;
+        }
+        
+        .table-2-1{
+            border: 1px solid rgb(102, 88, 221);
+            border-collapse: collapse;
+            margin-bottom: 15px; 
+        }
+        
+        .table-sign th, .table-sign td, .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td{
+            border: 1px solid rgb(102, 88, 221);
+            padding: 8px;
+            text-align: left;
+            
+        }
+        
+        .table-2-1 th, .table-2-1 td{
+            border: 1px solid rgb(102, 88, 221);
+            padding: 8px;
+            text-align: left;
+            height: 40px;
+        }
+
+        #snow-editor {
+            flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
+        }
+
+        input:focus ,td>textarea:focus{
+            outline: none;
+        }
+
+    </style>
 
 </head>
+
 <body>
-<!-- Begin page -->
-  <div id="wrapper">
+	<!-- Begin page -->
+	<div id="wrapper">
 
-     <!-- sidemenu include -->
-     <jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
-      
+  	<!-- sidemenu include -->
+  	<jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
+            
+  	<div class="content-page">
 
-      <!-- ============================================================== -->
-      <!-- Start Page Content here -->
-      <!-- ============================================================== -->
+    	<!-- topbar include -->
+      <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
 
-      <div class="content-page">
-
-         <!-- topbar include -->
-         <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
-         
-         <div class="content" style="background-color:#F2E8DA;">
+            <!-- ============================================================== -->
+            <!-- Start Page content -->
+            <!-- 전자결재 양식 2. 재택근무신청서-->
+            <!-- ============================================================== -->
+                
+                <div class="content" style="background-color: #F2E8DA;">
 
                     <!-- Start Content-->
-                    <div class="container-fluid">
+                    <div class="container-fluid" style="display:flex; justify-content: center;">
                         
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
+                        <div class="card" style="margin-top: 50px;">
+                            <div class="card-body">
+                                <div class="top-document">
+                                    <div class="document-title">
+                                        <h1>재택근무신청서</h1>
+                                    </div>
+                                    <div class="sign-table">
+                                        <table class="table-sign">
+                                            <tr>
+                                                <th rowspan="5" style="width:20px;">결 재 선</th>
+                                            </tr>
+                                            <tr>
+                                                <th>작 성 자</th>
+                                                <th>결 재 자</th>
+                                            </tr>
+                                            <tr class="sign">
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>  
+
+                                <div class="document-info">
+
+                                    <div class="info-1">
+                                        <table class="table-info-1">
+                                            <tr>
+                                                <th width="120px;">부서</th>
+                                                <td width="266px;">경영지원</td>    
+                                            </tr>
+                                            <tr>
+                                                <th>직급</th>
+                                                <td>대리</td>
+                                            </tr>
+                                            <tr>
+                                                <th>신청자</th>
+                                                <td>유주찬</td>
+                                            </tr>
+                                            <tr>
+                                                <th>신청일</th>
+                                                <td>2024-05-13 (월)</td>
+                                            </tr>
+                                        </table>
                                         
                                     </div>
-                                    <h4 class="page-title"></h4>
+                                    <div class="info-2">
+                                        <table class="table-info-2">
+                                            <tr>
+                                                <th width="120px;">참조인</th>
+                                                <td width="266px;">경영지원 김성한 팀장</td>
+                                            </tr>
+                                            <tr>
+                                                <th>보존연한</th>
+                                                <td>기안일로부터 5년</td>
+                                            </tr>
+                                            <tr>
+                                                <th>전화번호</th>
+                                                <td>010-9999-9999</td>
+                                            </tr>
+                                            <tr>
+                                                <th>결재일</th>
+                                                <td>2024-05-14 (화)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
                                 </div>
+
+                                    <div class="table-2">
+                                        <table class="table-2-1">
+                                            <tr>
+                                                <th width="120px;">제목</th>
+                                                <td width="655px;">
+                                                    <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    
+                                <!-- 내용 작성하기 -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border-primary mb-0">
+
+                                        <tbody>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;"> 근 무 일 </th>
+                                                <td>
+                                                    <input type="date" id="startDate" size="20" style="width:100px; border:0;"> ~
+                                                    <input type="date" id="endDate" size="20" style="width:100px; border:0;">
+                                                </td>
+                                            </tr>
+
+                                            <script>
+                                                // 오늘 today
+                                                var today = new Date();
+                                                // 내일 tomorrow
+                                                var tomorrow = new Date(today);
+                                                tomorrow.setDate(today.getDate() + 1);
+                                                // 14일후 nextTwoWeeks
+                                                var nextTwoWeeks = new Date(today);
+                                                nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
+                                        
+                                                // startDate 설정
+                                                var startDateField = document.getElementById('startDate');
+                                                startDateField.valueAsDate = tomorrow; // 최소날짜 내일
+                                                startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+                                                startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+                                        
+                                                // endDate 설정
+                                                var endDateField = document.getElementById('endDate');
+                                                endDateField.valueAsDate = tomorrow; // 최소날짜 내일
+                                                endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+                                                endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+
+                                                function checkEndDate() {
+                                                    if (endDateField.value < startDateField.value) {
+                                                        endDateField.value = startDateField.value;
+                                                    }
+                                                    endDateField.min = startDateField.value;
+                                                }
+
+                                                endDateField.addEventListener('change', checkEndDate);
+                                                startDateField.addEventListener('change', checkEndDate);
+                                            </script>
+
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">
+                                                    신청사유 <br>및<br> 근무내용
+                                                </th>
+                                                <td style="height:250px; width:350px;">
+                                                    <div id="snow-editor" style="height:250px;">
+                                                        기안자 작성란
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;"> 비 고 </th>
+                                                <td>
+                                                    <input type="text" name="etc-box" size="20" style="width:100%; border:0;" value="기안자 작성란">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">첨 부</th>
+                                                <td><input type="file" style="width:645px;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
+                                                <!--
+                                                    <td>
+                                                        <c:forEach var="at" items="${ board.attachList }">
+                                                            <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
+                    	                                </c:forEach>
+                                                    </td>
+                                                -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> <!-- 내용 작성하기 끝-->
+
+                                <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 재택근무를 신청하고자 하오니 허락하여 주시기 바랍니다.</p>
+                                <!--결재 처리사유-->
+                                <div class="opinion-box" style="margin-top:20px;">
+                                    <table class="table table-bordered border-primary mb-0">      
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">
+                                                    처 리 <br> 사 유
+                                                </th>
+                                                <td>
+                                                    <textarea rows="5" style="border:0; width:100%; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                    </table>
+                                </div> <!-- 결재 처리사유 끝-->
                             </div>
-                        </div>     
-
-                        <div class="row">
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#febe98; border-color:#febe98;">
-                                                    <i class="fe-heart font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1">₩<span data-plugin="counterup">594,700</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 매출액</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#de8286; border-color:#de8286;">
-                                                    <i class="fe-shopping-cart font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">20</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 판매량</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#fa9a85; border-color:#fa9a85;">
-                                                    <i class="fe-bar-chart-line- font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">10</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 결재</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#ffb2a5; border-color:#ffb2a5;">
-                                                    <i class="fe-eye font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">5</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 일정</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
                         </div>
-                        <!-- end row-->
-
-                        <div class="row">
-                            
-
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 450px;">
-                                        <h4 class="header-title">베스트 상품</h4>
-                                        <p class="sub-header"> </p>
-                                        
-                                        <!--  추후 기능 구현 시 판매량 높은 순으로 정렬 -->
-                                        <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner" role="listbox">
-                                                <div class="carousel-item active">
-                                                    <img src="${ contextPath }/assets/images/small/img-8.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-9.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-10.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-11.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-12.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col-->
-                            
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 450px;">
-                                        
-                                        <h4 class="header-title mb-0">베스트 상품 현황</h4>
-                                        
-                                        <div class="row justify-content-end">
-                                            
-                                        </div>
-                                        
-                                        <div id="cardCollpase5" class="collapse show">
-                                            <div class="table-responsive pt-3">
-                                                <table class="table table-hover table-centered mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>상품명</th>
-                                                            <th>가격</th>
-                                                            <th>판매량</th>
-                                                            <th>총 금액</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>COMME DES GARCONS 카라 히든 버튼 코트</td>
-                                                            <td>₩169,000</td>
-                                                            <td>4</td>
-                                                            <td>₩676,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>GUCCI 울 100% GG 로고 패턴 배색 프린지 머플러</td>
-                                                            <td>₩119,000</td>
-                                                            <td>5</td>
-                                                            <td>₩595,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>CHLOE 나일론 코튼 카라 버튼 자켓</td>
-                                                            <td>₩49,000</td>
-                                                            <td>4</td>
-                                                            <td>196,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>THEORY 린넨 블렌드 팬츠</td>
-                                                            <td>₩33,000</td>
-                                                            <td>1</td>
-                                                            <td>₩33,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>LANVIN 텐셀 더블 버튼 블레이저</td>
-                                                            <td>₩30,000</td>
-                                                            <td>1</td>
-                                                            <td>₩30,000</td>
-                                                        </tr>
-                                                                                                                
-                                                    </tbody>
-                                                </table>
-                                            </div> <!-- end table responsive-->
-                                        </div> <!-- collapsed end -->
-                                    </div> <!-- end card-body -->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-                            
-														<div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 400px;">
-                                        
-                                        <h4 class="header-title">일별 판매 현황</h4>
-                                        
-                                        <div>
-																				  <canvas id="myChart" style="border: none !important;outline: none !important;"></canvas>
-																				</div>
-																				
-																				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-																				
-																				<script>
-																			    $(document).ready(function(){
-																			        $.ajax({
-																			            url: '${contextPath}/chart/revenue.do',
-																			            method: 'GET',
-																			            success: function(data){
-																			                
-																			                var dates = data.map(function(item) {
-																			                		var orderDate = new Date(item.orderDate);
-																			                    return orderDate.toLocaleDateString();
-																			                });
-																			                var orderAmount = data.map(function(item) {
-																			                    return item.orderAmount
-																			                });
-																			
-																			                var ctx = document.getElementById('myChart').getContext('2d');
-																			                var myChart = new Chart(ctx, {
-																			                    type: 'bar',
-																			                    data: {
-																			                        labels: dates,
-																			                        datasets: [{
-																			                            label: '총 판매량',
-																			                            data: orderAmount,
-																			                            backgroundColor: '#febe98', 
-																			                            borderWidth: 0
-																			                        }]
-																			                    },
-																			                    options: {
-																			                        scales: {
-																			                            yAxes: [{
-																			                                ticks: {
-																			                                    beginAtZero: true,
-																			                                    max: 10 // 최대 값 설정
-																			                                }
-																			                            }]
-																			                        }
-																			                    }
-																			                });
-																			            },
-																			            error: function(xhr, status, error){
-																			                console.error(error);
-																			            }
-																			        });
-																			    });
-																			</script>
-
-                                        
-                                        
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 400px;">
-                                        
-                                        <h4 class="header-title">메뉴 뭘로 할지 고민중</h4>
-                                        
-                                        <div class="mt-3 chartjs-chart">
-                                            <canvas id="bar-chart-grouped"></canvas>
-                                        </div>
-                                        
-                                        
-                                        
-                                    </div>
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-
-                            
-                        </div>
-                        <!-- end row -->
+                    </div>
+          
 
 
-
-                            
                         
                     </div> <!-- container -->
 
                 </div> <!-- content -->
 
-               
             </div>
 
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
 
-        </div>
-        <!-- END wrapper -->
+      <!-- ============================================================== -->
+      <!-- <-- End Page Content
+      <!-- ============================================================== -->
+      
+      
 
-        <!-- Theme Settings -->
+	
+				<!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
             <div class="d-flex align-items-center w-100 p-0 offcanvas-header">
                 <!-- Nav tabs -->
@@ -434,7 +401,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -449,7 +416,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -464,7 +431,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -483,7 +450,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -498,7 +465,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -513,7 +480,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -528,7 +495,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -543,7 +510,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -558,7 +525,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -844,24 +811,12 @@
 
         <!-- Dashboar 1 init js-->
         <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-
-        <!-- Chart JS -->
-        <script src="${ contextPath }/assets/libs/chart.js/Chart.bundle.min.js"></script>
-
-        <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
-
-        <!-- Chat app -->
-        <script src="${ contextPath }/assets/js/pages/jquery.chat.js"></script>
-
-        <!-- Todo app -->
-        <script src="${ contextPath }/assets/js/pages/jquery.todo.js"></script>
-
-        <!-- Dashboard init JS -->
-        <script src="${ contextPath }/assets/js/pages/dashboard-3.init.js"></script>
         
-        
-       
+        <!-- Plugins js -->
+        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
 
+        <!-- Init js-->
+        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+	
 </body>
 </html>

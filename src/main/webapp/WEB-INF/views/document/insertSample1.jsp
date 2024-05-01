@@ -7,34 +7,34 @@
 
 <head>
 <meta charset="utf-8" />
-<title>임직원 메인페이지 | Follow me</title>
+<title>전자결재 양식 1. 품의서 | Follow me</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${ contextPath }/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Plugins css -->
-<link href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
         
 <!-- Plugins css -->
-<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
 
     <style>
         .a.nav-link.active{background-color:#FEBE98;}
@@ -141,12 +141,12 @@
       <!-- ============================================================== -->
 
 			
-                <div class="content">
+                <div class="content" style="background-color: #F2E8DA;">
 
                     <!-- Start Content-->
-                    <div class="container-fluid">
+                    <div class="container-fluid" style="display:flex; justify-content: center;">
                         
-                        <div class="card">
+                        <div class="card" style="margin-top: 50px;">
                             <div class="card-body">
                                 <div class="top-document">
                                     <div class="document-title">
@@ -155,7 +155,7 @@
                                     <div class="sign-table">
                                         <table class="table-sign">
                                             <tr>
-                                                <th rowspan="5" style="width: 20px;">결 재 선</th>
+                                                <th rowspan="5" style="width:20px;">결 재 선</th>
                                             </tr>
                                             <tr>
                                                 <th>작 성 자</th>
@@ -163,11 +163,6 @@
                                                 <th>결 재 자</th>
                                             </tr>
                                             <tr class="sign">
-                                                <td><img src="${contextPath}/assets/images/chan_sign_test.png"></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -181,8 +176,8 @@
                                     <div class="info-1">
                                         <table class="table-info-1">
                                             <tr>
-                                                <th width="35%;">기안부서</th>
-                                                <td width="250px;">경영지원</td>    
+                                                <th width="120px;">부서</th>
+                                                <td width="266px;">경영지원</td>    
                                             </tr>
                                             <tr>
                                                 <th>직급</th>
@@ -202,8 +197,8 @@
                                     <div class="info-2">
                                         <table class="table-info-2">
                                             <tr>
-                                                <th width="35%;">참조인</th>
-                                                <td width="250px;">경영지원 김성한 팀장</td>
+                                                <th width="120px;">참조인</th>
+                                                <td width="266px;">경영지원 김성한 팀장</td>
                                             </tr>
                                             <tr>
                                                 <th>보존연한</th>
@@ -225,8 +220,10 @@
                                     <div class="table-2">
                                         <table class="table-2-1">
                                             <tr>
-                                                <th width="113px;">제목</th>
-                                                <td width="550px;">전자결재 01.품의서 제목입니다. 기안자 작성란</td>
+                                                <th width="120px;">제목</th>
+                                                <td width="655px;">
+                                                    <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -239,10 +236,10 @@
                                         <tbody>
                                             <tr>
                                                 <th style="text-align:center; width:13%;">
-                                                    품의사유 <br>및<br>상세내용
+                                                    품의사유 <br>및<br> 상세내용
                                                 </th>
-                                                <td style="height: 250px; width: 350px;">
-                                                    <div id="snow-editor" style="height: 250px;">
+                                                <td style="height:250px; width:350px;">
+                                                    <div id="snow-editor" style="height:250px;">
                                                         기안자 작성란
                                                     </div>
                                                 </td>
@@ -250,14 +247,25 @@
                                             <tr>
                                                 <th style="text-align:center; width:13%;"> 비 용 </th>
                                                 <td>
-                                                    <input type="text" name="text" size="20" style="width:100%; border: 0;"> 기안자 작성란
+                                                    <input type="text" name="price-box" size="20" style="width:100%; border:0;" value="기안자 작성란">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th style="text-align:center; width:13%;"> 비 고 </th>
                                                 <td>
-                                                    <input type="text" name="text" size="20" style="width:100%; border: 0;"> 기안자 작성란
+                                                    <input type="text" name="etc-box" size="20" style="width:100%; border:0;" value="기안자 작성란">
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center; width:13%;">첨 부</th>
+                                                <td><input type="file" style="width:645px;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
+                                                <!--
+                                                    <td>
+                                                        <c:forEach var="at" items="${ board.attachList }">
+                                                            <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
+                    	                                </c:forEach>
+                                                    </td>
+                                                -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -271,7 +279,7 @@
                                                     처 리 <br> 사 유
                                                 </th>
                                                 <td>
-                                                    <textarea rows="5" style="border:0; width:100%; resize: none;">결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                                    <textarea rows="5" style="border:0; width:100%; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -280,13 +288,10 @@
                             </div>
                         </div>
                     </div>
-          
+        				  
+        				  </div> <!-- container -->
 
-
-                        
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
+               </div> <!-- content -->
 
             </div>
 
@@ -297,7 +302,9 @@
       
 
 	
-	<!-- Theme Settings -->
+
+	
+				<!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
             <div class="d-flex align-items-center w-100 p-0 offcanvas-header">
                 <!-- Nav tabs -->
@@ -362,7 +369,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -377,7 +384,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -392,7 +399,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -411,7 +418,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -426,7 +433,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -441,7 +448,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -456,7 +463,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -471,7 +478,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -486,7 +493,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -760,24 +767,24 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="assets/js/pages/dashboard-1.init.js"></script>
+        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
         
         <!-- Plugins js -->
-        <script src="assets/libs/quill/quill.min.js"></script>
+        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
 
         <!-- Init js-->
-        <script src="assets/js/pages/form-quilljs.init.js"></script>
+        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
 	
 </body>
 </html>
