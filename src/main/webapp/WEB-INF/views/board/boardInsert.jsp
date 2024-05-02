@@ -104,11 +104,12 @@
                                             <div>
                                                 <span>To.</span>
                                                 <span>
-                                                    <select name="" id="">
+                                                    <select name="" id="" style="margin-right: 20px">
                                                         <option value="">공지사항</option>
                                                         <option value="">사내소식</option>
-                                                    </select>
+                                                    </select>                                                                  
                                                 </span>
+                                                필독 <input type="checkbox">
                                             </div>
                                             <div class="col-lg-12">
                                                 <hr>

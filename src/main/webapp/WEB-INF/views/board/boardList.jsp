@@ -112,13 +112,24 @@
 
                                 <div class="card">
                                     <div class="card-body">
+                                    	<div class="col-9">
+                                    		<span>
+                                            	<select class="form-select form-select-sm" style="width:auto">
+                                            		<option>게시판</option>
+                                            		<option>통합검색</option>
+                                            	</select> 	
+                                            </span>
+                                                <input type="text" class="form-control form-control-sm" style="width: 100px">
+                                    	</div>
                                         <div class="row">
+                                        
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
                                                 	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
                                                 	<li><a href="${contextPath}/noticeList.page" onclick="activateMenuItem(this)">공지사항</a></li>
                                                 	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
-                                                </ul>
+                                                </ul>                                              
+                                                
                                             </div>
 
                                             <div class="col-lg-3"  >
