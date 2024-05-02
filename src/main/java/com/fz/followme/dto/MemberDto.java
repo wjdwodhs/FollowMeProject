@@ -45,5 +45,6 @@ public class MemberDto {
 	
 	private String deptName;
 	private String hashedPassword;
+	private String memNewEmail;
 	
 }

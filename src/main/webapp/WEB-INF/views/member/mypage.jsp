@@ -32,6 +32,66 @@
 	.a.nav-link.active{backgroun-color:#febe98;}
 </style>
 
+<script>
+		//"이메일 중복 확인" 링크 클릭 시 모달 창 표시
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#emailCheckLink').addEventListener('click', function() {
+            $('#emailCheckModal').modal('show'); 
+        });
+    });
+   
+		// 이메일 변경 모달창 '변경' 버튼 클릭 시 함수
+		function changeEmail() {
+			var originalEmail = document.getElementById('originMemEmail').value;
+			var newEmail = document.getElementById('newMemEmail').value;
+			
+			if(newEmail == '') {
+				alert('변경할 이메일을 입력해주세요');
+			} else if(originalEmail == newEmail) {
+				alert('기존과 다른 이메일 주소를 입력해주세요');
+			} else {
+				location.href = "${contextPath}/member/changeEmail.do?originalEmail=" + originalEmail + "&newEmail=" + newEmail;
+			}
+			
+		}
+		
+		// 비밀번호 버튼 클릭 시 모달창 표시
+		 document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#memPwd').addEventListener('click', function() {
+            $('#pwdChangeModal').modal('show'); 
+        });
+    });
+		
+		// 비밀번호 변경 모달창 '변경' 버튼 클릭 시 함수
+		function validatePassword(password) {
+			
+	    const regex = /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-z\d!@#$%^&*]{8,15}$/;
+	    return regex.test(password);
+		}
+		
+		function changePwd() {
+			 	var memNo = document.getElementById('memNo').value;
+		    var newMemPwd = document.getElementById('newMemPwd').value;
+		    var newMemPwdConfirm = document.getElementById('newMemPwdConfirm').value;
+		
+		    if (!validatePassword(newMemPwd)) {
+		        alert('비밀번호는 8~15자 사이의 영문, 숫자, 특수문자를 포함해야 합니다.');
+		        return;
+		    }
+		
+		    if (newMemPwd !== newMemPwdConfirm) {
+		        alert('비밀번호가 일치하지 않습니다.');
+		        return;
+		    }
+		
+		    // 비밀번호 변경 로직
+		    location.href = "${contextPath}/member/changePwd.do?newMemPwd=" + newMemPwd + "&memNo=" + memNo;
+		}
+    
+    
+</script>
+
+
 </head>
 
 <body>
@@ -296,19 +356,93 @@
 		                                                    <div class="row">
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
-		                                                                <label for="useremail" class="form-label">이메일</label>
-		                                                                <input type="email" class="form-control" id="useremail" value="${mypageUser.memEmail}">
-		                                                                <span class="form-text text-muted"><small>이메일 변경 <a href="javascript: void(0);">click</a> here.</small></span>
+		                                                                <label for="memEmail" class="form-label">이메일</label>
+		                                                                <input type="email" class="form-control" id="memEmail" value="${mypageUser.memEmail}">
+		                                                                <span class="form-text text-muted"><small>이메일 변경 <a href="#" id="emailCheckLink"> click</a> here.</small></span>
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
-		                                                            <div class="mb-3">
-		                                                                <label for="userpassword" class="form-label">비밀번호</label>
-		                                                                <input type="password" class="form-control" id="userpassword" placeholder="비밀번호는 아래 링크를 클릭해 변경해주세요" readonly>
-		                                                                <span class="form-text text-muted"><small>비밀번호 변경 <a href="javascript: void(0);">click</a> here.</small></span>
+																												        <div class="mb-3">
+		                                                                <label for="memPwd" class="form-label">비밀번호는 아래 버튼을 클릭해 변경해주세요.</label>
+		                                                                <input type="button" class="form-control" id="memPwd" value="비밀번호 변경" style="background-color:#f97272; color:white;"> 
+		                                                                <input type="hidden" id="memNo" value="${ mypageUser.memNo }">
 		                                                            </div>
-		                                                        </div> <!-- end col -->
+																												    </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
+		                                                    
+		                                                    
+		                                                    <div id="emailCheckModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+							                                            <div class="modal-dialog">
+							                                                <div class="modal-content">
+							                                                    <div class="modal-header">
+							                                                        <h4 class="modal-title">이메일 변경</h4>
+							                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							                                                    </div>
+							                                                    <div class="modal-body p-4">
+							                                                        
+							                                                        <div class="row">
+							                                                            <div class="col-md-12">
+							                                                                <div class="mb-3">
+							                                                                    <label for="originMemEmail" class="form-label">기존 이메일</label>
+							                                                                    <input type="email" class="form-control" id="originMemEmail"value="${mypageUser.memEmail}" readonly>
+							                                                                </div>
+							                                                            </div>
+							                                                        </div>
+							                                                        <div class="row">
+							                                                            <div class="col-md-12">
+							                                                                <div class="mb-3">
+							                                                                    <label for="newMemEmail" class="form-label">변경 이메일</label>
+							                                                                    <input type="email" class="form-control" id="newMemEmail" placeholder="변경할 이메일을 입력하세요" required>
+							                                                                </div>
+							                                                            </div>
+							                                                        </div>
+							                                                        
+							                                                    </div>
+							                                                    <div class="modal-footer">
+							                                                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
+							                                                        <button type="button" class="btn waves-effect waves-light" onclick="changeEmail();" style="background-color:#febe98; color:white;">변경</button>
+							                                                    </div>
+							                                                </div>
+							                                            </div>
+							                                        </div><!-- /.modal -->
+							                                        
+							                                        <div id="pwdChangeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+							                                            <div class="modal-dialog">
+							                                                <div class="modal-content">
+							                                                    <div class="modal-header">
+							                                                        <h4 class="modal-title">비밀번호 변경</h4>
+							                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							                                                    </div>
+							                                                    <div class="modal-body p-4">
+							                                                        
+							                                                        <div class="row">
+							                                                            <div class="col-md-12">
+							                                                                <div class="mb-3">
+							                                                                    <label for="newMemPwd" class="form-label">변경 비밀번호(8~15자리 영문,숫자,특수문자 포함)</label>
+							                                                                    <input type="email" class="form-control" id="newMemPwd" placeholder="변경할 비밀번호를 입력하세요." required>
+							                                                                </div>
+							                                                            </div>
+							                                                        </div>
+							                                                        <div class="row">
+							                                                            <div class="col-md-12">
+							                                                                <div class="mb-3">
+							                                                                    <label for="newMemPwdConfirm" class="form-label">변경 비밀번호 확인</label>
+							                                                                    <input type="email" class="form-control" id="newMemPwdConfirm" placeholder="변경할 비밀번호를 다시 한번 입력하세요." required>
+							                                                                </div>
+							                                                            </div>
+							                                                        </div>
+							                                                        
+							                                                    </div>
+							                                                    <div class="modal-footer">
+							                                                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
+							                                                        <button type="button" class="btn waves-effect waves-light" onclick="changePwd();" style="background-color:#febe98; color:white;">변경</button>
+							                                                    </div>
+							                                                </div>
+							                                            </div>
+							                                        </div><!-- /.modal -->	
+		                                                    
+		                                                    
+		                                                    
 		    
 		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building me-1"></i> 급여 계좌정보</h5>
 		                                                    <div class="row">

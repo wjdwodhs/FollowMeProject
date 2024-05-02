@@ -157,8 +157,64 @@ public class MemberController {
 	
 	// 인사관리 페이지로 이동
 	@RequestMapping("/empManagement.page")
-	public void empManagementPagd() {}
+	public void empManagementPage() {}
 
+	// 마이페이지 - 이메일 변경 기능
+	@RequestMapping("/changeEmail.do")
+	public String changeEmail(String originalEmail, String newEmail, RedirectAttributes redirectAttributes) {
+		
+		// 사용자의 기존 이메일로 존재하는 사용자인지 확인
+	    MemberDto isMember = memberService.memEmailCheck(originalEmail);
+	    
+	    // 새로운 이메일이 DB에 있는 기존 이메일들과 중복되지 않는지 확인
+	    MemberDto isMemberDouble = memberService.memEmailDoubleCheck(newEmail);
+	    
+	    if(isMemberDouble != null) { // 이메일 중복
+	    	redirectAttributes.addFlashAttribute("alertMsg", "중복된 이메일입니다.");
+	    } else {
+	    	// isMember 객체에 새로운 이메일 담기
+		    isMember.setMemNewEmail(newEmail);
+		    
+		    // 이메일 변경 서비스 호출
+		    int result2 = memberService.changeEmail(isMember);
+		    
+			if(result2 > 0) { // 이메일 변경 성공
+				redirectAttributes.addFlashAttribute("alertMsg", "이메일이 변경되었습니다.");
+			} else { // 이메일 변경 실패
+				redirectAttributes.addFlashAttribute("alertMsg", "이메일 변경에 실패하였습니다.");
+			}
+			
+	    }
+	    
+	    
+		return "redirect:/member/mypage.do"; 
+	}
+	
+	// 마이페이지 - 비밀번호 변경 기능
+	@RequestMapping("/changePwd.do")
+	public String changePwd(String newMemPwd, MemberDto m, RedirectAttributes redirectAttributes) {
+		
+		// 로그인한 사용자 MemberDto 객체 불러오기
+		MemberDto member = memberService.selectMember(m);
+		
+		if(member != null) {
+			// 새로운 pwd 암호화 해서 저장해두기
+			String hashedPassword = bcryptPwdEncoder.encode(String.valueOf(newMemPwd)); // 비밀번호 해싱
+			member.setHashedPassword(hashedPassword);
+			
+			// 비밀번호 업데이트
+			int result = memberService.updateTempPwd(member); // 임시 비밀번호 발급 때 만든 메소드인데 똑같이 활용
+			
+			if(result > 0) {
+				redirectAttributes.addFlashAttribute("alertMsg", "비밀번호가 변경되었습니다.");
+			} else {
+				redirectAttributes.addFlashAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
+			}
+		}
+		
+		return "redirect:/member/mypage.do";
+	}
+	
 }
 
 

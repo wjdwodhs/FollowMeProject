@@ -27,4 +27,14 @@ public class MemberDao {
 	public int updateTempPwd(MemberDto isMember) {
 		return sqlSessionTemplate.update("memberMapper.updateTempPwd", isMember);
 	}
+	
+	// 사용자가 입력한 이메일로 변경하는 서비스
+	public int changeEmail(MemberDto isMember) {
+		return sqlSessionTemplate.update("memberMapper.changeEmail", isMember);
+	}
+	
+	// 사용자가 입력한 이메일이 중복되는지 확인하는 서비스
+	public MemberDto memEmailDoubleCheck(String newEmail) {
+		return sqlSessionTemplate.selectOne("memberMapper.memEmailDoubleCheck", newEmail);
+	}
 }

@@ -27,4 +27,16 @@ public class MemberServiceImpl implements MemberService {
 	public int updateTempPwd(MemberDto isMember) {
 		return memberDao.updateTempPwd(isMember);
 	}
+
+	@Override
+	public int changeEmail(MemberDto isMember) {
+		return memberDao.changeEmail(isMember);
+	}
+
+	@Override
+	public MemberDto memEmailDoubleCheck(String newEmail) {
+		return memberDao.memEmailDoubleCheck(newEmail);
+	}
+
+	
 }

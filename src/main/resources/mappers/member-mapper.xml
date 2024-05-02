@@ -77,5 +77,34 @@
   	 			mem_no = #{memNo}
   </update>
   
+  <!-- 사용자가 입력한 이메일로 변경 (업데이트) -->
+  <update id="changeEmail">
+  	update
+  				tb_mem
+  		 set
+  		  	mem_email = #{memNewEmail}
+  	 where
+  	      mem_no = #{memNo}
+  </update>
+  
+  <!-- 사용자가 입력한 이메일 중복확인용 -->
+  <select id="memEmailDoubleCheck" resultMap="memberResult">
+  	select
+			 	 mem_no, mem_pwd, dept_name,
+			 	 profile_img_path, mem_gender, 
+			 	 mem_name, mem_securityno,
+			 	 mem_address, 
+			 	 mem_email, mem_grade, mem_role,
+			 	 extension_number, phone, 
+			 	 enroll_Date, quit_date, mem_salary,
+			 	 account_no, sig_no, 
+			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
+			 	 authorization_level, status
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		 where status = 'Y'
+		   and mem_email = #{newEmail}
+  </select>
+  
   
 </mapper>
