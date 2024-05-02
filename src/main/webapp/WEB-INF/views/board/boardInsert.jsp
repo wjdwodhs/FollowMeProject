@@ -175,6 +175,7 @@
                                     $(document).ready(function() {
 										//여기 아래 부분
 										$('#summernote').summernote();
+										
 									});
                                     /* 
                                  // 서머노트에 text 쓰기

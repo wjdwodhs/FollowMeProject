@@ -63,8 +63,7 @@
 
 .category a:hover {
   border-bottom: 2px solid #FFBE98;
-}    
-
+}
     
 </style>
 
@@ -104,10 +103,10 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
-                                            <li class="breadcrumb-item active">전체게시글</li>
+                                            <li class="breadcrumb-item active">사내소식</li>
                                         </ol>
                                     </div>                                  
-                                        <h4 class="page-title">게시판</h4> 
+                                        <h4 class="page-title">사내소식</h4> 
                                     </div>
                                 </div>
                             </div>
@@ -134,6 +133,7 @@
                                             </div>
                                         </div>
                                         
+                                        
                                         <script>
                                         function activateMenuItem(element) {
                                         	  // 모든 메뉴 항목의 활성 클래스 제거
@@ -147,7 +147,6 @@
                                         	}
                                         
                                         </script>
-                                        
                                         
                                         <div class="row">                                        
                                             <div class="col-lg-9">
@@ -180,22 +179,22 @@
 		                                                		<c:otherwise>
 		                                                			<c:forEach var="n" items="${ list }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ b.boardNo }</td>
-		                                                					<td class="list-item2"></td>
-		                                                					<td class="list-item3"></td>
-		                                                					<td class="list-item4"></td>
-		                                                					<td class="list-item5"></td>
+		                                                					<td class="list-item1">1</td>
+		                                                					<td class="list-item2">2</td>
+		                                                					<td class="list-item3">3</td>
+		                                                					<td class="list-item4">4</td>
+		                                                					<td class="list-item5">5</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 				</c:otherwise>
                                                 			</c:choose>
-                                                            <tr>
-                                                                <td class="list-item1">6</td>
-                                               					<td class="list-item2">[인사]2023 건강보험료 연말정산 안내</td>
+                                                			<tr>
+                                                				<td class="list-item1">@</td>
+                                               					<td class="list-item2">직원 경조사 관련 게시판 이용 안내</td>
                                                					<td class="list-item3">인사팀</td>
-                                               					<td class="list-item4">2024-01-20</td>
-                                               					<td class="list-item5">27</td>
-                                                            </tr>
+                                               					<td class="list-item4">2020-02-20</td>
+                                               					<td class="list-item5">70</td>
+                                                			</tr>
                                                             <tr>
                                                                 <td class="list-item1">5</td>
                                                					<td class="list-item2">[결혼] 영업부 김우석 사원 결혼(11/11)</td>
@@ -231,6 +230,7 @@
                                                					<td class="list-item4">2023-03-12</td>
                                                					<td class="list-item5">12</td>
                                                             </tr>
+                                                            
                                                         </tbody>
                                                         
                                                     </table>

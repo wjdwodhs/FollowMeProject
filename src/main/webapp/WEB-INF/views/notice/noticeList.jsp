@@ -4,6 +4,7 @@
 <c:set var="contextPath" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -29,11 +30,42 @@
 <!-- Icons css -->
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<script src="assets/js/summernote/summernote-lite.js"></script>
-<script src="assets/js/summernote/lang/summernote-ko-KR.js"></script>
+<style>
+    .list-column{
+        margin: 0 2px;
+        font-weight: bold;
+    }
+    .list-item1{ width: 5%; }
+    .list-item2{ width: 40%; }
+    .list-item3{ width: 10%; }
+    .list-item4{ width: 10%; }
+    .list-item5{ width: 5%; }
+    
+.category a {
+  color: black;
+  text-decoration: none; /* 기본 밑줄 제거 */ 
+}
+
+.category a.active {
+  border-bottom: 2px solid #FFBE98; /* 활성 상태일 때 밑줄 추가 */
+}
 
 
-<link rel="stylesheet" href="assets/css/summernote/summernote-lite.css">
+.category {
+  list-style-type: none; /* 기본 목록 마커 제거 */
+  padding: 0; /* 목록의 내부 여백 제거 */
+}
+
+.category li {
+  display: inline-block; /* 요소들을 가로로 나란히 배치 */
+  margin-right: 10px; /* 요소들 사이의 간격 조절 */
+}
+
+.category a:hover {
+  border-bottom: 2px solid #FFBE98;
+}
+    
+</style>
 
 </head>
 <body>
@@ -45,10 +77,20 @@
   	<jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
             
 
-   	<!-- topbar include -->
-    <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
+   	
+    
+    
+    		<!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
 
-		<div class="content">
+			
+            <div class="content-page">
+				<!-- topbar include -->
+    			<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
+   		          
+
+                <div class="content" style="background-color: #F2E8DA">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -59,71 +101,139 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">Calendar</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
+                                            <li class="breadcrumb-item active">공지사항</li>
                                         </ol>
+                                    </div>                                  
+                                        <h4 class="page-title">공지사항</h4> 
                                     </div>
-                                    <h4 class="page-title">공지사항</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title -->
 
+                        <!-- start page content -->
                         <div class="row">
                             <div class="col-12">
 
                                 <div class="card">
                                     <div class="card-body">
-                                        공지사항
-                                    </div>
-                                    <div class="card-body">
                                         <div class="row">
-                                           
-                                            </div> <!-- end col-->
-                                            <div class="col-lg-11">
-                                            <a href="" class="btn btn-light btn-sm">글쓰기</a>
-                                            <select name="" id="" style="float:right">
-                                                <option value="">20</option>
-                                                <option value="">40</option>
-                                            </select>
+                                            <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
+                                                <ul class="category">
+                                                	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
+                                                	<li><a href="${contextPath}/noticeList.page" onclick="activateMenuItem(this)">공지사항</a></li>
+                                                	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
+                                                </ul>
                                             </div>
 
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">번호</th>
-                                                        <th style="width: 60%;">제목</th>
-                                                        <th style="width: 15%;">작성자</th>
-                                                        <th style="width: 10%;">작성일</th>
-                                                        <th style="width: 10%;">조회수</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="width: 5%;">번호</td>
-                                                        <td style="width: 60%;">제목</td>
-                                                        <td style="width: 15%;">작성자</td>
-                                                        <td style="width: 10%;">작성일</td>
-                                                        <td style="width: 10%;">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="width: 5%;">번호</td>
-                                                        <td style="width: 60%;">제목</td>
-                                                        <td style="width: 15%;">작성자</td>
-                                                        <td style="width: 10%;">작성일</td>
-                                                        <td style="width: 10%;">조회수</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            
+                                            <div class="col-lg-3"  >
+                                                <p>최근공지글 | 최근본글</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <script>
+                                        function activateMenuItem(element) {
+                                        	  // 모든 메뉴 항목의 활성 클래스 제거
+                                        	  var categoryItems = document.querySelectorAll('.category a');
+                                        	  categoryItems.forEach(function(item) {
+                                        	    item.classList.remove('active');
+                                        	  });
+                                        	  
+                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
+                                        	  element.classList.add('active');
+                                        	}
+                                        
+                                        </script>
+                                        
+                                        
+                                        <div class="row">                                        
                                             <div class="col-lg-9">
+                                                
+                                                <table class="table">
+                                                    
+                                                    <table class="table table-hover">
+                                                        <a href="${contextPath}/board/boardInsert.page" class="btn btn-light btn-sm">글쓰기</a>
+                                                        <select name="" id="" style="float:right">
+                                                            <option value="">20</option>
+                                                            <option value="">40</option>
+                                                        </select>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="list-item1">번호</th>
+                                                                <th class="list-item2">제목</th>
+                                                                <th class="list-item3">작성자</th>
+                                                                <th class="list-item4">작성일</th>
+                                                                <th class="list-item5">조회수</th>
+                                                            </tr>
+                                                        </thead>
+                                                        
+                                                        <tbody>
+                                                            <c:choose>
+                                                				<c:when test="${ empty list }">
+		                                                			<tr>
+		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
+		                                                			</tr>
+		                                                		</c:when>
+		                                                		<c:otherwise>
+		                                                			<c:forEach var="n" items="${ list }">
+		                                                				<tr>
+		                                                					<td class="list-item1">${ n.noticeNo }</td>
+		                                                					<td class="list-item2"></td>
+		                                                					<td class="list-item3"></td>
+		                                                					<td class="list-item4"></td>
+		                                                					<td class="list-item5"></td>
+		                                                				</tr>
+		                                                			</c:forEach>
+                                                		</c:otherwise>
+                                                	</c:choose>
+                                                            <tr>
+                                                                <td class="list-item1">@</td>
+                                               					<td class="list-item2">[재무]2024년 결산 주의사항 안내</td>
+                                               					<td class="list-item3">김철완 부장</td>
+                                               					<td class="list-item4">2024-03-02</td>
+                                               					<td class="list-item5">17</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">@</td>
+                                               					<td class="list-item2">[재무]법인카드 관리 강화의 건</td>
+                                               					<td class="list-item3">김철완 부장</td>
+                                               					<td class="list-item4">2023-05-27</td>
+                                               					<td class="list-item5">40</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">1</td>
+                                               					<td class="list-item2">[인사]2023 건강보험료 연말정산 안내</td>
+                                               					<td class="list-item3">인사팀</td>
+                                               					<td class="list-item4">2024-01-20</td>
+                                               					<td class="list-item5">27</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        
+                                                    </table>
+                                            </div>
 
-                                            </div> <!-- end col -->
+                                             <!-- end col-->
+                                            
+                                            <div class="col-lg-3" >
+                                                <ul class="list-group" >
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                </ul>
 
+                                            </div>
+                                             
+                                            <!-- end col -->
+                                            
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
+
+                                <!-- end page content -->
 
                                 <!-- Add New Event MODAL -->
                                 <div class="modal fade" id="event-modal" tabindex="-1">
@@ -673,21 +783,6 @@
             </div>
         </div>
         
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
-
-        <!-- plugin js -->
-        <script src="assets/libs/moment/min/moment.min.js"></script>
-        <script src="assets/libs/fullcalendar/main.min.js"></script>
-
-        <!-- Calendar init -->
-        <script src="assets/js/pages/calendar.init.js"></script>
-
-
-
-
-</body>
+        
+    </body>
 </html>
