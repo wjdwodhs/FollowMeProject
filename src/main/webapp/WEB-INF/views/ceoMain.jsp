@@ -311,7 +311,7 @@
 																			                            yAxes: [{
 																			                                ticks: {
 																			                                    beginAtZero: true,
-																			                                    max: 10 // 최대 값 설정
+																			                                    max: 100 // 최대 값 설정
 																			                                }
 																			                            }]
 																			                        }
