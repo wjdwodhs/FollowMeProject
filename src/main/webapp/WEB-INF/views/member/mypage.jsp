@@ -350,7 +350,7 @@
 		                                                        <div class="col-md-2">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountHolder" class="form-label">예금주</label>
-		                                                                <input type="text" class="form-control" id="accountHolder" value="${mypageUser.memName}">
+		                                                                <input type="text" class="form-control" id="accountHolder" value="${mypageUser.memName}" readonly>
 		                                                            </div>
 		                                                        </div>
 		                                                        

@@ -66,6 +66,7 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
+                                        		<li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">좌석</a></li>
                                             <li class="breadcrumb-item active">사무실 좌석 예약</li>

@@ -7,47 +7,66 @@
 
 <head>
 <meta charset="UTF-8">
-<title>게시글 작성페이지</title>
+<title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
-  
-  
 
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets/images/favicon.ico">
 
+<!-- Plugin css -->
+<link href="assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="${contextPath }/assets/summernote-0.8.18/summernote.min.css">
+<!-- Theme Config Js -->
+<script src="assets/js/head.js"></script>
 
+<!-- Bootstrap css -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+<!-- App css -->
+<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Icons css -->
+<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
-    .form-type{
-        margin: 10px 0;
+    .list-column{
+        margin: 0 2px;
+        font-weight: bold;
     }
+    .list-item1{ width: 5%; }
+    .list-item2{ width: 40%; }
+    .list-item3{ width: 10%; }
+    .list-item4{ width: 10%; }
+    .list-item5{ width: 5%; }
+    
+.category a {
+  color: black;
+  text-decoration: none; /* 기본 밑줄 제거 */ 
+}
 
-    .text_box{
-        width: 100%;
-    }
+.category a.active {
+  border-bottom: 2px solid #FFBE98; /* 활성 상태일 때 밑줄 추가 */
+}
 
-    .attach_box{
-        border: 2px dashed #ddd;
-        padding: 8px 0;
-        box-sizing: border-box;
-        max-height: 200px;
-        width: 100%;
-        position: relative;
-        overflow-y: auto;
-    }
 
-    .table-width {
-        width: 100%;
-        margin: 8px 0;
-    }
+.category {
+  list-style-type: none; /* 기본 목록 마커 제거 */
+  padding: 0; /* 목록의 내부 여백 제거 */
+}
 
-    .cell-width {
-        width: 90%; 
-        margin: 8px 0;
-    }
+.category li {
+  display: inline-block; /* 요소들을 가로로 나란히 배치 */
+  margin-right: 10px; /* 요소들 사이의 간격 조절 */
+}
+
+.category a:hover {
+  border-bottom: 2px solid #FFBE98;
+}
+    
 </style>
+
 </head>
 <body>
 
@@ -71,7 +90,7 @@
     			<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
    		          
 
-                <div class="content">
+                <div class="content" style="background-color: #F2E8DA">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -82,12 +101,12 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">Calendar</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
+                                            <li class="breadcrumb-item active">사내소식</li>
                                         </ol>
                                     </div>                                  
-                                        <h4 class="page-title">글쓰기</h4> 
+                                        <h4 class="page-title">사내소식</h4> 
                                     </div>
                                 </div>
                             </div>
@@ -101,104 +120,139 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div>
-                                                <span>To.</span>
-                                                <span>
-                                                    <select name="" id="">
-                                                        <option value="">공지사항</option>
-                                                        <option value="">사내소식</option>
-                                                    </select>
-                                                </span>
+                                            <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
+                                                <ul class="category">
+                                                	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
+                                                	<li><a href="${contextPath}/noticeList.page" onclick="activateMenuItem(this)">공지사항</a></li>
+                                                	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
+                                                </ul>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <hr>
-                                                <form action="">
-                                                    <fieldset>
-                                                        <table class="form-type table-width">
-                                                            <colgroup>
-                                                                <col width="130px">
-                                                                <col width="*">
-                                                            </colgroup>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th>
-                                                                        <span>제목</span>
-                                                                    </th>
-                                                                    <td class="cell-width">
-                                                                        <table>
-                                                                            <input type="text" class="text_box">
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            
-                                                                <tr>
-                                                                    <th style="position: relative;">
-                                                                        <span style="position: absolute; top: 0; margin: 8px 0;">첨부파일</span>
-                                                                    </th>
-                                                                    <td>
-                                                                        <table class="table-width">
-                                                                            <td class="cell-width" >
-                                                                                <div class="attach_box" style="border: 2px dashed #ddd;" >
-                                                                                    <div>
-                                                                                        <span>
-                                                                                            파일을 선택하세요
-                                                                                            <input type="file" title="파일선택">
-                                                                                        </span>
-                                                                                        
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                            
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <hr>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                             			<textarea id="summernote" name="editordata"></textarea>
-                                                    </fieldset>
-                                                </form>
-                                            </div> <!-- end col-->
-                                            
-                                           
 
+                                            <div class="col-lg-3"  >
+                                                <p>최근공지글 | 최근본글</p>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <script>
+                                        function activateMenuItem(element) {
+                                        	  // 모든 메뉴 항목의 활성 클래스 제거
+                                        	  var categoryItems = document.querySelectorAll('.category a');
+                                        	  categoryItems.forEach(function(item) {
+                                        	    item.classList.remove('active');
+                                        	  });
+                                        	  
+                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
+                                        	  element.classList.add('active');
+                                        	}
+                                        
+                                        </script>
+                                        
+                                        <div class="row">                                        
+                                            <div class="col-lg-9">
+                                                
+                                                <table class="table">
+                                                    
+                                                    <table class="table table-hover">
+                                                        <a href="${contextPath}/board/boardInsert.page" class="btn btn-light btn-sm">글쓰기</a>
+                                                        <select name="" id="" style="float:right">
+                                                            <option value="">20</option>
+                                                            <option value="">40</option>
+                                                        </select>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="list-item1">번호</th>
+                                                                <th class="list-item2">제목</th>
+                                                                <th class="list-item3">작성자</th>
+                                                                <th class="list-item4">작성일</th>
+                                                                <th class="list-item5">조회수</th>
+                                                            </tr>
+                                                        </thead>
+                                                        
+                                                        <tbody>
+                                                            <c:choose>
+                                                				<c:when test="${ empty list }">
+		                                                			<tr>
+		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
+		                                                			</tr>
+		                                                		</c:when>
+		                                                		<c:otherwise>
+		                                                			<c:forEach var="n" items="${ list }">
+		                                                				<tr>
+		                                                					<td class="list-item1">1</td>
+		                                                					<td class="list-item2">2</td>
+		                                                					<td class="list-item3">3</td>
+		                                                					<td class="list-item4">4</td>
+		                                                					<td class="list-item5">5</td>
+		                                                				</tr>
+		                                                			</c:forEach>
+                                                				</c:otherwise>
+                                                			</c:choose>
+                                                			<tr>
+                                                				<td class="list-item1">@</td>
+                                               					<td class="list-item2">직원 경조사 관련 게시판 이용 안내</td>
+                                               					<td class="list-item3">인사팀</td>
+                                               					<td class="list-item4">2020-02-20</td>
+                                               					<td class="list-item5">70</td>
+                                                			</tr>
+                                                            <tr>
+                                                                <td class="list-item1">5</td>
+                                               					<td class="list-item2">[결혼] 영업부 김우석 사원 결혼(11/11)</td>
+                                               					<td class="list-item3">마크 앤슨 대리</td>
+                                               					<td class="list-item4">2023-11-11</td>
+                                               					<td class="list-item5">12</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">4</td>
+                                               					<td class="list-item2">[결혼]인사팀 이지연 사원 결혼(08/20)</td>
+                                               					<td class="list-item3">조던피터슨 사원</td>
+                                               					<td class="list-item4">2023-08-20</td>
+                                               					<td class="list-item5">12</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">3</td>
+                                               					<td class="list-item2">[부고]기획팀 조희찬 과장 모친상</td>
+                                               					<td class="list-item3">마이클샌댈 팀장</td>
+                                               					<td class="list-item4">2023-07-20</td>
+                                               					<td class="list-item5">12</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">2</td>
+                                               					<td class="list-item2">[발령]인사발령 </td>
+                                               					<td class="list-item3">정혜신 대리</td>
+                                               					<td class="list-item4">2023-05-21</td>
+                                               					<td class="list-item5">12</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="list-item1">1</td>
+                                               					<td class="list-item2">[결혼]인사팀 홍길동 사원 결혼(03/12)</td>
+                                               					<td class="list-item3">박민수 선임</td>
+                                               					<td class="list-item4">2023-03-12</td>
+                                               					<td class="list-item5">12</td>
+                                                            </tr>
+                                                            
+                                                        </tbody>
+                                                        
+                                                    </table>
+                                            </div>
+
+                                             <!-- end col-->
+                                            
+                                            <div class="col-lg-3" >
+                                                <ul class="list-group" >
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                </ul>
+
+                                            </div>
+                                             
+                                            <!-- end col -->
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
-									<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-                                    <script src="${contextPath }/assets/summernote-0.8.18/summernote.min.js"></script>
-                                    <script>
-                                    $(document).ready(function() {
-										//여기 아래 부분
-										$('#summernote').summernote();
-										
-									});
-                                    /* 
-                                 // 서머노트에 text 쓰기
-                                    $('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
-
-
-                                    // 서머노트 쓰기 비활성화
-                                    $('#summernote').summernote('disable');
-
-                                    // 서머노트 쓰기 활성화
-                                    $('#summernote').summernote('enable');
-
-
-                                    // 서머노트 리셋
-                                    $('#summernote').summernote('reset');
-
-
-                                    // 마지막으로 한 행동 취소 ( 뒤로가기 )
-                                    $('#summernote').summernote('undo');
-                                    // 앞으로가기
-                                    $('#summernote').summernote('redo');
-                                     */
-                                    </script>
                                 </div> <!-- end card -->
 
                                 <!-- end page content -->
@@ -753,40 +807,4 @@
         
         
     </body>
-</html>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-	
-
-</body>
 </html>

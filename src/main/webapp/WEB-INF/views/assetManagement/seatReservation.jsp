@@ -68,6 +68,7 @@
 	                    <div class="page-title-box">
 	                        <div class="page-title-right">
 	                            <ol class="breadcrumb m-0">
+                                  <li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
                                   <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
                                   <li class="breadcrumb-item"><a href="javascript: void(0);">좌석</a></li>
                                   <li class="breadcrumb-item active">사무실 좌석 예약</li>
@@ -185,15 +186,32 @@
                                                 <!-- Preview -->
                                                 <div class="dropzone-previews mt-3" id="file-previews">
                                                     
-                                                    <label for="reservationDate" style="margin-left: 30%; margin-right: 5px;">희망예약일</label>
-                                                    <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; color:gray; border-radius: 3px;">
+                                                    <div style="display: flex; justify-content: center;">
+                                                        <div>
+                                                            <label id="reservationDate" style="margin-right: 5px;">희망예약일</label>
+                                                            <input type="date" id="reservationDate" min="" style="border: 0.5px solid lightgray; border-radius: 3px; color: gray;">
+                                                        </div> 
+                                                        <div> 
+                                                        <label id="reservationDate" style="margin-right: 5px; margin-left: 15px;">희망시간</label>
+                                                        <select class="reservation-select class="form-control" name="condition"
+                                                                style="border: 0.5px solid lightgray; border-radius: 3px; height: 23px; color: gray;">
+                                                            <option value="writer">종일 [ 09 : 00 ~ 18 : 00 ]</option>
+                                                            <option value="title">오전 [ 09 : 00 ~ 14 : 00 ]</option>
+                                                            <option value="content">오후 [ 14 : 00 ~ 18 : 00 ]</option>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <br><br>
                                                     <div style="display: flex; justify-content: center;">
 
-                                                        <div style="border:none; background-color: #6EA1D4; width: 50px; height: 50px; margin-right: 15px;"> </div> 
-                                                        <label style="margin-top: 12px;">이용가능 </label> <br>
-                                                        <label style="margin-top: 12px;"> (<b>n</b>석) </label>
-                                                        <div style="border:none; background-color: lightgray; width: 50px; height: 50px; margin-right: 15px; margin-left: 60px;"></div>
+                                                        <div style="border:none; background-color: #F97272; width: 50px; height: 50px; margin-right: 12px;"> </div> 
+                                                        <label style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;오전<br> 이용가능 </label> <br>
+                                                        <label style="margin-top: 5px;"><br> (<b>n</b>석) </label>
+                                                        <div style="border:none; background-color: #6EA1D4; width: 50px; height: 50px; margin-right: 12px; margin-left: 15px;"> </div> 
+                                                        <label style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;오후<br> 이용가능 </label> <br>
+                                                        <label style="margin-top: 5px;"><br> (<b>n</b>석) </label>
+                                                        <div style="border:none; background-color: lightgray; width: 50px; height: 50px; margin-right: 12px; margin-left: 15px;"></div>
                                                         <label style="margin-top: 12px;">이용불가</label>
                                                         <label style="margin-top: 12px;"> (<b>n</b>석)</label>
 
@@ -214,7 +232,7 @@
 
                                         <div class="mb-3">
                                             <form action="">
-                                                <table class="table-sm" style="margin-left: 10px;">
+                                                <table class="table-sm" style="margin-left: 20px;">
                                                     <tr>
                                                         <th>예약자명</th>
                                                         <td style="width: 150px;">

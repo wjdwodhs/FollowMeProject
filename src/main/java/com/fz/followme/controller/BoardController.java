@@ -10,5 +10,17 @@ public class BoardController {
 	@RequestMapping("/socialFeed.page")
 	public void socialFeedPage() {}
 	
+	@RequestMapping("/boardList.page")
+	public String boardListPage() {
+		return "board/boardList";
+	}
+	
+	@RequestMapping("/boardInsert.page")
+	public String boardInsertPage() {
+		return "board/boardInsert";
+	}
+	
+	
+	
 	
 }
