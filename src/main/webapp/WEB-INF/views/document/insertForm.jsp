@@ -33,15 +33,7 @@
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 
-<!-- Plugins css -->
-<link href="${ contextPath }/assets/libs/quill/quill.core.css" rel="stylesheet"
-	type="text/css" />
-<link href="${ contextPath }/assets/libs/quill/quill.bubble.css" rel="stylesheet"
-	type="text/css" />
-<link href="${ contextPath }/assets/libs/quill/quill.snow.css" rel="stylesheet"
-	type="text/css" />
-	
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 .a.nav-link.active {
@@ -67,16 +59,13 @@ tr>th, tr>td {
 
 .btn-group>button {
 	background-color: #FFBE98;
-	border: 1px solid #FFBE98; /* 테두리 */ -
-	-ct-btn-active-bg: #FA9A85; -
-	-ct-btn-active-border-color: #FA9A85; -
-	-ct-btn-hover-bg: #FA9A85; -
-	-ct-btn-hover-border-color: #FA9A85;
+  border: 1px solid #FFBE98; /* 테두리 */
+  --ct-btn-active-bg:#FA9A85;    
+  --ct-btn-active-border-color:#FA9A85;
+  --ct-btn-hover-bg:#FA9A85;
+  --ct-btn-hover-border-color:#FA9A85;   
 }
 
-#snow-editor {
-	flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
-}
 </style>
 </head>
 <body>
@@ -186,7 +175,7 @@ tr>th, tr>td {
 													</div>
 												</div>
 												<div class="btn-group">
-													<button type="submit" class="btn btn-primary waves-effect waves-light" onclick="showDocument();">불러오기</button>
+													<button type="button" class="btn btn-primary waves-effect waves-light" onclick="showDocument();">불러오기</button>
 												</div>
 											</div>
 
@@ -219,6 +208,8 @@ tr>th, tr>td {
                                                 };
                                                 xhttp.open("GET", "${contextPath}/resources/document/sample" + selectedValue + ".html", true);
                                                 xhttp.send();
+                                                
+
                                             }
                                         </script>
 
@@ -718,16 +709,7 @@ tr>th, tr>td {
         
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
         
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
 </body>
 </html>

@@ -76,7 +76,7 @@
         align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */ 
     }
     
-    .btn-group>button{
+    .btn-group>a{
     	background-color: #FFBE98;
         border: 1px solid #FFBE98; /* 테두리 */
         --ct-btn-active-bg:#FA9A85;    
@@ -202,7 +202,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-primary"> 작성하기 </button>
+                                                		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -740,17 +740,7 @@
         
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-        
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
 	
 </body>
 </html>
