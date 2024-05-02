@@ -12,23 +12,6 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
-<!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
-
-<!-- Plugin css -->
-<link href="assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
-
-<!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
-
-<!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-<!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
-
-<!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
     .list-column{
@@ -64,6 +47,15 @@
 .category a:hover {
   border-bottom: 2px solid #FFBE98;
 }
+
+.button>button{
+       background-color: #FFBE98;
+        border: 1px solid #FFBE98; /* 테두리 */
+        --ct-btn-active-bg:#FA9A85;    
+        --ct-btn-active-border-color:#FA9A85;
+        --ct-btn-hover-bg:#FA9A85;
+        --ct-btn-hover-border-color:#FA9A85;   
+}    
     
 </style>
 
@@ -154,7 +146,18 @@
                                                 <table class="table">
                                                     
                                                     <table class="table table-hover">
-                                                        <a href="${contextPath}/board/boardInsert.page" class="btn btn-light btn-sm">글쓰기</a>
+                                                        <div class="button">
+                                                    	<button type="button" class="btn btn-primary btn-sm" onclick="insertPage()">
+                                                    		<span class="menu-icon"><i data-feather="edit-3"></i></span>글쓰기
+                                                    	</button>
+                                                    	</div>
+                                                    	<!-- 글 작성 페이지로 이동 -->
+                                                    	<script>
+                                                    		function insertPage(){
+                                                    			location.href ="${contextPath}/board/boardInsert.page"
+                                                    		}
+                                                    	</script>
+                                                    	
                                                         <select name="" id="" style="float:right">
                                                             <option value="">20</option>
                                                             <option value="">40</option>
@@ -782,6 +785,25 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Vendor js -->
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+		
+		<!-- App js -->
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
+	
+		<!-- Plugins js-->
+        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        
+        <!-- Dashboar 1 init js-->
+        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+        
+        <!-- Plugins js -->
+        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+
+        <!-- Init js-->
+        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
         
         
     </body>
