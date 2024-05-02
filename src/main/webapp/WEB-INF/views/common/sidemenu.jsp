@@ -112,14 +112,7 @@
                     <span class="menu-text"> 일정관리 </span>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="#" data-bs-toggle="collapse" class="menu-link">
-                    <span class="menu-icon"><i data-feather="briefcase"></i></span>
-                    <span class="menu-text"> 프로젝트관리 </span>
-                </a>
-            </li>
-            
-						<li class="menu-item">
+			<li class="menu-item">
                 <a href="#menuCrm" data-bs-toggle="collapse" class="menu-link">
                     <span class="menu-icon"><i data-feather="layers"></i></span>
                     <span class="menu-text"> 자산관리 </span>
