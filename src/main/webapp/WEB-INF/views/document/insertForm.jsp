@@ -104,13 +104,13 @@ tr>th, tr>td {
 						<li class="menu-item">
 							<a href="${ contextPath }/document/insertForm.page" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="edit-3"></i></span> 
-								<span class="menu-text"> 문서 작성하기 </span>
+								<span class="menu-text"> <b>문서 작성하기</b> </span>
 							</a>
 						</li>
 						<li class="menu-item" style="margin-top: 50px;">
 							<a href="${ contextPath }/document/list.page" class="menu-link">
 								<span class="menu-icon"><i data-feather="archive"></i></span> 
-								<span class="menu-text"> <b>전체 문서함</b> </span>
+								<span class="menu-text"> 전체 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
@@ -176,11 +176,11 @@ tr>th, tr>td {
 														<select id="selectDocument" name="selectDocument" class="form-select form-select-sm" style="width: auto; height: 37px;">
 															<option value="">전자결재 양식 선택</option>
 															<option value="1">품의서</option>
-															<option value="2">재택근무신청서</option>
-															<option value="3">휴가신청서</option>
-															<option value="4">지출결의서</option>
-															<option value="5">구매신청서</option>
-															<option value="6">출장보고서</option>
+															<option value="2">재택근무 신청서</option>
+															<option value="3">휴가 신청서</option>
+															<option value="4">지출 결의서</option>
+															<option value="5">구매 신청서</option>
+															<option value="6">출장 보고서</option>
 															<option value="7">협조문</option>
 														</select>
 													</div>
