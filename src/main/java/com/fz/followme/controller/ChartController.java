@@ -7,10 +7,9 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.fz.followme.dto.OrderDto;
@@ -20,18 +19,18 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RequestMapping("/chart")
-@Controller
+@RestController
 public class ChartController {
 	
 	private final OrderService orderService;
 
-	@ResponseBody
+	
 	@GetMapping("/revenue.do")
 	public List<OrderDto> selectOrder() {
 		return orderService.selectOrder();
 	}
 	
-	@ResponseBody
+	
 	@GetMapping("/naverNews.do")
 	public ResponseEntity<String> getNaverNews() {
         String clientId = "Icsu9Z4AFgHEk4gCROsJ"; // 애플리케이션 클라이언트 아이디
