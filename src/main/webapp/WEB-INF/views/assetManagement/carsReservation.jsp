@@ -211,14 +211,52 @@
                                   </tr>
                                   <tr>
                                       <th>예약시간</th>
-                                      <td>
-                                          <input type="time" value="14:00" class="form-control">
-                                      </td>
-                                      <td>~</td>
-                                      <td colspan="2"  style="width: 150px;">
-                                          <input type="time" value="16:00" class="form-control">
-                                      </td>
-                                      <td></td>
+                                                <td>
+                                                    <select class="reservation-select class="form-control" name="condition"
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 23px; color: gray;">
+                                                            <option value="">오전</option>
+                                                            <option value="">오후</option>
+                                                    </select>
+                                                    <select class="reservation-select class="form-control" name="condition"
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 23px; color: gray;">
+                                                            <option value="">01시</option>
+                                                            <option value="">02시</option>
+                                                            <option value="">03시</option>
+                                                            <option value="">04시</option>
+                                                            <option value="">05시</option>
+                                                            <option value="">06시</option>
+                                                            <option value="">07시</option>
+                                                            <option value="">08시</option>
+                                                            <option value="">09시</option>
+                                                            <option value="">10시</option>
+                                                            <option value="">11시</option>
+                                                            <option value="">12시</option>
+                                                    </select>
+                                                </td>
+                                                <td>~</td>
+                                                <td colspan="2"  style="width: 150px;">
+                                                    <select class="reservation-select class="form-control" name="condition"
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 23px; color: gray;">
+                                                            <option value="">오전</option>
+                                                            <option value="">오후</option>
+                                                    </select>
+                                                    <select class="reservation-select class="form-control" name="condition"
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 23px; color: gray;">
+                                                            <option value="">01시</option>
+                                                            <option value="">02시</option>
+                                                            <option value="">03시</option>
+                                                            <option value="">04시</option>
+                                                            <option value="">05시</option>
+                                                            <option value="">06시</option>
+                                                            <option value="">07시</option>
+                                                            <option value="">08시</option>
+                                                            <option value="">09시</option>
+                                                            <option value="">10시</option>
+                                                            <option value="">11시</option>
+                                                            <option value="">12시</option>
+                                                    </select>
+                                                </td>
+                                                <td></td>
                                   </tr>
                                   <tr>
                                       <th>이용목적</th>
