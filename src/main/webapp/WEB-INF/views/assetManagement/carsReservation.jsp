@@ -213,12 +213,12 @@
                                       <th>예약시간</th>
                                                 <td>
                                                     <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 23px; color: gray;">
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
                                                             <option value="">오전</option>
                                                             <option value="">오후</option>
                                                     </select>
                                                     <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 23px; color: gray;">
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
                                                             <option value="">01시</option>
                                                             <option value="">02시</option>
                                                             <option value="">03시</option>
@@ -236,12 +236,12 @@
                                                 <td>~</td>
                                                 <td colspan="2"  style="width: 150px;">
                                                     <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 23px; color: gray;">
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
                                                             <option value="">오전</option>
                                                             <option value="">오후</option>
                                                     </select>
                                                     <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 23px; color: gray;">
+                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
                                                             <option value="">01시</option>
                                                             <option value="">02시</option>
                                                             <option value="">03시</option>
