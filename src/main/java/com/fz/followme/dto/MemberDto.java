@@ -39,7 +39,6 @@ public class MemberDto {
 	private String memIncentive;
 	private String memCertificate;
 	private String memWelfare;
-	private String memCareer;
 	private String authLevel;
 	private String status;
 	

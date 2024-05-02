@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.fz.followme.dto.MemberDto" alias="MemberDto"/>
 		<typeAlias type="com.fz.followme.dto.OrderDto" alias="OrderDto"/>
+		<typeAlias type="com.fz.followme.dto.CareerDto" alias="CareerDto"/>
 	</typeAliases>
 	
 	<mappers>

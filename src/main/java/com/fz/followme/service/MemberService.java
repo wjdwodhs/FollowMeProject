@@ -1,5 +1,8 @@
 package com.fz.followme.service;
 
+import java.util.List;
+
+import com.fz.followme.dto.CareerDto;
 import com.fz.followme.dto.MemberDto;
 
 public interface MemberService {
@@ -18,4 +21,7 @@ public interface MemberService {
 	
 	// 사용자가 입력한 새로운 이메일이 기존 DB와 중복되지 않는지 확인하는 서비스
 	MemberDto memEmailDoubleCheck(String newEmail);
+	
+	// 사용자의 경력정보를 조회하는 서비스
+	List<CareerDto> selectCareer(String memNo);
 }

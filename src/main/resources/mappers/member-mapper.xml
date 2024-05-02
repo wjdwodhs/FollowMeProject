@@ -25,9 +25,16 @@
 		<result column="mem_incentive" property="memIncentive"/>
 		<result column="mem_certificate" property="memCertificate"/>
 		<result column="mem_welfare" property="memWelfare"/>
-		<result column="mem_career" property="memCareer"/>
 		<result column="authorization_level" property="authLevel"/>
 		<result column="status" property="status"/>
+	</resultMap>
+	
+	<resultMap id="careerResult" type="CareerDto">
+		<id column="carr_no" property="carrNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="carr_time" property="carrTime"/>
+		<result column="carr_corp" property="carrCorp"/>
+		<result column="carr_content" property="carrContent"/>
 	</resultMap>
   
   <!-- 로그인용 (암호화 적용)-->
@@ -41,7 +48,7 @@
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
 			 	 account_no, sig_no, 
-			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
+			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
 			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
@@ -59,7 +66,7 @@
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
 			 	 account_no, sig_no, 
-			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
+			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
 			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
@@ -98,7 +105,7 @@
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
 			 	 account_no, sig_no, 
-			 	 mem_incentive, mem_certificate, mem_welfare, mem_career,
+			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
 			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
@@ -106,5 +113,14 @@
 		   and mem_email = #{newEmail}
   </select>
   
+  <!-- 마이페이지 사용자 경력정보 조회용 -->
+	<select id="selectCareer" resultMap="careerResult">
+		select
+					carr_no, m.mem_no, carr_time, carr_corp, carr_content
+			from tb_career c
+			left join tb_mem m on (m.mem_no = c.mem_no)
+		where m.status = 'Y'
+		  and m.mem_no = #{memNo}
+	</select>  
   
 </mapper>

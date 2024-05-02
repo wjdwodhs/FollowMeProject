@@ -1,8 +1,11 @@
 package com.fz.followme.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.MemberDao;
+import com.fz.followme.dto.CareerDto;
 import com.fz.followme.dto.MemberDto;
 
 import lombok.RequiredArgsConstructor;
@@ -38,5 +41,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.memEmailDoubleCheck(newEmail);
 	}
 
+	@Override
+	public List<CareerDto> selectCareer(String memNo) {
+		return memberDao.selectCareer(memNo);
+	}
+
+	
 	
 }

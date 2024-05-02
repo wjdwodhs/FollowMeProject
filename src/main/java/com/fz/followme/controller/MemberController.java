@@ -2,6 +2,7 @@ package com.fz.followme.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fz.followme.dto.CareerDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.service.EmailSender;
@@ -88,10 +90,18 @@ public class MemberController {
 	@RequestMapping("/mypage.do")
 	public String mypage(HttpServletRequest request, Model model) {
 		
+		// 마이페이지로 로그인한 사용자 데이터 조회해오기
 		MemberDto m = (MemberDto)request.getSession().getAttribute("loginUser");
 		MemberDto mypageUser = memberService.selectMember(m);
 		
 		model.addAttribute("mypageUser", mypageUser);
+		
+		// 마이페이지로 로그인한 사용자의 경력정보 조회해오기
+		String memNo = mypageUser.getMemNo();
+		List<CareerDto> careerList = memberService.selectCareer(memNo);
+		
+		model.addAttribute("careerList", careerList);
+		
 		
 		return "member/mypage";
 	}
