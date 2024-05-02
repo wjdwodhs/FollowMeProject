@@ -50,13 +50,6 @@ public class DocumentController {
 		
 	}
 	
-	@GetMapping("/document/loadDocument")
-	public String loadDocument(@RequestParam("selectedOption") String selectedOption, Model model) {
-	    String documentContent = ""; // 선택된 옵션에 따라 JSP 파일의 내용을 가져오는 코드 작성
-	    model.addAttribute("documentContent", documentContent);
-	    return "documentContent"; // div의 ID인 documentContent를 반환합니다.
-	}
-	
 	
 	@RequestMapping("/document/sample1.page")
 	public void insertSample1() {

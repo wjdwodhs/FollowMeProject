@@ -110,7 +110,7 @@
                 <div style="margin-top:50px;">
                     <ul class="menu">
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
+                            <a href="${ contextPath }/document/insertForm.page" class="menu-link">
                                 <span class="menu-icon"><i data-feather="edit-3"></i></span>
                                 <span class="menu-text"> 문서 작성하기 </span>
                             </a>

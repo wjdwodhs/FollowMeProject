@@ -170,7 +170,6 @@ tr>th, tr>td {
 
 
 									<div class="mb-2" style="display: flex; justify-content: center;">
-										<form> 
 											<div class="row row-cols-sm-auto g-2 align-items-center">
 												<div style="display: flex;">
 													<div class="col-12 text-sm-center" style="width: auto;">
@@ -187,35 +186,41 @@ tr>th, tr>td {
 													</div>
 												</div>
 												<div class="btn-group">
-													<button type="submit" class="btn btn-primary waves-effect waves-light">불러오기</button>
+													<button type="submit" class="btn btn-primary waves-effect waves-light" onclick="showDocument();">불러오기</button>
 												</div>
 											</div>
-										</form>
-
-									<script>
-									    $(document).ready(function() {
-									        // 폼 제출 이벤트 핸들러
-									        $("form").submit(function(event) {
-									            event.preventDefault(); // 기본 제출 동작 방지
-									            
-									
-									            var selectedOption = $("#selectDocument").val(); // 선택된 옵션 값 가져오기
-									            console.log("옵션 값 : ", selectedOption);
-									
-									            // AJAX를 사용하여 선택된 옵션에 해당하는 JSP 파일을 가져옵니다.
-									            $.get("/document/loadDocument?selectedOption=" + selectedOption, function(data) {
-									                // 가져온 데이터를 해당하는 div에 넣습니다.
-									                $("#documentContent").html(data);
-									            });
-									        });
-									    });
-									</script>
 
 									</div>
-									<div class="documentContent" style="width: auto;">
-					
-									</div>
-
+									<div class="documentContent" style="width:auto;">
+                  		<div id="document1" class="document"></div>
+                      <div id="document2" class="document"></div>
+                      <div id="document3" class="document"></div>
+                      <div id="document4" class="document"></div>
+                      <div id="document5" class="document"></div>
+                      <div id="document6" class="document"></div>
+                      <div id="document7" class="document"></div>
+                  </div>
+                                        <script>
+                                            function showDocument() {
+                                                var selectBox = document.getElementById("selectDocument");
+                                                var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+                                                var documents = document.querySelectorAll('.document');
+                                                documents.forEach(function(doc) {
+                                                    doc.style.display = 'none';
+                                                });
+                                                document.getElementById("document" + selectedValue).style.display = 'block';
+                                        
+                                                // Ajax로 외부 HTML 파일을 불러오는 부분
+                                                var xhttp = new XMLHttpRequest();
+                                                xhttp.onreadystatechange = function() {
+                                                    if (this.readyState == 4 && this.status == 200) {
+                                                        document.getElementById("document" + selectedValue).innerHTML = this.responseText;
+                                                    }
+                                                };
+                                                xhttp.open("GET", "${contextPath}/resources/document/sample" + selectedValue + ".html", true);
+                                                xhttp.send();
+                                            }
+                                        </script>
 
 								</div>
 							</div>
