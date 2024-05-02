@@ -90,16 +90,6 @@
 	                                    <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
 	                                </div>
 	
-	                                <h6 class="mt-4">Labels</h6>
-	
-	                                <div class="list-group b-0 mail-list">
-	                                    <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-info me-2"></span>Web App</a>
-	                                    <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-warning me-2"></span>Recharge</a>
-	                                    <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-dark me-2"></span>Wallet Balance</a>
-	                                    <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-primary me-2"></span>Friends</a>
-	                                    <a href="#" class="list-group-item border-0"><span class="mdi mdi-circle text-success me-2"></span>Family</a>
-	                                </div>
-	
 	                            </div>
 	                            <!-- End Left sidebar -->
 	
