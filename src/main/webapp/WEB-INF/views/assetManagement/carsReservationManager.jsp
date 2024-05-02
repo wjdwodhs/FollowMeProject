@@ -29,6 +29,7 @@
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
+	
 </style>
 
 </head>
@@ -85,7 +86,7 @@
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 내역</b> | <small>RESERVAION / CANCEL</small></h5>
                                         
-                                        <div style="border: 1px solid none; width: 100%; height: 720px; box-sizing:border-box;">
+                                        <div class="carList" style="border: 1px solid none; width: 100%; height: 720px; box-sizing:border-box;">
 
                                             <br>
 
@@ -146,15 +147,25 @@
                                             <br><br>
                                             
                                             <!--페이징-->
-                                            <div>
-                                                <ul class="pagination" >
-                                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                                </ul>
-                                            </div>
+		                                        <ul class="pagination pagination-rounded justify-content-end mb-0">
+		                                            <li class="page-item">
+		                                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+		                                                    <span aria-hidden="true">«</span>
+		                                                    <span class="visually-hidden">Previous</span>
+		                                                </a>
+		                                            </li>
+		                                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+		                                            <li class="page-item">
+		                                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
+		                                                    <span aria-hidden="true">»</span>
+		                                                    <span class="visually-hidden">Next</span>
+		                                                </a>
+		                                            </li>
+		                                        </ul>
 
 
                                         </div>
@@ -791,11 +802,9 @@
         
         <!-- Plugins js-->
         <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>

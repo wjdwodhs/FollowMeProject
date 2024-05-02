@@ -849,11 +849,9 @@
         
         <!-- Plugins js-->
         <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>

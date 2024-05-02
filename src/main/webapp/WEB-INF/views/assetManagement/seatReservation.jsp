@@ -246,7 +246,7 @@
                                                     <tr>
                                                         <th>희망예약일</th>
                                                         <td>
-	                                                        <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; border-radius: 3px; color: gray; height: 30px;">
+	                                                        <input type="date" name="reservationDate" min="" style="border: 0.5px solid lightgray; border-radius: 3px; color: gray; height: 30px;">
                                                         </td>
                                                         <th>선택좌석</th>
                                                         <td>
@@ -385,8 +385,9 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		// - 예약조회/신청할 때 전날 선택 안되도록
-	 	document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
-		
+		document.querySelectorAll('input[type="date"]').forEach(function(minday){
+			minday.min = new Date().toISOString().split('T')[0];
+		})
 		
 		// 좌석 클릭하면 띄울 모달
 		$(document).ready(function(){
@@ -882,11 +883,9 @@
         
         <!-- Plugins js-->
         <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>

@@ -29,6 +29,8 @@
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
+	.active>.page-link, .page-link.active {
+    --ct-pagination-active-bg: #febe98;
 </style>
 
 </head>
@@ -137,7 +139,7 @@
                               <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회 / 취소</b> | <small>RESERVAION INQUIRY / CANCE</small></h5>
                                   
                               <label style="margin-left: 25px; margin-right: 10px;"><b>희망예약일</b></label>
-                              <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; 
+                              <input type="date" name="reservationDate" min="" style="border: 0.5px solid lightgray; 
                                                  border-radius: 3px; color: gray; height: 30px;">
                               <br><br>
                                   <table class="table-sm" style="margin-left: 20px;">
@@ -205,7 +207,7 @@
                                   <tr> 
                                       <th>예약날짜</th>
                                       <td colspan="4">
-                                          <input type="date" name="reservationDate" style="border: 0.5px solid lightgray; 
+                                          <input type="date" name="reservationDate" min="" style="border: 0.5px solid lightgray; 
                                                  border-radius: 3px; color: gray; height: 30px;">
                                       </td>
                                   </tr>
@@ -293,7 +295,10 @@
 
 
    <script>
-   	document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
+		// - 예약조회/신청할 때 전날 선택 안되도록
+		document.querySelectorAll('input[type="date"]').forEach(function(minday){
+			minday.min = new Date().toISOString().split('T')[0];
+		})
    </script>
 
 
@@ -781,11 +786,9 @@
         
         <!-- Plugins js-->
         <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${contextPath}/assets/libs/apexcharts/apexcharts.min.js"></script>
         <script src="${contextPath}/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <!-- Dashboar 1 init js-->
-        <script src="${contextPath}/assets/js/pages/dashboard-1.init.js"></script>
 	
 </body>
 </html>
