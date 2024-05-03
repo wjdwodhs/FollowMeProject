@@ -121,12 +121,14 @@
                 <div class="collapse" id="menuCrm">
                     <ul class="sub-menu">
                         <li class="menu-item">
-                            <a href="${contextPath }/asset/carsReservation.page" class="menu-link">
+                            <a href="${contextPath }/asset/${ loginUser.authLevel == '3' ? 'carsReservationManager.page'
+                                                                                         : 'carsReservation.page'  }" class="menu-link">
                                 <span class="menu-text">차량</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${contextPath }/asset/seatReservation.page" class="menu-link">
+                            <a href="${contextPath }/asset/${ loginUser.authLevel == '3' ? 'seatReservationManager.page'
+                                                                                         : 'seatReservation.page'  }" class="menu-link">
                                 <span class="menu-text">좌석</span>
                             </a>
                         </li>

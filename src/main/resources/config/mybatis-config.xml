@@ -12,11 +12,13 @@
 		<typeAlias type="com.fz.followme.dto.MemberDto" alias="MemberDto"/>
 		<typeAlias type="com.fz.followme.dto.OrderDto" alias="OrderDto"/>
 		<typeAlias type="com.fz.followme.dto.CareerDto" alias="CareerDto"/>
+		<typeAlias type="com.fz.followme.dto.AssetDto" alias="AssetDto"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
+		<mapper resource="mappers/asset-mapper.xml"/>
 	</mappers>
 
 </configuration>
