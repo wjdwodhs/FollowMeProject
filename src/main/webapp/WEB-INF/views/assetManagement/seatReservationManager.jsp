@@ -16,7 +16,7 @@
 <link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${contextPath}/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
 <link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
@@ -842,10 +842,10 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${contextPath}/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
         <script src="${contextPath}/assets/libs/flatpickr/flatpickr.min.js"></script>
