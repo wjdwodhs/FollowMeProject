@@ -13,7 +13,7 @@
 	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
 	name="description" />
 <meta content="Coderthemes" name="author" />
-
+ 
 <!-- App favicon -->
 <link rel="shortcut icon"
 	href="${ contextPath }/assets/images/favicon.ico">
@@ -32,6 +32,10 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
+	
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet" />
+
+  
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -64,6 +68,14 @@ tr>th, tr>td {
   --ct-btn-active-border-color:#FA9A85;
   --ct-btn-hover-bg:#FA9A85;
   --ct-btn-hover-border-color:#FA9A85;   
+}
+
+#snow-editor {
+    flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
+}
+
+.menu-icon:hover {
+  cursor: pointer;
 }
 
 </style>
@@ -175,43 +187,249 @@ tr>th, tr>td {
 													</div>
 												</div>
 												<div class="btn-group">
-													<button type="button" class="btn btn-primary waves-effect waves-light" onclick="showDocument();">불러오기</button>
+													<button type="button" class="btn btn-primary waves-effect waves-light" onclick="load();">불러오기</button>
 												</div>
 											</div>
 
 									</div>
-									<div class="documentContent" style="width:auto;">
-                  		<div id="document1" class="document"></div>
-                      <div id="document2" class="document"></div>
-                      <div id="document3" class="document"></div>
-                      <div id="document4" class="document"></div>
-                      <div id="document5" class="document"></div>
-                      <div id="document6" class="document"></div>
-                      <div id="document7" class="document"></div>
-                  </div>
-                                        <script>
-                                            function showDocument() {
-                                                var selectBox = document.getElementById("selectDocument");
-                                                var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-                                                var documents = document.querySelectorAll('.document');
-                                                documents.forEach(function(doc) {
-                                                    doc.style.display = 'none';
-                                                });
-                                                document.getElementById("document" + selectedValue).style.display = 'block';
-                                        
-                                                // Ajax로 외부 HTML 파일을 불러오는 부분
-                                                var xhttp = new XMLHttpRequest();
-                                                xhttp.onreadystatechange = function() {
-                                                    if (this.readyState == 4 && this.status == 200) {
-                                                        document.getElementById("document" + selectedValue).innerHTML = this.responseText;
-                                                    }
-                                                };
-                                                xhttp.open("GET", "${contextPath}/resources/document/sample" + selectedValue + ".html", true);
-                                                xhttp.send();
-                                                
+									<div id="documentContent" style="width:auto;">
 
-                                            }
-                                        </script>
+                  </div>
+                  
+                  
+    <!-- Include the Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js"></script>
+    <script>
+        function load() {
+        	
+            var selectBox = document.getElementById("selectDocument");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            if(selectedValue>0){
+            	fetch("${contextPath}/resources/document/sample" + selectedValue + ".html")
+            			.then(response => response.text())
+                	.then(htmlText => {
+                    	document.getElementById('documentContent').innerHTML = htmlText;
+                	})	
+            	.finally(() => {
+            			textEditorInit();
+            		
+            			if(selectedValue == 2){
+            				homework();
+            			}else if(selectedValue == 3){
+                  	holiday();
+                	}else if(selectedValue == 4){
+                		addExpenseRow(row);
+                		removeExpenseRow(row);
+                	}else if(selectedValue == 5){
+                		addExpenseRow(row);
+                		removeExpenseRow(row);
+                	}else if(selectedValue == 6){
+                		changeTotalCost();
+                	}else if(selectedValue == 7){
+                		workingLetter();
+                	}
+            			
+            	});
+           }
+        }
+        
+        function textEditorInit(){
+        		const quill=new Quill('#snow-editor', {theme:'snow'});
+        }
+    </script>
+		
+  	<!-- 2. 재택근무 신청서 날짜 선택 스크립트 -->
+    <script> 
+    function homework(){
+ 		// 오늘 today
+    var today = new Date();
+    // 내일 tomorrow
+    var tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    // 14일후 nextTwoWeeks
+    var nextTwoWeeks = new Date(today);
+    nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
+
+    // startDate 설정
+    var startDateField = document.getElementById('startDate');
+    startDateField.valueAsDate = tomorrow; // 최소날짜 내일
+    startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+    startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+
+    // endDate 설정
+    var endDateField = document.getElementById('endDate');
+    endDateField.valueAsDate = tomorrow; // 최소날짜 내일
+    endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+    endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+    
+	    function checkEndDate() {
+	        if (endDateField.value < startDateField.value) {
+	            endDateField.value = startDateField.value;
+	        }
+	        endDateField.min = startDateField.value;
+	    }
+	    
+    endDateField.addEventListener('change', checkEndDate);
+    startDateField.addEventListener('change', checkEndDate);
+    }
+    </script>		
+		
+		<!-- 3. 휴가 신청서 날짜 선택 스크립트 -->
+    <script>
+    function holiday(){
+    var today = new Date();
+    // var tomorrow = new Date(today);
+    // tomorrow.setDate(today.getDate() + 1);
+    var twoMonths = new Date(today);
+    twoMonths.setDate(today.getDate() + 60); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
+
+    // startDate 설정
+    var startDateField = document.getElementById('startDate');
+    startDateField.valueAsDate = today; // 최소날짜 내일
+    startDateField.min = today.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+    startDateField.max = twoMonths.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+
+    // endDate 설정
+    var endDateField = document.getElementById('endDate');
+    endDateField.valueAsDate = today; // 최소날짜 내일
+    endDateField.min = today.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+    endDateField.max = twoMonths.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+    
+	    function checkEndDate() {
+	        if (endDateField.value < startDateField.value) {
+	            endDateField.value = startDateField.value;
+	        }
+	        endDateField.min = startDateField.value;
+	    }
+    
+    endDateField.addEventListener('change', checkEndDate);
+    startDateField.addEventListener('change', checkEndDate);
+    }
+		</script>
+
+		<!-- 04. 지출 결의서 줄 추가/삭제 -->
+		<script>
+				function addExpenseRow() {
+				  var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
+				  var newRow = table.insertRow(-1);
+				  newRow.innerHTML = `
+				    <td style="width:60px; text-align:center;">
+				        <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span>
+				    </td>
+				    <td style="width:95px; text-align:center;">
+				        <input type="date" id="starDate" size="20" style="border:0; width:100px;">
+				    </td>
+				    <td style="width:270px;">
+				        <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
+				    </td>
+				    <td>
+				        <input type="text" name="-box" size="20" style="border:0; width:90px; text-align:center;" value="500,000">
+				    </td>
+				    <td style="width:100px; text-align:center;">
+				        <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
+				    </td>
+				  `;
+				}
+				
+				function removeExpenseRow(row) {
+					  var rowIndex = row.parentNode.parentNode.rowIndex; // Get the index of the row
+					  document.getElementById("expenseTable").deleteRow(rowIndex); // Delete the row
+					}
+		</script>
+    
+    <!-- 5. 구매신청서 줄 추가/삭제-->
+    <script>
+	    function addExpenseRow() {
+	    var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
+	    var newRow = table.insertRow(-1);
+	    newRow.innerHTML = `
+	        <td style="text-align:center;">
+	            <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span> 
+	        </td>
+	        <td>
+	            <input type="text" name="-box" size="20" style=" border:0; text-align:center;" width="130px;" value="간식">
+	        </td>
+	        <td>
+	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:45px;" value="5">ea
+	        </td>
+	        <td>
+	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:90px;" value="300,000">원
+	        </td>
+	        <td>
+	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:100px;" value="1,500,000">원
+	        </td>
+	        <td>
+	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:120px;">
+	        </td>  
+	        `;
+	    }
+	
+	    function removeExpenseRow(row) {
+	        var rowIndex = row.parentNode.parentNode.rowIndex; // Get the index of the row
+	        document.getElementById("expenseTable").deleteRow(rowIndex); // Delete the row
+	    }
+		</script>
+		
+		<!-- 6. 출장 보고서 총 금액 자동합산 -->
+    <script>
+      function changeTotalCost() {
+    	  
+          var transportCost = document.getElementById('transportCost');
+          var fuelCost = document.getElementById('fuelCost');
+          var foodCost = document.getElementById('foodCost');
+          var roomCost = document.getElementById('roomCost');
+          var etcCost = document.getElementById('etcCost');
+
+          // 요소가 존재하고 값이 비어있지 않은 경우에만 계산
+          if (transportCost && fuelCost && foodCost && roomCost && etcCost) {
+              var totalCost = (parseInt(transportCost.value) || 0) + 
+                              (parseInt(fuelCost.value) || 0) + 
+                              (parseInt(foodCost.value) || 0) + 
+                              (parseInt(roomCost.value) || 0) + 
+                              (parseInt(etcCost.value) || 0);
+              document.getElementById('totalCost').value = totalCost;
+          }
+      }
+  
+      changeTotalCost();
+      
+  </script>
+  
+  <!-- 7. 협조문 날짜 선택 스크립트 -->
+  <script>
+    function workingLetter() {
+        var today = new Date();
+        
+        // startDate 설정
+        var startDateField = document.getElementById('startDate');
+        startDateField.valueAsDate = today; // 시작일을 오늘로 설정
+        startDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
+        
+        // endDate 설정
+        var endDateField = document.getElementById('endDate');
+        endDateField.valueAsDate = today; // 종료일을 오늘로 설정
+        endDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
+        
+        function checkEndDate() {
+            // 종료일이 시작일 이전으로 선택되었을 때
+            if (endDateField.value < startDateField.value) {
+                endDateField.value = startDateField.value; // 종료일을 시작일과 같게 설정
+            }
+        }
+        
+        
+        
+        // 종료일 변경 시에도 검사
+        endDateField.addEventListener('change', checkEndDate);
+        
+        // 시작일 변경 시에도 검사
+        startDateField.addEventListener('change', checkStartDate);
+    }
+    
+    // 페이지 로드 시 실행
+    // window.addEventListener('load', workingLetter);
+</script>
+
 
 								</div>
 							</div>
@@ -710,6 +928,8 @@ tr>th, tr>td {
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        
+
         
 </body>
 </html>

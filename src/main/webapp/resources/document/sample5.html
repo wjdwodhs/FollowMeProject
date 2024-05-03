@@ -85,205 +85,177 @@
         outline: none;
     }
 
+	.menu-icon:hover {
+  	cursor: pointer;
+	}
 </style>
 </head>
 <body>
-        <!-- Begin page -->
-        <div id="wrapper" style="background-color: white;">
-  
-                <!-- ============================================================== -->
-                <!-- Start Page content -->
-                <!-- 전자결재 양식 5. 구매 신청서-->
-                <!-- ============================================================== -->
-                    
-                <div class="content">
-    
-                    <!-- Start Content-->
-                    <div class="container-fluid" style="display:flex; justify-content: center;">
-                        
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="top-document">
-                                    <div class="document-title">
-                                        <h1>구매 신청서</h1>
-                                    </div>
-                                    <div class="sign-table">
-                                        <table class="table-sign">
-                                            <tr>
-                                                <th rowspan="5" style="width:20px;">결 재 선</th>
-                                            </tr>
-                                            <tr>
-                                                <th>작 성 자</th>
-                                                <th>결 재 자</th>
-                                            </tr>
-                                            <tr class="sign">
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>  
-        
-                                <div class="document-info">
-        
-                                    <div class="info-1">
-                                        <table class="table-info-1">
-                                            <tr>
-                                                <th width="120px;">부서</th>
-                                                <td width="266px;">경영지원</td>    
-                                            </tr>
-                                            <tr>
-                                                <th>직급</th>
-                                                <td>대리</td>
-                                            </tr>
-                                            <tr>
-                                                <th>신청자</th>
-                                                <td>유주찬</td>
-                                            </tr>
-                                            <tr>
-                                                <th>신청일</th>
-                                                <td>2024-05-13 (월)</td>
-                                            </tr>
-                                        </table>
-                                        
-                                    </div>
-                                    <div class="info-2">
-                                        <table class="table-info-2">
-                                            <tr>
-                                                <th width="120px;">참조인</th>
-                                                <td width="266px;">경영지원 김성한 팀장</td>
-                                            </tr>
-                                            <tr>
-                                                <th>보존연한</th>
-                                                <td>기안일로부터 5년</td>
-                                            </tr>
-                                            <tr>
-                                                <th>전화번호</th>
-                                                <td>010-9999-9999</td>
-                                            </tr>
-                                            <tr>
-                                                <th>결재일</th>
-                                                <td>2024-05-14 (화)</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    
-                                </div>
-        
-                                    <div class="table-2">
-                                        <table class="table-2-1">
-                                            <tr>
-                                                <th width="120px;">제목</th>
-                                                <td width="655px;">
-                                                    <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    
-                                    
-                                <!-- 내용 작성하기 -->
-                                <div class="table-responsive">
-                                    <table class="table table-bordered border-primary mb-0">
-        
-                                        <tbody>
-                                            <tr>
-                                                <th style="text-align:center; width:90px;"> 근 무 일 </th>
-                                                <td style="text-align:left;">
-                                                    <input type="date" id="startDate" size="20" style="width:100px; border:0;"> ~
-                                                    <input type="date" id="endDate" size="20" style="width:100px; border:0;">
-                                                </td>
-                                            </tr>
-        
-                                            <script>
-                                                // 오늘 today
-                                                var today = new Date();
-                                                // 내일 tomorrow
-                                                var tomorrow = new Date(today);
-                                                tomorrow.setDate(today.getDate() + 1);
-                                                // 14일후 nextTwoWeeks
-                                                var nextTwoWeeks = new Date(today);
-                                                nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
-                                        
-                                                // startDate 설정
-                                                var startDateField = document.getElementById('startDate');
-                                                startDateField.valueAsDate = tomorrow; // 최소날짜 내일
-                                                startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-                                                startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-                                        
-                                                // endDate 설정
-                                                var endDateField = document.getElementById('endDate');
-                                                endDateField.valueAsDate = tomorrow; // 최소날짜 내일
-                                                endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-                                                endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-        
-                                                function checkEndDate() {
-                                                    if (endDateField.value < startDateField.value) {
-                                                        endDateField.value = startDateField.value;
-                                                    }
-                                                    endDateField.min = startDateField.value;
-                                                }
-        
-                                                endDateField.addEventListener('change', checkEndDate);
-                                                startDateField.addEventListener('change', checkEndDate);
-                                            </script>
-        
-                                            <tr>
-                                                <th style="text-align:center;">
-                                                    신청사유 <br>및<br> 근무내용
-                                                </th>
-                                                <td style="height:250px; width:655px; text-align:left;">
-                                                    <div id="snow-editor" style="height:250px;">
-                                                        기안자 작성란
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th style="text-align:center;"> 비 고 </th>
-                                                <td>
-                                                    <input type="text" name="etc-box" size="20" style="width:655px; border:0;" value="기안자 작성란">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th style="text-align:center;">첨 부</th>
-                                                <td><input type="file" style="width:645px;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
-                                                <!--
-                                                    <td>
-                                                        <c:forEach var="at" items="${ board.attachList }">
-                                                            <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
-                                                        </c:forEach>
-                                                    </td>
-                                                -->
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div> <!-- 내용 작성하기 끝-->
-        
-                                <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 재택근무를 신청하고자 하오니 허락하여 주시기 바랍니다.</p>
-                                <!--결재 처리사유-->
-                                <div class="opinion-box" style="margin-top:20px;">
-                                    <table class="table table-bordered border-primary mb-0">      
-                                            <tr>
-                                                <th style="text-align:center; width:90;">
-                                                    처 리 <br> 사 유
-                                                </th>
-                                                <td>
-                                                    <textarea rows="5" style="border:0; width:655px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                    </table>
-                                </div> <!-- 결재 처리사유 끝-->
+    <!-- Begin page -->
+    <div id="wrapper" style="background-color: white;">
+
+        <!-- ============================================================== -->
+        <!-- Start Page content -->
+        <!-- 전자결재 양식 5. 구매 신청서-->
+        <!-- ============================================================== -->
+            
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid" style="display:flex; justify-content: center;">
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="top-document">
+                            <div class="document-title">
+                                <h1>구매 신청서</h1>
                             </div>
+                            <div class="sign-table">
+                                <table class="table-sign">
+                                    <tr>
+                                        <th rowspan="5" style="width:20px;">결 재 선</th>
+                                    </tr>
+                                    <tr>
+                                        <th>신 청 자</th>
+                                        <th>결 재 자</th>
+                                    </tr>
+                                    <tr class="sign">
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>  
+
+                        <div class="document-info">
+
+                            <div class="info-1">
+                                <table class="table-info-1">
+                                    <tr>
+                                        <th width="120px;">부서</th>
+                                        <td width="266px;">경영지원</td>
+                                    </tr>
+                                    <tr>
+                                        <th>직급</th>
+                                        <td>대리</td>
+                                    </tr>
+                                    <tr>
+                                        <th>신청자</th>
+                                        <td>유주찬</td>
+                                    </tr>
+                                    <tr>
+                                        <th>신청일</th>
+                                        <td>2024-05-13 (월)</td>
+                                    </tr>
+                                </table>
+                                
+                            </div>
+                            <div class="info-2">
+                                <table class="table-info-2">
+                                    <tr>
+                                        <th>참조인</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th width="120px;">결재자</th>
+                                        <td width="266px;">경영지원 김성한 팀장</td>
+                                    </tr>
+                                    <tr>
+                                        <th>보존연한</th>
+                                        <td>기안일로부터 5년</td>
+                                    </tr>
+                                    <tr>
+                                        <th>결재일</th>
+                                        <td>2024-05-14 (화)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                            <div class="table-2">
+                                <table class="table-2-1">
+                                    <tr>
+                                        <th width="120px;">제목</th>
+                                        <td width="655px;">
+                                            <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            
+                        <!-- 내용 작성하기 -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary mb-0" id="expenseTable">
+                                <tbody>
+                                    <tr>
+                                        <th width="60px;">추 가</th>
+                                        <th style="text-align:center"> 품 목 </th>
+                                        <th style="text-align:center;"> 수 량</th>
+                                        <th style="text-align:center;"> 단 가 </th>
+                                        <th style="text-align:center;"> 금 액 (원) </th>
+                                        <th style="text-align:center;"> 비 고 </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <span class="menu-icon" onclick="addExpenseRow();"><b>╊</b></span> 
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center;" width="130px;" value="간식">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:45px;" value="5">ea
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:90px;" value="300,000">원
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:100px;" value="1,500,000">원
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:120px;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                  
+                            <table class="table table-bordered border-primary mb-0" style="margin-top:20px;">      
+
+                                <tr>
+                                    <th style="text-align:center; width: 60px;">첨 부</th>
+                                    <td><input type="file" style="width:100%;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
+                                    <!--
+                                        <td>
+                                            <c:forEach var="at" items="${ board.attachList }">
+                                                <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
+                                            </c:forEach>
+                                        </td>
+                                    -->
+                            </table>
+
+
+                            <!--결재 처리사유-->
+                            <div class="opinion-box" style="margin-top:10px;">
+                                <table class="table table-bordered border-primary mb-0">      
+                                            <tr>
+                                            <th style="text-align:center; width:60px;">
+                                                처 리 <br> 사 유
+                                            </th>
+                                            <td>
+                                                <textarea rows="5" style="border:0; width:500px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div> <!-- 결재 처리사유 끝-->
                         </div>
                     </div>
-          
-        
-        
-                        
-                </div> <!-- container -->
-        
-            </div> <!-- content -->
+                </div>
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+    </div> <!-- wrapper -->
             
 
             

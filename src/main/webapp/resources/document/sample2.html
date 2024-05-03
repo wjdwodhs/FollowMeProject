@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-topbar-color="dark">
+
 <head>
-<meta charset="UTF-8">
-<title>전자결재 양식 - 2. 재택근무 신청서</title>
+		<meta charset="utf-8" />
+    <title>전자결재 양식 - 2. 재택근무 신청서</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+   	
 <style>
     .a.nav-link.active{background-color:#FEBE98;}
 
@@ -159,7 +164,9 @@
                                             </tr>
                                             <tr>
                                                 <th>전화번호</th>
-                                                <td>010-9999-9999</td>
+                                                <td>
+                                                    <input type="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" style="width:100%; height: 20px; border:0;" placeholder="본인 전화번호 기입">
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>결재일</th>
@@ -195,39 +202,6 @@
                                                 </td>
                                             </tr>
         
-                                            <script>
-                                                // 오늘 today
-                                                var today = new Date();
-                                                // 내일 tomorrow
-                                                var tomorrow = new Date(today);
-                                                tomorrow.setDate(today.getDate() + 1);
-                                                // 14일후 nextTwoWeeks
-                                                var nextTwoWeeks = new Date(today);
-                                                nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
-                                        
-                                                // startDate 설정
-                                                var startDateField = document.getElementById('startDate');
-                                                startDateField.valueAsDate = tomorrow; // 최소날짜 내일
-                                                startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-                                                startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-                                        
-                                                // endDate 설정
-                                                var endDateField = document.getElementById('endDate');
-                                                endDateField.valueAsDate = tomorrow; // 최소날짜 내일
-                                                endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-                                                endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-        
-                                                function checkEndDate() {
-                                                    if (endDateField.value < startDateField.value) {
-                                                        endDateField.value = startDateField.value;
-                                                    }
-                                                    endDateField.min = startDateField.value;
-                                                }
-        
-                                                endDateField.addEventListener('change', checkEndDate);
-                                                startDateField.addEventListener('change', checkEndDate);
-                                            </script>
-        
                                             <tr>
                                                 <th style="text-align:center;">
                                                     신청사유 <br>및<br> 근무내용
@@ -258,6 +232,7 @@
                                         </tbody>
                                     </table>
                                 </div> <!-- 내용 작성하기 끝-->
+                                                        
         
                                 <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 재택근무를 신청하고자 하오니 허락하여 주시기 바랍니다.</p>
                                 <!--결재 처리사유-->
@@ -271,9 +246,10 @@
                                                     <textarea rows="5" style="border:0; width:655px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
                                                 </td>
                                             </tr>
-                                            <tr>
                                     </table>
                                 </div> <!-- 결재 처리사유 끝-->
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -285,6 +261,7 @@
         
             </div> <!-- content -->
             
+
 
             
             
