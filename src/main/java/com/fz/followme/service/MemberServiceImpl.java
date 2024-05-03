@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.MemberDao;
+import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
@@ -44,6 +45,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<LicenseDto> selectLicense(String memNo) {
 		return memberDao.selectLicense(memNo);
+	}
+
+	@Override
+	public AccountDto selectAccount(String memNo) {
+		return memberDao.selectAccount(memNo);
+	}
+
+	@Override
+	public int updateLicense(LicenseDto license) {
+		return memberDao.updateLicense(license);
+	}
+
+	@Override
+	public int deleteLicense(LicenseDto license) {
+		return memberDao.deleteLicense(license);
 	}
 
 }

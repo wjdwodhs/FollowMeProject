@@ -91,52 +91,43 @@
 		}
 		
 		
-		// 경력정보 수정 모달에서 '수정 버튼' 클릭 시 함수
-		$(document).ready(function() {
-	    $("#updateCareerBtn").click(function() {
-	        // 폼 데이터 수집
-	        var formData = $("#careerModifyForm").serialize();
-	
-	        // AJAX 요청 보내기
-	        $.ajax({
-	            url: "${contextPath}/member/updateCareer", 
-	            type: "POST",
-	            data: formData,
-	            success: function(response) {
-	                // 성공적으로 수정되었을 때 처리할 내용
-	                alert(response);
-	                // 모달 닫기
-	                $("#career-modify-modal").modal("hide");
-	                
-	            },
-	            error: function(xhr, status, error) {
-	                // 수정에 실패했을 때 처리할 내용
-	                alert(response);
-	                
-	            }
-	        });
-	    });
-	});
-		
 		// 계좌실명 인증
-		function checkAccount(){
-					const self = this;
-		            const bankselect = document.getElementById('bankselect');
-		            const accountHolder = document.getElementById('accountHolder');
-		            const accountNumber = document.getElementById('accountNumber');
-		 const data = {
-		      bank_code: this.bankname,
-		      bank_num: this.accountNumber
-		               };
-		     self.$axios.get("${contextPath}/members/checkAccount", { params: data })
-		     .then(function (res) {
-		     if (res.status == 200) {
-		     console.log(res.data.bankHolderInfo)
-		     console.log(self.name); 
-		     }
-		     });
-		}
-    
+		function checkAccount() {
+	    var bankselect = document.getElementById('bankselect').value;
+	    var accountNumber = document.getElementById('accountNumber').value;
+	    
+	    var data = {
+	        bank_code: bankselect,
+	        bank_num: accountNumber
+	    };
+	    
+	    var contextPath = "${contextPath}";
+	    
+	    // Ajax 요청
+	    fetch(contextPath + "/member/checkAccount", {
+	        method: "POST",
+	        headers: {
+	            "Content-Type": "application/json"
+	        },
+	        body: JSON.stringify(data)
+	    })
+	    .then(function(response) {
+	        if (!response.ok) {
+	            throw new Error('네트워크 응답이 오지 않습니다.');
+	        }
+	        return response.json();
+	    })
+	    .then(function(data) {
+	        // 예금주명을 예금주 칸에 기입
+	        document.getElementById('accountHolder').value = data.bankHolderInfo;
+	        // 알람창으로 예금주명 띄우기
+	        alert('예금주명: ' + data.bankHolderInfo + '\n\n확인되었습니다.');
+	    })
+	    .catch(function(error) {
+	        console.error('오류가 발생했습니다', error);
+	        alert('계좌 인증에 실패하였습니다.');
+	    });
+	}
     
 </script>
 
@@ -399,22 +390,22 @@
 		                                                               		<label for="bankselect" class="form-label">은행명</label>
 																								                    	<select class="form-select" id="bankselect" v-model="bankname" aria-label="Default select example">
 																								                        <option value="">은행선택</option>
-																								                        <option value="004">국민은행</option>
-																								                        <option value="020">우리은행</option>
-																								                        <option value="088">신한은행</option>
-																								                        <option value="003">기업은행</option>
-																								                        <option value="023">SC제일은행</option>
-																								                        <option value="011">농협은행</option>
-																								                        <option value="005">외환은행</option>
-																								                        <option value="090">카카오뱅크</option>
-																								                        <option value="032">부산은행</option>
-																								                        <option value="071">우체국</option>
-																								                        <option value="031">대구은행</option>
-																								                        <option value="037">전북은행</option>
-																								                        <option value="035">제주은행</option>
-																								                        <option value="007">수협은행</option>
-																								                        <option value="027">씨티은행</option>
-																								                        <option value="039">경남은행</option>
+																								                        <option value="004" ${bankAccount.bankName eq '국민은행' ? 'selected' : ''}>국민은행</option>
+																								                        <option value="020" ${bankAccount.bankName eq '우리은행' ? 'selected' : ''}>우리은행</option>
+																								                        <option value="088" ${bankAccount.bankName eq '신한은행' ? 'selected' : ''}>신한은행</option>
+																								                        <option value="003" ${bankAccount.bankName eq '기업은행' ? 'selected' : ''}>기업은행</option>
+																								                        <option value="023" ${bankAccount.bankName eq 'SC제일은행' ? 'selected' : ''}>SC제일은행</option>
+																								                        <option value="011" ${bankAccount.bankName eq '농협은행' ? 'selected' : ''}>농협은행</option>
+																								                        <option value="005" ${bankAccount.bankName eq '외환은행' ? 'selected' : ''}>외환은행</option>
+																								                        <option value="090" ${bankAccount.bankName eq '카카오뱅크' ? 'selected' : ''}>카카오뱅크</option>
+																								                        <option value="032" ${bankAccount.bankName eq '부산은행' ? 'selected' : ''}>부산은행</option>
+																								                        <option value="071" ${bankAccount.bankName eq '우체국' ? 'selected' : ''}>우체국</option>
+																								                        <option value="031" ${bankAccount.bankName eq '대구은행' ? 'selected' : ''}>대구은행</option>
+																								                        <option value="037" ${bankAccount.bankName eq '전북은행' ? 'selected' : ''}>전북은행</option>
+																								                        <option value="035" ${bankAccount.bankName eq '제주은행' ? 'selected' : ''}>제주은행</option>
+																								                        <option value="007" ${bankAccount.bankName eq '수협은행' ? 'selected' : ''}>수협은행</option>
+																								                        <option value="027" ${bankAccount.bankName eq '씨티은행' ? 'selected' : ''}>씨티은행</option>
+																								                        <option value="039" ${bankAccount.bankName eq '경남은행' ? 'selected' : ''}>경남은행</option>
 																								                    </select>
 																								                    
 																								                	</div> 
@@ -424,21 +415,21 @@
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountNumber" class="form-label">계좌번호</label>
-		                                                                <input type="text" class="form-control" id="accountNumber">
+		                                                                <input type="text" class="form-control" id="accountNumber" value="${bankAccount.bankAccountNo }">
 		                                                            </div>
 		                                                        </div>
 		
 		                                                        <div class="col-md-2">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountHolder" class="form-label">예금주</label>
-		                                                                <input type="text" class="form-control" id="accountHolder" value="${mypageUser.memName}" readonly>
+		                                                                <input type="text" class="form-control" id="accountHolder" value="${bankAccount.accountHolder }">
 		                                                            </div>
 		                                                        </div>
 		                                                        
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountAuthentication" class="form-label">계좌인증</label>
-		                                                                <button class="form-control" id="accountAuthentication" onclick="checkAccount();">계좌 실명 인증</button>
+		                                                                <button class="form-control" id="accountAuthentication" onclick="checkAccount();" style="background-color:#f97272; color:white;">계좌 실명 인증</button>
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -449,7 +440,6 @@
 								                                            <table class="table table-centered table-nowrap table-striped" id="products-datatable" style="text-align:center">
 								                                                <thead>
 								                                                    <tr>
-								                                                        <th>구분</th>
 								                                                        <th>자격증명</th>
 								                                                        <th>발급번호</th>
 								                                                        <th>발급일자</th>
@@ -461,9 +451,7 @@
 								                                                <tbody>
 								                                                	<c:forEach var="lc" items="${ licenseList }">
 								                                                    <tr>
-								                                                        <td>
-								                                                            ${ lc.licNo }
-								                                                        </td>
+								                                                        
 								                                                        <td>
 								                                                            ${ lc.licName }
 								                                                        </td>
@@ -493,7 +481,7 @@
                                                 
 		    
 		                                                    <div class="text-end">
-		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#f97272; color:white;"><i class="mdi mdi-content-save"></i> 저장</button>
+		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#febe98; color:white;"><i class="mdi mdi-content-save"></i> 저장</button>
 		                                                    </div>
 		                                                </form>
 		                                            </div>
@@ -554,26 +542,27 @@
 																								                    </div>
 																								                    <div class="modal-body p-4">
 																								                    	
-																								                        <form>
+																								                        <form action="${ contextPath }/member/modifyLicense" method="post">
+																								                        		<input type="hidden" name="licNo" value="${ lc.licNo }">
 																								                            <div class="row">
 																								                            		<div class="col-md-6">
 																								                            			  <div class="mb-3">
 																																						            <label for="licName" class="form-label">자격증명</label>
-																																						            <input type="text" class="form-control" id="licName" value="${ lc.licName }" required>
+																																						            <input type="text" class="form-control" name="licName" id="licName" value="${ lc.licName }" required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="issuedDate" class="form-label">발급일자</label>
-																																						            <input type="email" class="form-control" id="issuedDate" value="${ lc.issuedDate }" required>
+																																						            <input type="text" class="form-control" name="issuedDate" id="issuedDate" value="${ lc.issuedDate }" required>
 																																						        </div>
 																																						    </div>
 																																						    <div class="col-md-6">
 																																						    		<div class="mb-3">
 																																						            <label for="licConfirmNo" class="form-label">발급번호</label>
-																																						            <input type="text" class="form-control" id="licConfirmNo" value="${ lc.licConfirmNo }" required>
+																																						            <input type="text" class="form-control" name="licConfirmNo" id="licConfirmNo" value="${ lc.licConfirmNo }" required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="licAgency" class="form-label">발급기관</label>
-																																						            <input type="text" class="form-control" id="licAgency" value="${ lc.licAgency }" required>
+																																						            <input type="text" class="form-control" name="licAgency" id="licAgency" value="${ lc.licAgency }" required>
 																																						        </div>
 																																						    </div>
 																																						</div>
@@ -599,12 +588,16 @@
 																							                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 																							                    </div>
 																							                    <div class="modal-body p-4">
+																							                    
+																							                    	<form action="${ contextPath }/member/deleteLicense" method="post">
+																							                    	  <input type="hidden" name="licNo" value="${lc.licNo }">
 																							                        <p>선택한 자격증 정보를 삭제하시겠습니까?</p>
 																							
 																							                        <div class="text-end">
 																							                            <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">삭제</button>
 																							                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
 																							                        </div>
+																							                      </form>
 																							                    </div>
 																							
 																							                    

@@ -37,6 +37,13 @@
 		<result column="issued_date" property="issuedDate"/>
 		<result column="lic_agency" property="licAgency"/>
 	</resultMap>
+	
+	<resultMap id="accountResult" type="AccountDto">
+		<id column="account_no" property="accountNo"/>
+		<result column="bank" property="bankName"/>
+		<result column="bank_account_no" property="bankAccountNo"/>
+		<result column="account_holder" property="accountHolder"/>
+	</resultMap>
   
   <!-- 로그인용 (암호화 적용)-->
   <select id="selectMember" resultMap="memberResult">
@@ -125,6 +132,33 @@
   	order by lic_no asc
   </select>
   
+  <!--  사용자의 계좌정보를 조회하는용 -->
+  <select id="selectAccount" resultMap="accountResult">
+  	select account_no, bank, bank_account_no, account_holder
+		  from tb_account
+		 where account_no = (select account_no 
+		                       from tb_mem
+		                      where mem_no = #{memNo})
+  </select>
+  
+  <!-- 사용자의 자격증 정보를 수정하는용 -->
+  <update id="updateLicense">
+  	update 
+  				tb_license
+  		 set
+  		    lic_name = #{licName},
+  		    lic_confirmno = #{licConfirmNo},
+  		    issued_date = #{issuedDate},
+  		    lic_agency = #{licAgency}
+  	 where
+  	 			lic_no = #{licNo}
+  </update>
  
+ 	<!-- 사용자의 자격증 정보를 삭제하는용 -->
+ 	<delete id="deleteLicense">
+ 		delete
+ 		 			from tb_license
+ 		     where lic_no = #{licNo}
+ 	</delete>
   
 </mapper>

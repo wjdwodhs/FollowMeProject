@@ -12,18 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.service.CheckAccountService;
 import com.fz.followme.service.EmailSender;
 import com.fz.followme.service.MemberService;
 import com.fz.followme.util.FileUtil;
@@ -41,7 +44,8 @@ public class MemberController {
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final FileUtil fileUtil;
 	private final EmailSender emailSender;
-
+	private final CheckAccountService checkAccountService;
+	
 	// 로그인
 	@PostMapping("/login.do")
 	public void login(MemberDto m,
@@ -105,6 +109,11 @@ public class MemberController {
 		List<LicenseDto> licenseList = memberService.selectLicense(memNo);
 		
 		model.addAttribute("licenseList", licenseList);
+		
+		// 마이페이지로 로그인한 사용자의 계좌정보 데이터 조회해오기
+		AccountDto bankAccount = memberService.selectAccount(memNo);
+		
+		model.addAttribute("bankAccount", bankAccount);
 		
 		return "member/mypage";
 	}
@@ -229,7 +238,59 @@ public class MemberController {
 	}
 	
 	
+	// 마이페이지 - 계좌실명인증 기능 
+	@PostMapping("/checkAccount")
+	public ResponseEntity<Map<String, String>> checkAccount(@RequestBody Map<String, String> requestData) {
+	    String bankCode = requestData.get("bank_code");
+	    String bankNumber = requestData.get("bank_num");
+	    
+	    Map<String, String> response = new HashMap<>();
+	    try {
+	        Map<String, String> map = checkAccountService.getAccessToken1(bankCode, bankNumber);
+	        String bankHolderInfo = map.get("bankHolderInfo");
+	        Object errorObj = map.get("error");
+	        if (errorObj instanceof String) {
+	            String errorStr = (String) errorObj;
+	            int error = Integer.parseInt(errorStr);
+	            response.put("errormsg", String.valueOf(error));
+	        }
+	        response.put("bankHolderInfo", bankHolderInfo);
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        response.put("errormsg", e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
 	
+	// 마이페이지 - 자격증 정보 수정 기능 
+	@PostMapping("/modifyLicense")
+	public String modifyLicense(LicenseDto license, RedirectAttributes redirectAttributes) {
+		
+		int result = memberService.updateLicense(license);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "자격증 정보가 수정되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "자격증 정보 수정에 실패했습니다.");
+		}
+		
+		return "redirect:/member/mypage.do";
+	}
+	
+	// 마이페이지 - 자격증 정보 삭제 기능
+	@PostMapping("/deleteLicense")
+	public String deleteLicense(LicenseDto license, RedirectAttributes redirectAttributes) {
+		int result = memberService.deleteLicense(license);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "해당 자격증 정보가 삭제되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "해당 자격증 정보 삭제에 실패했습니다.");
+		}
+		
+		return "redirect:/member/mypage.do";
+		
+	}
 }
 
 

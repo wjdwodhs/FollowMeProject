@@ -2,6 +2,7 @@ package com.fz.followme.service;
 
 import java.util.List;
 
+import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
@@ -24,4 +25,13 @@ public interface MemberService {
 	
 	// 사용자의 자격증 정보를 조회하는 서비스
 	List<LicenseDto> selectLicense(String memNo);
+	
+	// 사용자의 계좌정보를 조회하는 서비스
+	AccountDto selectAccount(String memNo);
+	
+	// 사용자의 자격증 정보를 업데이트 하는 서비스
+	int updateLicense(LicenseDto license);
+	
+	// 사용자의 자격증 정보를 삭제하는 서비스
+	int deleteLicense(LicenseDto license);
 }
