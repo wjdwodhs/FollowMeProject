@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
-           
-</head>
-
+    
 <style>
 
     .a.nav-link.active{background-color:#FEBE98;}
@@ -94,7 +92,7 @@
     }
 
 </style>
-
+</head>
 <body>
 
     <!-- Begin page -->
@@ -241,40 +239,6 @@
                                     </tbody>
                                 </table>
                             </div> <!-- 내용 작성하기 끝-->
-                                    
-                            <script>
-                                function workingLetter() {
-                                    var today = new Date();
-                                    
-                                    // startDate 설정
-                                    var startDateField = document.getElementById('startDate');
-                                    startDateField.valueAsDate = today; // 시작일을 오늘로 설정
-                                    startDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
-                                    
-                                    // endDate 설정
-                                    var endDateField = document.getElementById('endDate');
-                                    endDateField.valueAsDate = today; // 종료일을 오늘로 설정
-                                    endDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
-                                    
-                                    function checkEndDate() {
-                                        // 종료일이 시작일 이전으로 선택되었을 때
-                                        if (endDateField.value < startDateField.value) {
-                                            endDateField.value = startDateField.value; // 종료일을 시작일과 같게 설정
-                                        }
-                                    }
-                                    
-                                    
-                                    
-                                    // 종료일 변경 시에도 검사
-                                    endDateField.addEventListener('change', checkEndDate);
-                                    
-                                    // 시작일 변경 시에도 검사
-                                    startDateField.addEventListener('change', checkStartDate);
-                                }
-                                
-                                // 페이지 로드 시 실행
-                                window.addEventListener('load', workingLetter);
-                            </script>
                                         
                             <p style="text-align:center; font-size:16px; margin-top:20px;">상기와 같이 협조를 부탁드리오니 바쁘시더라도 업무에 차질 없도록 협조바랍니다.</p>
                             <!--결재 처리사유-->

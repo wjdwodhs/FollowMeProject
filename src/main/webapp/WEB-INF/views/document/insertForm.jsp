@@ -35,9 +35,9 @@
 	
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 .a.nav-link.active {
@@ -61,15 +61,14 @@ tr>th, tr>td {
 	text-align: center;
 }
 
-.btn-group>button {
-	background-color: #FFBE98;
-  border: 1px solid #FFBE98; /* 테두리 */
-  --ct-btn-active-bg:#FA9A85;    
-  --ct-btn-active-border-color:#FA9A85;
-  --ct-btn-hover-bg:#FA9A85;
-  --ct-btn-hover-border-color:#FA9A85;   
-}
-
+.btn-group>button{
+		background-color: #FFBE98;
+    border: 1px solid #FFBE98; /* 테두리 */
+    --ct-btn-active-bg:#FA9A85;    
+    --ct-btn-active-border-color:#FA9A85;
+    --ct-btn-hover-bg:#FA9A85;
+    --ct-btn-hover-border-color:#FA9A85;   
+}	
 #snow-editor {
     flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
 }
@@ -218,21 +217,20 @@ tr>th, tr>td {
             			}else if(selectedValue == 3){
                   	holiday();
                 	}else if(selectedValue == 4){
-                		addExpenseRow(row);
-                		removeExpenseRow(row);
+                		addRow(row);
+                		removeRow(row);
                 	}else if(selectedValue == 5){
                 		addExpenseRow(row);
                 		removeExpenseRow(row);
                 	}else if(selectedValue == 6){
                 		changeTotalCost();
                 	}else if(selectedValue == 7){
-                		workingLetter();
+                		//workingLetter();
                 	}
             			
             	});
            }
         }
-        
         function textEditorInit(){
         		const quill=new Quill('#snow-editor', {theme:'snow'});
         }
@@ -241,26 +239,26 @@ tr>th, tr>td {
   	<!-- 2. 재택근무 신청서 날짜 선택 스크립트 -->
     <script> 
     function homework(){
- 		// 오늘 today
-    var today = new Date();
-    // 내일 tomorrow
-    var tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    // 14일후 nextTwoWeeks
-    var nextTwoWeeks = new Date(today);
-    nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
-
-    // startDate 설정
-    var startDateField = document.getElementById('startDate');
-    startDateField.valueAsDate = tomorrow; // 최소날짜 내일
-    startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-    startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-
-    // endDate 설정
-    var endDateField = document.getElementById('endDate');
-    endDateField.valueAsDate = tomorrow; // 최소날짜 내일
-    endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-    endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+	 		// 오늘 today
+	    var today = new Date();
+	    // 내일 tomorrow
+	    var tomorrow = new Date(today);
+	    tomorrow.setDate(today.getDate() + 1);
+	    // 14일후 nextTwoWeeks
+	    var nextTwoWeeks = new Date(today);
+	    nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
+	
+	    // startDate 설정
+	    var startDateField = document.getElementById('startDate');
+	    startDateField.valueAsDate = tomorrow; // 최소날짜 내일
+	    startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+	    startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
+	
+	    // endDate 설정
+	    var endDateField = document.getElementById('endDate');
+	    endDateField.valueAsDate = tomorrow; // 최소날짜 내일
+	    endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
+	    endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
     
 	    function checkEndDate() {
 	        if (endDateField.value < startDateField.value) {
@@ -309,12 +307,12 @@ tr>th, tr>td {
 
 		<!-- 04. 지출 결의서 줄 추가/삭제 -->
 		<script>
-				function addExpenseRow() {
+				function addRow() {
 				  var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
 				  var newRow = table.insertRow(-1);
 				  newRow.innerHTML = `
 				    <td style="width:60px; text-align:center;">
-				        <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span>
+				        <span class="menu-icon" onclick="removeRow(this);"><b>━</b></span>
 				    </td>
 				    <td style="width:95px; text-align:center;">
 				        <input type="date" id="starDate" size="20" style="border:0; width:100px;">
@@ -331,7 +329,7 @@ tr>th, tr>td {
 				  `;
 				}
 				
-				function removeExpenseRow(row) {
+				function removeRow(row) {
 					  var rowIndex = row.parentNode.parentNode.rowIndex; // Get the index of the row
 					  document.getElementById("expenseTable").deleteRow(rowIndex); // Delete the row
 					}
@@ -421,9 +419,8 @@ tr>th, tr>td {
         
         // 종료일 변경 시에도 검사
         endDateField.addEventListener('change', checkEndDate);
-        
-        // 시작일 변경 시에도 검사
-        startDateField.addEventListener('change', checkStartDate);
+        startDateField.addEventListener('change', checkEndDate);
+
     }
     
     // 페이지 로드 시 실행
