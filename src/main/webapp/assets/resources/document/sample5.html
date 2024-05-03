@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>전자결재 양식 - 7. 협조문</title>
+    <title>전자결재 양식 - 5. 구매 신청서</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
-    
-<style>
 
+<style>
     .a.nav-link.active{background-color:#FEBE98;}
 
     .card{
@@ -83,7 +82,7 @@
         height: 40px;
     }
 
-    #snow-editor {
+    #editor {
         flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
     }
 
@@ -91,16 +90,18 @@
         outline: none;
     }
 
+	.menu-icon:hover {
+  	cursor: pointer;
+	}
 </style>
 </head>
 <body>
-
     <!-- Begin page -->
     <div id="wrapper" style="background-color: white;">
 
         <!-- ============================================================== -->
         <!-- Start Page content -->
-        <!-- 전자결재 양식 7. 협조문-->
+        <!-- 전자결재 양식 5. 구매 신청서-->
         <!-- ============================================================== -->
             
         <div class="content">
@@ -112,7 +113,7 @@
                     <div class="card-body">
                         <div class="top-document">
                             <div class="document-title">
-                                <h1>휴가 신청서</h1>
+                                <h1>구매 신청서</h1>
                             </div>
                             <div class="sign-table">
                                 <table class="table-sign">
@@ -120,7 +121,7 @@
                                         <th rowspan="5" style="width:20px;">결 재 선</th>
                                     </tr>
                                     <tr>
-                                        <th>작 성 자</th>
+                                        <th>신 청 자</th>
                                         <th>결 재 자</th>
                                     </tr>
                                     <tr class="sign">
@@ -136,19 +137,19 @@
                             <div class="info-1">
                                 <table class="table-info-1">
                                     <tr>
-                                        <th width="120px;">수신부서</th>
-                                        <td width="266px;">마케팅</td>    
+                                        <th width="120px;">부서</th>
+                                        <td width="266px;">경영지원</td>
                                     </tr>
                                     <tr>
-                                        <th>발신부서</th>
-                                        <td>경영지원</td>
+                                        <th>직급</th>
+                                        <td>대리</td>
                                     </tr>
                                     <tr>
-                                        <th>담당자</th>
-                                        <td>유주찬 대리</td>
+                                        <th>신청자</th>
+                                        <td>유주찬</td>
                                     </tr>
                                     <tr>
-                                        <th>기안일</th>
+                                        <th>신청일</th>
                                         <td>2024-05-13 (월)</td>
                                     </tr>
                                 </table>
@@ -157,15 +158,15 @@
                             <div class="info-2">
                                 <table class="table-info-2">
                                     <tr>
-                                        <th width="120px;">참조인</th>
+                                        <th>참조인</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th width="120px;">결재자</th>
                                         <td width="266px;">경영지원 김성한 팀장</td>
                                     </tr>
                                     <tr>
-                                        <th>결재자</th>
-                                        <td>마케팅 한지민 팀장</td>
-                                    </tr>
-                                    <tr>
-                                        <th>보존연한</th>   
+                                        <th>보존연한</th>
                                         <td>기안일로부터 5년</td>
                                     </tr>
                                     <tr>
@@ -189,76 +190,80 @@
                             </div>
                             
                             
-                            <!-- 내용 작성하기 -->
-                            <div class="table-responsive">
-                                <table class="table table-bordered border-primary mb-0">
+                        <!-- 내용 작성하기 -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary mb-0" id="expenseTable">
+                                <tbody>
+                                    <tr>
+                                        <th width="60px;">추 가</th>
+                                        <th style="text-align:center"> 품 목 </th>
+                                        <th style="text-align:center;"> 수 량</th>
+                                        <th style="text-align:center;"> 단 가 </th>
+                                        <th style="text-align:center;"> 금 액 (원) </th>
+                                        <th style="text-align:center;"> 비 고 </th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <span class="menu-icon" onclick="addExpenseRow();"><b>╊</b></span> 
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center;" width="130px;" value="간식">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:45px;" value="5">ea
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:90px;" value="300,000">원
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:100px;" value="1,500,000">원
+                                        </td>
+                                        <td>
+                                            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:120px;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                  
+                            <table class="table table-bordered border-primary mb-0" style="margin-top:20px;">      
 
-                                    <tbody>
-                                        <tr>
-                                            <th style="text-align:center; width: 100px;"> 협 조 기 한 </th>
-                                            <td style="text-align:left;">
-                                                <input type="date" id="startDate" size="20" style="width:100px; border:0;"> ~
-                                                <input type="date" id="endDate" size="20" style="width:100px; border:0;">
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <th style="text-align:center; width: 60px;">첨 부</th>
+                                    <td><input type="file" style="width:100%;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
+                                    <!--
+                                        <td>
+                                            <c:forEach var="at" items="${ board.attachList }">
+                                                <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
+                                            </c:forEach>
+                                        </td>
+                                    -->
+                            </table>
 
 
-                                        <tr>
-                                            <th style="text-align:center;"> 협 조 사 항 </th>
-                                            <td>
-                                                <input type="text" name="place-box" size="20" style="width:640px; border:0;" placeholder="협조사항 기입">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;"> 참 고 사 항 </th>
-                                            <td>
-                                                <input type="text" name="place-box" size="20" style="width:640px; border:0;" placeholder="참고사항 기입">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">
-                                                상 세 내 용
-                                            </th>
-                                            <td style="height:250px; width:655px; text-align:left;">
-                                                <div id="snow-editor" style="height:250px;">
-                                                    기안자 작성란
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:center;">첨 부</th>
-                                            <td><input type="file" style="width:100%;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
-                                            <!--
-                                                <td>
-                                                    <c:forEach var="at" items="${ board.attachList }">
-                                                        <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
-                                                    </c:forEach>
-                                                </td>
-                                            -->
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> <!-- 내용 작성하기 끝-->
-                                        
-                            <p style="text-align:center; font-size:16px; margin-top:20px;">상기와 같이 협조를 부탁드리오니 바쁘시더라도 업무에 차질 없도록 협조바랍니다.</p>
                             <!--결재 처리사유-->
-                            <div class="opinion-box" style="margin-top:20px;">
+                            <div class="opinion-box" style="margin-top:10px;">
                                 <table class="table table-bordered border-primary mb-0">      
-                                        <tr>
-                                            <th style="text-align:center; width:100px;">
+                                            <tr>
+                                            <th style="text-align:center; width:60px;">
                                                 처 리 <br> 사 유
                                             </th>
                                             <td>
-                                                <textarea rows="5" style="border:0; width:640px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                                <textarea rows="5" style="border:0; width:500px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
                                             </td>
                                         </tr>
                                 </table>
                             </div> <!-- 결재 처리사유 끝-->
                         </div>
                     </div>
-                </div> <!-- container -->
-            </div> <!-- content -->
-        </div> <!-- wrapper -->
+                </div>
+            </div> <!-- container -->
 
-    </body>
+        </div> <!-- content -->
+
+    </div> <!-- wrapper -->
+            
+
+            
+            
+</body>
 </html>

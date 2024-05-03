@@ -231,9 +231,13 @@ tr>th, tr>td {
             	});
            }
         }
-        function textEditorInit(){
-        		const quill=new Quill('#snow-editor', {theme:'snow'});
+        
+        function textEditorInit() {
+            const quill = new Quill('#editor', {    
+                theme: 'snow'
+            });
         }
+
     </script>
 		
   	<!-- 2. 재택근무 신청서 날짜 선택 스크립트 -->
