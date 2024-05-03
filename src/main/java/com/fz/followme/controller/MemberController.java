@@ -2,7 +2,9 @@ package com.fz.followme.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -13,12 +15,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fz.followme.dto.CareerDto;
 import com.fz.followme.dto.EmailDto;
+import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.service.EmailSender;
 import com.fz.followme.service.MemberService;
@@ -96,12 +100,11 @@ public class MemberController {
 		
 		model.addAttribute("mypageUser", mypageUser);
 		
-		// 마이페이지로 로그인한 사용자의 경력정보 조회해오기
+		// 마이페이지로 로그인한 사용자의 자격증 정보 데이터 조회해오기
 		String memNo = mypageUser.getMemNo();
-		List<CareerDto> careerList = memberService.selectCareer(memNo);
+		List<LicenseDto> licenseList = memberService.selectLicense(memNo);
 		
-		model.addAttribute("careerList", careerList);
-		
+		model.addAttribute("licenseList", licenseList);
 		
 		return "member/mypage";
 	}
@@ -224,6 +227,8 @@ public class MemberController {
 		
 		return "redirect:/member/mypage.do";
 	}
+	
+	
 	
 }
 

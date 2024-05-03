@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.MemberDao;
-import com.fz.followme.dto.CareerDto;
+import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
 import lombok.RequiredArgsConstructor;
@@ -42,10 +42,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<CareerDto> selectCareer(String memNo) {
-		return memberDao.selectCareer(memNo);
+	public List<LicenseDto> selectLicense(String memNo) {
+		return memberDao.selectLicense(memNo);
 	}
 
-	
-	
 }

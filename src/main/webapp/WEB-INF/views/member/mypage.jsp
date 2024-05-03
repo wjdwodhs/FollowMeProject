@@ -28,6 +28,8 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <style>
 	.a.nav-link.active{backgroun-color:#febe98;}
 </style>
@@ -87,6 +89,53 @@
 		    // 비밀번호 변경 로직
 		    location.href = "${contextPath}/member/changePwd.do?newMemPwd=" + newMemPwd + "&memNo=" + memNo;
 		}
+		
+		
+		// 경력정보 수정 모달에서 '수정 버튼' 클릭 시 함수
+		$(document).ready(function() {
+	    $("#updateCareerBtn").click(function() {
+	        // 폼 데이터 수집
+	        var formData = $("#careerModifyForm").serialize();
+	
+	        // AJAX 요청 보내기
+	        $.ajax({
+	            url: "${contextPath}/member/updateCareer", 
+	            type: "POST",
+	            data: formData,
+	            success: function(response) {
+	                // 성공적으로 수정되었을 때 처리할 내용
+	                alert(response);
+	                // 모달 닫기
+	                $("#career-modify-modal").modal("hide");
+	                
+	            },
+	            error: function(xhr, status, error) {
+	                // 수정에 실패했을 때 처리할 내용
+	                alert(response);
+	                
+	            }
+	        });
+	    });
+	});
+		
+		// 계좌실명 인증
+		function checkAccount(){
+					const self = this;
+		            const bankselect = document.getElementById('bankselect');
+		            const accountHolder = document.getElementById('accountHolder');
+		            const accountNumber = document.getElementById('accountNumber');
+		 const data = {
+		      bank_code: this.bankname,
+		      bank_num: this.accountNumber
+		               };
+		     self.$axios.get("${contextPath}/members/checkAccount", { params: data })
+		     .then(function (res) {
+		     if (res.status == 200) {
+		     console.log(res.data.bankHolderInfo)
+		     console.log(self.name); 
+		     }
+		     });
+		}
     
     
 </script>
@@ -111,7 +160,7 @@
                <!-- topbar include -->
                <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
             
-		           <div class="content">
+		           <div class="content"  style="background-color:#F2E8DA;">
 		
 		                    <!-- Start Content-->
 		                    <div class="container-fluid">
@@ -214,96 +263,12 @@
 		                            <div class="col-lg-8 col-xl-8">
 		                                <div class="card">
 		                                    <div class="card-body">
-		                                        <ul class="nav nav-pills nav-fill navtab-bg">
-		                                            <li class="nav-item">
-		                                                <a href="#aboutme" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-		                                                    경력정보
-		                                                </a>
-		                                            </li>
-		                                            <li class="nav-item">
-		                                                <a href="#settings" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
-		                                                    인사정보
-		                                                </a>
-		                                            </li>
-		                                        </ul>
+		                                        
 		                                        <div class="tab-content">
-		                                            <div class="tab-pane show active" id="aboutme">
 		    
-		                                                <h5 class="mb-4 text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-		                                                    경력 정보</h5>
-		    
-		                                                <ul class="list-unstyled timeline-sm">
-		                                                
-		                                                		<c:forEach var="c" items="${ careerList }">
-		                                                			<li class="timeline-sm-item">
-		                                                        <span class="timeline-sm-date">${ c.carrTime }</span>
-		                                                        <h5 class="mt-0 mb-1">${ c.carrCorp }</h5>
-		                                                        <p class="mt-2" style="overflow-y: auto; max-height: 100px;">${ c.carrContent }</p>
-		                                                   		</li>
-		                                                		</c:forEach>
-		                                                    
-		                                                </ul>
-		    
-		                                                <h5 class="mb-3 mt-4 text-uppercase"><i class="mdi mdi-cards-variant me-1"></i>
-		                                                    보유자격증</h5>
-		                                                <div class="table-responsive">
-		                                                    <table class="table table-borderless mb-10">
-		                                                        <thead class="table-light">
-		                                                            <tr style="background-color:#febe98;">
-		                                                                <th>#</th>
-		                                                                <th>자격증</th>
-		                                                                <th>발급번호</th>
-		                                                                <th>취득일자</th>
-		                                                                <th>인증기관</th>
-		                                                                <th>증빙자료</th>
-		                                                            </tr>
-		                                                        </thead>
-		                                                        <tbody>
-		                                                            <tr>
-		                                                                <td>1</td>
-		                                                                <td>PMP</td>
-		                                                                <td>12345678</td>
-		                                                                <td>10/15/2018</td>
-		                                                                <td>PMI</td>
-		                                                                <td><input type="file"></td>
-		                                                            </tr>
-		                                                            <tr>
-		                                                                <td>2</td>
-		                                                                <td>경영자문사</td>
-		                                                                <td>12349874</td>
-		                                                                <td>12/05/2017</td>
-		                                                                <td>기관</td>
-		                                                                <td><input type="file"></td>
-		                                                            </tr>
-		                                                            <tr>
-		                                                                <td>3</td>
-		                                                                <td>ERP정보관리사</td>
-		                                                                <td>12346598</td>
-		                                                                <td>28/09/2016</td>
-		                                                                <td>기관</td>
-		                                                                <td><input type="file"></td>
-		                                                            </tr>
-		                                                            <tr>
-		                                                                <td>4</td>
-		                                                                <td>컴퓨터활용능력 1급</td>
-		                                                                <td>12345555</td>
-		                                                                <td>07/05/2015</td>
-		                                                                <td>기관</td>
-		                                                                <td><input type="file"></td>
-		                                                            </tr>
-		                                                        
-		                                                        </tbody>
-		                                                    </table>
-		                                                </div>
-		    
-		                                            </div> <!-- end tab-pane -->
-		                                            <!-- end about me section content -->
-		    
-		                                            
-		    
-		                                            <div class="tab-pane" id="settings">
+		                                            <div id="settings">
 		                                                <form>
-		                                                    <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> 개인정보</h5>
+		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-account-circle me-1"></i> 개인정보</h5>
 		                                                    <div class="row">
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
@@ -334,7 +299,6 @@
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
 		    
-		                                                    
 		    
 		                                                    <div class="row">
 		                                                        <div class="col-md-6">
@@ -479,41 +443,175 @@
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
 		                                                    
-		                                                
-		                                                    
-		                                                    
-		                                                    
-		    
-		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-earth me-1"></i> SNS</h5>
-		                                                    
-		                                                    <div class="row">
-		                                                        <div class="col-md-6">
-		                                                            <div class="mb-3">
-		                                                                <label for="social-insta" class="form-label">Instagram</label>
-		                                                                <div class="input-group">
-		                                                                    <span class="input-group-text"><i class="fab fa-instagram"></i></span>
-		                                                                    <input type="text" class="form-control" id="social-insta" placeholder="Url">
-		                                                                </div>
-		                                                            </div>
-		                                                        </div>
-		                                                        <div class="col-md-6">
-		                                                            <div class="mb-3">
-		                                                                <label for="social-lin" class="form-label">Linkedin</label>
-		                                                                <div class="input-group">
-		                                                                    <span class="input-group-text"><i class="fab fa-linkedin"></i></span>
-		                                                                    <input type="text" class="form-control" id="social-lin" placeholder="Url">
-		                                                                </div>
-		                                                            </div>
-		                                                        </div> <!-- end col -->
-		                                                    </div> <!-- end row -->
+				                                                
+		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-cards-variant me-1"></i>보유자격증</h5>
+					                                                <div class="table-responsive">
+								                                            <table class="table table-centered table-nowrap table-striped" id="products-datatable" style="text-align:center">
+								                                                <thead>
+								                                                    <tr>
+								                                                        <th>구분</th>
+								                                                        <th>자격증명</th>
+								                                                        <th>발급번호</th>
+								                                                        <th>발급일자</th>
+								                                                        <th>발급기관</th>
+								                                                        <th>증빙자료</th>
+								                                                        <th style="width: 85px;">Action</th>
+								                                                    </tr>
+								                                                </thead>
+								                                                <tbody>
+								                                                	<c:forEach var="lc" items="${ licenseList }">
+								                                                    <tr>
+								                                                        <td>
+								                                                            ${ lc.licNo }
+								                                                        </td>
+								                                                        <td>
+								                                                            ${ lc.licName }
+								                                                        </td>
+								                                                        <td>
+								                                                            ${ lc.licConfirmNo }
+								                                                        </td>
+								                                                        <td>
+								                                                            ${ lc.issuedDate }
+								                                                        </td>
+								                                                        <td>
+								                                                            ${ lc.licAgency }
+								                                                        </td>
+								                                                        <td>
+								                                                        	<input type="file" class="form-control" name="uploadFile">
+								                                                        </td>
+								                                                        <td>
+								                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-modify-modal-${ lc.licNo }"> <i class="mdi mdi-square-edit-outline"></i></a>
+								                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-delete-modal-${ lc.licNo }"> <i class="mdi mdi-delete"></i></a>
+								                                                        </td>
+								                                                    </tr>
+								                                                   </c:forEach>
+								                                                    
+								                                                    
+								                                                </tbody>
+								                                            </table>
+								                                        </div>
+                                                
 		    
 		                                                    <div class="text-end">
-		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#febe98; color:white;"><i class="mdi mdi-content-save"></i> Save</button>
+		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#f97272; color:white;"><i class="mdi mdi-content-save"></i> 저장</button>
 		                                                    </div>
 		                                                </form>
 		                                            </div>
 		                                            <!-- end settings content-->
-		    
+		                                            
+		                                            <!-- 자격증 추가 Modal -->                                     
+																								        <div class="modal fade" id="license-add-modal" tabindex="-1" role="dialog" aria-hidden="true">
+																								            <div class="modal-dialog modal-dialog-centered">
+																								                <div class="modal-content">
+																								                    <div class="modal-header bg-light">
+																								                        <h4 class="modal-title" id="myCenterModalLabel">자격증 정보 추가</h4>
+																								                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+																								                    </div>
+																								                    <div class="modal-body p-4">
+																								                        <form>
+																								                            <div class="row">
+																								                            		<div class="col-md-6">
+																								                            			  <div class="mb-3">
+																																						            <label for="licName" class="form-label">자격증명</label>
+																																						            <input type="text" class="form-control" id="licName" required>
+																																						        </div>
+																																						        <div class="mb-3">
+																																						            <label for="issuedDate" class="form-label">발급일자</label>
+																																						            <input type="email" class="form-control" id="issuedDate" required>
+																																						        </div>
+																																						    </div>
+																																						    <div class="col-md-6">
+																																						    		<div class="mb-3">
+																																						            <label for="licConfirmNo" class="form-label">발급번호</label>
+																																						            <input type="text" class="form-control" id="licConfirmNo" required>
+																																						        </div>
+																																						        <div class="mb-3">
+																																						            <label for="licAgency" class="form-label">발급기관</label>
+																																						            <input type="text" class="form-control" id="licAgency" required>
+																																						        </div>
+																																						    </div>
+																																						</div>
+																								        
+																								                            <div class="text-end">
+																								                                <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">추가</button>
+																								                                <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
+																								                            </div>
+																								                        </form>
+																								                    </div>
+																								                </div><!-- /.modal-content -->
+																								            </div><!-- /.modal-dialog -->
+																								        </div><!-- /.modal -->
+																								        
+																								        
+																										    <!-- 자격증 수정 Modal -->     
+																										    <c:forEach var="lc" items="${ licenseList }">                                
+																								        	<div class="modal fade" id="license-modify-modal-${ lc.licNo }" tabindex="-1" role="dialog" aria-hidden="true">
+																								            <div class="modal-dialog modal-dialog-centered">
+																								                <div class="modal-content">
+																								                    <div class="modal-header bg-light">
+																								                        <h4 class="modal-title" id="myCenterModalLabel">자격증 정보 수정</h4>
+																								                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+																								                    </div>
+																								                    <div class="modal-body p-4">
+																								                    	
+																								                        <form>
+																								                            <div class="row">
+																								                            		<div class="col-md-6">
+																								                            			  <div class="mb-3">
+																																						            <label for="licName" class="form-label">자격증명</label>
+																																						            <input type="text" class="form-control" id="licName" value="${ lc.licName }" required>
+																																						        </div>
+																																						        <div class="mb-3">
+																																						            <label for="issuedDate" class="form-label">발급일자</label>
+																																						            <input type="email" class="form-control" id="issuedDate" value="${ lc.issuedDate }" required>
+																																						        </div>
+																																						    </div>
+																																						    <div class="col-md-6">
+																																						    		<div class="mb-3">
+																																						            <label for="licConfirmNo" class="form-label">발급번호</label>
+																																						            <input type="text" class="form-control" id="licConfirmNo" value="${ lc.licConfirmNo }" required>
+																																						        </div>
+																																						        <div class="mb-3">
+																																						            <label for="licAgency" class="form-label">발급기관</label>
+																																						            <input type="text" class="form-control" id="licAgency" value="${ lc.licAgency }" required>
+																																						        </div>
+																																						    </div>
+																																						</div>
+																								        
+																								                            <div class="text-end">
+																								                                <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">수정</button>
+																								                                <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
+																								                            </div>
+																								                        </form>
+																								                     
+																								                    </div>
+																								                </div><!-- /.modal-content -->
+																								            </div><!-- /.modal-dialog -->
+																								        </div><!-- /.modal -->
+																								      
+						                                            
+						                                            
+						                                            <div class="modal fade" id="license-delete-modal-${ lc.licNo }" tabindex="-1" role="dialog" aria-hidden="true">
+																							            <div class="modal-dialog modal-dialog-centered">
+																							                <div class="modal-content">
+																							                    <div class="modal-header bg-light">
+																							                        <h4 class="modal-title" id="myCenterModalLabel">자격증 정보 삭제</h4>
+																							                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+																							                    </div>
+																							                    <div class="modal-body p-4">
+																							                        <p>선택한 자격증 정보를 삭제하시겠습니까?</p>
+																							
+																							                        <div class="text-end">
+																							                            <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">삭제</button>
+																							                            <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
+																							                        </div>
+																							                    </div>
+																							
+																							                    
+																							                </div><!-- /.modal-content -->
+																							            </div><!-- /.modal-dialog -->
+																							        </div><!-- /.modal -->
+		    																						</c:forEach>
 		                                        </div> <!-- end tab-content -->
 		                                    </div>
 		                                </div> <!-- end card-->
