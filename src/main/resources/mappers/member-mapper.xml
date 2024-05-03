@@ -29,12 +29,20 @@
 		<result column="status" property="status"/>
 	</resultMap>
 	
-	<resultMap id="careerResult" type="CareerDto">
-		<id column="carr_no" property="carrNo"/>
+	<resultMap id="licenseResult" type="LicenseDto">
+		<id column="lic_no" property="licNo"/>
 		<result column="mem_no" property="memNo"/>
-		<result column="carr_time" property="carrTime"/>
-		<result column="carr_corp" property="carrCorp"/>
-		<result column="carr_content" property="carrContent"/>
+		<result column="lic_name" property="licName"/>
+		<result column="lic_confirmno" property="licConfirmNo"/>
+		<result column="issued_date" property="issuedDate"/>
+		<result column="lic_agency" property="licAgency"/>
+	</resultMap>
+	
+	<resultMap id="accountResult" type="AccountDto">
+		<id column="account_no" property="accountNo"/>
+		<result column="bank" property="bankName"/>
+		<result column="bank_account_no" property="bankAccountNo"/>
+		<result column="account_holder" property="accountHolder"/>
 	</resultMap>
   
   <!-- 로그인용 (암호화 적용)-->
@@ -113,14 +121,44 @@
 		   and mem_email = #{newEmail}
   </select>
   
-  <!-- 마이페이지 사용자 경력정보 조회용 -->
-	<select id="selectCareer" resultMap="careerResult">
-		select
-					carr_no, m.mem_no, carr_time, carr_corp, carr_content
-			from tb_career c
-			left join tb_mem m on (m.mem_no = c.mem_no)
-		where m.status = 'Y'
-		  and m.mem_no = #{memNo}
-	</select>  
+  <!-- 사용자의 자격증 정보를 조회하는용 -->
+  <select id="selectLicense" resultMap="licenseResult">
+  	select
+        lic_no, m.mem_no, lic_name, lic_confirmno, issued_date, lic_agency
+ 		 from  tb_license l
+  	 left join tb_mem m on (m.mem_no = l.mem_no)
+  	where m.status = 'Y'
+  	  and m.mem_no = #{memNo}
+  	order by lic_no asc
+  </select>
+  
+  <!--  사용자의 계좌정보를 조회하는용 -->
+  <select id="selectAccount" resultMap="accountResult">
+  	select account_no, bank, bank_account_no, account_holder
+		  from tb_account
+		 where account_no = (select account_no 
+		                       from tb_mem
+		                      where mem_no = #{memNo})
+  </select>
+  
+  <!-- 사용자의 자격증 정보를 수정하는용 -->
+  <update id="updateLicense">
+  	update 
+  				tb_license
+  		 set
+  		    lic_name = #{licName},
+  		    lic_confirmno = #{licConfirmNo},
+  		    issued_date = #{issuedDate},
+  		    lic_agency = #{licAgency}
+  	 where
+  	 			lic_no = #{licNo}
+  </update>
+ 
+ 	<!-- 사용자의 자격증 정보를 삭제하는용 -->
+ 	<delete id="deleteLicense">
+ 		delete
+ 		 			from tb_license
+ 		     where lic_no = #{licNo}
+ 	</delete>
   
 </mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="assetMapper">
+
+<resultMap id="assetResult" type="AssetDto">
+	<id column="asset_no" property="assetNo"></id>
+	<result column="asset_type" property="assetType"></result>
+	<result column="regist_date" property="registDate"></result>
+	<result column="asset_name" property="assetName"></result>
+	<result column="car_no" property="carNo"></result>
+	<result column="no_mem" property="noMem"></result>
+	<result column="rsvn_qty" property="rsvnQty"></result>
+	<result column="status" property="status"></result>
+	<result column="modify_date" property="modifyDate"></result>
+</resultMap>
+
+
+<select id="selectcarList" resultMap="assetResult">
+	select
+       asset_no
+     , regist_date
+     , asset_name
+     , car_no
+     , no_mem
+  from tb_asset
+ where asset_type = 'C'
+</select>
+
+
+</mapper>

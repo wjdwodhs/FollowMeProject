@@ -5,7 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.fz.followme.dto.CareerDto;
+import com.fz.followme.dto.AccountDto;
+import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,23 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.memEmailDoubleCheck", newEmail);
 	}
 	
-	// 사용자의 경력정보를 조회하는 서비스
-	public List<CareerDto> selectCareer(String memNo) {
-		return sqlSessionTemplate.selectList("memberMapper.selectCareer", memNo);
+	// 사용자의 자격증 정보를 조회하는 서비스
+	public List<LicenseDto> selectLicense(String memNo) {
+		return sqlSessionTemplate.selectList("memberMapper.selectLicense", memNo);
+	}
+	
+	// 사용자의 계좌정보를 조회하는 서비스
+	public AccountDto selectAccount(String memNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectAccount", memNo);
+	}
+	
+	// 사용자의 자격증 정보를 수정하는 서비스
+	public int updateLicense(LicenseDto license) {
+		return sqlSessionTemplate.update("memberMapper.updateLicense", license);
+	}
+	
+	// 사용자의 자격증 정보를 삭제하는 서비스
+	public int deleteLicense(LicenseDto license) {
+		return sqlSessionTemplate.delete("memberMapper.deleteLicense", license);
 	}
 }

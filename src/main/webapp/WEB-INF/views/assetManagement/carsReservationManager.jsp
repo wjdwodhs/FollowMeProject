@@ -29,7 +29,8 @@
 
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
-	
+  .active>.page-link, .page-link.active {
+    --ct-pagination-active-bg: #febe98;
 </style>
 
 </head>
@@ -147,25 +148,25 @@
                                             <br><br>
                                             
                                             <!--페이징-->
-		                                        <ul class="pagination pagination-rounded justify-content-end mb-0">
-		                                            <li class="page-item">
-		                                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
-		                                                    <span aria-hidden="true">«</span>
-		                                                    <span class="visually-hidden">Previous</span>
-		                                                </a>
-		                                            </li>
-		                                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-		                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-		                                            <li class="page-item">
-		                                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
-		                                                    <span aria-hidden="true">»</span>
-		                                                    <span class="visually-hidden">Next</span>
-		                                                </a>
-		                                            </li>
-		                                        </ul>
+		                                        <ul class="pagination pagination-rounded justify-content-end mb-0" style="">
+	                                            <li class="page-item">
+	                                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+	                                                    <span aria-hidden="true">«</span>
+	                                                    <span class="visually-hidden">Previous</span>
+	                                                </a>
+	                                            </li>
+	                                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+	                                            <li class="page-item">
+	                                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
+	                                                    <span aria-hidden="true">»</span>
+	                                                    <span class="visually-hidden">Next</span>
+	                                                </a>
+	                                            </li>
+                                        		</ul>
 
 
                                         </div>
@@ -184,7 +185,9 @@
                                     <div class="card-body">
                                         <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
                                        
-                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 89%;">추가</button>
+                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" 
+                                                style="background-color: #FFBE98; border: none; margin-left: 89%;" 
+                                                data-bs-toggle="modal" data-bs-target="#con-close-modal">추가</button>
                                         <br><br>
                                         <table class="table table-striped table-hover">
                                             <tr align="center">
@@ -193,28 +196,24 @@
                                                 <th>탑승인원(명)</th>
                                                 <th>비고</th>
                                             </tr>
-                                            <tr  align="center">
-                                                <td>캐스퍼</td>
-                                                <td>111가1234</td>
-                                                <td>4</td>
-                                                <td>이용가능</td>
+                                            <c:if test="${ not empty list }">
+                                            	<c:forEach var="car" items="${ list }">
+                                            		<tr align="center">
+                                                <th>${ car.assetName }</th>
+                                                <th>${ car.carNo }</th>
+                                                <th>${ car.noMem }</th>
+                                                <th>비고</th>
                                             </tr>
-                                            <tr  align="center">
-                                                <td>아반떼</td>
-                                                <td>222나6789</td>
-                                                <td>5</td>
-                                                <td>이용가능</td>
-                                            </tr>
-                                            <tr  align="center">
-                                                <td>스타렉스</td>
-                                                <td>333다4321</td>
-                                                <td>9</td>
-                                                <td>이용가능</td>
-                                            </tr>
+                                            	</c:forEach>
+                                            </c:if>
+                                            
+                                            
+                                            
+                                            
                                           </table>
                                     </div>
                                 </div> <!-- end col-->
-
+														</form>
 
                                 <!-- 예약 신청 -->
                                 <div class="card">
@@ -308,7 +307,67 @@
 
             </div>
 			
-
+	 <!-- 차량추가 모달 -->
+   <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <form action="">
+                   <input type="hidden" name="assetType" value="c">
+                   <div class="modal-header" style="background-color: #FFBE98;">
+                       <h4 class="modal-title" style="color:white"><b>법인차량 등록</b></h4>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body p-4">
+                       <div class="row">
+                           <div class="col-md-6">
+                               <div class="mb-3">
+                                   <label for="field-1" class="form-label">차종</label>
+                                   <input type="text" class="form-control" id="field-1">
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="mb-3">
+                                   <label for="field-2" class="form-label">차량번호</label>
+                                   <input type="text" class="form-control" id="field-2" >
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                               <div class="mb-3">
+                                   <label for="field-3" class="form-label">등록일자</label>
+                                   <input type="date" class="form-control" id="field-3">
+                               </div>
+                           </div>
+                       </div>
+           						<div class="row">
+	                       <div class="col-md-4">
+	                           <div class="mb-3">
+	                               <label for="field-4" class="form-label">탑승인원</label>
+	                               <input type="text" class="form-control" id="field-4">
+	                           </div>
+	                       </div>
+	                       <div class="col-md-4">
+	                           <div class="mb-3">
+	                               <label for="field-5" class="form-label">비고</label>
+					                       <select class="form-control" name="" id=""> <br>
+					                           <option value="">이용가능</option>
+					                           <option value="">이용불가</option>
+					                       </select>
+	                           </div>
+	                       </div>
+                      </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-info waves-effect waves-light"
+                               style="background-color: #FFBE98; border: none;">등록</button>
+                       <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">닫기</button>
+                   </div>
+               </form>
+           </div>
+       </div>
+   </div>
+   <!-- /.차량추가 모달 끝 -->
 
 
 
