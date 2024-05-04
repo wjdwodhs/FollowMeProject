@@ -22,6 +22,7 @@
      , asset_name
      , car_no
      , no_mem
+     , status
   from tb_asset
  where asset_type = 'C'
 </select>

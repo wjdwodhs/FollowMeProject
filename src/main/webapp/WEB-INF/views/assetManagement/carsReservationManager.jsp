@@ -180,7 +180,6 @@
                             <div class="col-lg-6">
                                 
                                 <!-- 예약 조회-->
-                            <form action="">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
@@ -190,30 +189,36 @@
                                                 data-bs-toggle="modal" data-bs-target="#con-close-modal">추가</button>
                                         <br><br>
                                         <table class="table table-striped table-hover">
+                                        	<thead>
                                             <tr align="center">
                                                 <th>차종</th>
                                                 <th>차량번호</th>
                                                 <th>탑승인원(명)</th>
                                                 <th>비고</th>
                                             </tr>
-                                            <c:if test="${ not empty list }">
-                                            	<c:forEach var="car" items="${ list }">
-                                            		<tr align="center">
-                                                <th>${ car.assetName }</th>
-                                                <th>${ car.carNo }</th>
-                                                <th>${ car.noMem }</th>
-                                                <th>비고</th>
-                                            </tr>
-                                            	</c:forEach>
-                                            </c:if>
-                                            
-                                            
-                                            
-                                            
+                                           </thead>
+                                           <tbody>
+                                            <c:choose>
+                                            	<c:when test="${ empty carlist }">
+                                            		<tr>
+                                            			<td colspan="6">조회된 차량이 없습니다.</td>
+                                            		</tr>
+                                            	</c:when>
+                                            	<c:otherwise>
+                                            		<c:forEach var="car" items="${ carlist }">
+	                                            		<tr align="center">
+	                                                <th>${ car.assetName }</th>
+	                                                <th>${ car.carNo }</th>
+	                                                <th>${ car.noMem }</th>
+	                                                <th>비고</th>
+	                                                </tr>
+                                            		</c:forEach>
+                                            	</c:otherwise>
+                                            </c:choose>
+                                           </tbody> 
                                           </table>
                                     </div>
                                 </div> <!-- end col-->
-														</form>
 
                                 <!-- 예약 신청 -->
                                 <div class="card">

@@ -1,9 +1,10 @@
 package com.fz.followme.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fz.followme.dto.AssetDto;
@@ -22,21 +23,15 @@ public class AssetController {
 
 	// * 관리자 차량관리 -------------------------------------------------------
 	@RequestMapping("/carsReservationManager.page")
-	public String carsReservationManager() {
+	public String carsReservationManager(HttpSession session) {
+		
+		// 법인차량 목록 불러오기
+		List<AssetDto> carlist = assetService.selectcarList();
+		session.setAttribute("carlist", carlist);
+		
+		log.debug("carlist : {}", carlist);
+		
 		return "assetManagement/carsReservationManager";
-	}
-	
-	
-	// 법인차량 목록 관련
-	@GetMapping("/carlist.do")
-	public String selectcarList(HttpSession session) {
-		
-		AssetDto list = assetService.selectcarList();
-		session.setAttribute("list", list);
-		
-		log.debug("list : {}", list);
-		
-		return "redirect:/asset/carsReservationManager";
 	}
 	
 	
