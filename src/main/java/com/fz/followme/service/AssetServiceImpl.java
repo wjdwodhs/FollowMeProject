@@ -1,5 +1,7 @@
 package com.fz.followme.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.AssetDao;
@@ -15,7 +17,7 @@ public class AssetServiceImpl implements AssetService {
 
 
 	@Override
-	public AssetDto selectcarList() {
+	public List<AssetDto> selectcarList() {
 		return assetDao.selectcarList();
 	}
 	

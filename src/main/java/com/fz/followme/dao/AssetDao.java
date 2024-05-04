@@ -1,5 +1,7 @@
 package com.fz.followme.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +16,8 @@ public class AssetDao {
 	private final SqlSessionTemplate sqlSessionTemplate;
 	
 	
-	public AssetDto selectcarList() {
-		return sqlSessionTemplate.selectOne("assetMapper.selectcarList");
+	public List<AssetDto> selectcarList() {
+		return sqlSessionTemplate.selectList("assetMapper.selectcarList");
 	}
 	
 	
