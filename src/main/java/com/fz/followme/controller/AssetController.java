@@ -29,7 +29,15 @@ public class AssetController {
 		List<AssetDto> carlist = assetService.selectcarList();
 		session.setAttribute("carlist", carlist);
 		
-		log.debug("carlist : {}", carlist);
+		for(AssetDto ad:carlist) {
+			if(ad.getStatus().equals("Y")) {
+				ad.setStatus("이용가능");
+			}else if(ad.getStatus().equals("N")) {
+				ad.setStatus("이용불가");
+			}
+		}
+		
+		session.setAttribute("carlist", carlist);
 		
 		return "assetManagement/carsReservationManager";
 	}

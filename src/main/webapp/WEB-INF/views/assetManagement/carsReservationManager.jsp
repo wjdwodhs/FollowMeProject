@@ -210,7 +210,7 @@
 	                                                <th>${ car.assetName }</th>
 	                                                <th>${ car.carNo }</th>
 	                                                <th>${ car.noMem }</th>
-	                                                <th>비고</th>
+	                                                <th>${ car.status }</th>
 	                                                </tr>
                                             		</c:forEach>
                                             	</c:otherwise>
