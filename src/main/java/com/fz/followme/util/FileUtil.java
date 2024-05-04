@@ -45,7 +45,14 @@ public class FileUtil {
 		map.put("filesystemName", filesystemName);
 		
 		return map;
-		
 	}
+	
+	// 파일 삭제 처리
+    public void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if(file.exists()) {
+            file.delete();
+        }
+    }
 
 }

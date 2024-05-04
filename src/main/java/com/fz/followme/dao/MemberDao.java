@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fz.followme.dto.AccountDto;
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
@@ -60,5 +61,35 @@ public class MemberDao {
 	// 사용자의 자격증 정보를 삭제하는 서비스
 	public int deleteLicense(LicenseDto license) {
 		return sqlSessionTemplate.delete("memberMapper.deleteLicense", license);
+	}
+	
+	// 사용자의 자격증 정보를 추가하는 서비스
+	public int addLicense(LicenseDto license) {
+		return sqlSessionTemplate.insert("memberMapper.addLicense", license);
+	}
+	
+	// 사용자의 개인정보를 업데이트 하는 서비스
+	public int updatePersonalInfo(MemberDto m) {
+		return sqlSessionTemplate.update("memberMapper.updatePersonalInfo", m);
+	}
+	
+	// 사용자의 계좌정보를 업데이트 하는 서비스
+	public int updateAccountInfo(AccountDto ac) {
+		return sqlSessionTemplate.update("memberMapper.updateAccountInfo", ac);
+	}
+	
+	// 자격증 첨부파일 추가하는 서비스
+	public int insertAttachment(AttachmentDto attach) {
+		return sqlSessionTemplate.insert("memberMapper.insertAttach", attach);
+	}
+	
+	// 자격증 첨부파일 삭제 서비스
+	public int deleteAttachment(int licNo) {
+		return sqlSessionTemplate.delete("memberMapper.deleteAttachment", licNo);
+	}
+	
+	// 자격증 첨부파일 조회 서비스
+	public AttachmentDto selectAttachment(int licNo) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectAttachment", licNo);
 	}
 }

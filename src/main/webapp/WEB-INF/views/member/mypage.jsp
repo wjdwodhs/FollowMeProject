@@ -92,6 +92,7 @@
 		
 		
 		// 계좌실명 인증
+		
 		function checkAccount() {
 	    var bankselect = document.getElementById('bankselect').value;
 	    var accountNumber = document.getElementById('accountNumber').value;
@@ -128,7 +129,32 @@
 	        alert('계좌 인증에 실패하였습니다.');
 	    });
 	}
-    
+			
+		
+	    // 은행명 선택시 value가 '은행명'으로 넘어가게 하는 함수(숫자 말고)
+	   	document.addEventListener('DOMContentLoaded', function() {
+		    // 은행명 select 요소
+		    var bankSelect = document.getElementById('bankselect');
+		    // 은행명이 변경될 때마다 실행되는 이벤트 리스너
+		    bankSelect.addEventListener('change', function() {
+		        setBankNameValue();
+		    });
+		    
+		    // 페이지 로드 시에도 실행되도록 설정
+		    setBankNameValue();
+		    
+		    function setBankNameValue() {
+		        // 선택된 은행명
+		        var selectedBankName = bankSelect.options[bankSelect.selectedIndex].text;
+		        // 은행명 hidden input에 설정
+		        var hiddenBankInput = document.getElementById('bankName');
+		        // hidden input의 값이 빈 문자열인 경우에만 값을 설정
+		        if (hiddenBankInput.value.trim() === '') {
+		            hiddenBankInput.value = selectedBankName;
+		        }
+		    }
+		});
+
 </script>
 
 
@@ -258,19 +284,20 @@
 		                                        <div class="tab-content">
 		    
 		                                            <div id="settings">
-		                                                <form>
+		                                                <form id="updateMypageForm" action="${ contextPath }/member/updateMypage" method="post" enctype="multipart/form-data">
+		                                                		<input type="hidden" name="memNo" value="${mypageUser.memNo}">
 		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-account-circle me-1"></i> 개인정보</h5>
 		                                                    <div class="row">
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="memName" class="form-label">이름</label>
-		                                                                <input type="text" class="form-control" id="memName" value="${mypageUser.memName}">
+		                                                                <input type="text" class="form-control" id="memName" name="memName" value="${mypageUser.memName}">
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="memGender" class="form-label">성별</label>
-		                                                                <input type="text" class="form-control" id="memGender" value="${mypageUser.gender}">
+		                                                                <input type="text" class="form-control" id="memGender" name="gender" value="${mypageUser.gender}">
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -279,13 +306,13 @@
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="phone" class="form-label">휴대폰 번호</label>
-		                                                                <input type="text" class="form-control" id="phone" value="${mypageUser.phone}">
+		                                                                <input type="text" class="form-control" id="phone" name="phone" value="${mypageUser.phone}">
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="address" class="form-label">주소</label>
-		                                                                <input type="text" class="form-control" id="address" value="${mypageUser.address}">
+		                                                                <input type="text" class="form-control" id="address" name="address" value="${mypageUser.address}">
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -295,14 +322,14 @@
 		                                                        <div class="col-md-6">
 		                                                            <div class="mb-3">
 		                                                                <label for="memEmail" class="form-label">이메일</label>
-		                                                                <input type="email" class="form-control" id="memEmail" value="${mypageUser.memEmail}">
+		                                                                <input type="email" class="form-control" id="memEmail" name="memEmail" value="${mypageUser.memEmail}">
 		                                                                <span class="form-text text-muted"><small>이메일 변경 <a href="#" id="emailCheckLink"> click</a> here.</small></span>
 		                                                            </div>
 		                                                        </div>
 		                                                        <div class="col-md-6">
 																												        <div class="mb-3">
 		                                                                <label for="memPwd" class="form-label">비밀번호는 아래 버튼을 클릭해 변경해주세요.</label>
-		                                                                <input type="button" class="form-control" id="memPwd" value="비밀번호 변경" style="background-color:#f97272; color:white;"> 
+		                                                                <input type="button" class="form-control" id="memPwd" name="memPwd" value="비밀번호 변경" style="background-color:#f97272; color:white;"> 
 		                                                                <input type="hidden" id="memNo" value="${ mypageUser.memNo }">
 		                                                            </div>
 																												    </div> <!-- end col -->
@@ -322,7 +349,7 @@
 							                                                            <div class="col-md-12">
 							                                                                <div class="mb-3">
 							                                                                    <label for="originMemEmail" class="form-label">기존 이메일</label>
-							                                                                    <input type="email" class="form-control" id="originMemEmail"value="${mypageUser.memEmail}" readonly>
+							                                                                    <input type="email" class="form-control" id="originMemEmail" value="${mypageUser.memEmail}" readonly>
 							                                                                </div>
 							                                                            </div>
 							                                                        </div>
@@ -330,7 +357,7 @@
 							                                                            <div class="col-md-12">
 							                                                                <div class="mb-3">
 							                                                                    <label for="newMemEmail" class="form-label">변경 이메일</label>
-							                                                                    <input type="email" class="form-control" id="newMemEmail" placeholder="변경할 이메일을 입력하세요" required>
+							                                                                    <input type="email" class="form-control" id="newMemEmail" name="newMemEmail" placeholder="변경할 이메일을 입력하세요">
 							                                                                </div>
 							                                                            </div>
 							                                                        </div>
@@ -357,7 +384,7 @@
 							                                                            <div class="col-md-12">
 							                                                                <div class="mb-3">
 							                                                                    <label for="newMemPwd" class="form-label">변경 비밀번호(8~15자리 영문,숫자,특수문자 포함)</label>
-							                                                                    <input type="email" class="form-control" id="newMemPwd" placeholder="변경할 비밀번호를 입력하세요." required>
+							                                                                    <input type="password" class="form-control" id="newMemPwd" name="newMemPwd" placeholder="변경할 비밀번호를 입력하세요.">
 							                                                                </div>
 							                                                            </div>
 							                                                        </div>
@@ -365,7 +392,7 @@
 							                                                            <div class="col-md-12">
 							                                                                <div class="mb-3">
 							                                                                    <label for="newMemPwdConfirm" class="form-label">변경 비밀번호 확인</label>
-							                                                                    <input type="email" class="form-control" id="newMemPwdConfirm" placeholder="변경할 비밀번호를 다시 한번 입력하세요." required>
+							                                                                    <input type="password" class="form-control" id="newMemPwdConfirm" name="newMemPwdConfirm" placeholder="변경할 비밀번호를 다시 한번 입력하세요.">
 							                                                                </div>
 							                                                            </div>
 							                                                        </div>
@@ -411,18 +438,19 @@
 																								                	</div> 
 		                                                            </div>
 		                                                        </div>
-		
+																														<input type="hidden" name="accountNo" value="${bankAccount.accountNo }">
+																														<input type="hidden" id="bankName" name="bankName">
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountNumber" class="form-label">계좌번호</label>
-		                                                                <input type="text" class="form-control" id="accountNumber" value="${bankAccount.bankAccountNo }">
+		                                                                <input type="text" class="form-control" id="accountNumber" name="bankAccountNo" value="${bankAccount.bankAccountNo }">
 		                                                            </div>
 		                                                        </div>
 		
 		                                                        <div class="col-md-2">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountHolder" class="form-label">예금주</label>
-		                                                                <input type="text" class="form-control" id="accountHolder" value="${bankAccount.accountHolder }">
+		                                                                <input type="text" class="form-control" id="accountHolder" name="accountHolder" value="${bankAccount.accountHolder }">
 		                                                            </div>
 		                                                        </div>
 		                                                        
@@ -436,6 +464,7 @@
 		                                                    
 				                                                
 		                                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-cards-variant me-1"></i>보유자격증</h5>
+		                                                    
 					                                                <div class="table-responsive">
 								                                            <table class="table table-centered table-nowrap table-striped" id="products-datatable" style="text-align:center">
 								                                                <thead>
@@ -444,14 +473,23 @@
 								                                                        <th>발급번호</th>
 								                                                        <th>발급일자</th>
 								                                                        <th>발급기관</th>
-								                                                        <th>증빙자료</th>
+								                                                        <th colspan="2">증빙자료</th>
 								                                                        <th style="width: 85px;">Action</th>
 								                                                    </tr>
 								                                                </thead>
 								                                                <tbody>
-								                                                	<c:forEach var="lc" items="${ licenseList }">
+								                                                	<c:forEach var="lc" items="${ licenseList }" varStatus="loop">
+								                                                			<input type="hidden" name="licenseList[${loop.index}].licNo" value="${lc.licNo}">
+																																			<input type="hidden" name="licenseList[${loop.index}].licName" value="${lc.licName}">
+																																			<input type="hidden" name="licenseList[${loop.index}].licConfirmNo" value="${lc.licConfirmNo}">
+																																			<input type="hidden" name="licenseList[${loop.index}].issuedDate" value="${lc.issuedDate}">
+																																			<input type="hidden" name="licenseList[${loop.index}].licAgency" value="${lc.licAgency}">
+																																			<input type="hidden" name="licenseList[${loop.index}].attachment.filePath" value="${lc.attachment.filePath}">
+																																			<input type="hidden" name="licenseList[${loop.index}].attachment.originName" value="${lc.attachment.originName}">
+																																			<input type="hidden" name="licenseList[${loop.index}].attachment.systemName" value="${lc.attachment.systemName}">
+
+																																			
 								                                                    <tr>
-								                                                        
 								                                                        <td>
 								                                                            ${ lc.licName }
 								                                                        </td>
@@ -465,7 +503,10 @@
 								                                                            ${ lc.licAgency }
 								                                                        </td>
 								                                                        <td>
-								                                                        	<input type="file" class="form-control" name="uploadFile">
+								                                                        	<input type="file" class="form-control" name="uploadFiles">
+								                                                        </td>
+								                                                        <td>
+								                                                        	<a href="${ contextPath }${lc.attachment.filePath}/${lc.attachment.systemName}" download="${ lc.attachment.originName }">${ lc.attachment.originName }</a>
 								                                                        </td>
 								                                                        <td>
 								                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-modify-modal-${ lc.licNo }"> <i class="mdi mdi-square-edit-outline"></i></a>
@@ -473,15 +514,14 @@
 								                                                        </td>
 								                                                    </tr>
 								                                                   </c:forEach>
-								                                                    
-								                                                    
 								                                                </tbody>
 								                                            </table>
 								                                        </div>
                                                 
 		    
 		                                                    <div class="text-end">
-		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#febe98; color:white;"><i class="mdi mdi-content-save"></i> 저장</button>
+		                                                   			<button type="button" class="btn waves-effect waves-light mt-2" data-bs-toggle="modal" data-bs-target="#license-add-modal" style="background-color:#febe98; color:white;"><i class="mdi mdi-square-edit-outline"></i> 자격증 추가</button>
+		                                                        <button type="submit" class="btn waves-effect waves-light mt-2" style="background-color:#f97272; color:white;"><i class="mdi mdi-content-save"></i> 저장</button>
 		                                                    </div>
 		                                                </form>
 		                                            </div>
@@ -496,26 +536,27 @@
 																								                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 																								                    </div>
 																								                    <div class="modal-body p-4">
-																								                        <form>
+																								                        <form action="${ contextPath }/member/addLicense" method="post">
+																								                            <input type="hidden" name="memNo" value="${mypageUser.memNo }">
 																								                            <div class="row">
 																								                            		<div class="col-md-6">
 																								                            			  <div class="mb-3">
 																																						            <label for="licName" class="form-label">자격증명</label>
-																																						            <input type="text" class="form-control" id="licName" required>
+																																						            <input type="text" class="form-control" name="licName"required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="issuedDate" class="form-label">발급일자</label>
-																																						            <input type="email" class="form-control" id="issuedDate" required>
+																																						            <input type="text" class="form-control" name="issuedDate" required>
 																																						        </div>
 																																						    </div>
 																																						    <div class="col-md-6">
 																																						    		<div class="mb-3">
 																																						            <label for="licConfirmNo" class="form-label">발급번호</label>
-																																						            <input type="text" class="form-control" id="licConfirmNo" required>
+																																						            <input type="text" class="form-control" name="licConfirmNo" required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="licAgency" class="form-label">발급기관</label>
-																																						            <input type="text" class="form-control" id="licAgency" required>
+																																						            <input type="text" class="form-control" name="licAgency" required>
 																																						        </div>
 																																						    </div>
 																																						</div>
@@ -548,21 +589,21 @@
 																								                            		<div class="col-md-6">
 																								                            			  <div class="mb-3">
 																																						            <label for="licName" class="form-label">자격증명</label>
-																																						            <input type="text" class="form-control" name="licName" id="licName" value="${ lc.licName }" required>
+																																						            <input type="text" class="form-control" name="licName" value="${ lc.licName }" required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="issuedDate" class="form-label">발급일자</label>
-																																						            <input type="text" class="form-control" name="issuedDate" id="issuedDate" value="${ lc.issuedDate }" required>
+																																						            <input type="text" class="form-control" name="issuedDate" value="${ lc.issuedDate }" required>
 																																						        </div>
 																																						    </div>
 																																						    <div class="col-md-6">
 																																						    		<div class="mb-3">
 																																						            <label for="licConfirmNo" class="form-label">발급번호</label>
-																																						            <input type="text" class="form-control" name="licConfirmNo" id="licConfirmNo" value="${ lc.licConfirmNo }" required>
+																																						            <input type="text" class="form-control" name="licConfirmNo" value="${ lc.licConfirmNo }" required>
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="licAgency" class="form-label">발급기관</label>
-																																						            <input type="text" class="form-control" name="licAgency" id="licAgency" value="${ lc.licAgency }" required>
+																																						            <input type="text" class="form-control" name="licAgency" value="${ lc.licAgency }" required>
 																																						        </div>
 																																						    </div>
 																																						</div>

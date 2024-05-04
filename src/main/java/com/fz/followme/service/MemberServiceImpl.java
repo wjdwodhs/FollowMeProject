@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.MemberDao;
 import com.fz.followme.dto.AccountDto;
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 
@@ -60,6 +61,36 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteLicense(LicenseDto license) {
 		return memberDao.deleteLicense(license);
+	}
+
+	@Override
+	public int addLicense(LicenseDto license) {
+		return memberDao.addLicense(license);
+	}
+
+	@Override
+	public int updatePersonalInfo(MemberDto m) {
+		return memberDao.updatePersonalInfo(m);
+	}
+
+	@Override
+	public int updateAccountInfo(AccountDto ac) {
+		return memberDao.updateAccountInfo(ac);
+	}
+
+	@Override
+	public int deleteAttachment(int licNo) {
+		return memberDao.deleteAttachment(licNo);
+	}
+
+	@Override
+	public int insertAttachment(AttachmentDto attach) {
+		return memberDao.insertAttachment(attach);
+	}
+
+	@Override
+	public AttachmentDto selectAttachment(int licNo) {
+		return memberDao.selectAttachment(licNo);
 	}
 
 }

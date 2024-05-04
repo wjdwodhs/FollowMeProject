@@ -1,6 +1,7 @@
 package com.fz.followme.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,6 @@ public class MemberDto {
 	private String memName;
 	private String securityNo;
 	private String address;
-	private String addressDetail;
 	private String memEmail;
 	private String memGrade;
 	private String memRole;
@@ -45,5 +45,7 @@ public class MemberDto {
 	private String deptName;
 	private String hashedPassword;
 	private String memNewEmail;
+	
+	private List<LicenseDto> licenseList; // 자격증 여러 개
 	
 }

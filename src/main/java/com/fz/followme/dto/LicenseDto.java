@@ -24,4 +24,6 @@ public class LicenseDto {
 	private Date issuedDate;
 	private String licAgency;
 
+	private AttachmentDto attachment; // 단일 첨부파일 변수
+	private String originName; // 첨부파일 originName
 }

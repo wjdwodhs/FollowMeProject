@@ -2,6 +2,7 @@ package com.fz.followme.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AccountDto;
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
@@ -108,12 +111,22 @@ public class MemberController {
 		String memNo = mypageUser.getMemNo();
 		List<LicenseDto> licenseList = memberService.selectLicense(memNo);
 		
-		model.addAttribute("licenseList", licenseList);
+		
+		// 자격증 첨부파일 조회 및 license 속성에 추가
+	    AttachmentDto attachment = new AttachmentDto();
+	    for (LicenseDto license : licenseList) {
+	        attachment = memberService.selectAttachment(license.getLicNo());
+	        license.setAttachment(attachment);
+	    }
+
+	    model.addAttribute("licenseList", licenseList);
+		
 		
 		// 마이페이지로 로그인한 사용자의 계좌정보 데이터 조회해오기
 		AccountDto bankAccount = memberService.selectAccount(memNo);
 		
 		model.addAttribute("bankAccount", bankAccount);
+		
 		
 		return "member/mypage";
 	}
@@ -290,6 +303,77 @@ public class MemberController {
 		
 		return "redirect:/member/mypage.do";
 		
+	}
+	
+	// 마이페이지 - 자격증 정보 추가 기능
+	@PostMapping("/addLicense")
+	public String addLicense(LicenseDto license, RedirectAttributes redirectAttributes) {
+		int result = memberService.addLicense(license);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "해당 자격증 정보가 추가되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "해당 자격증 정보 추가에 실패했습니다.");
+		}
+		
+		return "redirect:/member/mypage.do";
+	}
+	
+	// 마이페이지 - 전체 페이지 업데이트 저장 및 파일 업로드 기능
+	@PostMapping("/updateMypage")
+	public String updateMypage(MemberDto m
+	                         , AccountDto ac
+	                         , MultipartFile[] uploadFiles
+	                         , HttpSession session
+	                         , RedirectAttributes redirectAttributes) {
+
+		int result1 = memberService.updatePersonalInfo(m);
+	    int result2 = memberService.updateAccountInfo(ac);
+	    int result3 = 1; // 초기값 설정
+
+	    // 자격증 파일 업데이트 (첨부파일 교체 포함)
+	    for (int i = 0; i < m.getLicenseList().size(); i++) {
+	        LicenseDto lc = m.getLicenseList().get(i);
+
+	        MultipartFile uploadFile = uploadFiles[i]; // 각 자격증에 해당하는 파일 가져오기
+
+	        if (uploadFile != null && !uploadFile.isEmpty()) {
+	            
+	        	// 이전 첨부 파일 삭제
+	            AttachmentDto oldAttachment = lc.getAttachment();
+	            
+	            if (oldAttachment != null) {
+	                memberService.deleteAttachment(lc.getLicNo());
+	                fileUtil.deleteFile(oldAttachment.getFilePath());
+	            }
+	            
+	            // 새로운 파일 업로드 및 첨부파일 설정
+	            Map<String, String> map = fileUtil.fileUpload(uploadFile, "license");
+	            
+	            AttachmentDto newAttachment = AttachmentDto.builder()
+	                                                .originName(map.get("originalName"))
+	                                                .filePath(map.get("filePath"))
+	                                                .systemName(map.get("filesystemName"))
+	                                                .type("L")
+	                                                .refNo(lc.getLicNo())
+	                                                .build();
+	            lc.setAttachment(newAttachment);
+	            
+	            // DB에 첨부파일 추가
+	            result3 *= memberService.insertAttachment(newAttachment);
+	        }
+	    }
+
+
+
+	    // 최종 결과에 따라 리다이렉트 및 알림 메시지 설정
+	    if (result1 > 0 && result2 > 0 && result3 > 0) {
+	        redirectAttributes.addFlashAttribute("alertMsg", "인사정보 업데이트에 성공했습니다.");
+	    } else {
+	        redirectAttributes.addFlashAttribute("alertMsg", "인사정보 업데이트에 실패했습니다.");
+	    }
+
+	    return "redirect:/member/mypage.do";
 	}
 }
 
