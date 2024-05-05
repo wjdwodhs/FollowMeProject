@@ -33,49 +33,156 @@
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet"
 	type="text/css" />
 	
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
-
-
 <style>
-.a.nav-link.active {
-	background-color: #FEBE98;
-}
 
-.container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center; /* 세로 가운데 정렬 */
-	align-items: center; /* 가로 가운데 정렬 */
-	height: 100vh; /* 화면 전체를 채우도록 설정 */
-}
+    .a.nav-link.active{background-color:#FEBE98;}
 
-.badge.label-table {
-	font-size: 12px; /* 뱃지의 텍스트 크기를 조절합니다. */
-	padding: 5px; /* 뱃지의 내부 여백을 조절합니다. */
-}
+    .card{
+        align-items: center;
+    }
+    
+    .document-info{ 
+        display: flex; 
+    }
+    
+    .top-document{
+        justify-content: space-between;
+        display: flex;
+        align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */     
+    }
 
-tr>th, tr>td {
-	text-align: center;
-}
+    .document-title{
+        margin-bottom: 60px; margin-left: 100px;
+    }
+    
+    .sign-table{
+        text-align: right;
+    }
+    
+    .table-sign{
+        border: 1px solid rgb(102, 88, 221);
+        border-collapse: collapse;
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
 
-.btn-group>button{
-		background-color: #FFBE98;
-    border: 1px solid #FFBE98; /* 테두리 */
-    --ct-btn-active-bg:#FA9A85;    
-    --ct-btn-active-border-color:#FA9A85;
-    --ct-btn-hover-bg:#FA9A85;
-    --ct-btn-hover-border-color:#FA9A85;   
-}	
-#snow-editor {
-    flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
-}
+    .table-sign tr>th, .table-sign tr>td{
+        text-align: center; 
+        width: 100px;
+        height: 25px;
+        font-size: 11px;
+        font-weight: lighter;
+    }
 
-.menu-icon:hover {
-  cursor: pointer;
-}
+    .sign{
+        height:75px;
+    }
+
+    .table-info-1, .table-info-2{
+        border: 1px solid rgb(102, 88, 221);
+        border-collapse: collapse;
+        margin-bottom: 15px;
+    }
+    
+    .table-info-2{
+        margin-left: 2px;
+    }
+    
+    .table-2-1{
+        border: 1px solid rgb(102, 88, 221);
+        border-collapse: collapse;
+        margin-bottom: 15px; 
+    }
+    
+    .table-sign th, .table-sign td, .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td{
+        border: 1px solid rgb(102, 88, 221);
+        padding: 8px;
+        text-align: left;
+        
+    }
+    
+    .table-2-1 th, .table-2-1 td{
+        border: 1px solid rgb(102, 88, 221);
+        padding: 8px;
+        text-align: left;
+        height: 40px;
+    }
+
+    #editor {
+        flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
+    }
+
+    input:focus ,td>textarea:focus{
+        outline: none;
+    }
+    
+    .btn-group-2{
+        margin-top: 30px;
+        display:flex;
+        justify-content: center;
+    }
+
+    .btn-group-2>.write{
+	    background-color: #FFBE98;
+        border: 1px solid #FFBE98; /* 테두리 */
+        --ct-btn-active-bg:#FA9A85;    
+        --ct-btn-active-border-color:#FA9A85;
+        --ct-btn-hover-bg:#FA9A85;
+        --ct-btn-hover-border-color:#FA9A85;  
+        margin-left: 15px;
+    }
+    
+    .btn-group-2>.cancel{
+        --ct-btn-color: #323a46;
+        --ct-btn-bg: #f3f7f9;
+        --ct-btn-border-color: #f3f7f9;
+        --ct-btn-hover-color: #323a46;
+        --ct-btn-hover-bg: #cfd2d4;
+        --ct-btn-hover-border-color: #c2c6c7;
+        --ct-btn-focus-shadow-rgb: 214, 219, 222;
+        --ct-btn-active-color: #323a46;
+        --ct-btn-active-bg: #c2c6c7;
+        --ct-btn-active-border-color: #b6b9bb;
+        --ct-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        --ct-btn-disabled-color: #323a46;
+        --ct-btn-disabled-bg: #f3f7f9;
+        --ct-btn-disabled-border-color: #f3f7f9;
+        margin-right:15px; 
+
+    }
+
+    #pend{
+        margin-left: 12px;
+    }
+
+    .btn-group-3>.write{
+	    background-color: #FFBE98;
+        border: 1px solid #FFBE98; /* 테두리 */
+        --ct-btn-active-bg:#FA9A85;    
+        --ct-btn-active-border-color:#FA9A85;
+        --ct-btn-hover-bg:#FA9A85;
+        --ct-btn-hover-border-color:#FA9A85;  
+    }
+    
+    .btn-group-3>.cancel{
+        --ct-btn-color: #323a46;
+        --ct-btn-bg: #f3f7f9;
+        --ct-btn-border-color: #f3f7f9;
+        --ct-btn-hover-color: #323a46;
+        --ct-btn-hover-bg: #cfd2d4;
+        --ct-btn-hover-border-color: #c2c6c7;
+        --ct-btn-focus-shadow-rgb: 214, 219, 222;
+        --ct-btn-active-color: #323a46;
+        --ct-btn-active-bg: #c2c6c7;
+        --ct-btn-active-border-color: #b6b9bb;
+        --ct-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        --ct-btn-disabled-color: #323a46;
+        --ct-btn-disabled-bg: #f3f7f9;
+        --ct-btn-disabled-border-color: #f3f7f9;
+    }
 
 </style>
 </head>
@@ -95,7 +202,7 @@ tr>th, tr>td {
 			<!-- ============================================================== -->
 			<!-- Start Page content -->
 			<!-- ============================================================== -->
-
+			
 			<div class="content"
 				style="background-color: #F2E8DA; display: flex;">
 
@@ -104,7 +211,7 @@ tr>th, tr>td {
 						<li class="menu-item">
 							<a href="${ contextPath }/document/insertForm.page" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="edit-3"></i></span> 
-								<span class="menu-text"> <b>문서 작성하기</b> </span>
+								<span class="menu-text"> 문서 작성하기 </span>
 							</a>
 						</li>
 						<li class="menu-item" style="margin-top: 50px;">
@@ -153,7 +260,7 @@ tr>th, tr>td {
 						</li>
 					</ul>
 				</div>
-
+				
 				<!-- Start Content-->
 				<div class="container-fluid"
 					style="display: flex; justify-content: center;">
@@ -164,273 +271,31 @@ tr>th, tr>td {
 								style="margin-top: 50px; width: 1000px; text-align: center;">
 								<div class="card-body" style="text-align: center;">
 									<div>
-										<h4 class="header-title">전자결재 문서 작성하기</h4>
-										<p class="sub-header">Access write Electronic documents</p>
+										<h4 class="header-title">전자결재 문서 조회</h4>
+										<p class="sub-header">Access read Electronic documents</p>
 									</div>
 
-
-									<div class="mb-2" style="display: flex; justify-content: center;">
-											<div class="row row-cols-sm-auto g-2 align-items-center">
-												<div style="display: flex;">
-													<div class="col-12 text-sm-center" style="width: auto;">
-														<select id="selectDocument" name="selectDocument" class="form-select form-select-sm" style="width: auto; height: 37px;">
-															<option value="">전자결재 양식 선택</option>
-															<option value="1">품의서</option>
-															<option value="2">재택근무 신청서</option>
-															<option value="3">휴가 신청서</option>
-															<option value="4">지출 결의서</option>
-															<option value="5">구매 신청서</option>
-															<option value="6">출장 보고서</option>
-															<option value="7">협조문</option>
-														</select>
-													</div>
-												</div>
-												<div class="btn-group">
-													<button type="button" class="btn btn-primary waves-effect waves-light" onclick="load();">불러오기</button>
-												</div>
-											</div>
-
-									</div>
 									<div id="documentContent" style="width:auto;">
 
                   </div>
                   
-                  
-    <!-- Include the Quill library -->
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js"></script>
-    <script>
-        function load() {
-        	
-            var selectBox = document.getElementById("selectDocument");
-            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-            if(selectedValue>0){
-            	fetch("${contextPath}/resources/document/sample" + selectedValue + ".html")
-            			.then(response => response.text())
-                	.then(htmlText => {
-                    	document.getElementById('documentContent').innerHTML = htmlText;
-                	})	
-            	.finally(() => {
-            			
-            			if(selectedValue == 1){
-            				textEditorInit();
-            			}else if(selectedValue == 2){
-            				textEditorInit();
-            				homework();
-            			}else if(selectedValue == 3){
-            				textEditorInit();
-                  	holiday();
-                	}else if(selectedValue == 6){
-                		textEditorInit();
-                		changeTotalCost();
-                	}else if(selectedValue == 7){
-                		textEditorInit();
-                		workingLetter();
-                	}
-            			
-            	});
-           }
-        }
-        
-        function textEditorInit() {
-            const quill = new Quill('#editor', {    
-                theme: 'snow'
-            });
-        }
+							    <script>				
+							        function load() {
+//							            fetch("${contextPath}/resources/document/detailSample" + ${document.category} + ".html")
+							            fetch("${contextPath}/resources/document/detailSample1.html")
+							                .then(response => response.text())
+							                .then(htmlText => {
+							                    document.getElementById('documentContent').innerHTML = htmlText;
+							                })
+							                .catch(error => {
+							                    console.error('HTML 파일을 로드하는 중 오류가 발생했습니다:', error);
+							                })
+							                .finally(() => {
 
-    </script>
-		
-  	<!-- 2. 재택근무 신청서 날짜 선택 스크립트 -->
-    <script> 
-    function homework(){
-	 		// 오늘 today
-	    var today = new Date();
-	    // 내일 tomorrow
-	    var tomorrow = new Date(today);
-	    tomorrow.setDate(today.getDate() + 1);
-	    // 14일후 nextTwoWeeks
-	    var nextTwoWeeks = new Date(today);
-	    nextTwoWeeks.setDate(today.getDate() + 15); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
-	
-	    // startDate 설정
-	    var startDateField = document.getElementById('startDate');
-	    startDateField.valueAsDate = tomorrow; // 최소날짜 내일
-	    startDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-	    startDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-	
-	    // endDate 설정
-	    var endDateField = document.getElementById('endDate');
-	    endDateField.valueAsDate = tomorrow; // 최소날짜 내일
-	    endDateField.min = tomorrow.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-	    endDateField.max = nextTwoWeeks.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-    
-	    function checkEndDate() {
-	        if (endDateField.value < startDateField.value) {
-	            endDateField.value = startDateField.value;
-	        }
-	        endDateField.min = startDateField.value;
-	    }
-	    
-    endDateField.addEventListener('change', checkEndDate);
-    startDateField.addEventListener('change', checkEndDate);
-    }
-    </script>		
-		
-		<!-- 3. 휴가 신청서 날짜 선택 스크립트 -->
-    <script>
-    function holiday(){
-    var today = new Date();
-    // var tomorrow = new Date(today);
-    // tomorrow.setDate(today.getDate() + 1);
-    var twoMonths = new Date(today);
-    twoMonths.setDate(today.getDate() + 60); // 14일이 아닌 15일인 이유는 내일을 포함하기 때문입니다.
-
-    // startDate 설정
-    var startDateField = document.getElementById('startDate');
-    startDateField.valueAsDate = today; // 최소날짜 내일
-    startDateField.min = today.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-    startDateField.max = twoMonths.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-
-    // endDate 설정
-    var endDateField = document.getElementById('endDate');
-    endDateField.valueAsDate = today; // 최소날짜 내일
-    endDateField.min = today.toISOString().split('T')[0]; // 최소날짜 설정 + 년월일까지만 표시
-    endDateField.max = twoMonths.toISOString().split('T')[0]; // 최대날짜 설정 + 년월일까지만 표시
-    
-	    function checkEndDate() {
-	        if (endDateField.value < startDateField.value) {
-	            endDateField.value = startDateField.value;
-	        }
-	        endDateField.min = startDateField.value;
-	    }
-    
-    endDateField.addEventListener('change', checkEndDate);
-    startDateField.addEventListener('change', checkEndDate);
-    }
-		</script>
-
-		<!-- 04. 지출 결의서 줄 추가/삭제 -->
-		<script>
-        function addRow4() {
-        var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow(-1);
-        newRow.innerHTML = `
-            <td style="width:60px; text-align:center;">
-                <span class="menu-icon" onclick="removeRow(this);"><b>━</b></span> 
-            </td>
-            <td style="width:95px; text-align:center;">
-                <input type="date" id="starDate" size="20" style="border:0; width:100px;">
-            </td>
-            <td style="width:270px;">
-                <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
-            </td>
-            <td>
-                <input type="text" name="-box" size="20" style="border:0; width:90px; text-align:center;" value="500,000">
-            </td>
-            <td style="width:100px; text-align:center;">
-                <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
-            </td>
-            
-        `;
-        }
-
-        function removeRow(row) {
-            var rowIndex = row.parentNode.parentNode.rowIndex; // Get the index of the row
-            document.getElementById("expenseTable").deleteRow(rowIndex); // Delete the row
-        }
-		</script>
-    
-    <!-- 5. 구매신청서 줄 추가/삭제-->
-    <script>
-	    function addExpenseRow() {
-	    var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
-	    var newRow = table.insertRow(-1);
-	    newRow.innerHTML = `
-	        <td style="text-align:center;">
-	            <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span> 
-	        </td>
-	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center;" width="130px;" value="간식">
-	        </td>
-	        <td>
-	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:45px;" value="5">ea
-	        </td>
-	        <td>
-	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:90px;" value="300,000">원
-	        </td>
-	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:100px;" value="1,500,000">원
-	        </td>
-	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:120px;">
-	        </td>  
-	        `;
-	    }
-	
-	    function removeExpenseRow(row) {
-	        var rowIndex = row.parentNode.parentNode.rowIndex; // Get the index of the row
-	        document.getElementById("expenseTable").deleteRow(rowIndex); // Delete the row
-	    }
-		</script>
-		
-		<!-- 6. 출장 보고서 총 금액 자동합산 -->
-    <script>
-      function changeTotalCost() {
-    	  
-          var transportCost = document.getElementById('transportCost');
-          var fuelCost = document.getElementById('fuelCost');
-          var foodCost = document.getElementById('foodCost');
-          var roomCost = document.getElementById('roomCost');
-          var etcCost = document.getElementById('etcCost');
-
-          // 요소가 존재하고 값이 비어있지 않은 경우에만 계산
-          if (transportCost && fuelCost && foodCost && roomCost && etcCost) {
-              var totalCost = (parseInt(transportCost.value) || 0) + 
-                              (parseInt(fuelCost.value) || 0) + 
-                              (parseInt(foodCost.value) || 0) + 
-                              (parseInt(roomCost.value) || 0) + 
-                              (parseInt(etcCost.value) || 0);
-              document.getElementById('totalCost').value = totalCost;
-          }
-      }
-  
-      changeTotalCost();
-      
-  </script>
-  
-  <!-- 7. 협조문 날짜 선택 스크립트 -->
-  <script>
-    function workingLetter() {
-        var today = new Date();
-        
-        // startDate 설정
-        var startDateField = document.getElementById('startDate');
-        startDateField.valueAsDate = today; // 시작일을 오늘로 설정
-        startDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
-        
-        // endDate 설정
-        var endDateField = document.getElementById('endDate');
-        endDateField.valueAsDate = today; // 종료일을 오늘로 설정
-        endDateField.min = today.toISOString().split('T')[0]; // 최소날짜를 오늘로 설정 + 년월일까지만 표시
-        
-        function checkEndDate() {
-            // 종료일이 시작일 이전으로 선택되었을 때
-            if (endDateField.value < startDateField.value) {
-                endDateField.value = startDateField.value; // 종료일을 시작일과 같게 설정
-            }
-        }
-        
-        
-        
-        // 종료일 변경 시에도 검사
-        endDateField.addEventListener('change', checkEndDate);
-        startDateField.addEventListener('change', checkEndDate);
-
-    }
-    
-    // 페이지 로드 시 실행
-    // window.addEventListener('load', workingLetter);
-</script>
-
+							                });
+							        }
+							        window.onload = load();
+							    </script>
 
 								</div>
 							</div>
@@ -931,6 +796,6 @@ tr>th, tr>td {
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
         
 
-        
+        							
 </body>
 </html>

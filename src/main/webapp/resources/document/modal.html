@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+                                <c:choose>
+                                    <c:when test="${loginUser.memNo eq document.memNo}">
+                                        <div class="btn-group-2">
+                                            <a type="button" class="btn btn-primary waves-effect waves-light cancel" href="${contextPath}/document/list.page"> 목록으로 </a>
+                                            <c:if test="${document.status eq 0 and document.midApproveStatus eq 'N'}">
+                                                <button type="button" class="btn btn-danger waves-effect waves-light complete" data-bs-toggle="modal" data-bs-target="#recall-modal"> 회수하기 </button>
+                                            </c:if>
+                                        </div>
+                                    
+                                    <!-- 회수하기 버튼-->
+                                    <div class="modal fade" id="recall-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="topModalLabel">문서를 회수하시겠습니까?</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 style="text-align:left;">문서 회수 시 결재 상태가 더이상 진행되지 않습니다.</h5>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="btn-group-3">
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="btn-group-2">
+                                            <a type="button" class="btn btn-primary waves-effect waves-light cancel" href="${contextPath}/document/list.page"> 목록으로 </a>
+                                            <c:when test="${(loginUser.memNo eq document.midApprover and document.midApproveStatus eq 'N') or (loginUser.memNo eq document.finalApprover and document.finalApproveStatus eq 'N')}">
+                                                <button type="button" id="reject" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#reject-modal"> 반려하기 </button>
+                                                <button type="button" id="pend" class="btn btn-blue waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#pend-modal"> 승인하기 </button>
+                                            </div>
+
+                                    <!-- 반려 버튼-->
+                                    <div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="topModalLabel">반려하시겠습니까?</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 반려됩니다.</h5>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="btn-group-3">
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+
+                                    <!-- 승인 버튼-->
+                                    <div class="modal fade" id="pend-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="topModalLabel">승인하시겠습니까?</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 승인됩니다.</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="btn-group-3">
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </c:otherwise>
+                            </c:choose>
+
+
+</body>
+</html>
