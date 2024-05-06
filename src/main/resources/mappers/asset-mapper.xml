@@ -27,5 +27,48 @@
  where asset_type = 'C'
 </select>
 
+<insert id="insertCar">
+	insert 
+	  into tb_asset
+	  (
+	    asset_no
+	  , asset_type
+	  , regist_date
+	  , asset_name
+	  , car_no
+	  , no_mem
+	  , status
+	  )
+	  values
+	  (
+	    seq_assetno.nextval
+	  , 'C'
+	  , #{registDate}
+	  , #{assetName}
+	  , #{carNo}
+	  , #{noMem}
+	  , #{status}
+	  )
+</insert>
+
+<select id="selectCar" resultMap="assetResult">
+	select
+       asset_no
+     , TO_CHAR(regist_date, 'YYYY-MM-DD') regist_date
+     , asset_name
+     , car_no
+     , no_mem
+     , status 
+  from tb_asset
+ where asset_no = #{no}
+</select>
+
+
+
+
+
+
+
+
 
 </mapper>

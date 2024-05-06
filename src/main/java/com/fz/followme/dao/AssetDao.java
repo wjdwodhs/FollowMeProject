@@ -21,4 +21,14 @@ public class AssetDao {
 	}
 	
 	
+	public int insertCar(AssetDto ad) {
+		return sqlSessionTemplate.insert("assetMapper.insertCar", ad);
+	}
+	
+	
+	public AssetDto selectCar(int no) {
+		return sqlSessionTemplate.selectOne("assetMapper.selectCar", no);
+	}
+	
+	
 }

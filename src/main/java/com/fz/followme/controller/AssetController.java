@@ -5,7 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AssetDto;
 import com.fz.followme.service.AssetService;
@@ -44,10 +47,34 @@ public class AssetController {
 	
 	
 	
+	// 차량등록
+	@PostMapping("/insertcar.do")
+	public String insertCar(AssetDto ad,
+			                RedirectAttributes redirectAttributes) {
+		
+		log.debug("조건 수행 전 ad : {}", ad);
+		
+		int result = assetService.insertCar(ad);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "차량 등록에 성공하였습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "차량 등록에 실패하였습니다. 다시 확인해 주십시오.");
+		}
+		
+		log.debug("조건 수행 후 ad : {}", ad);
+		log.debug("result : {}", result);
+		
+		return "redirect:/asset/carsReservationManager.page";
+	}
 	
 	
-	
-	
+	// 차량 상세조회
+	@ResponseBody
+	@PostMapping(value="/detailCar.do", produces="application/json; charset=utf-8")
+	public AssetDto ajaxSelectCar(int no) {
+		return assetService.selectCar(no);
+	}
 	
 	
 	

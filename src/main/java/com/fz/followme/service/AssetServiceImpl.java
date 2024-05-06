@@ -20,6 +20,18 @@ public class AssetServiceImpl implements AssetService {
 	public List<AssetDto> selectcarList() {
 		return assetDao.selectcarList();
 	}
+
+
+	@Override
+	public int insertCar(AssetDto ad) {
+		return assetDao.insertCar(ad);
+	}
+
+
+	@Override
+	public AssetDto selectCar(int no) {
+		return assetDao.selectCar(no);
+	}
 	
 	
 	

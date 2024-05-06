@@ -25,6 +25,6 @@ public class AssetDto {
 	private int noMem;
 	private int rsvnQty;
 	private String status;
-	private Date modifyDate;
+	private String modifyDate;
 	
 }

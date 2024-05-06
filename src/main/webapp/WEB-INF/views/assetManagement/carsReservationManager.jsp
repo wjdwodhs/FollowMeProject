@@ -206,11 +206,11 @@
                                             	</c:when>
                                             	<c:otherwise>
                                             		<c:forEach var="car" items="${ carlist }">
-	                                            		<tr align="center">
-	                                                <th>${ car.assetName }</th>
-	                                                <th>${ car.carNo }</th>
-	                                                <th>${ car.noMem }</th>
-	                                                <th>${ car.status }</th>
+	                                            		<tr align="center" onclick="detailCar(${car.assetNo});">
+	                                                <td>${ car.assetName }</td>
+	                                                <td>${ car.carNo }</td>
+	                                                <td>${ car.noMem }</td>
+	                                                <td>${ car.status }</td>
 	                                                </tr>
                                             		</c:forEach>
                                             	</c:otherwise>
@@ -220,54 +220,62 @@
                                     </div>
                                 </div> <!-- end col-->
 
-                                <!-- 예약 신청 -->
+                                <!-- 차량 상세조회 -->
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>차량 상세조회</b> | <small>VEHICLEV DETAILED INQUIRY</small></h5>
 
-                                       
-                                        <table class="table-sm">
+                                      	<form action="">
+                                        <table class="table-sm" id="detailC">
                                             <tr>
                                                 <th>차종</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" value="아반떼">    
+                                                    <input type="text"class="form-control" name="assetName" value="">    
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>차량번호</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" value="222나6789">
+                                                    <input type="text"class="form-control" name="carNo" value="">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>탑승인원(명)</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" value="5">    
+                                                    <input type="text"class="form-control" name="noMem" value="">    
                                                 </td> 
                                             </tr>
                                             <tr>
                                                 <th>등록일자</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" value="yyyy-mm-dd">        
+                                                    <input type="date"class="form-control" name="registDate" value="">        
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>차량상태</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; margin-bottom: 10px; color: gray;">
-                                                        <option value="">이용가능</option>
-                                                        <option value="">이용불가</option>
+                                                    <div class="form-check-inline">
+																										  <label class="form-check-label" for="status">
+																										    <input type="radio" class="form-check-input" name="status" value="Y">&nbsp;이용가능
+																										  </label>
+																										</div>
+																										<div class="form-check-inline">
+																										  <label class="form-check-label" for="status">
+																										    <input type="radio" class="form-check-input" name="status" value="N">&nbsp;이용불가
+																										  </label>
+																										</div>
                                                 </td>
                                             </tr>
                                         </table> 
                                             
-                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">수정</button>
-                                        <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+                                        	<button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">수정</button>
+                                        	<button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+                                        </form>
                                         </div> <!-- end card -->
                                         
                             
@@ -276,7 +284,6 @@
                                 <!-- end row -->
 
                                 </div>
-                            </form>     
 
                         <!-- end row -->
 
@@ -316,24 +323,23 @@
    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
        <div class="modal-dialog">
            <div class="modal-content">
-               <form action="">
-                   <input type="hidden" name="assetType" value="c">
                    <div class="modal-header" style="background-color: #FFBE98;">
                        <h4 class="modal-title" style="color:white"><b>법인차량 등록</b></h4>
                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                    </div>
+               <form action="${ contextPath }/asset/insertcar.do" method="post">
                    <div class="modal-body p-4">
                        <div class="row">
                            <div class="col-md-6">
                                <div class="mb-3">
                                    <label for="field-1" class="form-label">차종</label>
-                                   <input type="text" class="form-control" id="field-1">
+                                   <input type="text" class="form-control" id="field-1" name="assetName" required>
                                </div>
                            </div>
                            <div class="col-md-6">
                                <div class="mb-3">
                                    <label for="field-2" class="form-label">차량번호</label>
-                                   <input type="text" class="form-control" id="field-2" >
+                                   <input type="text" class="form-control" id="field-2" name="carNo" required placeholder="ex) 111가1111">
                                </div>
                            </div>
                        </div>
@@ -341,7 +347,7 @@
                            <div class="col-md-12">
                                <div class="mb-3">
                                    <label for="field-3" class="form-label">등록일자</label>
-                                   <input type="date" class="form-control" id="field-3">
+                                   <input type="date" class="form-control" id="field-3" name="registDate" required>
                                </div>
                            </div>
                        </div>
@@ -349,22 +355,28 @@
 	                       <div class="col-md-4">
 	                           <div class="mb-3">
 	                               <label for="field-4" class="form-label">탑승인원</label>
-	                               <input type="text" class="form-control" id="field-4">
+	                               <input type="number" class="form-control" id="field-4" name="noMem">
 	                           </div>
 	                       </div>
 	                       <div class="col-md-4">
-	                           <div class="mb-3">
-	                               <label for="field-5" class="form-label">비고</label>
-					                       <select class="form-control" name="" id=""> <br>
-					                           <option value="">이용가능</option>
-					                           <option value="">이용불가</option>
-					                       </select>
+	                           <div class="mb-3" style="width:200px; margin-top:3px;">
+	                             <label for="field-5" class="form-label">비고</label> <br>
+	                           		<div class="form-check-inline">
+																  <label class="form-check-label" for="status">
+																    <input type="radio" class="form-check-input" name="status" value="Y">&nbsp;이용가능
+																  </label>
+																</div>
+																<div class="form-check-inline">
+																  <label class="form-check-label" for="status">
+																    <input type="radio" class="form-check-input" name="status" value="N">&nbsp;이용불가
+																  </label>
+																</div>  
 	                           </div>
 	                       </div>
                       </div>
                    </div>
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-info waves-effect waves-light"
+                       <button type="submit" class="btn btn-info waves-effect waves-light"
                                style="background-color: #FFBE98; border: none;">등록</button>
                        <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">닫기</button>
                    </div>
@@ -374,7 +386,49 @@
    </div>
    <!-- /.차량추가 모달 끝 -->
 
-
+	<script>
+			function detailCar(no){
+				$.ajax({
+					url: "${contextPath}/asset/detailCar.do",
+					type:"post",
+					data: {no:no},
+					success:function(ad){
+						console.log(ad);
+					
+						$("#detailC input[name='assetName']").val(ad.assetName); // 차종
+						$("#detailC input[name='carNo']").val(ad.carNo); // 차량번호
+						$("#detailC input[name='noMem']").val(ad.noMem); // 탑승인원
+						
+						// 등록일자 => Date로 년,월,일 추출하기 console.log로 찍었을때 1644073200000 이런식으로 출력됨
+						let date = new Date(ad.registDate);
+						
+						let year = date.getFullYear();
+						let month = ('0' + (date.getMonth()+1)).slice(-2); // 월은 0부터 시작이라 +1, 끝자리부터 2자리 추출
+						let day = ('0' + date.getDate()).slice(-2);
+						let registDt = year + '-' + month + '-' + day;
+						
+						$("#detailC input[name='registDate']").val(registDt); 
+						
+						// 차량상태
+						const statusYN = ["Y","N"];
+							$("#detailC input[name='status']").each(function(index, el){
+								let radioVal = $(el).val();
+								if(statusYN.includes(radioVal)){
+									if(ad.status == radioVal){
+										$(el).prop("checked", true);
+									}else{
+										$(el).prop("checked", false);
+									}
+								}
+							})
+							
+						},
+					error:function(){
+						console.log("ajax통신 실패");
+						}
+				})
+			}
+	</script>
 
 
 
