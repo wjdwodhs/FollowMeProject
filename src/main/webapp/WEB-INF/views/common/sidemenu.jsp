@@ -11,6 +11,8 @@
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
 
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
         <!-- App favicon -->
         <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
@@ -29,7 +31,6 @@
         <!-- Icons css -->
         <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         
         
     </head>
