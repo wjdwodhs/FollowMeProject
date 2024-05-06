@@ -92,8 +92,10 @@
 		
 		
 		// 계좌실명 인증
-		
 		function checkAccount() {
+			
+			event.preventDefault();
+			
 	    var bankselect = document.getElementById('bankselect').value;
 	    var accountNumber = document.getElementById('accountNumber').value;
 	    
@@ -128,6 +130,7 @@
 	        console.error('오류가 발생했습니다', error);
 	        alert('계좌 인증에 실패하였습니다.');
 	    });
+	   
 	}
 			
 		
@@ -154,6 +157,7 @@
 		        }
 		    }
 		});
+         	
 
 </script>
 
@@ -200,9 +204,8 @@
 		                            <div class="col-lg-4 col-xl-4">
 		                                <div class="card text-center">
 		                                    <div class="card-body">
-		                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
-		                                        alt="profile-image">
-		
+		                                        <img id="profileImg" src="${contextPath}${mypageUser.profileImgPath}" class="rounded-circle avatar-lg img-thumbnail">
+             																
 		                                        <h4 class="mb-0">${ mypageUser.memName }</h4>
 		                                        <p class="text-muted">@${ mypageUser.memNo }</p>
 		
