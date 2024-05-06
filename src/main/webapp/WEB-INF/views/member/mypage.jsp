@@ -151,10 +151,8 @@
 		        var selectedBankName = bankSelect.options[bankSelect.selectedIndex].text;
 		        // 은행명 hidden input에 설정
 		        var hiddenBankInput = document.getElementById('bankName');
-		        // hidden input의 값이 빈 문자열인 경우에만 값을 설정
-		        if (hiddenBankInput.value.trim() === '') {
-		            hiddenBankInput.value = selectedBankName;
-		        }
+		        
+		        hiddenBankInput.value = selectedBankName;
 		    }
 		});
          	
