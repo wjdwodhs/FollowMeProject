@@ -7,7 +7,7 @@
 		<result column="mem_pwd" property="memPwd"/>
 		<result column="dept_no" property="deptNo"/>
 		<result column="dept_name" property="deptName"/>
-		<result column="profile_img_path" property="profilImgPath"/>
+		<result column="profile_img_path" property="profileImgPath"/>
 		<result column="mem_gender" property="gender"/>
 		<result column="mem_name" property="memName"/>
 		<result column="mem_securityno" property="securityNo"/>
@@ -269,5 +269,146 @@
 			from tb_attachment
 		where ref_no = #{licNo}
 	</select>
-
+	
+	<!-- 사용자 프로필 이미지 변경용 -->
+	<update id="updateProfileImg">
+		update
+						 tb_mem
+				 set profile_img_path = #{profileImgPath}
+			 where mem_no = #{memNo}
+	</update>
+	
+	
+	<!-- 멤버 리스트 수 조회용 -->
+	<select id="selectMemberListCount" resultType="_int">
+		select 
+					count(*)
+			from tb_mem
+		where status = 'Y'
+	</select>
+	
+	<!-- 멤버 리스트 조회용 -->
+	<select id="selectMemberList" resultMap="memberResult">
+		select
+			 	 mem_no, mem_pwd, dept_name,
+			 	 profile_img_path, mem_gender, 
+			 	 mem_name, mem_securityno,
+			 	 mem_address, 
+			 	 mem_email, mem_grade, mem_role,
+			 	 extension_number, phone, 
+			 	 enroll_date, quit_date, mem_salary,
+			 	 account_no, sig_no, 
+			 	 mem_incentive, mem_certificate, mem_welfare,
+			 	 authorization_level, status
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		 where status = 'Y'
+	</select>
+	
+	<!-- 인사관리 - 검색기능 결과 조회용 -->
+	<select id="searchMemberList" resultMap="memberResult">
+		select
+			 	 mem_no, mem_pwd, dept_name,
+			 	 profile_img_path, mem_gender, 
+			 	 mem_name, mem_securityno,
+			 	 mem_address, 
+			 	 mem_email, mem_grade, mem_role,
+			 	 extension_number, phone, 
+			 	 enroll_date, quit_date, mem_salary,
+			 	 account_no, sig_no, 
+			 	 mem_incentive, mem_certificate, mem_welfare,
+			 	 authorization_level, status
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		 where status = 'Y'
+		   and (
+        mem_name like '%' || #{keyword} || '%'
+        or mem_no like '%' || #{keyword} || '%'
+        or dept_name like '%' || #{keyword} || '%'
+        or mem_grade like '%' || #{keyword} || '%'
+        or mem_role like '%' || #{keyword} || '%'
+        or mem_salary like '%' || #{keyword} || '%'
+        or enroll_date like '%' || #{keyword} || '%'
+        or status like '%' || #{keyword} || '%'
+    			)
+	</select>
+	
+	<!-- 인사관리 - 검색 시 멤버 리스트 수 조회용 -->
+	<select id="searchMemberListCount" resultType="_int">
+		select 
+					count(*)
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		where status = 'Y'
+			and (
+	        mem_name like '%' || #{keyword} || '%'
+	        or mem_no like '%' || #{keyword} || '%'
+	        or dept_name like '%' || #{keyword} || '%'
+	        or mem_grade like '%' || #{keyword} || '%'
+	        or mem_role like '%' || #{keyword} || '%'
+	        or mem_salary like '%' || #{keyword} || '%'
+	        or enroll_date like '%' || #{keyword} || '%'
+	        or status like '%' || #{keyword} || '%'
+	    			)
+	</select>
+	
+	<!-- 인사관리 - 신규 직원등록용 -->
+	<insert id="insertNewEmp">
+		insert
+					into tb_mem
+					(
+						mem_no
+					, mem_pwd
+					, mem_name
+					, authorization_level
+					, dept_no
+					, mem_grade
+					, mem_salary
+					, enroll_date
+					)
+					values
+					(
+						#{memNo}
+					, #{memPwd}
+					, #{memName}
+					, #{authLevel}
+					, #{deptNo}
+					, #{memGrade}
+					, #{memSalary}
+					, #{enrollDate}
+					)
+	</insert>
+	
+	<!-- 인사관리 - 신규 직원등록 시 중복 사원번호 수 체크용 -->
+	<select id="memNoCheck" resultType="_int">
+		select
+					count(*)
+			from tb_mem
+		 where mem_no = #{memNoCheck}
+	</select>
+	
+	<!-- 인사관리 - 직원정보 수정용 -->
+	<update id="modifyEmpInfo">
+		update
+						tb_mem
+			 set 
+			 			mem_name = #{memName}
+			 		, authorization_level = #{authLevel}
+			 		, dept_no = #{deptNo}
+			 		, mem_grade = #{memGrade}
+			 		, mem_salary = #{memSalary}
+			 		, mem_role = #{memRole}
+			 		, enroll_date = #{enrollDate}
+		 where mem_no = #{memNo}
+	</update>
+	
+	<!-- 인사관리 - 직원정보 삭제용(status :n) -->
+	<update id="deleteEmpInfo">
+		update 
+					tb_mem
+			set
+					status = 'N'
+		where mem_no = #{memNo}
+	</update>
+	
 </mapper>

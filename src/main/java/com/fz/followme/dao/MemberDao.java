@@ -2,6 +2,7 @@ package com.fz.followme.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,7 @@ import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -68,6 +70,11 @@ public class MemberDao {
 		return sqlSessionTemplate.insert("memberMapper.addLicense", license);
 	}
 	
+	// 사용자의 프로필 이미지를 변경하는 서비스
+	public int updateProfileImg(MemberDto m) {
+		return sqlSessionTemplate.update("memberMapper.updateProfileImg", m);
+	}
+	
 	// 사용자의 개인정보를 업데이트 하는 서비스
 	public int updatePersonalInfo(MemberDto m) {
 		return sqlSessionTemplate.update("memberMapper.updatePersonalInfo", m);
@@ -91,5 +98,57 @@ public class MemberDao {
 	// 자격증 첨부파일 조회 서비스
 	public AttachmentDto selectAttachment(int licNo) {
 		return sqlSessionTemplate.selectOne("memberMapper.selectAttachment", licNo);
+	}
+	
+	// 인사관리 - 멤버 리스트 카운트 서비스
+	public int selectMemberListCount() {
+		return sqlSessionTemplate.selectOne("memberMapper.selectMemberListCount");
+	}
+	
+	// 인사관리 - 멤버 리스트 조회 서비스
+	public List<MemberDto> selectMemberList(PageInfoDto pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("memberMapper.selectMemberList", null, rowBounds);
+	}
+	
+	// 인사관리 - 검색 기능 서비스
+	public List<MemberDto> searchMemberList(String keyword, PageInfoDto pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("memberMapper.searchMemberList", keyword, rowBounds);
+	}
+	
+	// 인사관리 - 검색 리스트 카운트 서비스
+	public int searchMemberListCount(String keyword) {
+		return sqlSessionTemplate.selectOne("memberMapper.searchMemberListCount", keyword);
+	}
+	
+	// 인사관리 - 신규 직원등록 서비스
+	public int insertNewEmp(MemberDto m) {
+		return sqlSessionTemplate.insert("memberMapper.insertNewEmp", m);
+	}
+	
+	// 인사관리 - 신규 직원 등록 시 사원번호 중복 여부 체크 서비스
+	public int memNoCheck(String memNoCheck) {
+		return sqlSessionTemplate.selectOne("memberMapper.memNoCheck", memNoCheck);
+	}
+	
+	// 인사관리 - 직원정보 수정 서비스
+	public int modifyEmpInfo(MemberDto m) {
+		return sqlSessionTemplate.update("memberMapper.modifyEmpInfo", m);
+	}
+	
+	// 인사관리 - 직원정보 삭제 서비스
+	public int deleteEmpInfo(String memNo) {
+		return sqlSessionTemplate.update("memberMapper.deleteEmpInfo", memNo);
 	}
 }

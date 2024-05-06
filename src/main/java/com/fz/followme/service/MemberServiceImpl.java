@@ -9,6 +9,7 @@ import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,6 +68,11 @@ public class MemberServiceImpl implements MemberService {
 	public int addLicense(LicenseDto license) {
 		return memberDao.addLicense(license);
 	}
+	
+	@Override
+	public int updateProfileImg(MemberDto m) {
+		return memberDao.updateProfileImg(m);
+	}
 
 	@Override
 	public int updatePersonalInfo(MemberDto m) {
@@ -92,5 +98,48 @@ public class MemberServiceImpl implements MemberService {
 	public AttachmentDto selectAttachment(int licNo) {
 		return memberDao.selectAttachment(licNo);
 	}
+	
+	@Override
+	public int selectMemberListCount() {
+		return memberDao.selectMemberListCount();
+	}
+
+	@Override
+	public List<MemberDto> selectMemberList(PageInfoDto pi) {
+		return memberDao.selectMemberList(pi);
+	}
+
+	@Override
+	public List<MemberDto> searchMemberList(String keyword, PageInfoDto pi) {
+		return memberDao.searchMemberList(keyword, pi);
+	}
+
+	@Override
+	public int searchMemberListCount(String keyword) {
+		return memberDao.searchMemberListCount(keyword);
+	}
+
+	@Override
+	public int insertNewEmp(MemberDto m) {
+		return memberDao.insertNewEmp(m);
+	}
+
+	@Override
+	public int memNoCheck(String memNoCheck) {
+		return memberDao.memNoCheck(memNoCheck);
+	}
+
+	@Override
+	public int modifyEmpInfo(MemberDto m) {
+		return memberDao.modifyEmpInfo(m);
+	}
+
+	@Override
+	public int deleteEmpInfo(String memNo) {
+		return memberDao.deleteEmpInfo(memNo);
+	}
+
+	
+
 
 }

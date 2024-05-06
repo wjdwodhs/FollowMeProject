@@ -6,6 +6,7 @@ import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 public interface MemberService {
 
@@ -45,13 +46,35 @@ public interface MemberService {
 	// 마이페이지 - 계좌정보 업데이트 서비스
 	int updateAccountInfo(AccountDto ac);
 	
-	// 자격증 첨부파일 삭제 서비스
+	// 마이페이지 - 자격증 첨부파일 삭제 서비스
 	int deleteAttachment(int licNo);
 	
-	// 자격증 첨부파일 등록 서비스
+	// 마이페이지 - 자격증 첨부파일 등록 서비스
 	int insertAttachment(AttachmentDto attachment);
 	
-	// 자격증 첨부파일 조회 서비스
+	// 마이페이지 - 자격증 첨부파일 조회 서비스
 	AttachmentDto selectAttachment(int licNo);
 	
+	// 마이페이지 - 프로필 이미지 변경 서비스
+	int updateProfileImg(MemberDto m);
+	
+	// 인사관리 - 직원 리스트 조회 서비스 (페이징)
+	int selectMemberListCount();
+	List<MemberDto> selectMemberList(PageInfoDto pi);
+	
+	// 인사관리 - 검색 서비스
+	int searchMemberListCount(String keyword);
+	List<MemberDto> searchMemberList(String keyword, PageInfoDto pi);
+	
+	// 인사관리 - 신규 직원 등록 서비스
+	int insertNewEmp(MemberDto m);
+	
+	// 인사관리 - 신규 직원 등록 시 사원번호 중복 여부 확인 서비스
+	int memNoCheck(String memNoCheck);
+	
+	// 인사관리 - 직원정보 수정 서비스
+	int modifyEmpInfo(MemberDto m);
+	
+	// 인사관리 - 직원정보 삭제 서비스
+	int deleteEmpInfo(String memNo);
 }

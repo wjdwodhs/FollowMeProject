@@ -1,8 +1,8 @@
 package com.fz.followme.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AccountDto;
@@ -29,10 +39,13 @@ import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.service.CheckAccountService;
 import com.fz.followme.service.EmailSender;
 import com.fz.followme.service.MemberService;
 import com.fz.followme.util.FileUtil;
+import com.fz.followme.util.PagingUtil;
+import com.fz.followme.util.ProfileUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +59,8 @@ public class MemberController {
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final FileUtil fileUtil;
+	private final ProfileUtil profileUtil;
+	private final PagingUtil pagingUtil;
 	private final EmailSender emailSender;
 	private final CheckAccountService checkAccountService;
 	
@@ -190,10 +205,6 @@ public class MemberController {
 	    return "redirect:/member/resetPwd.page"; 
 	}
 	
-	// 인사관리 페이지로 이동
-	@RequestMapping("/empManagement.page")
-	public void empManagementPage() {}
-
 	// 마이페이지 - 이메일 변경 기능
 	@RequestMapping("/changeEmail.do")
 	public String changeEmail(String originalEmail, String newEmail, RedirectAttributes redirectAttributes) {
@@ -319,6 +330,34 @@ public class MemberController {
 		return "redirect:/member/mypage.do";
 	}
 	
+	// 마이페이지 - 프로필 사진 변경용
+	@ResponseBody
+	@PostMapping("/modifyProfile")
+	public String ajaxModifyProfile(MultipartFile uploadFile
+								, HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String originalProfileURL = loginUser.getProfileImgPath();
+		
+		// 파일업로드 
+		Map<String, String> map = profileUtil.fileUpload(uploadFile);
+		loginUser.setProfileImgPath(map.get("filePath") + "/" + map.get("filesystemName"));
+				
+		int result = memberService.updateProfileImg(loginUser);
+		
+		if(result > 0) {
+			if(originalProfileURL != null) {
+				new File(originalProfileURL).delete();
+			}
+			return "SUCCESS";
+		}else {
+			new File(map.get("filePath") + "/" + map.get("filesystemName")).delete();
+			return "FAIL";
+		}
+		
+	}
+	
+	
 	// 마이페이지 - 전체 페이지 업데이트 저장 및 파일 업로드 기능
 	@PostMapping("/updateMypage")
 	public String updateMypage(MemberDto m
@@ -375,6 +414,177 @@ public class MemberController {
 
 	    return "redirect:/member/mypage.do";
 	}
+	
+
+	
+	// 인사관리 페이지로 이동 (리스트 페이징 처리 추가)
+	@RequestMapping("/empManagement.page")
+	public ModelAndView empManagementPage(@RequestParam(value="page", defaultValue="1") int currentPage
+		     							 , ModelAndView mv) {
+		
+		int listCount = memberService.selectMemberListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+		List<MemberDto> memberList = memberService.selectMemberList(pi);
+		
+		
+		mv.addObject("memberList", memberList)
+		  .addObject("pi", pi)
+		  .setViewName("member/empManagement");
+		
+		return mv;
+	}
+	
+	// 인사관리 페이지 - 검색처리
+	@GetMapping("/searchList")
+	@ResponseBody
+	public Map<String, Object> ajaxSearchList(String keyword
+							   				, @RequestParam(value="pageNo", defaultValue="1") int currentPage) {
+		
+		int listCount = memberService.searchMemberListCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+		List<MemberDto> memberList = memberService.searchMemberList(keyword, pi);
+		
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("memberList", memberList);
+		response.put("pi", pi);
+		
+		return response;
+    }
+	
+	// 인사관리 페이지 - 신규 직원정보 등록
+	@PostMapping("/insertNewEmp")
+	public String insertNewEmp(MemberDto m
+							 , RedirectAttributes redirectAttributes) {
+		
+		
+		// memNo 중복 체크 먼저 진행
+		String memNoCheck = m.getMemNo();
+		
+		if(memberService.memNoCheck(memNoCheck) > 0) { // 중복된 사원번호 존재
+			redirectAttributes.addFlashAttribute("alertMsg", "중복된 사원번호가 존재합니다.");
+		} else {
+			// 임시비밀번호 암호화 후 memberService로 전달
+			String hashedPassword = bcryptPwdEncoder.encode(String.valueOf(m.getMemPwd()));
+			log.debug(m.getMemPwd());
+			m.setMemPwd(hashedPassword);
+			
+			int result = memberService.insertNewEmp(m);
+			
+			if(result > 0) {
+				redirectAttributes.addFlashAttribute("alertMsg", "신규 직원 등록에 성공했습니다.");
+			}else {
+				redirectAttributes.addFlashAttribute("alertMsg", "신규 직원 등록에 실패했습니다.");
+			}
+			
+		}
+		
+		return "redirect:/member/empManagement.page";
+	}
+	
+	// 인사관리 페이지 - 직원정보 수정
+	@PostMapping("/modifyEmpInfo")
+	public String modifyEmp(MemberDto m
+						   , RedirectAttributes redirectAttributes) {
+		
+		int result = memberService.modifyEmpInfo(m);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "직원 정보 수정에 성공했습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "직원 정보 수정에 실패했습니다.");
+		}
+		
+		return "redirect:/member/empManagement.page";
+		
+	}
+	
+	// 인사관리 페이지 - 직원정보 삭제
+	@PostMapping("/deleteEmpInfo")
+	public String deleteEmpInfo(String memNo
+							  , RedirectAttributes redirectAttributes) {
+		
+		int result = memberService.deleteEmpInfo(memNo);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "직원 정보 삭제에 성공했습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "직원 정보 삭제에 실패했습니다.");
+		}
+		
+		return "redirect:/member/empManagement.page";
+		
+	}
+	
+	// 인사관리 페이지 - 직원 목록 엑셀 다운로드 기능
+	@GetMapping("/excelDownload")
+    public void excelDownload(HttpServletResponse response) throws IOException {
+			//	 Workbook wb = new HSSFWorkbook();
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("첫번째 시트");
+        Row row = null;
+        Cell cell = null;
+        int rowNum = 0;
+
+        // Header
+        row = sheet.createRow(rowNum++);
+        cell = row.createCell(0);
+        cell.setCellValue("번호");
+        cell = row.createCell(1);
+        cell.setCellValue("이름");
+        cell = row.createCell(2);
+        cell.setCellValue("제목");
+
+        // Body
+        for (int i=0; i<3; i++) {
+            row = sheet.createRow(rowNum++);
+            cell = row.createCell(0);
+            cell.setCellValue(i);
+            cell = row.createCell(1);
+            cell.setCellValue(i+"_name");
+            cell = row.createCell(2);
+            cell.setCellValue(i+"_title");
+        }
+
+        // 컨텐츠 타입과 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        //response.setHeader("Content-Disposition", "attachment;filename=example.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=example.xlsx");
+
+        // Excel File Output
+        wb.write(response.getOutputStream());
+        wb.close();
+    }
+	
+	// 인사관리 페이지 - 엑셀 내려받기
+	@PostMapping("/excelDownload")
+    public ResponseEntity<byte[]> excelDownload(@RequestBody List<List<String>> data) throws IOException {
+        // 엑셀 워크북 생성
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Data");
+
+        // 데이터를 엑셀에 기록하는 작업
+        for (int i = 0; i < data.size(); i++) {
+            List<String> rowData = data.get(i);
+            Row row = sheet.createRow(i);
+            for (int j = 0; j < rowData.size(); j++) {
+                Cell cell = row.createCell(j);
+                cell.setCellValue(rowData.get(j));
+            }
+        }
+
+        // 엑셀 파일을 byte 배열로 변환하여 HTTP 응답으로 반환
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        workbook.write(out);
+        byte[] bytes = out.toByteArray();
+        workbook.close();
+
+        return ResponseEntity
+                .ok()
+                .contentLength(bytes.length)
+                .header("Content-Disposition", "attachment; filename=data.xlsx")
+                .body(bytes);
+    }
 }
 
 

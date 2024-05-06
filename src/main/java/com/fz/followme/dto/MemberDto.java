@@ -21,7 +21,7 @@ public class MemberDto {
 	private String memNo;
 	private String memPwd;
 	private int deptNo;
-	private String profilImgPath;
+	private String profileImgPath;
 	private String gender;
 	private String memName;
 	private String securityNo;

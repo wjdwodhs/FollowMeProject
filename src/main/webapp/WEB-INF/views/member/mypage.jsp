@@ -156,6 +156,38 @@
 		    }
 		});
          	
+	  // 프로필 사진 변경
+	  $(document).ready(function(){
+   		$("#profileImgFile").on("change", function(evt){
+   			
+   			if(this.files.length != 0){ // 현재 선택된 파일이 있을 경우
+   				
+   				let formData = new FormData();
+   				formData.append("uploadFile", this.files[0]);
+   				
+   				$.ajax({
+   					url:"${contextPath}/member/modifyProfile",
+   					type:"post",
+   					data:formData,
+   					processData:false,
+   					contentType:false,
+   					success:function(result){
+   						
+   						if(result == "SUCCESS"){
+   							location.reload(); // 새로고침
+   						}else if(result == "FAIL"){
+   							alert("프로필 변경에 실패하였습니다.");
+   						}
+   						
+   					},error:function(){
+   						console.log("프로필이미지 변경용 ajax 통신 실패");
+   					}
+   				})
+   				
+   			}
+   			
+   		})
+   	})
 
 </script>
 
@@ -202,7 +234,8 @@
 		                            <div class="col-lg-4 col-xl-4">
 		                                <div class="card text-center">
 		                                    <div class="card-body">
-		                                        <img id="profileImg" src="${contextPath}${mypageUser.profileImgPath}" class="rounded-circle avatar-lg img-thumbnail">
+		                                        <img id="profileImg" src="${contextPath}${mypageUser.profileImgPath}" class="rounded-circle avatar-lg img-thumbnail" onclick="$('#profileImgFile').click();">
+             																<input type="file" class="file" id="profileImgFile" style="display:none;" accept="image/*">
              																
 		                                        <h4 class="mb-0">${ mypageUser.memName }</h4>
 		                                        <p class="text-muted">@${ mypageUser.memNo }</p>

@@ -12,6 +12,8 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <!-- App favicon -->
 <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
@@ -27,12 +29,78 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
 	.active>.page-link, .page-link.active {
     --ct-pagination-active-bg: #febe98;
 </style>
+<script>
 
+	// 체크박스 일괄 선택
+	$(document).on('click', '#allCheckBox', function() {
+    if($(this).prop("checked")) {
+        $("input[type=checkbox]").prop("checked",true);
+    } else {
+        $("input[type=checkbox]").prop("checked",false);
+    }
+	});
+	
+	// 엑셀 내려받기 기능 관련
+	var contextPath = "${ contextPath }";
+
+	function exportSelectedToExcel() {
+        // 선택한 요소의 데이터를 담을 배열 생성
+        var selectedData = [];
+
+        // 테이블 요소 선택
+        var table = document.getElementById('products-datatable');
+        
+        // 테이블의 체크된 체크박스 요소를 찾아서 선택한 행의 데이터를 수집
+        var checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(function(checkbox) {
+            var row = checkbox.closest('tr');
+            var rowData = [];
+
+            // 각 행의 셀 데이터를 수집하여 배열에 추가
+            for (var j = 0; j < row.cells.length; j++) {
+                rowData.push(row.cells[j].innerText.trim());
+            }
+
+            // 선택한 행의 데이터 배열을 전체 데이터 배열에 추가
+            selectedData.push(rowData);
+        });
+        
+
+        // 선택한 데이터를 서버로 전송하여 엑셀 파일 생성 요청
+        sendSelectedDataToServer(selectedData);
+    }
+
+    function sendSelectedDataToServer(selectedData) {
+        // 서버로 선택한 데이터를 전송하여 엑셀 파일 생성 요청
+        fetch(contextPath + '/member/excelDownload', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedData)
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            // 엑셀 파일 다운로드 링크 생성
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'selected_data.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
+    
+</script>
 </head>
 
 <body>
@@ -75,13 +143,22 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row mb-2">
-                                            <div class="col-sm-4">
-                                                <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#custom-modal"  style="background-color: #febe98; border: none; font-weight: bold;"><i class="mdi mdi-plus-circle me-1"></i> 신규 직원정보 등록</button>
+                                        		<div class="col-sm-2">
+                                            		
+												                    		<form class="search-bar">
+												                            <div class="position-relative">
+												                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
+												                                <span class="mdi mdi-magnify"></span>
+												                            </div>
+												                        </form>
+                    
+                                            </div>
+                                            <div class="col-sm-2">
+                                            		<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#employee-insert-modal"  style="background-color: #febe98; border: none; font-weight: bold;"><i class="mdi mdi-plus-circle me-1"></i> 신규 직원정보 등록</button>
                                             </div>
                                             <div class="col-sm-8">
                                                 <div class="text-sm-end mt-2 mt-sm-0">
-                                                    
-                                                    <button type="button" class="btn btn-light mb-2">엑셀로 내려받기</button>
+                                                    <button type="button" class="btn btn-light mb-2" id="excelDownloadButton" onclick="exportSelectedToExcel();">엑셀로 내려받기</button>
                                                 </div>
                                             </div><!-- end col-->
                                         </div>
@@ -92,7 +169,7 @@
                                                     <tr>
                                                         <th style="width: 20px;">
                                                             <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                                <input type="checkbox" id="allCheckBox" class="form-check-input" id="customCheck1">
                                                                 <label class="form-check-label" for="customCheck1">&nbsp;</label>
                                                             </div>
                                                         </th>
@@ -108,7 +185,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                	<c:forEach var="m" items="${ memberList}">
+                                                		<tr>
                                                         <td>
                                                             <div class="form-check">
                                                                 <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -116,359 +194,43 @@
                                                             </div>
                                                         </td>
                                                         <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
+                                                            <img src="${ contextPath }${m.profileImgPath}" class="me-2 rounded-circle">
+                                                            <a href="javascript:void(0);" class="text-body fw-semibold">${m.memName}</a>
                                                         </td>
+                                                        <td>${m.memNo}</td>
+                                                        <td>${m.deptName}</td>
+                                                        <td>${m.memGrade }</td>
+                                                        <td>${m.memRole}</td>
+                                                        <td>${m.memSalary }</td>
+                                                        <td>${m.enrollDate }</td>
                                                         <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
+                                                            <span class="badge bg-soft-success text-success">${m.status == 'Y' ? "재직" : "" }</span>
                                                         </td>
                     
                                                         <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete" data-bs-toggle="modal" data-bs-target="#employee-delete-modal"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal-${m.memNo}"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-delete-modal-${m.memNo}"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>
-                                                    
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" alt="table-user" class="me-2 rounded-circle">
-                                                            <a href="javascript:void(0);" class="text-body fw-semibold">Paul J. Friend</a>
-                                                        </td>
-                                                        <td>
-                                                            240426
-                                                        </td>
-                                                        <td>
-                                                            마케팅팀
-                                                        </td>
-                                                        <td>
-                                                            사원
-                                                        </td>
-                                                        <td>
-                                                            회사 인스타 계정 포스팅 관리
-                                                        </td>
-                                                        <td>
-                                                            4,000만원
-                                                        </td>
-                                                        <td>
-                                                            07/07/2018
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge bg-soft-success text-success">Active</span>
-                                                        </td>
-                    
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#employee-modify-modal"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
+                                                	</c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
-
+                                       
                                         <ul class="pagination pagination-rounded justify-content-end mb-0">
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+                                                <a class="page-link" href="${ contextPath }/member/empManagement.page?page=${pi.currentPage-1}" aria-label="Previous">
                                                     <span aria-hidden="true">«</span>
                                                     <span class="visually-hidden">Previous</span>
                                                 </a>
                                             </li>
-                                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
+                                            
+                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/member/empManagement.page?page=${p}">${p}</a></li>
+                                           </c:forEach>
+                                           
+                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+                                                <a class="page-link" href="${ contextPath }/member/empManagement.page?page=${pi.currentPage+1}" aria-label="Next">
                                                     <span aria-hidden="true">»</span>
                                                     <span class="visually-hidden">Next</span>
                                                 </a>
@@ -498,7 +260,7 @@
         <!-- END wrapper -->
 
         <!-- Modal -->
-        <div class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="employee-insert-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-light">
@@ -506,51 +268,60 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <form>
+                        <form action="${ contextPath }/member/insertNewEmp" method="post">
                             <div class="row">
-                            		<div class="col-md-6">
-                            			  <div class="mb-3">
-														            <label for="name" class="form-label">이름</label>
-														            <input type="text" class="form-control" id="name" required>
-														        </div>
-														        <div class="mb-3">
-														            <label for="identificationNumber" class="form-label">사원번호(그룹웨어 아이디)</label>
-														            <input type="email" class="form-control" id="identificationNumber" required>
-														        </div>
-														    </div>
-														    <div class="col-md-6">
-														    		<div class="mb-3">
-														            <label for="authLevel" class="form-label">권한레벨</label>
-														            <input type="text" class="form-control" id="authLevel" required>
-														        </div>
-														        <div class="mb-3">
-														            <label for="tempPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-														            <input type="text" class="form-control" id="tempPwd" required>
-														        </div>
-														        
-														    </div>
-														    <div class="col-md-6">
-														        <div class="mb-3">
-														            <label for="deptName" class="form-label">부서</label>
-														            <input type="text" class="form-control" id="deptName" required>
-														        </div>
-														        <div class="mb-3">
-														            <label for="memSalary" class="form-label">계약연봉</label>
-														            <input type="text" class="form-control" id="memSalary" required>
-														        </div>
-														    </div>
-														    <div class="col-md-6">
-														        <div class="mb-3">
-														            <label for="memGrade" class="form-label">직급</label>
-														            <input type="text" class="form-control" id="memGrade" required>
-														        </div>
-														        <div class="mb-3">
-														            <label for="enrollDate" class="form-label">입사일</label>
-														            <input type="text" class="form-control" id="enrollDate" required>
-														        </div>
-														    </div>
-														    
-														</div>
+													    <div class="col-md-6">
+													        <div class="mb-3">
+													            <label for="memName" class="form-label">이름</label>
+													            <input type="text" class="form-control" id="memName"  name="memName" required>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memNo" class="form-label">사원번호(그룹웨어 아이디)</label>
+													            <input type="text" class="form-control" id="memNo" name="memNo" required>
+													        </div>
+													        <div class="mb-3">
+													            <div class="deptSelect">
+                                     		<label for="deptSelect" class="form-label">부서명</label>
+									                    	<select class="form-select" id="deptSelect" name="deptNo" aria-label="Default select example">
+									                        <option value="1">영업팀</option>
+									                        <option value="2">마케팅팀</option>
+									                        <option value="3">경영지원팀</option>
+									                        <option value="4">물류팀</option>
+									                        <option value="5">가발령</option>
+									                   	 </select>
+											                </div>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memGrade" class="form-label">직급</label>
+													            <input type="text" class="form-control" id="memGrade" name="memGrade" required>
+													        </div>
+													    </div>
+													    <div class="col-md-6">
+													        <div class="mb-3">
+													            <div class="authLevelSelect">
+                                       		<label for="authLevelSelect" class="form-label">권한레벨</label>
+										                    	<select class="form-select" id="authLevelSelect" name="authLevel" aria-label="Default select example">
+										                        <option value="0">0</option>
+										                        <option value="1">1</option>
+										                        <option value="2">2</option>
+										                        <option value="3">3</option>
+										                   	 </select>
+										                	</div>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
+													            <input type="text" class="form-control" id="memPwd" name="memPwd" required>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memSalary" class="form-label">계약연봉</label>
+													            <input type="text" class="form-control" id="memSalary" name="memSalary" required>
+													        </div>
+													        <div class="mb-3">
+													            <label for="enrollDate" class="form-label">입사일</label>
+													            <input type="text" class="form-control" id="enrollDate" name="enrollDate" required>
+													        </div>
+													    </div>
+													</div>
         
                             <div class="text-end">
                                 <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">추가</button>
@@ -563,7 +334,8 @@
         </div><!-- /.modal -->
 
         <!-- Modal -->
-        <div class="modal fade" id="employee-modify-modal" tabindex="-1" role="dialog" aria-hidden="true">
+       <c:forEach var="m" items="${ memberList }">
+        <div class="modal fade" id="employee-modify-modal-${ m.memNo }" tabindex="-1" role="dialog" aria-hidden="true" data-memNo="${ m.memNo }">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-light">
@@ -571,23 +343,30 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <form>
-                            
+                        <form action="${ contextPath }/member/modifyEmpInfo" method="post">
+                        		<input type="hidden" name="memNo" value="${m.memNo }">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start mb-3">
-                                            <img class="d-flex me-3 rounded-circle avatar-lg" src="assets/images/users/user-4.jpg" alt="Generic placeholder image">
+                                            <img class="d-flex me-3 rounded-circle avatar-lg" src="${contextPath }${m.profileImgPath}" alt="Generic placeholder image">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
-                                                        <label for="empName" class="form-label">이름</label>
-                                                        <input type="text" class="form-control" id="empName" value="Paul J.Friend">
+                                                        <label for="memName" class="form-label">이름</label>
+                                                        <input type="text" class="form-control" id="memName" name="memName" value="${ m.memName }">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
-                                                        <label for="authLevel" class="form-label">권한레벨</label>
-                                                        <input type="text" class="form-control" id="authLevel" value="0">
+                                                      <div class="authLevelSelect">
+                                                     		<label for="authLevelSelect" class="form-label">권한레벨</label>
+																		                    	<select class="form-select" id="authLevelSelect" name="authLevel" aria-label="Default select example">
+																		                        <option value="0" ${m.authLevel == 0 ? 'selected' : ''}>0</option>
+																		                        <option value="1" ${m.authLevel == 1 ? 'selected' : ''}>1</option>
+																		                        <option value="2" ${m.authLevel == 2 ? 'selected' : ''}>2</option>
+																		                        <option value="3" ${m.authLevel == 3 ? 'selected' : ''}>3</option>
+																		                   	 </select>
+																		                	</div> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -597,50 +376,44 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-2">
-                                                    <label for="identificationNumber" class="form-label">사원번호</label>
-                                                    <input type="text" class="form-control" id="identificationNumber" value="240426">
+                                                    <div class="deptSelect">
+                                                     		<label for="deptSelect" class="form-label">부서명</label>
+																		                    	<select class="form-select" id="deptSelect" name="deptNo" aria-label="Default select example">
+																		                        <option value="1" ${m.deptName eq '영업팀' ? 'selected' : ''}>영업팀</option>
+																		                        <option value="2" ${m.deptName eq '마케팅팀' ? 'selected' : ''}>마케팅팀</option>
+																		                        <option value="3" ${m.deptName eq '경영지원팀' ? 'selected' : ''}>경영지원팀</option>
+																		                        <option value="4" ${m.deptName eq '물류팀' ? 'selected' : ''}>물류팀</option>
+																		                        <option value="5" ${m.deptName eq '가발령' ? 'selected' : ''}>가발령</option>
+																		                   	 </select>
+																		                </div> 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-2">
-                                                    <label for="department" class="form-label">부서</label>
-                                                    <input type="text" class="form-control" id="department" value="마케팅팀">
+                                                    <label for="memGrade" class="form-label">직급</label>
+                                                    <input type="text" class="form-control" id="memGrade" name="memGrade" value="${ m.memGrade }">
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                        		<div class="col-md-6">
                                                 <div class="mb-2">
-                                                    <label for="grade" class="form-label">직급</label>
-                                                    <input type="text" class="form-control" id="grade" value="사원">
+                                                    <label for="memSalary" class="form-label">계약연봉</label>
+                                                    <input type="text" class="form-control" id="memSalary" name="memSalary" value="${ m.memSalary }">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-2">
-                                                    <label for="salary" class="form-label">계약연봉</label>
-                                                    <input type="text" class="form-control" id="salary" value="4,000만원">
+                                                    <label for="enrollDate" class="form-label">입사일</label>
+                                                    <input type="text" class="form-control" id="enrollDate" name="enrollDate" value="${ m.enrollDate }">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="w-100 mb-2">
-                                            <label for="role" class="form-label">직무</label>
-                                            <input type="text" class="form-control" id="role" value="인스타 계정 포스팅 관리">
+                                            <label for="memRole" class="form-label">직무</label>
+                                            <input type="text" class="form-control" id="memRole" name="memRole" value="${ m.memRole }">
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-2">
-                                                    <label for="enrollDate" class="form-label">입사일</label>
-                                                    <input type="text" class="form-control" id="enrollDate" value="2023-10-04">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-2">
-                                                    <label for="empStatus" class="form-label">상태</label>
-                                                    <input type="text" class="form-control" id="empStatus" value="재직">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
                                     </div>
                                 </div> <!-- end card-->
                             
@@ -649,13 +422,16 @@
                                 <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">수정</button>
                                 <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
                             </div>
+                           
                         </form>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+       </c:forEach>
 
-        <div class="modal fade" id="employee-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<c:forEach var="m" items="${ memberList }">
+        <div class="modal fade" id="employee-delete-modal-${m.memNo}" tabindex="-1" role="dialog" aria-hidden="true"  data-memNo="${ m.memNo }">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-light">
@@ -663,18 +439,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <p>선택한 직원정보를 삭제하시겠습니까?</p>
+                    	<form action="${ contextPath }/member/deleteEmpInfo" method="post">
+                    		<input type="hidden" name="memNo" value="${m.memNo }">
+                        <p>선택한 직원정보(사번 : ${m.memNo})를 삭제하시겠습니까?</p>
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">삭제</button>
                             <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
                         </div>
+                      </form>
                     </div>
-
-                    
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
+       </c:forEach>
 
 
 
@@ -708,7 +486,7 @@
 
                         <form class="search-bar">
                             <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control">
                                 <span class="mdi mdi-magnify"></span>
                             </div>
                         </form>
@@ -743,7 +521,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -758,7 +536,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -773,7 +551,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -792,7 +570,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -807,7 +585,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -822,7 +600,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -837,7 +615,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -852,7 +630,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -867,7 +645,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -1145,5 +923,5 @@
 
         <!-- App js -->
         <script src="${ contextPath }/assets/js/app.min.js"></script>
-</body>
+	</body>
 </html>
