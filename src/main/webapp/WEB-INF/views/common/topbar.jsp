@@ -376,7 +376,7 @@
             <!-- User Dropdown -->
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="${ contextPath }/assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="${ contextPath }${loginUser.profileImgPath}" alt="user-image" class="rounded-circle">
                     <span class="ms-1 d-none d-md-inline-block">
                         ${loginUser.memName } 님<i class="mdi mdi-chevron-down"></i>
                     </span>
