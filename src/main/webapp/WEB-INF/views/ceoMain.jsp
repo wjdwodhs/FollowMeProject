@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${ pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,9 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+<script>
 
+</script>
 
 </head>
 <body>
@@ -78,7 +81,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="text-end">
-                                                    <h3 class="text-dark mt-1">₩<span data-plugin="counterup">594,700</span></h3>
+                                                    <h3 class="text-dark mt-1"><span id="revenue" data-plugin="counterup">${todayInfo.revenue}</span></h3>
                                                     <p class="text-muted mb-1 text-truncate">오늘의 매출액</p>
                                                 </div>
                                             </div>
@@ -98,7 +101,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">20</span></h3>
+                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">${todayInfo.orderAmount}</span></h3>
                                                     <p class="text-muted mb-1 text-truncate">오늘의 판매량</p>
                                                 </div>
                                             </div>
@@ -161,36 +164,14 @@
                                         <!--  추후 기능 구현 시 판매량 높은 순으로 정렬 -->
                                         <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
                                             <div class="carousel-inner" role="listbox">
-                                                <div class="carousel-item active">
-                                                    <img src="${ contextPath }/assets/images/small/img-8.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-9.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-10.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-11.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="${ contextPath }/assets/images/small/img-12.jpg" alt="..." class="d-block" style="width:700px;height:350px;">
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h3 class="text-white"></h3>
-                                                    </div>
-                                                </div>
+                                            	<c:forEach var="r" items="${revenueList}" varStatus="status">
+																			            <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+																			                <img src="${contextPath}${r.proImgPath}" class="d-block" style="width:700px;height:350px;">
+																			                <div class="carousel-caption d-none d-md-block">
+																			                    <h3 class="text-white"></h3>
+																			                </div>
+																			            </div>
+																			        </c:forEach>
                                             </div>
                                             <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -222,43 +203,20 @@
                                                     <thead>
                                                         <tr>
                                                             <th>상품명</th>
-                                                            <th>가격</th>
+                                                            <th>판매가</th>
                                                             <th>판매량</th>
-                                                            <th>총 금액</th>
+                                                            <th>총 매출액</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    	<c:forEach var="r" items="${revenueList}">
                                                         <tr>
-                                                            <td>COMME DES GARCONS 카라 히든 버튼 코트</td>
-                                                            <td>₩169,000</td>
-                                                            <td>4</td>
-                                                            <td>₩676,000</td>
+                                                            <td>${r.proName}</td>
+                                                            <td><fmt:formatNumber value="${r.proPrice}" pattern="#,##0"/>원</td>
+                                                            <td style="text-align:center;">${r.orderAmount}</td>
+                                                            <td><fmt:formatNumber value="${r.revenue}" pattern="#,##0"/>원</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>GUCCI 울 100% GG 로고 패턴 배색 프린지 머플러</td>
-                                                            <td>₩119,000</td>
-                                                            <td>5</td>
-                                                            <td>₩595,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>CHLOE 나일론 코튼 카라 버튼 자켓</td>
-                                                            <td>₩49,000</td>
-                                                            <td>4</td>
-                                                            <td>196,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>THEORY 린넨 블렌드 팬츠</td>
-                                                            <td>₩33,000</td>
-                                                            <td>1</td>
-                                                            <td>₩33,000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>LANVIN 텐셀 더블 버튼 블레이저</td>
-                                                            <td>₩30,000</td>
-                                                            <td>1</td>
-                                                            <td>₩30,000</td>
-                                                        </tr>
-                                                                                                                
+                                                       </c:forEach>                                    
                                                     </tbody>
                                                 </table>
                                             </div> <!-- end table responsive-->
@@ -873,11 +831,9 @@
         
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+        
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
 
         <!-- Chart JS -->
         <script src="${ contextPath }/assets/libs/chart.js/Chart.bundle.min.js"></script>

@@ -20,4 +20,14 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectOrder();
 	}
 
+	@Override
+	public List<OrderDto> selectRevenue() {
+		return orderDao.selectRevenue();
+	}
+
+	@Override
+	public OrderDto selectTodayInfo() {
+		return orderDao.selectTodayInfo();
+	}
+
 }
