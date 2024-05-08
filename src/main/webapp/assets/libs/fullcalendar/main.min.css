@@ -1,9 +1,53 @@
+.fc-button{	
+		--fc-button-bg-color:#FFBE98;		 
+		--fc-button-bg:#FFBE98;
+	  --fc-button-border-color:#FFBE98;
+	  --fc-button-hover-color:#fff;
+	  --fc-button-hover-bg-color:#F2E8DA;
+	  --fc-button-hover-border-color:#F2E8DA;
+	  --fc-button-active-color:#fff;
+	  --fc-button-active-bg-color:#F2E8DA;
+	  --fc-button-active-border-color:#F2E8DA;
+	  --fc-button-disabled-bg:#FFBE98;
+	  --fc-button-disabled-border-color:#FFBE98;
+}
+
+
+.fc-day-sun a{
+  color: red;
+  text-decoration: none;
+}
+.fc-day-sat a{
+  color: blue;
+  text-decoration: none;
+}
+.fc-day-mon a{
+  color: black;
+  text-decoration: none;
+}
+.fc-day-tue a{
+  color: black;
+  text-decoration: none;
+}
+.fc-day-wed a{
+  color: black;
+  text-decoration: none;
+}
+.fc-day-thu a{
+  color: black;
+  text-decoration: none;
+}
+.fc-day-fri a{
+  color: black;
+  text-decoration: none;
+}
+
 
 .fc - icon, .fc - unselectable {
     -moz - user - select: none; - ms - user - select: none
 }.fc.fc - button, .fc - icon {
     text - transform: none;
-    font - weight: 400
+    font - weight: 1000
 }.fc - not - allowed, .fc - not - allowed.fc - event {
     cursor: not - allowed
 }.fc.fc - button: not(: disabled), .fc a[data - navlink], .fc - event.fc - event - draggable, .fc - event[href] {
@@ -76,14 +120,14 @@
     font - size: 1 em;
     line - height: 1.5;
     border - radius: .25 em
-}.fc.fc - button: focus {
-    outline: 0;box - shadow: 0 0 0 .2 rem rgba(44, 62, 80, .25)
-}.fc.fc - button - primary: focus, .fc.fc - button - primary: not(: disabled).fc - button - active: focus, .fc.fc - button - primary: not(: disabled): active: focus {
-    box - shadow: 0 0 0 .2 rem rgba(76, 91, 106, .5)
-}.fc.fc - button: disabled {
+}
+
+
+
+.fc.fc - button: disabled {
     opacity: .65
 }.fc.fc - button - primary {
-    color: #fff;color: var (--fc - button - text - color, #fff);background - color: #2C3E50;background-color:var(--fc-button-bg-color,# 2 C3E50);
+    color: #fff;color: var (--fc - button - text - color, #fff);background - color: #FFBE98;background-color:var(--fc-button-bg-color,# 2 C3E50);
 border - color: #2C3E50;border-color:var(--fc-button-border-color,# 2 C3E50)
 }.fc.fc - button - primary: hover {
     color: #fff;color: var (--fc - button - text - color, #fff);background - color: #1e2b37;background-color:var(--fc-button-hover-bg-color,# 1e2 b37);
@@ -188,14 +232,14 @@ border - color: #151e27;border-color:var(--fc-button-active-border-color,# 151e2
 }.fc.fc - non - business {
     background: rgba(215, 215, 215, .3);background: var (--fc - non - business - color, rgba(215, 215, 215, .3))
 }.fc.fc - bg - event {
-    background: var (--fc - bg - event - color, #8fdf82);opacity:.3;opacity:var(--fc-bg-event-opacity,.3)}.fc .fc-bg-event .fc-event-title{margin:.5em;font-size:.85em;font-size:var(--fc-small-font-size,.85em);font-style:italic}.fc .fc-highlight{background:rgba(188,232,241,.3);background:var(--fc-highlight-color,rgba(188,232,241,.3))}.fc .fc-cell-shaded,.fc .fc-day-disabled{background:rgba(208,208,208,.3);background:var(--fc-neutral-bg-color,rgba(208,208,208,.3))}.fc-event .fc-event-main{position:relative;z-index:2}.fc-event-dragging:not(.fc-event-selected){opacity:.75}.fc-event-dragging.fc-event-selected{box-shadow:0 2px 7px rgba(0,0,0,.3)}.fc-event .fc-event-resizer{display:none;position:absolute;z-index:4}.fc-event-selected .fc-event-resizer,.fc-event:hover .fc-event-resizer,.fc-h-event,.fc-v-event{display:block}.fc-event-selected .fc-event-resizer{border-radius:4px;border-radius:calc(var(--fc-event-resizer-dot-total-width,8px)/ 2);border-width:1px;border-width:var(--fc-event-resizer-dot-border-width,1px);width:8px;width:var(--fc-event-resizer-dot-total-width,8px);height:8px;height:var(--fc-event-resizer-dot-total-width,8px);border-style:solid;border-color:inherit;background:var(--fc-page-bg-color,# fff)
+    background: var (--fc - bg - event - color, #8fdf82);opacity:.3;opacity:var(--fc-bg-event-opacity,.3)}.fc .fc-bg-event .fc-event-title{margin:.5em;font-size:.85em;font-size:var(--fc-small-font-size,.85em);font-style:italic}.fc .fc-highlight{background:rgba(188,232,241,.3);background:var(--fc-highlight-color,rgba(188,232,241,.3))}.fc .fc-cell-shaded,.fc .fc-day-disabled{background:rgba(208,208,208,.3);background:var(--fc-neutral-bg-color,rgba(208,208,208,.3))}.fc-event .fc-event-main{position:relative;z-index:2}.fc-event-dragging:not(.fc-event-selected){opacity:.75}.fc-event-dragging.fc-event-selected{box-shadow:0 2px 7px rgba(0,0,0,.3)}.fc-event .fc-event-resizer{display:none;position:absolute;z-index:4}.fc-event-selected .fc-event-resizer,.fc-event:hover .fc-event-resizer,.fc-h-event{display:block}.fc-event-selected .fc-event-resizer{border-radius:4px;border-radius:calc(var(--fc-event-resizer-dot-total-width,8px)/ 2);border-width:1px;border-width:var(--fc-event-resizer-dot-border-width,1px);width:8px;width:var(--fc-event-resizer-dot-total-width,8px);height:8px;height:var(--fc-event-resizer-dot-total-width,8px);border-style:solid;border-color:inherit;background:var(--fc-page-bg-color,# fff)
 }.fc - event - selected.fc - event - resizer: before {
     content: '';position: absolute;top: -20 px;left: -20 px;right: -20 px;bottom: -20 px
-}.fc - event - selected, .fc - event: focus {
+}.fc - event - selected {
     box - shadow: 0 2 px 5 px rgba(0, 0, 0, .2)
-}.fc - event - selected: before, .fc - event: focus: before {
+}.fc - event - selected: before {
     content: "";position: absolute;z - index: 3;top: 0;left: 0;right: 0;bottom: 0
-}.fc - event - selected: after, .fc - event: focus: after {
+}.fc - event - selected: after {
     content: "";background: rgba(0, 0, 0, .25);background: var (--fc - event - selected - overlay - color, rgba(0, 0, 0, .25));position: absolute;z - index: 1;top: -1 px;left: -1 px;right: -1 px;bottom: -1 px
 }.fc - h - event {
     border: 1 px solid #3788d8;border:1px solid var(--fc-event-border-color,# 3788 d8);
@@ -226,20 +270,15 @@ background - color: #3788d8;background-color:var(--fc-event-bg-color,# 3788 d8)
 }.fc - h - event: not(.fc - event - selected).fc - event - resizer {
     top: 0;bottom: 0;width: 8 px;width: var (--fc - event - resizer - thickness, 8 px)
 }.fc - direction - ltr.fc - h - event: not(.fc - event - selected).fc - event - resizer - start, .fc - direction - rtl.fc - h - event: not(.fc - event - selected).fc - event - resizer - end {
-    cursor: w - resize;left: -4 px;left: calc(-.5 *
-        var (--fc - event - resizer - thickness, 8 px))
+    cursor: w - resize;left: -4 px;left: calc(var (--fc - event - resizer - thickness, 8 px) / -2)
 }.fc - direction - ltr.fc - h - event: not(.fc - event - selected).fc - event - resizer - end, .fc - direction - rtl.fc - h - event: not(.fc - event - selected).fc - event - resizer - start {
-    cursor: e - resize;right: -4 px;right: calc(-.5 *
-        var (--fc - event - resizer - thickness, 8 px))
+    cursor: e - resize;right: -4 px;right: calc(var (--fc - event - resizer - thickness, 8 px) / -2)
 }.fc - h - event.fc - event - selected.fc - event - resizer {
-    top: 50 % ;margin - top: -4 px;margin - top: calc(-.5 *
-        var (--fc - event - resizer - dot - total - width, 8 px))
+    top: 50 % ;margin - top: -4 px;margin - top: calc(var (--fc - event - resizer - dot - total - width, 8 px) / -2)
 }.fc - direction - ltr.fc - h - event.fc - event - selected.fc - event - resizer - start, .fc - direction - rtl.fc - h - event.fc - event - selected.fc - event - resizer - end {
-    left: -4 px;left: calc(-.5 *
-        var (--fc - event - resizer - dot - total - width, 8 px))
+    left: -4 px;left: calc(var (--fc - event - resizer - dot - total - width, 8 px) / -2)
 }.fc - direction - ltr.fc - h - event.fc - event - selected.fc - event - resizer - end, .fc - direction - rtl.fc - h - event.fc - event - selected.fc - event - resizer - start {
-    right: -4 px;right: calc(-.5 *
-        var (--fc - event - resizer - dot - total - width, 8 px))
+    right: -4 px;right: calc(var (--fc - event - resizer - dot - total - width, 8 px) / -2)
 }.fc.fc - popover {
     position: absolute;z - index: 9999;box - shadow: 0 2 px 6 px rgba(0, 0, 0, .15)
 }.fc.fc - popover - header {
@@ -346,7 +385,7 @@ border - radius: calc(var (--fc - daygrid - event - dot - width, 8 px) / 2)
 }.fc - direction - rtl.fc - daygrid - event.fc - event - time {
     margin - left: 3 px
 }.fc - v - event {
-    border: 1 px solid #3788d8;border:1px solid var(--fc-event-border-color,# 3788 d8);
+    display: block;border: 1 px solid #3788d8;border:1px solid var(--fc-event-border-color,# 3788 d8);
 background - color: #3788d8;background-color:var(--fc-event-bg-color,# 3788 d8)
 }.fc - v - event.fc - event - main {
     color: #fff;color: var (--fc - event - text - color, #fff);height: 100 %
@@ -428,7 +467,7 @@ background - color: #3788d8;background-color:var(--fc-event-bg-color,# 3788 d8)
 }.fc.fc - timegrid - col - frame {
     min - height: 100 % ;
     position: relative
-}.fc - media - screen.fc - liquid - hack.fc - timegrid - col - frame {
+}.fc - liquid - hack.fc - timegrid - col - frame {
     height: auto;position: absolute;top: 0;right: 0;bottom: 0;left: 0
 }.fc - media - screen.fc - timegrid - cols {
     position: absolute;top: 0;left: 0;right: 0;bottom: 0
@@ -515,10 +554,6 @@ background - color: #3788d8;background-color:var(--fc-event-bg-color,# 3788 d8)
     border - left: 0;border - right: 0
 }.fc.fc - list - sticky.fc - list - day > * {
     position: sticky;top: 0;background: var (--fc - page - bg - color, #fff)
-}.fc.fc - list - table thead {
-    position: absolute;left: -10000 px
-}.fc.fc - list - table tbody > tr: first - child th {
-    border - top: 0
 }.fc.fc - list - table th {
     padding: 0
 }.fc.fc - list - day - cushion, .fc.fc - list - table td {
@@ -554,14 +589,4 @@ border - radius: calc(var (--fc - list - event - dot - width, 10 px) / 2)
     text - decoration: underline
 }.fc - theme - bootstrap a: not([href]) {
     color: inherit
-}.fc - theme - bootstrap5 a: not([href]) {
-    color: inherit;text - decoration: inherit
-}.fc - theme - bootstrap5.fc - list, .fc - theme - bootstrap5.fc - scrollgrid, .fc - theme - bootstrap5 td, .fc - theme - bootstrap5 th {
-    border: 1 px solid
-    var (--bs - gray - 400)
-}.fc - theme - bootstrap5.fc - scrollgrid {
-    border - right - width: 0;
-    border - bottom - width: 0
-}.fc - theme - bootstrap5 - shaded {
-    background - color: var (--bs - gray - 200)
 }

@@ -10,42 +10,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
-
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
-
-        <!-- Plugin css -->
-        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
-  		<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
-       
-
-        <!-- Theme Config Js -->
-        <script src="${ contextPath }/assets/js/head.js"></script>
-
-        <!-- Bootstrap css -->
-        <link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-        <!-- App css -->
-        <link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- Icons css -->
-        <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         
-<style>
-.btn-group>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
-.fc-toolbar-chunk>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
- .fc-day-sun  {
-  color: red;
-  text-decoration: none;
-}
+			<!-- fullcalendar -->
+     <link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet"/>
+     <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
+		 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
+		 
+		 
+	   <!-- jquery CDN -->  
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     
+     <!-- fullcalendar 언어 CDN -->  
+     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+     
+     <!-- Bootstrap JavaScript -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-.fc-day-sat  {
-  color: blue;
-  text-decoration: none;
-}
+      
+<style>
+
+				  
 </style>
-    </head>
+</head>
 <body>
+      
 	<!-- Begin page -->
         <div id="wrapper">
            <!-- sidemenu include -->
@@ -84,26 +72,7 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <button class="btn btn-lg font-16 w-100" id="btn-new-event" style="background-color: #FFBE98; color: white;"><i class="mdi mdi-plus-circle-outline"></i> 일정 추가</button>
-                                                
-                                                <div id="external-events">
-                                                    <br>
-                                                    <div class="external-event bg-success" data-class="bg-success">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>직원
-                                                    </div>
-                                                    <div class="external-event bg-info" data-class="bg-info">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>부서
-                                                    </div>
-                                                    <div class="external-event bg-warning" data-class="bg-warning">
-                                                        <i class="mdi mdi-checkbox-blank-circle me-2 vertical-middle"></i>회사
-                                                    </div>
-                                                    
-                                                </div>
-
-                                            </div> <!-- end col-->
-
+                                        <div class="row" style="display:flex; justify-content:center;">
                                             <div class="col-lg-9">
                                                 <div id="calendar"></div>
                                             </div> <!-- end col -->
@@ -112,61 +81,65 @@
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
 
-                                <!-- Add New Event MODAL -->
-                                <div class="modal fade" id="event-modal" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                                                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                <h5 class="modal-title" id="modal-title">event</h5>
-                                            </div>
-                                            <div class="modal-body px-4 pb-4 pt-0">
-                                                <form class="needs-validation" name="event-form" id="form-event" novalidate>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">제목</label>
-                                                                <input class="form-control" placeholder="제목을 입력하세요"
-                                                                    type="text" name="title" id="event-title" required />
-                                                                <div class="invalid-feedback">제목을 입력해주세요</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">내용</label>
-                                                                <textarea class="form-control" placeholder="내용을 입력하세요"
-                                                                     name="content" id="event-content" style="resize:none;">
-                                                                 </textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">카테고리</label>
-                                                                <select class="form-select" name="category" id="event-category" required>
-                                                                    <!-- <option value="bg-danger" selected>Danger</option> -->
-                                                                    <option value="bg-success">직원</option>
-                                                                    <!-- <option value="bg-primary">Primary</option> -->
-                                                                    <option value="bg-info">부서</option>
-                                                                    <!-- <option value="bg-dark">Dark</option> -->
-                                                                    <option value="bg-warning">일정</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-2">
-                                                        <div class="col-md-6 col-4">
-                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
-                                                        </div>
-                                                        <div class="col-md-6 col-8 text-end">
-                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div> <!-- end modal-content-->
-                                    </div> <!-- end modal dialog-->
-                                </div><!-- end modal-->
+                               <!-- 부트스트랩 modal 부분 -->
+															     <!-- start modal -->
+															     <div class="modal fade" id="event-modal" tabindex="-1">
+															      <div class="modal-dialog">
+															          <div class="modal-content">
+															              <div class="modal-header py-3 px-4 border-bottom-0 d-block">
+															                  <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+															                  <h5 class="modal-title" id="modal-title">일정 추가</h5>
+															              </div>
+															              <div class="modal-body px-4 pb-4 pt-0">
+															                  <form class="needs-validation" name="event-form" id="form-event" novalidate>
+															                      <div class="row">
+															                          <div class="col-12">
+															                              <div class="mb-3">
+															                                  <label class="form-label">일정 제목</label>
+															                                  <input class="form-control" type="text" name="title" id="event-title" required />
+															                              </div>
+															                          </div>
+															                          <div class="col-12">
+															                            <div class="mb-3">
+															                              <label class="form-label">일정 내용</label>
+															                              <textarea class="form-control" name="content" id="event-content" style="resize: none;"></textarea>
+															                          </div>
+															                        </div>
+															                        <div class="col-12">
+															                          <div class="mb-3">
+															                            <label class="form-label">시작 일자</label>
+															                            <input class="form-control" type="datetime-local" name="start" id="event-start" />
+															                        </div>
+															                      </div>
+															                      <div class="col-12">
+															                        <div class="mb-3">
+															                          <label class="form-label">종료 일자</label>
+															                          <input class="form-control" type="datetime-local" name="end" id="event-end" />
+															                      </div>
+															                    </div>
+															                          <div class="col-12">
+															                              <div class="mb-3">
+															                                  <label class="form-label">카테고리</label>
+															                                  <select class="form-select" name="category" id="event-category" required>
+															                                      <option value="red" selected>직원</option>
+															                                      <option value="blue">부서</option>
+															                                      <option value="purple">회사</option>
+															                                  </select>
+															                              </div>
+															                          </div>
+															                      </div>
+															                      <div class="row mt-2">
+															                          <div class="col-md-12 col-8 text-end">
+															                              <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
+															                              <button type="button" class="btn" style="background-color: #FFBE98; color: white;" id="btn-save-event">Save</button>
+															                          </div>
+															                      </div>
+															                  </form>
+															              </div>
+															          </div> <!-- end modal-content-->
+															      </div> <!-- end modal dialog-->
+															  </div>
+															  <!-- end modal-->
                                 
                             </div><!-- end col-12 -->
                             
@@ -656,9 +629,10 @@
         <!-- plugin js -->
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         
-
         <!-- Calendar init -->
-        <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
+		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
+       
+        
 	
 
 </body>
