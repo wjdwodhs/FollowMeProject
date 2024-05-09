@@ -58,6 +58,9 @@ public interface MemberService {
 	// 마이페이지 - 프로필 이미지 변경 서비스
 	int updateProfileImg(MemberDto m);
 	
+	// 마이페이지 - 전자서명 이미지 등록 서비스
+	int updateSigImg(MemberDto m);
+	
 	// 인사관리 - 직원 리스트 조회 서비스 (페이징)
 	int selectMemberListCount();
 	List<MemberDto> selectMemberList(PageInfoDto pi);

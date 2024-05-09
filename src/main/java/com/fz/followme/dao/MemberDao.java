@@ -75,6 +75,11 @@ public class MemberDao {
 		return sqlSessionTemplate.update("memberMapper.updateProfileImg", m);
 	}
 	
+	// 사용자의 전자서명 이미지를 변경하는 서비스
+	public int updateSigImg(MemberDto m) {
+		return sqlSessionTemplate.update("memberMapper.updateSigImg", m);
+	}
+	
 	// 사용자의 개인정보를 업데이트 하는 서비스
 	public int updatePersonalInfo(MemberDto m) {
 		return sqlSessionTemplate.update("memberMapper.updatePersonalInfo", m);

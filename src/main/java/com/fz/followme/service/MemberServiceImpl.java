@@ -73,6 +73,11 @@ public class MemberServiceImpl implements MemberService {
 	public int updateProfileImg(MemberDto m) {
 		return memberDao.updateProfileImg(m);
 	}
+	
+	@Override
+	public int updateSigImg(MemberDto m) {
+		return memberDao.updateSigImg(m);
+	}
 
 	@Override
 	public int updatePersonalInfo(MemberDto m) {
@@ -138,6 +143,8 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteEmpInfo(String memNo) {
 		return memberDao.deleteEmpInfo(memNo);
 	}
+
+	
 
 	
 

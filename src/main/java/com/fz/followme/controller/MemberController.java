@@ -46,6 +46,7 @@ import com.fz.followme.service.MemberService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
 import com.fz.followme.util.ProfileUtil;
+import com.fz.followme.util.SignatureUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,7 @@ public class MemberController {
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final FileUtil fileUtil;
 	private final ProfileUtil profileUtil;
+	private final SignatureUtil signatureUtil;
 	private final PagingUtil pagingUtil;
 	private final EmailSender emailSender;
 	private final CheckAccountService checkAccountService;
@@ -357,6 +359,34 @@ public class MemberController {
 		
 	}
 	
+	// 마이페이지 - 전자도장 이미지 등록용
+	@ResponseBody
+	@PostMapping("/modifySignature")
+	public String ajaxModifySignature(MultipartFile uploadFile, 
+									  HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String originalSigImgPath = loginUser.getSigImgPath();
+		
+		// 파일 업로드
+		Map<String, String> map = signatureUtil.fileUpload(uploadFile);
+		loginUser.setSigImgPath(map.get("filePath") + "/" + map.get("filesystemName"));
+		
+		int result = memberService.updateSigImg(loginUser);
+		
+		if(result > 0) {
+			if(originalSigImgPath != null) {
+				new File(originalSigImgPath).delete();
+			}
+			return "SUCCESS";
+		}else {
+			new File(map.get("filePath") + "/" + map.get("filesystemName")).delete();
+			return "FAIL";
+		}
+		
+	}
+	
+	
 	
 	// 마이페이지 - 전체 페이지 업데이트 저장 및 파일 업로드 기능
 	@PostMapping("/updateMypage")
@@ -444,7 +474,6 @@ public class MemberController {
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
 		List<MemberDto> memberList = memberService.searchMemberList(keyword, pi);
 		
-		
 		Map<String, Object> response = new HashMap<>();
 		response.put("memberList", memberList);
 		response.put("pi", pi);
@@ -516,45 +545,6 @@ public class MemberController {
 		
 	}
 	
-	// 인사관리 페이지 - 직원 목록 엑셀 다운로드 기능
-	@GetMapping("/excelDownload")
-    public void excelDownload(HttpServletResponse response) throws IOException {
-			//	 Workbook wb = new HSSFWorkbook();
-        Workbook wb = new XSSFWorkbook();
-        Sheet sheet = wb.createSheet("첫번째 시트");
-        Row row = null;
-        Cell cell = null;
-        int rowNum = 0;
-
-        // Header
-        row = sheet.createRow(rowNum++);
-        cell = row.createCell(0);
-        cell.setCellValue("번호");
-        cell = row.createCell(1);
-        cell.setCellValue("이름");
-        cell = row.createCell(2);
-        cell.setCellValue("제목");
-
-        // Body
-        for (int i=0; i<3; i++) {
-            row = sheet.createRow(rowNum++);
-            cell = row.createCell(0);
-            cell.setCellValue(i);
-            cell = row.createCell(1);
-            cell.setCellValue(i+"_name");
-            cell = row.createCell(2);
-            cell.setCellValue(i+"_title");
-        }
-
-        // 컨텐츠 타입과 파일명 지정
-        response.setContentType("ms-vnd/excel");
-        //response.setHeader("Content-Disposition", "attachment;filename=example.xls");
-        response.setHeader("Content-Disposition", "attachment;filename=example.xlsx");
-
-        // Excel File Output
-        wb.write(response.getOutputStream());
-        wb.close();
-    }
 	
 	// 인사관리 페이지 - 엑셀 내려받기
 	@PostMapping("/excelDownload")

@@ -33,77 +33,197 @@
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
 	.active>.page-link, .page-link.active {
-    --ct-pagination-active-bg: #febe98;
-</style>
-<script>
+    --ct-pagination-active-bg: #febe98;}
 
+</style>
+
+</head>
+
+<body>
+
+<script>
+	
 	// 체크박스 일괄 선택
 	$(document).on('click', '#allCheckBox', function() {
-    if($(this).prop("checked")) {
-        $("input[type=checkbox]").prop("checked",true);
-    } else {
-        $("input[type=checkbox]").prop("checked",false);
-    }
+	   if($(this).prop("checked")) {
+	       $("input[type=checkbox]").prop("checked",true);
+	   } else {
+	       $("input[type=checkbox]").prop("checked",false);
+	   }
 	});
 	
 	// 엑셀 내려받기 기능 관련
 	var contextPath = "${ contextPath }";
-
+	
 	function exportSelectedToExcel() {
-        // 선택한 요소의 데이터를 담을 배열 생성
-        var selectedData = [];
+	       // 선택한 요소의 데이터를 담을 배열 생성
+	       var selectedData = [];
+	
+	       // 테이블 요소 선택
+	       var table = document.getElementById('products-datatable');
+	       
+	       // 테이블의 체크된 체크박스 요소를 찾아서 선택한 행의 데이터를 수집
+	       var checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
+	       checkboxes.forEach(function(checkbox) {
+	           var row = checkbox.closest('tr');
+	           var rowData = [];
+	
+	           // 각 행의 셀 데이터를 수집하여 배열에 추가
+	           for (var j = 0; j < row.cells.length; j++) {
+	               rowData.push(row.cells[j].innerText.trim());
+	           }
+	
+	           // 선택한 행의 데이터 배열을 전체 데이터 배열에 추가
+	           selectedData.push(rowData);
+	       });
+	       
+	
+	       // 선택한 데이터를 서버로 전송하여 엑셀 파일 생성 요청
+	       sendSelectedDataToServer(selectedData);
+	   }
+	
+	   function sendSelectedDataToServer(selectedData) {
+	       // 서버로 선택한 데이터를 전송하여 엑셀 파일 생성 요청
+	       fetch(contextPath + '/member/excelDownload', {
+	           method: 'POST',
+	           headers: {
+	               'Content-Type': 'application/json'
+	           },
+	           body: JSON.stringify(selectedData)
+	       })
+	       .then(response => response.blob())
+	       .then(blob => {
+	           // 엑셀 파일 다운로드 링크 생성
+	           var url = window.URL.createObjectURL(blob);
+	           var a = document.createElement('a');
+	           a.href = url;
+	           a.download = 'empManagement_list.xlsx';
+	           document.body.appendChild(a);
+	           a.click();
+	           window.URL.revokeObjectURL(url);
+	       })
+	       .catch(error => console.error('Error:', error));
+	   }
+	   
+	   // 키워드 검색에 따른 결과 요청 및 표시 (검색바 검색기능)
+	   
+	   // 키워드 검색 시 해당 pageNo 전달하고 searchList 함수 호출
+	   $(document).on('keyup', '#keyword', function(){
+				var pageNo = 1;
+		    searchList(pageNo);
+		    return false;
+		});
+	
+	   // 검색 결과 페이징 바 클릭 시 pageNo 전달
+	   $(document).on('click','#searchPage',function(){
+	   	var pageNo = $(this).text();
+	   	searchList(pageNo);
+	   	return false;
+	   })
+	   
+	   $(document).on('click','#searchPage2',function(){
+	   	var pageNo = $(this).data('page');
+	   	searchList(pageNo);
+	   	return false;
+	   })
+	   
+	   // 검색 결과 요청
+	   function searchList(pageNo) {
+	    var keyword = document.getElementById("keyword").value;
+	
+	    $.ajax({
+	        type: "get",
+	        url: "${ contextPath }/member/searchList",
+	        data: {
+	            keyword: keyword,
+	            pageNo: pageNo
+	        },
+	        success: function(response) {
+			        	let value="";
+		              	//유저정보
+		                for(let i=0; i<response.memberList.length; i++){
+		                	
+		                	// enrollDate를 타임스탬프에서 Date 객체로 변환
+		                	var date = new Date(response.memberList[i].enrollDate);
+	
+		                	// 날짜를 "yyyy-mm-dd" 형식으로 포맷팅
+		                	var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+											
+		                	
+		                	value += "<tr>" 
+		                        + "<td><div class='form-check'>" 
+		                        + "<input type='checkbox' class='form-check-input' id='customCheck2'>" 
+		                        + "<label class='form-check-label' for='customCheck2'>&nbsp;</label>" 
+		                        + "</div></td>"
+		                        + "<td class='table-user'><img src='${ contextPath }" + response.memberList[i].profileImgPath + "' class='me-2 rounded-circle'>"
+		                        + "<a href='javascript:void(0);' class='text-body fw-semibold'>" + response.memberList[i].memName + "</a></td>"
+		                        + "<td> " + response.memberList[i].memNo + "</td>"
+		                        + "<td> " + response.memberList[i].deptName + "</td>"
+		                        + "<td> " + response.memberList[i].memGrade + "</td>"
+		                        + "<td> " + (response.memberList[i].memRole == null ? '' : response.memberList[i].memRole) + "</td>" 
+		                        + "<td> " + (response.memberList[i].memSalary == null ? '' : response.memberList[i].memSalary) + "</td>" 
+		                        + "<td> " + formattedDate + "</td>" 
+		                        + "<td><span class='badge bg-soft-success text-success'>" + (response.memberList[i].status == 'Y' ? "재직" : "퇴사") + "</span></td>"
+		                        + "<td><a href='javascript:void(0);' class='action-icon' data-bs-toggle='modal' data-bs-target='#employee-modify-modal-" + response.memberList[i].memNo + "'>"
+		                        + "<i class='mdi mdi-square-edit-outline'></i></a>"
+		                        + "<a href='javascript:void(0);' class='action-icon'>"
+		                        + "<i class='mdi mdi-delete' data-bs-toggle='modal' data-bs-target='#employee-delete-modal-"+ response.memberList[i].memNo + "'></i></a>"
+		                        + "</td>"
+		                        + "</tr>";
+	
+	                            
+		                }
+		                
+			            	$('#products-datatable tbody').html(value);
+			            	
+			            	var paginationHtml = "";
+			            	if (response.pi.currentPage == 1) {
+			            	    paginationHtml += "<li class='page-item disabled'>" +
+			            	        "<a class='page-link' href='#' aria-label='Previous'>" +
+			            	        "<span aria-hidden='true'>«</span>" +
+			            	        "<span class='visually-hidden'>Previous</span>" +
+			            	        "</a>" +
+			            	        "</li>";
+			            	} else {
+			            	    paginationHtml += "<li class='page-item'>" +
+			            	        "<a class='page-link' href='#' aria-label='Previous' id='searchPage2' data-page='" + (response.pi.currentPage-1) + "'>" +
+			            	        "<span aria-hidden='true'>«</span>" +
+			            	        "<span class='visually-hidden'>Previous</span>" +
+			            	        "</a>" +
+			            	        "</li>";
+			            	}
+	
+			            	for (var p = response.pi.startPage; p <= response.pi.endPage; p++) {
+			            	    paginationHtml += "<li class='page-item " + (response.pi.currentPage == p ? 'active' : '') + "'><a class='page-link' href='#' id='searchPage'>" + p + "</a></li>";
+			            	}
+	
+			            	if (response.pi.currentPage == response.pi.maxPage) {
+			            	    paginationHtml += "<li class='page-item disabled'>" +
+			            	        "<a class='page-link' href='#' aria-label='Next'>" +
+			            	        "<span aria-hidden='true'>»</span>" +
+			            	        "<span class='visually-hidden'>Next</span>" +
+			            	        "</a>" +
+			            	        "</li>";
+			            	} else {
+			            	    paginationHtml += "<li class='page-item'>" +
+			            	        "<a class='page-link' href='#' aria-label='Next' id='searchPage2' data-page='" + (response.pi.currentPage+1) + "'>" +
+			            	        "<span aria-hidden='true'>»</span>" +
+			            	        "<span class='visually-hidden'>Next</span>" +
+			            	        "</a>" +
+			            	        "</li>";
+			            	}
+	
+			            	$("#pageBar").html(paginationHtml);
+				        },
+				        error: function(xhr, status, error) {
+				            console.error("Ajax 오류:", error);
+				        }
+				    });
+				}
+	
+		</script>
 
-        // 테이블 요소 선택
-        var table = document.getElementById('products-datatable');
-        
-        // 테이블의 체크된 체크박스 요소를 찾아서 선택한 행의 데이터를 수집
-        var checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
-        checkboxes.forEach(function(checkbox) {
-            var row = checkbox.closest('tr');
-            var rowData = [];
 
-            // 각 행의 셀 데이터를 수집하여 배열에 추가
-            for (var j = 0; j < row.cells.length; j++) {
-                rowData.push(row.cells[j].innerText.trim());
-            }
-
-            // 선택한 행의 데이터 배열을 전체 데이터 배열에 추가
-            selectedData.push(rowData);
-        });
-        
-
-        // 선택한 데이터를 서버로 전송하여 엑셀 파일 생성 요청
-        sendSelectedDataToServer(selectedData);
-    }
-
-    function sendSelectedDataToServer(selectedData) {
-        // 서버로 선택한 데이터를 전송하여 엑셀 파일 생성 요청
-        fetch(contextPath + '/member/excelDownload', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(selectedData)
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            // 엑셀 파일 다운로드 링크 생성
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'selected_data.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        })
-        .catch(error => console.error('Error:', error));
-    }
-    
-    
-</script>
-</head>
-
-<body>
 	<!-- Begin page -->
 	<div id="wrapper">
 
@@ -129,7 +249,11 @@
                             <div class="col-12">
                                 <div class="page-title-box">
                                     <div class="page-title-right">
-                                        
+                                        <ol class="breadcrumb m-0">
+					                              		<li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
+					                                  <li class="breadcrumb-item"><a href="javascript: void(0);">인사관리</a></li>
+					                                  <li class="breadcrumb-item active">인사관리</li>
+					                              </ol>
                                     </div>
                                     <h4 class="page-title">인사관리</h4>
                                 </div>
@@ -217,7 +341,7 @@
                                             </table>
                                         </div>
                                        
-                                        <ul class="pagination pagination-rounded justify-content-end mb-0">
+                                        <ul class="pagination pagination-rounded justify-content-end mb-0" id="pageBar">
                                             <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
                                                 <a class="page-link" href="${ contextPath }/member/empManagement.page?page=${pi.currentPage-1}" aria-label="Previous">
                                                     <span aria-hidden="true">«</span>
@@ -923,5 +1047,7 @@
 
         <!-- App js -->
         <script src="${ contextPath }/assets/js/app.min.js"></script>
+        
 	</body>
+	
 </html>

@@ -28,11 +28,22 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+<!-- Plugins css -->
+<link href="${ contextPath }/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
 	.a.nav-link.active{backgroun-color:#febe98;}
 </style>
+
+
+
+
+</head>
+
+<body>
 
 <script>
 		//"이메일 중복 확인" 링크 클릭 시 모달 창 표시
@@ -188,13 +199,44 @@
    			
    		})
    	})
+   	
+   	// 전자서명 등록 및 수정
+   	$(document).ready(function(){
+   		$("#signatureFile").on("change", function(evt){
+   			
+   			if(this.files.length != 0){ // 현재 선택된 파일이 있을 경우
+   				
+   				let formData = new FormData();
+   				formData.append("uploadFile", this.files[0]);
+   				
+   				$.ajax({
+   					url:"${contextPath}/member/modifySignature",
+   					type:"post",
+   					data:formData,
+   					processData:false,
+   					contentType:false,
+   					success:function(result){
+   						
+   						if(result == "SUCCESS"){
+   							location.reload(); // 새로고침
+   						}else if(result == "FAIL"){
+   							alert("전자도장 등록에 실패하였습니다.");
+   						}
+   						
+   					},error:function(){
+   						console.log("전자도장 등록용 ajax 통신 실패");
+   					}
+   				})
+   				
+   			}
+   			
+   		})
+   	})
+   	
 
 </script>
 
 
-</head>
-
-<body>
 <!-- Begin page -->
         <div id="wrapper">
 
@@ -258,54 +300,22 @@
 		                                </div> <!-- end card -->
 		
 		                                <div class="card">
-		                                    <div class="card-body" style="height: 472px;">
-		                                        <h4 class="header-title mb-3">쪽지함</h4>
-		
+		                                    <div class="card-body" style="height: 350px;">
+		                                        <h5 class="mb-3 text-uppercase bg-light p-2"> 전자서명 관리</h5>
+																								
 		                                        <div class="inbox-widget" data-simplebar style="max-height: 350px;">
-		                                            <div class="inbox-item">
-		                                                <div class="inbox-item-img"><img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle" alt=""></div>
-		                                                <p class="inbox-item-author">라이언 사원</p>
-		                                                <p class="inbox-item-text">지난번에 말씀하셨던 그 프로젝트는 이번주...</p>
-		                                                <p class="inbox-item-date">
-		                                                    <a href="javascript:(0);" class="btn btn-sm btn-link text-info font-13"> 답장 </a>
-		                                                </p>
-		                                            </div>
-		                                            <div class="inbox-item">
-		                                                <div class="inbox-item-img"><img src="${ contextPath }/assets/images/users/user-3.jpg" class="rounded-circle" alt=""></div>
-		                                                <p class="inbox-item-author">어피치 사원</p>
-		                                                <p class="inbox-item-text">말씀하신 결재 기안 올렸습니다!</p>
-		                                                <p class="inbox-item-date">
-		                                                    <a href="javascript:(0);" class="btn btn-sm btn-link text-info font-13"> 답장 </a>
-		                                                </p>
-		                                            </div>
-		                                            <div class="inbox-item">
-		                                                <div class="inbox-item-img"><img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle" alt=""></div>
-		                                                <p class="inbox-item-author">프로도 사원</p>
-		                                                <p class="inbox-item-text">메일로 전달드린 보고서 확인 부탁드립니다.</p>
-		                                                <p class="inbox-item-date">
-		                                                    <a href="javascript:(0);" class="btn btn-sm btn-link text-info font-13"> 답장 </a>
-		                                                </p>
-		                                            </div>
-		
-		                                            <div class="inbox-item">
-		                                                <div class="inbox-item-img"><img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle" alt=""></div>
-		                                                <p class="inbox-item-author">무지 매니저</p>
-		                                                <p class="inbox-item-text">아 맞다, 언제 휴가라고 했지?</p>
-		                                                <p class="inbox-item-date">
-		                                                    <a href="javascript:(0);" class="btn btn-sm btn-link text-info font-13"> 답장 </a>
-		                                                </p>
-		                                            </div>
-		                                            <div class="inbox-item">
-		                                                <div class="inbox-item-img"><img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle" alt=""></div>
-		                                                <p class="inbox-item-author">네오 사원</p>
-		                                                <p class="inbox-item-text">다음 회의는 목요일 오전 10시로 확정되었습니다.</p>
-		                                                <p class="inbox-item-date">
-		                                                    <a href="javascript:(0);" class="btn btn-sm btn-link text-info font-13"> 답장 </a>
-		                                                </p>
-		                                            </div>
-		
+		                                            
+		                                            <div class="row">
+																								    <div class="col-md-6">
+																								        <img id="signatureImg" src="${contextPath}${mypageUser.sigImgPath}" class="avatar-lg img-thumbnail" style="width: 200px; height: 200px;">
+																								    </div>
+																								    <div class="col-md-6">
+																								        <input type="file" data-plugins="dropify" id="signatureFile" accept="image/*">
+																								    </div>
+																								</div>
 		                                            
 		                                        </div> <!-- end inbox-widget -->
+		                                        
 		                                    </div>
 		                                </div> <!-- end card-->
 		
@@ -1174,10 +1184,17 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
+        <script src="${contextPath}/assets/js/app.min.js"></script>
+
+        <!-- Plugins js -->
+        <script src="${contextPath}/assets/libs/dropzone/min/dropzone.min.js"></script>
+        <script src="${contextPath}/assets/libs/dropify/js/dropify.min.js"></script>
+
+        <!-- Init js-->
+        <script src="${contextPath}/assets/js/pages/form-fileuploads.init.js"></script>
 
     </body>
 
