@@ -8,6 +8,7 @@
 		<result column="dept_no" property="deptNo"/>
 		<result column="dept_name" property="deptName"/>
 		<result column="profile_img_path" property="profileImgPath"/>
+		<result column="sig_img_path" property="sigImgPath"/>
 		<result column="mem_gender" property="gender"/>
 		<result column="mem_name" property="memName"/>
 		<result column="mem_securityno" property="securityNo"/>
@@ -21,7 +22,6 @@
 		<result column="quit_date" property="quitDate"/>
 		<result column="mem_salary" property="memSalary"/>
 		<result column="account_no" property="accountNo"/>
-		<result column="sig_no" property="sigNo"/>
 		<result column="mem_incentive" property="memIncentive"/>
 		<result column="mem_certificate" property="memCertificate"/>
 		<result column="mem_welfare" property="memWelfare"/>
@@ -63,11 +63,11 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, 
+			 	 mem_address, sig_img_path,
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
-			 	 account_no, sig_no, 
+			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
@@ -81,11 +81,11 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, 
+			 	 mem_address, sig_img_path,
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
-			 	 account_no, sig_no, 
+			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
@@ -120,11 +120,11 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, 
+			 	 mem_address, sig_img_path,
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
-			 	 account_no, sig_no, 
+			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
@@ -293,11 +293,11 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, 
+			 	 mem_address, sig_img_path,
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_date, quit_date, mem_salary,
-			 	 account_no, sig_no, 
+			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
@@ -311,11 +311,11 @@
 			 	 mem_no, mem_pwd, dept_name,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
-			 	 mem_address, 
+			 	 mem_address, sig_img_path,
 			 	 mem_email, mem_grade, mem_role,
 			 	 extension_number, phone, 
 			 	 enroll_date, quit_date, mem_salary,
-			 	 account_no, sig_no, 
+			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
 			 	 authorization_level, status
 			from tb_mem
