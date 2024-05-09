@@ -166,245 +166,244 @@
 
             <!-- Start Content-->
             <div class="container-fluid" style="display:flex; justify-content: center;">
+            
+                <form id="enrollForm" method="post" action="${ contextPath }/document/regist.do" enctype="multipart/form-data" onsubmit="updateDocuContent();">
                 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="top-document">
-                            <div class="document-title">
-                                <h1>출장 보고서</h1>
-                            </div>
-                            <div class="sign-table">
-                                <table class="table-sign">
-                                    <tr>
-                                        <th rowspan="5" style="width:20px;">결 재 선</th>
-                                    </tr>
-                                    <tr>
-                                        <th>기 안 자</th>
-                                        <th>결 재 자</th>
-                                        <th>결 재 자</th>
-                                    </tr>
-                                    <tr class="sign">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>  
-
-                        <div class="document-info">
-
-                            <div class="info-1">
-                                <table class="table-info-1">
-                                    <tr>
-                                        <th width="120px;">부서</th>
-                                        <td width="266px;">경영지원</td>    
-                                    </tr>
-                                    <tr>
-                                        <th>직급</th>
-                                        <td>대리</td>
-                                    </tr>
-                                    <tr>
-                                        <th>기안자</th>
-                                        <td>유주찬</td>
-                                    </tr>
-                                    <tr>
-                                        <th>기안일</th>
-                                        <td>2024-05-13 (월)</td>
-                                    </tr>
-                                </table>
-                                
-                            </div>
-                            <div class="info-2">
-                                <table class="table-info-2">
-                                    <tr>
-                                        <th width="120px;">참조인</th>
-                                        <td width="266px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>보존연한</th>
-                                        <td>기안일로부터 5년</td>
-                                    </tr>
-                                    <tr>
-                                        <th>중간 결재일</th>
-                                        <td>2024-05-13 (화)</td>
-                                    </tr>
-                                    <tr>
-                                        <th>최종 결재일</th>
-                                        <td>2024-05-14 (화)</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            
-                        </div>
-
+		                <div class="card">
+		                    <div class="card-body">
+		                        <div class="top-document">
+		                            <div class="document-title">
+		                                <h1>출장 보고서</h1>
+		                            </div>
+		                            <div class="sign-table">
+		                                <table class="table-sign">
+		                                    <tr>
+		                                        <th rowspan="5" style="width:20px;">결 재 선</th>
+		                                    </tr>
+		                                    <tr>
+		                                        <th>기 안 자</th>
+		                                        <th>결 재 자</th>
+		                                        <th>결 재 자</th>
+		                                    </tr>
+		                                    <tr class="sign">
+		                                        <td>
+	                                          		<img src="${contextPath}${loginUser.sigImgPath}">
+		                                        </td>
+		                                        <td></td>
+		                                        <td></td>
+		                                    </tr>
+		                                </table>
+		                            </div>
+		                        </div>  
+		
+		                        <div class="document-info">
+		
+		                            <div class="info-1">
+		                                <table class="table-info-1">
+		                                    <tr>
+                                            <th width="120px;"> 부서 </th>
+                                            <td width="266px;"> ${loginUser.deptName} </td>    
+		                                    </tr>
+		                                    <tr>
+                                            <th> 직급 </th>
+                                            <td> ${loginUser.memGrade} </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 기안자 </th>
+                                            <td> ${loginUser.memName} </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 기안일 </th>
+                                            <td> ${document.registDate} </td>
+		                                    </tr>
+		                                </table>
+		                                
+		                            </div>
+		                            <div class="info-2">
+		                                <table class="table-info-2">
+		                                    <tr>
+		                                        <th width="120px;"> 참조인 </th>
+		                                        <td width="266px;">
+                                            		<input type="text" id="refDeptNo" name="refDeptNo" placeholder="참조인 사번 입력">
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 보존연한 </th>
+		                                        <td> 기안일로부터 5년 </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 중간 결재일 </th>
+		                                        <td></td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 최종 결재일 </th>
+		                                        <td></td>
+		                                    </tr>
+		                                </table>
+		                            </div>
+		                            
+		                        </div>
+		
                             <div class="table-2">
                                 <table class="table-2-1">
                                     <tr>
-                                        <th width="120px;">제목</th>
+                                        <th width="120px;"> 제목 </th>
                                         <td width="655px;">
-                                            <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
+                                          	<input type="text" name="docuTitle" size="20" style="width:100%; border:0;" placeholder="제목을 입력하세요.">
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-                            
-                            
+		                            
+		                            
                             <!-- 내용 작성하기 -->
                             <div class="table-responsive">
-                            <table class="table table-bordered border-primary mb-0">
-
-                                <tbody>
-                                    <tr>
-                                        <th style="text-align:center; width:120px;"> 출 장 일 </th>
-                                        <td colspan="3" style="text-align:left;">
-                                            <input type="date" id="startDate" size="20" style="width:100px; border:0;"> ~
-                                            <input type="date" id="endDate" size="20" style="width:100px; border:0;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;"> 출발지 </th>
-                                        <td>
-                                            <input type="text" name="etc-box" size="20" style="width:200px; border:0;" value="기안자 작성란">
-                                        </td>
-                                        <th style="text-align:center; width:120px;"> 도착지 </th>
-                                        <td>
-                                            <input type="text" name="etc-box" size="20" style="width:200px; border:0;" value="기안자 작성란">
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <th style="text-align:center;">
-                                            상세목적지 <br>및<br> 상세내용
-                                        </th>
-                                        <td colspan="3" style="height:250px; width:600px; text-align:left;">
-                                            <div id="editor" style="height:250px;">
-                                                기안자 작성란
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="5" style="text-align:center;">
-                                            비 용
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;"> 대중교통비 </th>
-                                        <td>
-                                            <input type="number" id="transportCost" name="transportCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
-                                        </td>
-                                        <th style="text-align:center; width:120px;"> 식비 </th>
-                                        <td>
-                                            <input type="number" id="foodCost" name="foodCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;"> 유류비 </th>
-                                        <td>
-                                            <input type="number" id="fuelCost" name="fuelCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
-                                        </td>
-                                        <th style="text-align:center; width:120px;"> 숙박비 </th>
-                                        <td>
-                                            <input type="number" id="roomCost" name="roomCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center;"> 기타 </th>
-                                        <td>
-                                            <input type="number" id="etcCost" name="etcCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
-                                        </td>
-                                        <th style="text-align:center; width:120px;">
-                                            <b style="color:darkblue; font-size:medium;"> 계 </b>
-                                        </th>
-                                        <td>
-                                            <b style="color:darkblue;">
-                                                <input type="number" id="totalCost" name="totalCost" size="20" style="width:200px; border:0; text-align:right; color:darkblue; font-size:large;" onkeyup="inputNumberFormat(this);" value="">원
-                                            </b>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th style="text-align:center;">첨 부</th>
-                                        <td colspan="3">
-                                            <input type="file" style="width:100%;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple>
-                                        </td>
-                                        <!--
-                                            <td>
-                                                <c:forEach var="at" items="${ board.attachList }">
-                                                    <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
-                                                </c:forEach>
-                                            </td>
-                                        -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div> <!-- 내용 작성하기 끝-->
+		                            <table class="table table-bordered border-primary mb-0">
+		
+		                                <tbody>
+		                                    <tr>
+		                                        <th style="text-align:center; width:120px;"> 출 장 일 </th>
+		                                        <td colspan="3" style="text-align:left;">
+		                                            <input type="date" id="startDate" name="docuStartDate" size="20" style="width:100px; border:0;"> ~
+		                                            <input type="date" id="endDate" name="docuEndDate" size="20" style="width:100px; border:0;">
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th style="text-align:center;"> 출발지 </th>
+		                                        <td>
+		                                            <input type="text" name="docuStartPlace" size="20" style="width:200px; border:0;">
+		                                        </td>
+		                                        <th style="text-align:center; width:120px;"> 도착지 </th>
+		                                        <td>
+		                                            <input type="text" name="docuEndPlace" size="20" style="width:200px; border:0;">
+		                                        </td>
+		                                    </tr>
+		                                    
+		                                    <tr>
+		                                        <th style="text-align:center;">
+		                                            상세목적지 <br>및<br> 상세내용
+		                                        </th>
+		                                        <td colspan="3" style="height:250px; width:600px; text-align:left;">
+		                                        		<input type="hidden" id="docuContent" name="docuContent">
+		                                            <div id="editor" style="height:250px;">
+		                                                
+		                                            </div>
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th colspan="5" style="text-align:center;">
+		                                            비 용
+		                                        </th>
+		                                    </tr>
+		                                    <tr>
+		                                        <th style="text-align:center;"> 대중교통비 </th>
+		                                        <td>
+		                                            <input type="number" id="transportCost" name="docuTransportCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
+		                                        </td>
+		                                        <th style="text-align:center; width:120px;"> 식비 </th>
+		                                        <td>
+		                                            <input type="number" id="foodCost" name="docuFoodCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th style="text-align:center;"> 유류비 </th>
+		                                        <td>
+		                                            <input type="number" id="fuelCost" name="docuFuelCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
+		                                        </td>
+		                                        <th style="text-align:center; width:120px;"> 숙박비 </th>
+		                                        <td>
+		                                            <input type="number" id="roomCost" name="docuRoomCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th style="text-align:center;"> 기타 </th>
+		                                        <td>
+		                                            <input type="number" id="etcCost" name="docuEtcCost" size="20" style="width:200px; border:0; text-align:right;" oninput="changeTotalCost();" value="">원
+		                                        </td>
+		                                        <th style="text-align:center; width:120px;">
+		                                            <b style="color:darkblue; font-size:medium;"> 계 </b>
+		                                        </th>
+		                                        <td>
+		                                            <b style="color:darkblue;">
+		                                                <input type="number" id="totalCost" name="docuCost" size="20" style="width:200px; border:0; text-align:right; color:darkblue; font-size:large;" onkeyup="inputNumberFormat(this);" value="">원
+		                                            </b>
+		                                        </td>
+		                                    </tr>
+		
+		                                    <tr>
+		                                        <th style="text-align:center;">첨 부</th>
+		                                        <td colspan="3">
+		                                            <input type="file" style="width:100%;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple>
+		                                        </td>
+		                                    </tr>
+		                                </tbody>
+		                            </table>
+                        		</div> <!-- 내용 작성하기 끝-->
                                                 
-                        <!--결재 처리사유-->
-                        <div class="opinion-box" style="margin-top:20px;">
-                            <table class="table table-bordered border-primary mb-0">      
-                                    <tr>
-                                        <th style="text-align:center; width:120px;">
-                                            처 리 <br> 사 유
-                                        </th>
-                                        <td colspan="3">
-                                            <textarea rows="5" style="border:0; width:600px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
-                                        </td>
-                                    </tr>
-                            </table>
-                            
-                                <div class="btn-group-2">
-                                    <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-toggle="modal" data-bs-target="#cancel-modal"> 취소하기 </button>
-                                    <button type="button" class="btn btn-primary waves-effect waves-light write" data-bs-toggle="modal" data-bs-target="#write-modal"> 작성하기 </button>
-                                </div>
-
-                                <!-- 취소하기 버튼-->
-                                <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="topModalLabel">작성을 취소하시겠습니까?</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h5 style="text-align:left;">입력한 정보는 저장되지 않습니다.</h5>
-                                                
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="btn-group-3">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-
-                                <!-- 작성하기 버튼-->
-                                <div class="modal fade" id="write-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="topModalLabel">문서를 등록하시겠습니까?</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h5 style="text-align:left;">이미 등록한 문서는 수정할 수 없습니다.</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="btn-group-3">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->                            
-                            
-                        </div> <!-- 결재 처리사유 끝-->
-                        
-                    </div>
-                </div>
+		                        <!--결재 처리사유-->
+		                        <div class="opinion-box" style="margin-top:20px;">
+		                            <table class="table table-bordered border-primary mb-0">      
+		                                    <tr>
+		                                        <th style="text-align:center; width:120px;">
+		                                            처 리 <br> 사 유
+		                                        </th>
+		                                        <td colspan="3">
+		                                            <textarea rows="5" style="border:0; width:600px; resize:none;" readonly></textarea>
+		                                        </td>
+		                                    </tr>
+		                            </table>
+		                            
+		                            <div class="btn-group-2">
+		                                <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-toggle="modal" data-bs-target="#cancel-modal"> 취소하기 </button>
+		                                <button type="button" class="btn btn-primary waves-effect waves-light write" data-bs-toggle="modal" data-bs-target="#write-modal"> 작성하기 </button>
+		                            </div>
+		
+		                            <!-- 취소하기 버튼-->
+		                            <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		                                <div class="modal-dialog modal-dialog-centered">
+		                                    <div class="modal-content">
+		                                        <div class="modal-header">
+		                                            <h4 class="modal-title" id="topModalLabel">작성을 취소하시겠습니까?</h4>
+		                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                                        </div>
+		                                        <div class="modal-body">
+		                                            <h5 style="text-align:left;">입력한 정보는 저장되지 않습니다.</h5>
+		                                            
+		                                        </div>
+		                                        <div class="modal-footer">
+		                                            <div class="btn-group-3">
+		                                                <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+		                                                <button type="button" class="btn btn-primary waves-effect waves-light write" onclick="history.back();">확인</button>
+		                                            </div>
+		                                        </div>
+		                                    </div><!-- /.modal-content -->
+		                                </div><!-- /.modal-dialog -->
+		                            </div><!-- /.modal -->
+		
+		                            <!-- 작성하기 버튼-->
+		                            <div class="modal fade" id="write-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		                                <div class="modal-dialog modal-dialog-centered">
+		                                    <div class="modal-content">
+		                                        <div class="modal-header">
+		                                            <h4 class="modal-title" id="topModalLabel">문서를 등록하시겠습니까?</h4>
+		                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                                        </div>
+		                                        <div class="modal-body">
+		                                            <h5 style="text-align:left;">이미 등록한 문서는 수정할 수 없습니다.</h5>
+		                                        </div>
+		                                        <div class="modal-footer">
+		                                            <div class="btn-group-3">
+		                                                <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+		                                                <button type="submit" class="btn btn-primary waves-effect waves-light write">확인</button>
+		                                            </div>
+		                                        </div>
+		                                    </div><!-- /.modal-content -->
+		                                </div><!-- /.modal-dialog -->
+		                            </div><!-- /.modal -->                                              
+				                    </div> <!-- 결재 처리사유 끝--> 
+		                    </div>
+		                </div>
+		        		</form>
             </div> <!-- container -->
         </div> <!-- content -->
     </div> <!-- wrapper -->           

@@ -122,25 +122,25 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/pendList.page" class="menu-link">
+                            <a href="${ contextPath }/document/pendList.page?status=0" class="menu-link">
                                 <span class="menu-icon"><i data-feather="refresh-cw"></i></span>
                                 <span class="menu-text"> 진행중인 문서 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/approvalList.page" class="menu-link">
+                            <a href="${ contextPath }/document/approvalList.page?status=1" class="menu-link">
                                 <span class="menu-icon"><i data-feather="check-circle"></i></span>
                                 <span class="menu-text"> 승인 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/rejectList.page" class="menu-link">
+                            <a href="${ contextPath }/document/rejectList.page?status=2" class="menu-link">
                                 <span class="menu-icon"><i data-feather="x"></i></span>
                                 <span class="menu-text"> 반려 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/recallList.page" class="menu-link">
+                            <a href="${ contextPath }/document/recallList.page?status=3" class="menu-link">
                                 <span class="menu-icon"><i data-feather="trash-2"></i></span>
                                 <span class="menu-text"> 회수 문서함 </span>
                             </a>
@@ -179,32 +179,55 @@
     
                                         <div class="mb-2">
                                             <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
-                                                <div style="display:flex;">
-                                                    <div class="col-12 text-sm-center" style="width:auto;">
-                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                            <option value="">전체</option>
-                                                            <option value="문서유형">문서유형</option>
-                                                            <option value="문서제목">문서제목</option>
-                                                        </select>
-                                                        <!-- 결재권한 있을 경우 -->
-                                                        <!--
-                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                            <option value="">전체</option>
-                                                            <option value="문서유형">문서유형</option>
-                                                            <option value="문서제목">문서제목</option>
-                                                            <option value="기안자">기안자</option>
-                                                            <option value="기안부서">기안부서</option>
-                                                        </select>
-                                                        -->
-                                                        
-                                                    </div>
-                                                    <div class="col-12" id="top-middle" style="width:auto;">
-                                                        <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
-                                                    </div>
-                                                </div>
-                                                <div class="btn-group">
-                                                		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
-                                                </div>
+                                                
+                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get">
+                                                		<div style="display:flex;">
+                                                    		<input type="hidden" name="page">
+		                                                    <div class="col-12 text-sm-center" style="width:auto;">
+		                                                        <c:choose>
+		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_title">문서제목</option>
+						                                                        </select>
+		                                                        		</c:when>
+		                                                        		<c:otherwise>
+		                                                        				<!-- 팀장, 대표일 경우 -->
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_title">문서제목</option>
+						                                                            <option value="mem_name">기안자</option>
+						                                                            <option value="dept_name">기안부서</option>
+						                                                        </select>
+				                                                        </c:otherwise>
+		                                                        </c:choose>
+		                                                    </div>
+		                                                    <div>
+		                                                    		<button type="button" class="btn btn-soft-secondary waves-effect">검색</button>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="col-12" id="top-middle" style="width:auto;">
+		                                                    <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+		                                                </div>
+                                                </form>
+                                                
+                                                <c:if test="${ not empty search }">
+																				            <script>
+																				            	$(document).ready(function(){
+																				            		$("#searchForm select").val("${search.condition}");
+																				            		
+																				            		//검색후 페이지일 경우 페이징바의 페이지 클릭시
+																				            		$("#pagingArea a").on("click", function(){
+																				            			$("#searchForm input[name=page]").val($(this).text());
+																				            			$("#searchForm").submit();
+																				            			return false; //기본이벤트 제거(즉, a태그에 작성되어있는 href="/list.do" 실행안되도록)
+																				            		})
+																				            	})
+																				            </script>
+																			          </c:if>
+                                            </div>
+                                            <div class="btn-group">
+                                            		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
                                             </div>
                                         </div>
                                         
@@ -212,107 +235,66 @@
                                         <div class="table-responsive">
                                             <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                 <thead>
-                                                <tr>
-                                                    <th>NO</th>
-                                                    <th>문서유형</th>
-                                                    <th>문서제목</th>
-                                                    <th>기안자</th>
-                                                    <th>기안부서</th>
-                                                    <th>기안일</th>
-                                                    <th>결재상태</th>
-                                                    <th>결재일</th>
+		                                                <tr>
+		                                                    <th>NO</th>
+		                                                    <th>문서유형</th>
+		                                                    <th>문서제목</th>
+		                                                    <th>기안자</th>
+		                                                    <th>기안부서</th>
+		                                                    <th>기안일</th>
+		                                                    <th>결재상태</th>
+		                                                    <th>결재일</th>
+		
+		                                                </tr>
+		                                                </thead>
+		                                                <tbody>
+		                                                
+		                                                <c:choose>
+		                                                		<c:when test="${empty list}">
+		                                                				<tr>
+		                                                						<td colspan="8">존재하는 문서가 없습니다.</td>
+		                                                				</tr>
+						                                            </c:when>
+						                                            <c:otherwise>
+						                                            		<c:forEach var="d" items="${ list }">
+								                                                <tr onclick="location.href='${contextPath}/document/detail.page?no=${d.docuNo}';">
+								                                                    <td>${d.docuNo}</td>
+								                                                    <td style="text-align: left;">${d.docuCategoryName}</td>
+								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td>${d.memName}</td>
+								                                                    <td>${d.deptName}</td>
+								                                                    <td>${d.registDate}</td>
+								                                                    <td><span class="badge label-table bg-secondary">${d.status}</span></td>
+								                                                    <td>${d.finalApproveDate}</td>
+								                                                </tr>
+								                                            </c:forEach>
+						                                            </c:otherwise>
+		                                                </c:choose>
 
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td style="text-align: left;">휴가신청서</td>
-                                                    <td style="text-align: left;">휴가ㅅ신청합니다</td>
-                                                    <td>장영근</td>
-                                                    <td>물류</td>
-                                                    <td>2024-05-10</td>
-                                                    <td><span class="badge label-table bg-secondary">문서 회수</span></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td style="text-align: left;">지출결의서</td>
-                                                    <td style="text-align: left;">사무용품 지출결의서</td>
-                                                    <td>임수희</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-09</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-09</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td style="text-align: left;">재택근무신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 9일 재택 근무 신청합니다.</td>
-                                                    <td>이미리</td>
-                                                    <td>마케팅</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-danger">결재 반려</span></td>
-                                                    <td>2024-05-08</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td style="text-align: left;">구매신청서</td>
-                                                    <td style="text-align: left;">경영지원팀 태블릿PC 2대 구매 신청의 건</td>
-                                                    <td>임수희</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-warning">결재 대기</span></td>
-                                                    <td></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td style="text-align: left;">재택근무신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 9일 재택근무 신청의 건</td>
-                                                    <td>이미리</td>
-                                                    <td>마케팅</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-08</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td style="text-align: left;">휴가신청서</td>
-                                                    <td style="text-align: left;">2024년 5월 13일~14일 휴가 신청의 건</td>
-                                                    <td>박대기</td>
-                                                    <td>영업</td>
-                                                    <td>2024-05-07</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-07</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td style="text-align: left;">지출결의서</td>
-                                                    <td style="text-align: left;">2024년 5월 4일 법인카드 지출결의서입니다.</td>
-                                                    <td>김우영</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-07</td>
-                                                    <td><span class="badge label-table bg-success">결재 승인</span></td>
-                                                    <td>2024-05-07</td>
-                                                </tr>
     
                                                 </tbody>
                                                 <tfoot>
-                                                <tr class="active">
-                                                    <td colspan="5">
-                                                        <div class="text-end">
-                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+		                                                <tr class="active">
+		                                                    <td colspan="5">
+		                                                        <div class="text-end">
+		                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
+		                                                        </div>
+		                                                    </td>
+		                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div> <!-- end .table-responsive-->
+                                        <div id="pagingArea">
+														                <ul class="pagination">
+														                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage - 1}">Previous</a></li>
+														                    
+														                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+														                    <li class="page-item ${ pi.currentPage == p ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${p}">${ p }</a></li>
+														                    </c:forEach>
+														                    
+														                    <li class="page-item ${ pi.currentPage >= pi.maxPage ? 'disabled':''}" ><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage + 1}">Next</a></li>
+														                </ul>
+														            </div>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
