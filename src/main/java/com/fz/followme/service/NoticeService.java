@@ -11,4 +11,6 @@ public interface NoticeService {
 	int selectNoticeListCount();
 	List<BoardDto> selectNoticeList(PageInfoDto pi);
 	
+	// 최신글 목록 조회(5개)
+	List<BoardDto> selectLatestPostList();
 }

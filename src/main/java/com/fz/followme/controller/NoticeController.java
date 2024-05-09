@@ -29,14 +29,20 @@ public class NoticeController {
 		
 		int noticeListCount = noticeService.selectNoticeListCount();
 		PageInfoDto pi = pagingUtil.getPageInfoDto(noticeListCount, page, 5, 20);
-		List<BoardDto> list = noticeService.selectNoticeList(pi);
-		
+		List<BoardDto> allList = noticeService.selectNoticeList(pi);
+		log.debug("allList:{}",allList);
+		List<BoardDto> newList = noticeService.selectLatestPostList();
+		log.debug("newList:{}",newList);
+
 		mv.addObject("pi", pi)
-		  .addObject("list", list)
+		  .addObject("allList", allList)
+		  .addObject("newList", newList)
 		  .setViewName("/notice/noticeList");
 		
 		return mv;
 	}
+	
+	
 	
 	
 	

@@ -114,7 +114,7 @@
                                         <div class="row">
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/boardList.page">전체글</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
                                                 	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
                                                 	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>
@@ -148,7 +148,7 @@
                                         				$('#list-page').html(list);
                                         			},
                                         			error: function(){
-                                        				
+                                        				console.log("전체글 ajax 통신 실패")
                                         			}
                                         		})
                                         		
@@ -202,19 +202,19 @@
                                                         
                                                         <tbody>
                                                             <c:choose>
-                                                				<c:when test="${ empty list }">
+                                                				<c:when test="${ empty allList }">
 		                                                			<tr>
 		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="n" items="${ list }">
+		                                                			<c:forEach var="an" items="${ allList }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ n.boardNo }</td>
-		                                                					<td class="list-item2">${ n.boardTitle }</td>
-		                                                					<td class="list-item3">${ n.memNo }</td>
-		                                                					<td class="list-item4">${ n.enrollDate }</td>
-		                                                					<td class="list-item5">${ n.readCount }</td>
+		                                                					<td class="list-item1">${ an.boardNo }</td>
+		                                                					<td class="list-item2">${ an.boardTitle }</td>
+		                                                					<td class="list-item3">${ an.memNo }</td>
+		                                                					<td class="list-item4">${ an.enrollDate }</td>
+		                                                					<td class="list-item5">${ an.readCount }</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 		</c:otherwise>
@@ -236,11 +236,9 @@
                                             
                                             <div class="col-lg-3" >
                                                 <ul class="list-group" >
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                <c:forEach var="nn" items="${ newList }">
+                                                    <li class="list-group-item">${ nn.boardType }${ nn.boardTitle }</li>
+                                                </c:forEach> 
                                                 </ul>
 
                                             </div>

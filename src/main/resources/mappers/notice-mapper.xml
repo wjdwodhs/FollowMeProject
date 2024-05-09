@@ -10,9 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="mem_name" property="memNo"/>
 		<result column="enroll_date" property="enrollDate"/>
 		<result column="read_count" property="readCount"/>
+		<result column="board_type" property="boardType"/>		
 		<result column="attach_Count" property="attachCount"/>
 	</resultMap>
 	
+	<!-- 공지사항 전체글 갯수  -->
 	<select id="selectNoticeListCount" resultType="_int">
 		select
 				count(*)
@@ -21,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   and board_type = 'NO'
 	</select>
 	
+	<!-- 공지사항 전체 목록 조회 -->
 	<select id="selectNoticeList" resultMap="NoticeResult">
 		select
 	          board_no
@@ -36,7 +39,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        from tb_board b
 	        join tb_mem using (mem_no)
 	        where b.status = 'Y'
-	          and b.board_type = 'NO'	  
+	          and b.board_type = 'NO'
+	          order
+			 	by board_no desc	  
 	</select>
+	
+	<select id="selectLatestPostList" resultMap="NoticeResult">
+		select
+				board_type
+			  , board_title
+		   from (
+		   	select *
+		   	from tb_board b
+		   	order
+		   	   by b.enroll_date desc
+		   )
+		   where rownum between 1 and 5
+	</select>
+	
+	
 
 </mapper>
