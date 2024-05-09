@@ -15,22 +15,16 @@
 		<typeAlias type="com.fz.followme.dto.LicenseDto" alias="LicenseDto"/>
 		<typeAlias type="com.fz.followme.dto.AccountDto" alias="AccountDto"/>
 		<typeAlias type="com.fz.followme.dto.AttachmentDto" alias="AttachmentDto"/>
-<<<<<<< Updated upstream
 		<typeAlias type="com.fz.followme.dto.CalendarDto" alias="CalendarDto"/>
-=======
 		<typeAlias type="com.fz.followme.dto.DocumentDto" alias="DocumentDto"/>
->>>>>>> Stashed changes
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/order-mapper.xml"/>
 		<mapper resource="mappers/asset-mapper.xml"/>
-<<<<<<< Updated upstream
 		<mapper resource="mappers/calendar-mapper.xml"/>
-=======
 		<mapper resource="mappers/document-mapper.xml"/>
->>>>>>> Stashed changes
 	</mappers>
 
 </configuration>
