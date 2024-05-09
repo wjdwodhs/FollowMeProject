@@ -385,7 +385,7 @@
 	</select>
 
 	<!-- 본인이 결재권자일때 미처리 리스트 조회 -->
-	<select id="selectRefListCount" resultType="_int">
+	<select id="selectNotDoneCount" resultType="_int">
 		select 
 					 count(*)
 		  from tb_document d
