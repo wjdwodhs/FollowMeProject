@@ -22,6 +22,7 @@ public class MemberDto {
 	private String memPwd;
 	private int deptNo;
 	private String profileImgPath;
+	private String sigImgPath;
 	private String gender;
 	private String memName;
 	private String securityNo;
@@ -35,7 +36,6 @@ public class MemberDto {
 	private Date quitDate;
 	private String memSalary;
 	private int accountNo;
-	private int sigNo;
 	private String memIncentive;
 	private String memCertificate;
 	private String memWelfare;
