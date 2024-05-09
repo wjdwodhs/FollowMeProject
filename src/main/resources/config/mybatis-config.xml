@@ -17,6 +17,7 @@
 		<typeAlias type="com.fz.followme.dto.AttachmentDto" alias="AttachmentDto"/>
 		<typeAlias type="com.fz.followme.dto.CalendarDto" alias="CalendarDto"/>
 		<typeAlias type="com.fz.followme.dto.DocumentDto" alias="DocumentDto"/>
+		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
 	</typeAliases>
 	
 	<mappers>
@@ -25,6 +26,8 @@
 		<mapper resource="mappers/asset-mapper.xml"/>
 		<mapper resource="mappers/calendar-mapper.xml"/>
 		<mapper resource="mappers/document-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
+		<mapper resource="mappers/companyNews-mapper.xml"/>
 	</mappers>
 
 </configuration>
