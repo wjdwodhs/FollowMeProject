@@ -18,6 +18,7 @@
 		<typeAlias type="com.fz.followme.dto.CalendarDto" alias="CalendarDto"/>
 		<typeAlias type="com.fz.followme.dto.DocumentDto" alias="DocumentDto"/>
 		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
+		<typeAlias type="com.fz.followme.dto.AssetReservationDto" alias="AssetReservationDto"/>
 	</typeAliases>
 	
 	<mappers>
