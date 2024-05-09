@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DocumentMapper">
+
+	<resultMap id="attachmentResultMap" type="AttachmentDto">
+		<id column="file_no" property="fileNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="origin_name" property="originName"/>
+		<result column="system_name" property="systemName"/>
+		<result column="type" property="type"/>
+		<result column="ref_no" property="refNo"/>
+		<result column="upload_date" property="uploadDate"/>
+	</resultMap>
+
+	<resultMap id="documentResultMap" type="DocumentDto">
+	
+		<id column="docu_no" property="docuNo" />
+		<result column="docu_category" property="docuCategory" />
+		<result column="docu_title" property="docuTitle" />
+		<result column="docu_content" property="docuContent" />
+		<result column="mem_no " property="memNo" />
+		<result column="mem_dept_no" property="memDeptName" />
+		<result column="regist_date" property="registDate" />
+		<result column="ref_mem_no" property="refMemName" />
+		<result column="ref_dept_no" property="refDeptName" />
+		<result column="mid_approver" property="midApprover" />
+		<result column="mid_approve_date" property="midApproveDate" />
+		<result column="mid_approver_sig" property="midApproverSig" />
+		<result column="final_approver" property="finalApprover" />
+		<result column="final_approve_date" property="finalApproveDate" />
+		<result column="final_approver_sig" property="finalApproverSig" />
+		<result column="approver_inf" property="approverInf" />
+		<result column="process_reason" property="processReason" />
+		<result column="status" property="status" />
+		<result column="mid_approve_status" property="midApproveStatus" />
+		<result column="final_approve_status" property="finalApproveStatus" />
+		<result column="docu_cost" property="docuCost" />
+		<result column="docu_remark" property="docuRemark" />
+		<result column="docu_start_date" property="docuStartDate" />
+		<result column="docu_end_date" property="docuEndDate" />
+		<result column="docu_start_place" property="docuStartPlace" />
+		<result column="docu_end_place" property="docuEndPlace" />
+		<result column="docu_emergency_call" property="docuEmergencyCall" />
+		<result column="docu_annual_leave" property="docuAnnualLeave" />
+		<result column="docu_item" property="docuItem" />
+		<result column="docu_transport_cost" property="docuTransportCost" />
+		<result column="docu_fuel_cost" property="docuFuelCost" />
+		<result column="docu_food_cost" property="docuFoodCost" />
+		<result column="docu_room_cost" property="docuRoomCost" />
+		<result column="docu_etc_cost" property="docuEtcCost" />
+		<result column="docu_text" property="docuText" />
+		<result column="docu_text_note" property="docuTextNote" />
+		<result column="docu_count" property="docuCount" />
+		<result column="count" property="count"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_dept_name" property="memDeptName"/>
+		<result column="ref_dept_name" property="refDeptName"/>
+		<result column="ref_mem_name" property="refMemName"/>
+		<result column="docu_category_name" property="docuCategoryName" />
+
+		<collection resultMap="attachmentResultMap" property="attachList" />
+	</resultMap>
+	
+	<!-- 전체 리스트 조회 -->
+	<select id="selectDocumentListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where (
+			      d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status != '3'
+						)
+	</select>
+	
+	<select id="selectDocumentList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where  
+		 		 	 (
+			      d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status != '3'
+						)
+		 order
+		    by docu_no desc
+	</select>
+	
+	<select id="selectSearchListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where ${condition} like '%' ||#{keyword}||'%'
+		   and (
+		   			d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status != '3'
+						)
+	</select>
+	
+	<select id="selectSearchList" resultMap="documentResultMap">
+	    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		where ${condition} like '%' ||#{keyword}||'%'
+		 	and	 	
+		 		 	 (
+			      d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status != '3'
+						)
+		 order
+		    by docu_no desc
+	</select>
+	
+		<select id="statusSearchListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where ${condition} like '%' ||#{keyword}||'%'
+		   and (
+		   			d.mem_no = #{memNo}
+		   			and d.status = #{status}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status = #{status}
+			    	and d.status != '3'
+						)
+	</select>
+	
+	<select id="statusSearchList" resultMap="documentResultMap">
+	    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		where ${condition} like '%' ||#{keyword}||'%'
+		 	and	 	
+		 		 	 (
+			      d.mem_no = #{memNo}
+			      and d.status = #{status}
+					 )
+				or (
+			    	d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+			    	and d.status = #{status}
+						)
+		 order
+		    by docu_no desc
+	</select>
+
+	<!-- 진행중인 리스트 조회 -->
+	<select id="selectPendListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where (
+			      d.status = '0'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '0'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+	</select>
+	
+	
+	
+	<select id="selectPendList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where (
+			      d.status = '0'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '0'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+		 order
+		    by docu_no desc
+	</select>
+
+	<!-- 승인 리스트 조회 -->
+	<select id="selectApprovalListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where (
+			      d.status = '1'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '1'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+	</select>
+	
+	<select id="selectApprovalList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where (
+			      d.status = '1'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '1'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+		 order
+		    by docu_no desc
+	</select>
+	
+	<!-- 반려 리스트 조회 -->
+	<select id="selectRejectListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where (
+			      d.status = '2'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '2'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+	</select>
+	
+	<select id="selectRejectList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where (
+			      d.status = '2'
+			      and d.mem_no = #{memNo}
+					 )
+				or (
+			    	d.status = '2'
+			    	and d.mem_dept_no = #{deptNo}
+			    	and '팀장' = #{memGrade}
+						)
+		 order
+		    by docu_no desc
+	</select>
+	
+	<!-- 회수 리스트 조회 -->
+	<select id="selectRecallListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m
+		 where d.status = '3'
+			     and d.mem_no = #{memNo}
+					 
+
+	</select>
+	
+	<select id="selectRecallList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where d.status = '3'
+			     and d.mem_no = #{memNo}
+
+		 order
+		    by docu_no desc
+	</select>
+	
+	<!-- 나를 참조하는 리스트 조회 -->
+	<select id="selectRefListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		 where not d.status = '3'
+			 and ref_mem_no = #{memNo}
+					 
+	</select>
+	
+	<select id="selectRefList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where d.status != '3'
+			 and ref_mem_no = #{memNo}
+		 order
+		    by docu_no desc
+	</select>
+
+	<!-- 본인이 결재권자일때 미처리 리스트 조회 -->
+	<select id="selectRefListCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		 where (d.status = '0' and mid_approve_status = 'N' and mid_approver = #{memNo})
+			  or (mid_approve_status = 'Y' and final_approve_status = 'N' and final_approver = #{memNo})
+			  or (mid_approver is null and final_approve_status = 'N' AND final_approver = #{memNo})
+					 
+	</select>
+
+	<select id="selectNotDoneList" resultMap="documentResultMap">
+    select docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where (d.status = '0' and mid_approve_status = 'N' and mid_approver = #{memNo})
+			  or (mid_approve_status = 'Y' and final_approve_status = 'N' and final_approver = #{memNo})
+			  or (mid_approver is null and final_approve_status = 'N' AND final_approver = #{memNo})
+		 order
+		    by docu_no desc
+	</select>
+	
+
+
+
+
+
+
+
+
+</mapper>
