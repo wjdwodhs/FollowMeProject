@@ -29,4 +29,9 @@ public class NoticeDao {
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		return sqlSessionTemplate.selectList("noticeMapper.selectNoticeList", null, rowBounds);
 	}
+	
+	public List<BoardDto> selectLatestPostList(){
+		return sqlSessionTemplate.selectList("noticeMapper.selectLatestPostList");
+	}
+	
 }

@@ -26,4 +26,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectNoticeList(pi);
 	}
 
+	@Override
+	public List<BoardDto> selectLatestPostList() {
+		return noticeDao.selectLatestPostList();
+	}
+
 }
