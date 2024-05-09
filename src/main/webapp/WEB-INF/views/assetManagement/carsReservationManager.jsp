@@ -31,6 +31,16 @@
 	.a.nav-link.active{backgroun-color:#FEBE98;}
   .active>.page-link, .page-link.active {
     --ct-pagination-active-bg: #febe98;
+
+  .btn-group>button{
+     background-color: #FFBE98;
+      border: 1px solid #FFBE98; /* 테두리 */
+      --ct-btn-active-bg:#FA9A85;    
+      --ct-btn-active-border-color:#FA9A85;
+      --ct-btn-hover-bg:#FA9A85;
+      --ct-btn-hover-border-color:#FA9A85;   
+  }       
+    
 </style>
 
 </head>
@@ -71,10 +81,10 @@
                                         		<li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">차량</a></li>
-                                            <li class="breadcrumb-item active">법인차량 예약</li>
+                                            <li class="breadcrumb-item active">법인차량 예약 관리</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title"><b>법인차량 예약</b></h4>
+                                    <h4 class="page-title"><b>법인차량 예약 관리</b></h4>
                                 </div>
                             </div>
                         </div>
@@ -82,86 +92,76 @@
 
 
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" style="width:60%">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 내역</b> | <small>RESERVAION / CANCEL</small></h5>
                                         
                                         <div class="carList" style="border: 1px solid none; width: 100%; height: 720px; box-sizing:border-box;">
 
-                                            <br>
+                                           <br>
 
-                                            <button type="button" class="btn w-sm btn-success waves-effect waves-light btn btn-primary" 
-                                            style="background-color: #FFBE98; border: none; margin-left: 80%;">.xls 다운로드</button>
+                                           <button type="button" class="btn w-sm btn-light waves-effect">.xlsx 다운로드</button>
+                                           <button class="btn btn-danger waves-effect waves-light btn-group"
+                                           style="background-color: #FFBE98; border: none; margin-left:75%;">삭제</button>
                                            <br><br>
                                             <table class="table table-sm table-bordered">
-                                                <tr>
+                                            	<thead>  
+                                                <tr align="center">
+                                                		<th style="width: 20px;">
+	                                                    <div class="form-check">
+	                                                        <input type="checkbox" id="allCheckBox" class="form-check-input" id="customCheck1">
+	                                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
+	                                                    </div>
+                                                    </th>
+                                                    <th>이용차량</th>
                                                     <th>사용일</th>
-                                                    <th>사용시간</th>
-                                                    <th>반납시간</th>
+                                                    <th colspan="2">사용시간</th>
+                                                    <th colspan="2">반납시간</th>
                                                     <th>예약자</th>
                                                     <th>소속부서</th>
                                                     <th>이용사유</th>
                                                 </tr>
-                                                <tr>
-                                                    <td>xxxx-xx-xx</td>
-                                                    <td>xx:xx</td>
-                                                    <td>xx:xx</td>
-                                                    <td>xxx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxx</td>
+                                              </thead>
+                                              <tbody> 
+                                              	<c:forEach var="r" items="${rList}">
+                                                <tr align="center">
+                                                		<td>
+                                                      <div class="form-check">
+                                                          <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                          <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                      </div>
+                                                    </td>
+                                                    <td>${ r.assetName }</td>
+                                                    <td>${ r.rsvnDate }</td>
+                                                    <td>${ r.startDivision }</td>
+                                                    <td>${ r.startDate }</td>
+                                                    <td>${ r.endDivision }</td>
+                                                    <td>${ r.endDate }</td>
+                                                    <td>${ r.rsvnName }</td>
+                                                    <td>${ r.deptName }</td>
+                                                    <td>${ r.rsvnContent }</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>xx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxxx</td>
-                                                    <td>xxx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>xx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxxx</td>
-                                                    <td>xxx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>xx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxxx</td>
-                                                    <td>xxx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxx</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>xx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxxx</td>
-                                                    <td>xxx</td>
-                                                    <td>xxxx</td>
-                                                    <td>xxxx</td>
-                                                </tr>
+                                               </c:forEach> 
+                                              </tbody>   
                                             </table>
                                             
                                             <br><br>
                                             
                                             <!--페이징-->
-		                                        <ul class="pagination pagination-rounded justify-content-end mb-0" style="">
-	                                            <li class="page-item">
-	                                                <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+		                                        <ul class="pagination pagination-rounded justify-content-end mb-0">
+	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/asset/carsReservationManager.page?page=${pi.currentPage-1}" aria-label="Previous">
 	                                                    <span aria-hidden="true">«</span>
 	                                                    <span class="visually-hidden">Previous</span>
 	                                                </a>
 	                                            </li>
-	                                            <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
-	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
-	                                            <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
-	                                            <li class="page-item">
-	                                                <a class="page-link" href="javascript: void(0);" aria-label="Next">
+	                                            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/asset/carsReservationManager.page?page=${p}">${ p }</a></li>
+	                                            </c:forEach>
+	                                            
+	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/asset/carsReservationManager.page?page=${pi.currentPage+1}" aria-label="Next">
 	                                                    <span aria-hidden="true">»</span>
 	                                                    <span class="visually-hidden">Next</span>
 	                                                </a>
@@ -177,7 +177,7 @@
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" style="width:40%">
                                 
                                 <!-- 예약 조회-->
                                 <div class="card">
@@ -185,10 +185,10 @@
                                         <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
                                        
                                         <button type="button" class="btn w-sm btn-success waves-effect waves-light" 
-                                                style="background-color: #FFBE98; border: none; margin-left: 89%;" 
+                                                style="background-color: #FFBE98; border: none; margin-left: 87%;" 
                                                 data-bs-toggle="modal" data-bs-target="#con-close-modal">추가</button>
                                         <br><br>
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped table-hover" id="carList">
                                         	<thead>
                                             <tr align="center">
                                                 <th>차종</th>
@@ -220,39 +220,40 @@
                                     </div>
                                 </div> <!-- end col-->
 
-                                <!-- 차량 상세조회 -->
+                                <!-- 차량 상세조회 / 수정 / 삭제 -->
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>차량 상세조회</b> | <small>VEHICLEV DETAILED INQUIRY</small></h5>
 
-                                      	<form action="">
+                                      	<form id="modifyCar">
+                                        	<input type="hidden" name="assetNo" id="assetNo" value="">
                                         <table class="table-sm" id="detailC">
                                             <tr>
                                                 <th>차종</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" name="assetName" value="">    
+                                                    <input type="text"class="form-control" id="assetName" name="assetName" value="" required>    
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>차량번호</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" name="carNo" value="">
+                                                    <input type="text"class="form-control" id="carNo" name="carNo" value="" required>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>탑승인원(명)</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="text"class="form-control" name="noMem" value="">    
+                                                    <input type="text"class="form-control" id="noMem" name="noMem" value="" >    
                                                 </td> 
                                             </tr>
                                             <tr>
                                                 <th>등록일자</th>
                                                 <td></td>
                                                 <td colspan="2">
-                                                    <input type="date"class="form-control" name="registDate" value="">        
+                                                    <input type="date"class="form-control" id="registDate" name="registDate" value="" required>        
                                                 </td>
                                             </tr>
                                             <tr>
@@ -272,8 +273,9 @@
                                                 </td>
                                             </tr>
                                         </table> 
-                                            
-                                        	<button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">수정</button>
+                                           <br>
+                                        	<button type="submit" class="btn w-sm btn-success waves-effect waves-light" 
+                                        					style="background-color: #FFBE98; border: none; margin-left: 45%;">수정</button>
                                         	<button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
                                         </form>
                                         </div> <!-- end card -->
@@ -286,31 +288,6 @@
                                 </div>
 
                         <!-- end row -->
-
-
-                        <!-- file preview template -->
-                        <div class="d-none" id="uploadPreviewTemplate">
-                            <div class="card mt-1 mb-0 shadow-none border">
-                                <div class="p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-                                        </div>
-                                        <div class="col ps-0">
-                                            <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name></a>
-                                            <p class="mb-0" data-dz-size></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Button -->
-                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-                                                <i class="dripicons-cross"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         
                     </div> <!-- container -->
 
@@ -387,6 +364,18 @@
    <!-- /.차량추가 모달 끝 -->
 
 	<script>
+			
+			// 체크박스 일괄 선택
+			$(document).on('click', '#allCheckBox', function() {
+		    if($(this).prop("checked")) {
+		        $("input[type=checkbox]").prop("checked",true);
+		    } else {
+		        $("input[type=checkbox]").prop("checked",false);
+		    }
+			});
+	
+	
+			// 차량상세조회
 			function detailCar(no){
 				$.ajax({
 					url: "${contextPath}/asset/detailCar.do",
@@ -395,6 +384,7 @@
 					success:function(ad){
 						console.log(ad);
 					
+						$("#modifyCar input[name='assetNo']").val(ad.assetNo); // assetNo
 						$("#detailC input[name='assetName']").val(ad.assetName); // 차종
 						$("#detailC input[name='carNo']").val(ad.carNo); // 차량번호
 						$("#detailC input[name='noMem']").val(ad.noMem); // 탑승인원
@@ -428,6 +418,47 @@
 						}
 				})
 			}
+			
+		
+			
+			// 차량 등록정보 수정
+			$("#modifyCar").submit(function(event){
+			
+				event.preventDefault();
+				
+				let formData = new FormData(this);
+				
+				$.ajax({
+						url:"${contextPath}/asset/modifycar.do",
+						type:"post",
+						data:formData,
+						processData:false,
+						contentType:false,
+						success:function(result){
+							
+							console.log(result);
+							
+							if(result>0){
+								alert("차량정보가 수정 되었습니다.");
+							}else{
+								alert("차량정보 수정에 실패하였습니다.");
+							}
+							
+						},
+						error:function(){
+							console.log("차량정보 수정 ajax 통신 실패");
+						}
+				})
+			})
+			
+			
+			
+			// 차량 삭제
+			
+			
+			
+			
+
 	</script>
 
 
@@ -511,137 +542,7 @@
 
                         <h6 class="fw-medium mt-3 text-uppercase">Favourites <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
 
-                        <div>
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To an English person, it will seem like simplified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium mt-3 text-uppercase">Other Chats <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
-
-                        <div class="pb-4">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">If several languages coalesce the grammar of the resulting.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The new common language will be more simple.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
+                        
                                     <div class="overflow-hidden">
                                         <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
                                         <div class="font-13 text-muted">
@@ -904,14 +805,6 @@
                 </div>
             </div>
 
-            <div class="offcanvas-footer border-top py-2 px-2 text-center">
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-light w-50" id="reset-layout">Reset</button>
-                    <a href="https://1.envato.market/uboldadmin" class="btn btn-danger w-50" target="_blank"><i class="mdi mdi-basket me-1"></i> Buy</a>
-                </div>
-            </div>
-        </div>
-        
         <!-- Vendor js -->
         <script src="${contextPath}/assets/js/vendor.min.js"></script>
 

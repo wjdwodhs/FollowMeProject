@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.AssetDao;
 import com.fz.followme.dto.AssetDto;
+import com.fz.followme.dto.AssetReservationDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +33,24 @@ public class AssetServiceImpl implements AssetService {
 	@Override
 	public AssetDto selectCar(int no) {
 		return assetDao.selectCar(no);
+	}
+
+
+	@Override
+	public int updatecar(AssetDto ad) {
+		return assetDao.updatecar(ad);
+	}
+
+
+	@Override
+	public int selectCarReservationListCount() {
+		return assetDao.selectCarReservationListCount();
+	}
+
+
+	@Override
+	public List<AssetReservationDto> selectCarReservationList(PageInfoDto pi) {
+		return assetDao.selectCarReservationList(pi);
 	}
 	
 	

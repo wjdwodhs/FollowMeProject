@@ -7,11 +7,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AssetDto;
+import com.fz.followme.dto.AssetReservationDto;
+import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.service.AssetService;
+import com.fz.followme.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +28,22 @@ import lombok.extern.slf4j.Slf4j;
 public class AssetController {
 
 	private final AssetService assetService;
+	private final PagingUtil pagingUtil;
 
 	// * 관리자 차량관리 -------------------------------------------------------
 	@RequestMapping("/carsReservationManager.page")
-	public String carsReservationManager(HttpSession session) {
+	public ModelAndView carsReservationManager(@RequestParam(value="page", defaultValue="1") int currentPage
+			                             , HttpSession session
+			                             , ModelAndView mv) {
+		
+		// 차량이용내역 조회, 페이징
+		int listCount = assetService.selectCarReservationListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<AssetReservationDto> rList = assetService.selectCarReservationList(pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("rList", rList)
+		  .setViewName("assetManagement/carsReservationManager");
 		
 		// 법인차량 목록 불러오기
 		List<AssetDto> carlist = assetService.selectcarList();
@@ -42,7 +59,7 @@ public class AssetController {
 		
 		session.setAttribute("carlist", carlist);
 		
-		return "assetManagement/carsReservationManager";
+		return mv;
 	}
 	
 	
@@ -77,6 +94,23 @@ public class AssetController {
 	}
 	
 	
+	// 차량 등록정보 수정
+	@ResponseBody
+	@PostMapping(value="/modifycar.do", produces="application/json; charset=utf-8")
+	public int ajaxmodifyCar(AssetDto ad,
+							 HttpSession session) {
+		log.debug("ad : {}", ad);
+		
+		int result = assetService.updatecar(ad);
+		
+		if(result > 0) {
+			// 수정하고 업데이트 세션에 갱신
+			session.setAttribute("selectCar", assetService.selectCar(ad.getAssetNo()));
+		}
+		
+		
+		return result;
+	}
 	
 	
 	

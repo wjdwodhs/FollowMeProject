@@ -14,7 +14,22 @@
 	<result column="modify_date" property="modifyDate"></result>
 </resultMap>
 
+<resultMap id="assetReservationResult" type="AssetReservationDto">
+	<id column="RSVN_NO" property="rsvnNo"></id>
+	<result column="ASSET_NO" property="assetNo"></result>
+	<result column="RSVN_NAME" property="rsvnName"></result>
+	<result column="RSVN_DATE" property="rsvnDate"></result>
+	<result column="START_DIVISION" property="startDivision"></result>
+	<result column="START_DATE" property="startDate"></result>
+	<result column="END_DIVISION" property="endDivision"></result>
+	<result column="END_DATE" property="endDate"></result>
+	<result column="RSVN_CONTENT" property="rsvnContent"></result>
+	<result column="STATUS" property="status"></result>
+	<result column="ASSET_NAME" property="assetName"></result>
+	<result column="DEPT_NAME" property="deptName"></result>
+</resultMap>
 
+<!-- 법인차량 리스ㅡ 조회 -->
 <select id="selectcarList" resultMap="assetResult">
 	select
        asset_no
@@ -27,6 +42,7 @@
  where asset_type = 'C'
 </select>
 
+<!-- 차량 추가 -->
 <insert id="insertCar">
 	insert 
 	  into tb_asset
@@ -51,6 +67,7 @@
 	  )
 </insert>
 
+<!-- 법인차량 상세조회 -->
 <select id="selectCar" resultMap="assetResult">
 	select
        asset_no
@@ -63,9 +80,45 @@
  where asset_no = #{no}
 </select>
 
+<update id="updatecar">
+	update
+	       tb_asset
+	   set regist_date = #{registDate}
+	      , asset_name = #{assetName}
+	      , car_no = #{carNo}
+	      , no_mem = #{noMem}
+	      , status = #{status}
+	      , modify_date = sysdate
+	 where asset_no  = #{assetNo}
+</update>
+
+<select id="selectCarReservationListCount" resultType="_int">
+	select
+	       count(*)
+	  from tb_asset_rsvn 
+</select>
 
 
-
+<!-- 차량 이용내역 조회  -->
+<select id="selectCarReservationList" resultMap="assetReservationResult">
+	SELECT
+	       RSVN_NO 
+	     , ASSET_NAME 
+	     , RSVN_DATE 
+	     , START_DIVISION 
+	     , TO_CHAR(START_DATE, 'HH:MI AM') START_DATE
+	     , END_DIVISION 
+	     , TO_CHAR(END_DATE, 'HH:MI AM') END_DATE
+	     , RSVN_NAME 
+	     , DEPT_NAME
+	     , RSVN_CONTENT
+	  FROM TB_ASSET_RSVN A
+	  JOIN TB_ASSET USING (ASSET_NO)
+	  LEFT JOIN TB_MEM M ON (A.RSVN_NAME = M.MEM_NAME )
+	  LEFT JOIN TB_DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
+	  WHERE ASSET_TYPE = 'C'
+	  ORDER BY RSVN_DATE DESC
+</select>
 
 
 

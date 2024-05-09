@@ -22,10 +22,15 @@ public class AssetReservationDto {
 	private String rsvnName;
 	private Date rsvnDate;
 	private String startDivision;
-	private Date startDate;
+	private String startDate;
 	private String endDivision;
-	private Date endDate;
+	private String endDate;
 	private String rsvnContent;
 	private String status;
+	
+	// 관리자페이지 예약조회를 위한 필드
+	private String assetName;
+	private String deptName;
+	
 	
 }

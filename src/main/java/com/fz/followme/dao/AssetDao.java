@@ -2,10 +2,13 @@ package com.fz.followme.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fz.followme.dto.AssetDto;
+import com.fz.followme.dto.AssetReservationDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +32,31 @@ public class AssetDao {
 	public AssetDto selectCar(int no) {
 		return sqlSessionTemplate.selectOne("assetMapper.selectCar", no);
 	}
+	
+	public int updatecar(AssetDto ad) {
+		return sqlSessionTemplate.update("assetMapper.updatecar", ad);
+	}
+	
+	public int selectCarReservationListCount() {
+		return sqlSessionTemplate.selectOne("assetMapper.selectCarReservationListCount");
+	}
+	
+	
+	public List<AssetReservationDto> selectCarReservationList(PageInfoDto pi){
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("assetMapper.selectCarReservationList", null, rowBounds);
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
