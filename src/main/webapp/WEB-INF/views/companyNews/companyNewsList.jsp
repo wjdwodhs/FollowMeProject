@@ -115,7 +115,7 @@
                                         <div class="row">
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/boardList.page">전체글</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
                                                 	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
                                                 	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>
@@ -146,6 +146,8 @@
                                         			
                                         			var list = $(response).find('#list-page').html();
                                     				$('#list-page').html(list);
+                                    				
+                                    				
                                         		},
 	                                        	error: function(){
 	                                				
