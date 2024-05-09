@@ -115,9 +115,9 @@
                                         <div class="row">
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
-                                                	<li><a href="${contextPath}/noticeList.page" onclick="activateMenuItem(this)">공지사항</a></li>
-                                                	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/boardList.page">전체글</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>
                                             </div>
 
@@ -128,6 +128,35 @@
                                         
                                         
                                         <script>
+                                        $(document).ready(function(){
+                                        	$('.ajax-pageMove').click(function(event){
+                                        		event.preventDefault();
+                                        		
+                                        		var url = $(this).data('url');
+                                        		loadPage(url);
+                                        	});
+                                        });
+                                        
+                                        function loadPage(url){
+                                        	$.ajax({
+                                        		url: url,
+                                        		type: 'get',
+                                        		success:function(response){
+                                        			$('#list-page').empty();
+                                        			
+                                        			var list = $(response).find('#list-page').html();
+                                    				$('#list-page').html(list);
+                                        		},
+	                                        	error: function(){
+	                                				
+	                                			}
+                                        	})
+                                        }
+                                        
+                                        
+                                        
+                                        
+                                        
                                         function activateMenuItem(element) {
                                         	  // 모든 메뉴 항목의 활성 클래스 제거
                                         	  var categoryItems = document.querySelectorAll('.category a');
@@ -141,7 +170,7 @@
                                         
                                         </script>
                                         
-                                        <div class="row">                                        
+                                        <div class="row" id="list-page">                                        
                                             <div class="col-lg-9">
                                                 
                                                 <table class="table">
@@ -181,60 +210,17 @@
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="n" items="${ list }">
+		                                                			<c:forEach var="c" items="${ list }">
 		                                                				<tr>
-		                                                					<td class="list-item1">1</td>
-		                                                					<td class="list-item2">2</td>
-		                                                					<td class="list-item3">3</td>
-		                                                					<td class="list-item4">4</td>
-		                                                					<td class="list-item5">5</td>
+		                                                					<td class="list-item1">${ c.boardNo }</td>
+		                                                					<td class="list-item2">${ c.boardTitle }</td>
+		                                                					<td class="list-item3">${ c.memNo }</td>
+		                                                					<td class="list-item4">${ c.enrollDate }</td>
+		                                                					<td class="list-item5">${ c.readCount }</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 				</c:otherwise>
-                                                			</c:choose>
-                                                			<tr>
-                                                				<td class="list-item1">@</td>
-                                               					<td class="list-item2">직원 경조사 관련 게시판 이용 안내</td>
-                                               					<td class="list-item3">인사팀</td>
-                                               					<td class="list-item4">2020-02-20</td>
-                                               					<td class="list-item5">70</td>
-                                                			</tr>
-                                                            <tr>
-                                                                <td class="list-item1">5</td>
-                                               					<td class="list-item2">[결혼] 영업부 김우석 사원 결혼(11/11)</td>
-                                               					<td class="list-item3">마크 앤슨 대리</td>
-                                               					<td class="list-item4">2023-11-11</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">4</td>
-                                               					<td class="list-item2">[결혼]인사팀 이지연 사원 결혼(08/20)</td>
-                                               					<td class="list-item3">조던피터슨 사원</td>
-                                               					<td class="list-item4">2023-08-20</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">3</td>
-                                               					<td class="list-item2">[부고]기획팀 조희찬 과장 모친상</td>
-                                               					<td class="list-item3">마이클샌댈 팀장</td>
-                                               					<td class="list-item4">2023-07-20</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">2</td>
-                                               					<td class="list-item2">[발령]인사발령 </td>
-                                               					<td class="list-item3">정혜신 대리</td>
-                                               					<td class="list-item4">2023-05-21</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">1</td>
-                                               					<td class="list-item2">[결혼]인사팀 홍길동 사원 결혼(03/12)</td>
-                                               					<td class="list-item3">박민수 선임</td>
-                                               					<td class="list-item4">2023-03-12</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            
+                                                			</c:choose>             
                                                         </tbody>
                                                         
                                                     </table>
@@ -254,6 +240,27 @@
                                             </div>
                                              
                                             <!-- end col -->
+                                            
+                                            <ul class="pagination pagination-rounded justify-content-end mb-0">
+	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/companyNews/list.do?page=${pi.currentPage-1}" aria-label="Previous">
+	                                                    <span aria-hidden="true">«</span>
+	                                                    <span class="visually-hidden">Previous</span>
+	                                                </a>
+	                                            </li>
+	                                            
+	                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/companyNews/list.do?page=${p}">${p}</a></li>
+	                                           </c:forEach>
+	                                           
+	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/companyNews/list.do?page=${pi.currentPage+1}" aria-label="Next">
+	                                                    <span aria-hidden="true">»</span>
+	                                                    <span class="visually-hidden">Next</span>
+	                                                </a>
+	                                            </li>
+	                                        </ul>
+                                            
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->

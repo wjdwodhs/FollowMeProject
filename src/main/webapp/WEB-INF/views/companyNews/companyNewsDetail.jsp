@@ -12,54 +12,55 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
-
 <style>
-    .list-column{
-        margin: 0 2px;
-        font-weight: bold;
-    }
-    .list-item1{ width: 5%; }
-    .list-item2{ width: 40%; }
-    .list-item3{ width: 10%; }
-    .list-item4{ width: 10%; }
-    .list-item5{ width: 5%; }
-    
-.category a {
-  color: black;
-  text-decoration: none; /* 기본 밑줄 제거 */ 
-}
+            .photo>a>img{
+                height: 25px;
+                width: 25px;
+            }
 
-.category a.active {
-  border-bottom: 2px solid #FFBE98; /* 활성 상태일 때 밑줄 추가 */
-}
+            .department{
+                display: inline-block; 
+                padding-bottom: 10px;
+            }
 
+            .info{display: inline-block;}
 
-.category {
-  list-style-type: none; /* 기본 목록 마커 제거 */
-  padding: 0; /* 목록의 내부 여백 제거 */
-}
+            .article_view{
+                padding: 25px;
+                min-height: 300px;
+               padding-bottom: 100px;
+            }
 
-.category li {
-  display: inline-block; /* 요소들을 가로로 나란히 배치 */
-  margin-right: 10px; /* 요소들 사이의 간격 조절 */
-}
+            .editor_view{
+                line-height: 1.5;
+            }
 
-.category a:hover {
-  border-bottom: 2px solid #FFBE98;
-}   
+            .content_view{
 
-.button>button{
-       background-color: #FFBE98;
-        border: 1px solid #FFBE98; /* 테두리 */
-        --ct-btn-active-bg:#FA9A85;    
-        --ct-btn-active-border-color:#FA9A85;
-        --ct-btn-hover-bg:#FA9A85;
-        --ct-btn-hover-border-color:#FA9A85;   
-}    
+            }
 
-    
-</style>
+            .part{
+                margin: 5px;
+            }
 
+            .reply_warp>ul{
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            .reply_warp>ul>li{
+                text-align: left;
+            }
+
+            .horizontal-line {
+            border-top: 1px solid lightgray; /* 가로 줄의 스타일 지정 */
+            margin: 10px 0; /* 원하는 여백 추가 */
+            }
+            
+            .aaaa{
+                margin-right: 15%;
+            }
+     </style>
 </head>
 <body>
 
@@ -68,23 +69,15 @@
 
   	<!-- sidemenu include -->
   	<jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
-            
+  	
+  	
+  	
+  	<div class="content-page">
 
-   	
-    
-    
-    		<!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
-
-			
-            <div class="content-page">
-				<!-- topbar include -->
-    			<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
-   		          
-
-                <div class="content" style="background-color: #F2E8DA">
-
+                <div class="content">
+					<!-- topbar include -->
+    				<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
+    				
                     <!-- Start Content-->
                     <div class="container-fluid">
                         
@@ -94,182 +87,104 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
-                                            <li class="breadcrumb-item active">전체게시글</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                            <li class="breadcrumb-item active">Calendar</li>
                                         </ol>
-                                    </div>                                  
-                                        <h4 class="page-title">게시판</h4> 
                                     </div>
+                                    <h4 class="page-title">전자게시판</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title -->
 
-                        <!-- start page content -->
-                        <div class="row">
+                        <div class="row aaaa">
+                        
                             <div class="col-12">
-
+                            
                                 <div class="card">
                                     <div class="card-body">
-                                    	<div class="col-9">
-                                    		<span>
-                                            	<select class="form-select form-select-sm" style="width:auto">
-                                            		<option>게시판</option>
-                                            		<option>통합검색</option>
-                                            	</select> 	
-                                            </span>
-                                                <input type="text" class="form-control form-control-sm" style="width: 100px">
-                                    	</div>
                                         <div class="row">
-                                        
-                                            <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
-                                                <ul class="category">
-                                                	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
-                                                	<li><a href="${contextPath}/notice/list.do" onclick="activateMenuItem(this)">공지사항</a></li>
-                                                	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
-                                                </ul>                                              
-                                                
-                                            </div>
-
-                                            <div class="col-lg-3"  >
-                                                <p>최근공지글 | 최근본글</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <script>
-                                        function activateMenuItem(element) {
-                                        	  // 모든 메뉴 항목의 활성 클래스 제거
-                                        	  var categoryItems = document.querySelectorAll('.category a');
-                                        	  categoryItems.forEach(function(item) {
-                                        	    item.classList.remove('active');
-                                        	  });
-                                        	  
-                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
-                                        	  element.classList.add('active');
-                                        	}
-                                        
-                                        </script>
-                                        
-                                        
-                                        <div class="row" id="list-page">                                        
-                                            <div class="col-lg-9">
-                                                
-                                                <table class="table">
-                                                    
-                                                    <table class="table table-hover">
-                                                    	<div class="button">
-                                                    	<button type="button" class="btn btn-primary btn-sm" onclick="insertPage()">
-                                                    		<span class="menu-icon"><i data-feather="edit-3"></i></span>글쓰기
-                                                    	</button>
-                                                    	</div>
-                                                    	
-                                                    	<script>
-                                                    		function insertPage(){
-                                                    			location.href ="${contextPath}/board/boardInsert.page"
-                                                    		}
-                                                    	</script>
-                                                        
-                                                        <select name="" id="" style="float:right">
-                                                            <option value="">20</option>
-                                                            <option value="">40</option>
-                                                        </select>
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="list-item1">번호</th>
-                                                                <th class="list-item2">제목</th>
-                                                                <th class="list-item3">작성자</th>
-                                                                <th class="list-item4">작성일</th>
-                                                                <th class="list-item5">조회수</th>
-                                                            </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                            <c:choose>
-                                                				<c:when test="${ empty list }">
-		                                                			<tr>
-		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
-		                                                			</tr>
-		                                                		</c:when>
-		                                                		<c:otherwise>
-		                                                			<c:forEach var="n" items="${ list }">
-		                                                				<tr>
-		                                                					<td class="list-item1">${ b.boardNo }</td>
-		                                                					<td class="list-item2"></td>
-		                                                					<td class="list-item3"></td>
-		                                                					<td class="list-item4"></td>
-		                                                					<td class="list-item5"></td>
-		                                                				</tr>
-		                                                			</c:forEach>
-                                                				</c:otherwise>
-                                                			</c:choose>
-                                                            <tr>
-                                                                <td class="list-item1">6</td>
-                                               					<td class="list-item2">[인사]2023 건강보험료 연말정산 안내</td>
-                                               					<td class="list-item3">인사팀</td>
-                                               					<td class="list-item4">2024-01-20</td>
-                                               					<td class="list-item5">27</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">5</td>
-                                               					<td class="list-item2">[결혼] 영업부 김우석 사원 결혼(11/11)</td>
-                                               					<td class="list-item3">마크 앤슨 대리</td>
-                                               					<td class="list-item4">2023-11-11</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">4</td>
-                                               					<td class="list-item2">[결혼]인사팀 이지연 사원 결혼(08/20)</td>
-                                               					<td class="list-item3">조던피터슨 사원</td>
-                                               					<td class="list-item4">2023-08-20</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">3</td>
-                                               					<td class="list-item2">[부고]기획팀 조희찬 과장 모친상</td>
-                                               					<td class="list-item3">마이클샌댈 팀장</td>
-                                               					<td class="list-item4">2023-07-20</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">2</td>
-                                               					<td class="list-item2">[발령]인사발령 </td>
-                                               					<td class="list-item3">정혜신 대리</td>
-                                               					<td class="list-item4">2023-05-21</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">1</td>
-                                               					<td class="list-item2">[결혼]인사팀 홍길동 사원 결혼(03/12)</td>
-                                               					<td class="list-item3">박민수 선임</td>
-                                               					<td class="list-item4">2023-03-12</td>
-                                               					<td class="list-item5">12</td>
-                                                            </tr>
-                                                        </tbody>
-                                                        
-                                                    </table>
-                                            </div>
-
-                                             <!-- end col-->
                                             
-                                            <div class="col-lg-3" >
-                                                <ul class="list-group" >
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                            <h3><b>[인사] 인사발령</b></h3>
+                                            <div>
+                                                <span class="department">
+                                                    <p>인사팀</p>
+                                                </span>
+                                                <div class="info">
+                                                    <a id="myLink" href="">김철완 선임</a>
+                                                    <span> 2024-02-25</span>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            
+                                            <div class="modal" id="myModal">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
+											
+											      <!-- Modal Header -->
+											      <div class="modal-header">
+											        <h4 class="modal-title">Modal Heading</h4>
+											        <button type="button" class="close" data-dismiss="modal">&times;</button>
+											      </div>
+											
+											      <!-- Modal body -->
+											      <div class="modal-body">
+											        Modal body..
+											      </div>
+											
+											      <!-- Modal footer -->
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											      </div>
+											
+											    </div>
+											  </div>
+											</div>
+
+                                            <article class="article_view">
+                                                <span class="editor_view">
+                                                    <div class="content-view">
+                                                    </div>
+                                                </span>
+                                            </article>
+
+                                            <div class="reply_warp">
+                                                <ul class="reply_view">
+                                                    <li>
+                                                        <span class="reply ">댓글</span>
+                                                        <span class="part">|</span>
+                                                        <span>조회수 0</span>
+                                                    </li>
                                                 </ul>
-
+                                                <div class="horizontal-line"></div>
                                             </div>
-                                             
-                                            <!-- end col -->
                                             
+
+                                            
+                                                <table class="table">
+                                                    <tr>
+                                                        <td style="width: 10%;">댓글</td>
+                                                        <td style="width: 80%;"><textarea name="" id="" cols="2" rows="2" style="width: 100%;"></textarea></td>
+                                                        <td style="width: 10%;"><button>등록</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>작성자</td>
+                                                        <td>내용</td>
+                                                        <td>등록일</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>작성자</td>
+                                                        <td>내용</td>
+                                                        <td>등록일</td>
+                                                    </tr>
+                                                </table>
+                                            
+                                            
+
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
-
-                                <!-- end page content -->
 
                                 <!-- Add New Event MODAL -->
                                 <div class="modal fade" id="event-modal" tabindex="-1">
@@ -327,13 +242,33 @@
                     </div> <!-- container -->
 
                 </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
             </div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
 
-		 </div>
+
         </div>
         <!-- END wrapper -->
 
@@ -402,7 +337,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -417,7 +352,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -432,7 +367,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -451,7 +386,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -466,7 +401,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -481,7 +416,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -496,7 +431,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -511,7 +446,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -526,7 +461,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -798,27 +733,50 @@
                 </div>
             </div>
         </div>
+        <script>
+	        function openModal() {
+			  var modal = document.getElementById("myModal");
+			  modal.style.display = "block";
+			}
+			
+			// 모달 창 닫기
+			function closeModal() {
+			  var modal = document.getElementById("myModal");
+			  modal.style.display = "none";
+			}
+			
+			// 링크 클릭 시 모달 창 열기
+			document.getElementById("myLink").addEventListener("click", function(event) {
+			  event.preventDefault(); // 기본 이벤트(링크 이동) 방지
+			  openModal();
+			});
+			
+			// 모달 닫기 버튼과 모달 외부를 클릭 시 모달 창 닫기
+			var closeBtn = document.getElementsByClassName("close")[0];
+			var modal = document.getElementById("myModal");
+			window.addEventListener("click", function(event) {
+			  if (event.target == modal) {
+			    closeModal();
+			  }
+			});
+			closeBtn.addEventListener("click", function() {
+			  closeModal();
+			});
+</script>
         
         <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-		
-		<!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
-	
-		<!-- Plugins js-->
-        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-        
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-        
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+        <script src="assets/js/vendor.min.js"></script>
 
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
-        
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>
+
+        <!-- plugin js -->
+        <script src="assets/libs/moment/min/moment.min.js"></script>
+        <script src="assets/libs/fullcalendar/main.min.js"></script>
+
+        <!-- Calendar init -->
+        <script src="assets/js/pages/calendar.init.js"></script>
+  	
 	
-    </body>
+</body>
 </html>

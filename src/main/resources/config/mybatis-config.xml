@@ -16,6 +16,7 @@
 		<typeAlias type="com.fz.followme.dto.AccountDto" alias="AccountDto"/>
 		<typeAlias type="com.fz.followme.dto.AttachmentDto" alias="AttachmentDto"/>
 		<typeAlias type="com.fz.followme.dto.CalendarDto" alias="CalendarDto"/>
+		<typeAlias type="com.fz.followme.dto.DocumentDto" alias="DocumentDto"/>
 	</typeAliases>
 	
 	<mappers>
@@ -23,6 +24,7 @@
 		<mapper resource="mappers/order-mapper.xml"/>
 		<mapper resource="mappers/asset-mapper.xml"/>
 		<mapper resource="mappers/calendar-mapper.xml"/>
+		<mapper resource="mappers/document-mapper.xml"/>
 	</mappers>
 
 </configuration>

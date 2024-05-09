@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="companyNewsMapper">
+
+	<resultMap type="boardDto" id="CompanyNewsResult">
+		<id column="board_no" property="boardNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="mem_name" property="memNo"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="read_count" property="readCount"/>
+		<result column="attach_Count" property="attachCount"/>
+	</resultMap>
+	
+		
+	<select id="selectCompanyNewsListCount" resultType="_int">
+		select
+				count(*)
+		   from tb_board
+		  where status = 'Y'
+		    and board_type = 'CO'
+	</select>
+	
+	<select id="selectCompanyNewsList" resultMap="CompanyNewsResult">
+		select
+				board_no
+			  , board_title
+			  , mem_name
+			  , b.enroll_date
+			  , read_count
+			  , (
+			  	select count(*)
+			  	from tb_attachment
+			  	where ref_no = board_no
+			  )attach_Count
+			  from tb_board b
+			  join tb_mem using (mem_no)
+			  where b.status = 'Y'
+			    and b.board_type = 'CO'
+	</select>
+	
+	
+	
+
+</mapper>

@@ -106,7 +106,7 @@
                         <!-- end page title -->
 
                         <!-- start page content -->
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-12">
 
                                 <div class="card">
@@ -114,11 +114,12 @@
                                         <div class="row">
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="${contextPath}/board/boardList.page" onclick="activateMenuItem(this)">전체글</a></li>
-                                                	<li><a href="${contextPath}/noticeList.page" onclick="activateMenuItem(this)">공지사항</a></li>
-                                                	<li><a href="${contextPath}/companyNewsList.page" onclick="activateMenuItem(this)">사내소식</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/boardList.page">전체글</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
+                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>
                                             </div>
+                                            
 
                                             <div class="col-lg-3"  >
                                                 <p>최근공지글 | 최근본글</p>
@@ -126,21 +127,48 @@
                                         </div>
                                         
                                         <script>
-                                        function activateMenuItem(element) {
-                                        	  // 모든 메뉴 항목의 활성 클래스 제거
-                                        	  var categoryItems = document.querySelectorAll('.category a');
-                                        	  categoryItems.forEach(function(item) {
-                                        	    item.classList.remove('active');
-                                        	  });
-                                        	  
-                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
-                                        	  element.classList.add('active');
+                                        
+                                        	$(document).ready(function(){
+                                        		$('.ajax-pageMove').click(function(event){
+                                        			event.preventDefault(); // 링크 이벤트x
+                                        			
+                                        			var url = $(this).data('url');
+                                        			loadPage(url);
+                                        		});
+                                        	});
+                                        	
+                                        	function loadPage(url){
+                                        		$.ajax({
+                                        			url: url,
+                                        			type: 'get' ,
+                                        			success: function(response){
+                                        				$('#list-page').empty();
+                                        				
+                                        				var list = $(response).find('#list-page').html();
+                                        				$('#list-page').html(list);
+                                        			},
+                                        			error: function(){
+                                        				
+                                        			}
+                                        		})
+                                        		
                                         	}
+                                        
+	                                        function activateMenuItem(element) {
+	                                        	  // 모든 메뉴 항목의 활성 클래스 제거
+	                                        	  var categoryItems = document.querySelectorAll('.category a');
+	                                        	  categoryItems.forEach(function(item) {
+	                                        	    item.classList.remove('active');
+	                                        	  });
+	                                        	  
+	                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
+	                                        	  element.classList.add('active');
+	                                        	}
                                         
                                         </script>
                                         
                                         
-                                        <div class="row">                                        
+                                        <div class="row" id="list-page" >                                        
                                             <div class="col-lg-9">
                                                 
                                                 <table class="table">
@@ -182,36 +210,23 @@
 		                                                		<c:otherwise>
 		                                                			<c:forEach var="n" items="${ list }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ n.noticeNo }</td>
-		                                                					<td class="list-item2"></td>
-		                                                					<td class="list-item3"></td>
-		                                                					<td class="list-item4"></td>
-		                                                					<td class="list-item5"></td>
+		                                                					<td class="list-item1">${ n.boardNo }</td>
+		                                                					<td class="list-item2">${ n.boardTitle }</td>
+		                                                					<td class="list-item3">${ n.memNo }</td>
+		                                                					<td class="list-item4">${ n.enrollDate }</td>
+		                                                					<td class="list-item5">${ n.readCount }</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 		</c:otherwise>
                                                 	</c:choose>
                                                             <tr>
                                                                 <td class="list-item1">@</td>
-                                               					<td class="list-item2">[재무]2024년 결산 주의사항 안내</td>
+                                               					<td class="list-item2"><i data-feather="camera"></i>2024년 결산 주의사항 안내</td>
                                                					<td class="list-item3">김철완 부장</td>
                                                					<td class="list-item4">2024-03-02</td>
                                                					<td class="list-item5">17</td>
                                                             </tr>
-                                                            <tr>
-                                                                <td class="list-item1">@</td>
-                                               					<td class="list-item2">[재무]법인카드 관리 강화의 건</td>
-                                               					<td class="list-item3">김철완 부장</td>
-                                               					<td class="list-item4">2023-05-27</td>
-                                               					<td class="list-item5">40</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="list-item1">1</td>
-                                               					<td class="list-item2">[인사]2023 건강보험료 연말정산 안내</td>
-                                               					<td class="list-item3">인사팀</td>
-                                               					<td class="list-item4">2024-01-20</td>
-                                               					<td class="list-item5">27</td>
-                                                            </tr>
+                                                            
                                                         </tbody>
                                                         
                                                     </table>
@@ -232,7 +247,30 @@
                                              
                                             <!-- end col -->
                                             
+                                            <ul class="pagination pagination-rounded justify-content-end mb-0">
+	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/notice/list.do?page=${pi.currentPage-1}" aria-label="Previous">
+	                                                    <span aria-hidden="true">«</span>
+	                                                    <span class="visually-hidden">Previous</span>
+	                                                </a>
+	                                            </li>
+	                                            
+	                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/notice/list.do?page=${p}">${p}</a></li>
+	                                           </c:forEach>
+	                                           
+	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+	                                                <a class="page-link" href="${ contextPath }/notice/list.do?page=${pi.currentPage+1}" aria-label="Next">
+	                                                    <span aria-hidden="true">»</span>
+	                                                    <span class="visually-hidden">Next</span>
+	                                                </a>
+	                                            </li>
+	                                        </ul>
+                                            
                                         </div>  <!-- end row -->
+                                        
+                                        
+                                        
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
 
