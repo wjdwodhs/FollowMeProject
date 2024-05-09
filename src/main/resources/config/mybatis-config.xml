@@ -29,6 +29,7 @@
 		<mapper resource="mappers/document-mapper.xml"/>
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/companyNews-mapper.xml"/>
+		<mapper resource="mappers/board-mapper.xml"/>
 	</mappers>
 
 </configuration>
