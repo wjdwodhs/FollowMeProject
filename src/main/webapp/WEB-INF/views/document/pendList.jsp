@@ -178,32 +178,54 @@
     
                                         <div class="mb-2">
                                             <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
-                                                <div style="display:flex;">
-                                                    <div class="col-12 text-sm-center" style="width:auto;">
-                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                            <option value="">전체</option>
-                                                            <option value="문서유형">문서유형</option>
-                                                            <option value="문서제목">문서제목</option>
-                                                        </select>
-                                                        <!-- 결재권한 있을 경우 -->
-                                                        <!--
-                                                        <select id="demo-foo-filter-status" class="form-select form-select-sm">
-                                                            <option value="">전체</option>
-                                                            <option value="문서유형">문서유형</option>
-                                                            <option value="문서제목">문서제목</option>
-                                                            <option value="기안자">기안자</option>
-                                                            <option value="기안부서">기안부서</option>
-                                                        </select>
-                                                        -->
-                                                        
-                                                    </div>
-                                                    <div class="col-12" id="top-middle" style="width:auto;">
-                                                        <input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
-                                                    </div>
-                                                </div>
-                                                <div class="btn-group">
-                                                		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
-                                                </div>
+                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get">
+                                                		<div style="display:flex;">
+                                                    		<input type="hidden" name="page">
+		                                                    <div class="col-12 text-sm-center" style="width:auto;">
+		                                                        <c:choose>
+		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_title">문서제목</option>
+						                                                        </select>
+		                                                        		</c:when>
+		                                                        		<c:otherwise>
+		                                                        				<!-- 팀장, 대표일 경우 -->
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_title">문서제목</option>
+						                                                            <option value="mem_name">기안자</option>
+						                                                            <option value="dept_name">기안부서</option>
+						                                                        </select>
+				                                                        </c:otherwise>
+		                                                        </c:choose>
+		                                                    </div>
+		                                                    <div>
+		                                                    		<button type="button" class="btn btn-soft-secondary waves-effect">검색</button>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="col-12" id="top-middle" style="width:auto;">
+		                                                    <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
+		                                                </div>
+                                                </form>
+                                                
+                                                <c:if test="${ not empty search }">
+																				            <script>
+																				            	$(document).ready(function(){
+																				            		$("#searchForm select").val("${search.condition}");
+																				            		
+																				            		//검색후 페이지일 경우 페이징바의 페이지 클릭시
+																				            		$("#pagingArea a").on("click", function(){
+																				            			$("#searchForm input[name=page]").val($(this).text());
+																				            			$("#searchForm").submit();
+																				            			return false; //기본이벤트 제거(즉, a태그에 작성되어있는 href="/list.do" 실행안되도록)
+																				            		})
+																				            	})
+																				            </script>
+																			          </c:if>
+                                            </div>
+                                            <div class="btn-group">
+                                            		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
                                             </div>
                                         </div>
                                         
@@ -211,42 +233,66 @@
                                         <div class="table-responsive">
                                             <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                 <thead>
-                                                <tr>
-                                                    <th>NO</th>
-                                                    <th>문서유형</th>
-                                                    <th>문서제목</th>
-                                                    <th>기안자</th>
-                                                    <th>기안부서</th>
-                                                    <th>기안일</th>
-                                                    <th>결재상태</th>
-                                                    <th>결재일</th>
-
-                                                </tr>
+		                                                <tr>
+		                                                    <th>NO</th>
+		                                                    <th>문서유형</th>
+		                                                    <th>문서제목</th>
+		                                                    <th>기안자</th>
+		                                                    <th>기안부서</th>
+		                                                    <th>기안일</th>
+		                                                    <th>결재상태</th>
+		                                                    <th>결재일</th>
+		
+		                                                </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td style="text-align: left;">구매신청서</td>
-                                                    <td style="text-align: left;">경영지원팀 태블릿PC 2대 구매 신청의 건</td>
-                                                    <td>임수희</td>
-                                                    <td>경영지원</td>
-                                                    <td>2024-05-08</td>
-                                                    <td><span class="badge label-table bg-warning">결재 대기</span></td>
-                                                    <td></td>
-                                                </tr>
+                                                
+		                                                <c:choose>
+		                                                		<c:when test="${empty list}">
+		                                                				<tr>
+		                                                						<td colspan="8">존재하는 문서가 없습니다.</td>
+		                                                				</tr>
+						                                            </c:when>
+						                                            <c:otherwise>
+						                                            		<c:forEach var="d" items="${ list }">
+								                                                <tr onclick="location.href='${contextPath}/document/detail.page?no=${d.docuNo}';">
+								                                                    <td>${d.docuNo}</td>
+								                                                    <td style="text-align: left;">${d.docuCategoryName}</td>
+								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td>${d.memName}</td>
+								                                                    <td>${d.deptName}</td>
+								                                                    <td>${d.registDate}</td>
+								                                                    <td><span class="badge label-table bg-secondary">${d.status}</span></td>
+								                                                    <td>${d.finalApproveDate}</td>
+								                                                </tr>
+								                                            </c:forEach>
+						                                            </c:otherwise>
+		                                                </c:choose>
+
     
                                                 </tbody>
                                                 <tfoot>
-                                                <tr class="active">
-                                                    <td colspan="5">
-                                                        <div class="text-end">
-                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+		                                                <tr class="active">
+		                                                    <td colspan="5">
+		                                                        <div class="text-end">
+		                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
+		                                                        </div>
+		                                                    </td>
+		                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div> <!-- end .table-responsive-->
+                                        <div id="pagingArea">
+														                <ul class="pagination">
+														                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage - 1}">Previous</a></li>
+														                    
+														                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+														                    <li class="page-item ${ pi.currentPage == p ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${p}">${ p }</a></li>
+														                    </c:forEach>
+														                    
+														                    <li class="page-item ${ pi.currentPage >= pi.maxPage ? 'disabled':''}" ><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage + 1}">Next</a></li>
+														                </ul>
+														            </div>
                                     </div>
                                 </div> <!-- end card -->
                             </div> <!-- end col -->

@@ -168,48 +168,52 @@
 		        <!-- Start Content-->
 		        <div class="container-fluid" style="display:flex; justify-content: center;">
 		            
-		            <div class="card">
-		                <div class="card-body">
-		                    <div class="top-document">
-		                        <div class="document-title">
-		                            <h1>재택근무 신청서</h1>
-		                        </div>
-		                        <div class="sign-table">
-		                            <table class="table-sign">
-		                                <tr>
-		                                    <th rowspan="5" style="width:20px;">결 재 선</th>
-		                                </tr>
-		                                <tr>
-		                                    <th>작 성 자</th>
-		                                    <th>결 재 자</th>
-		                                </tr>
-		                                <tr class="sign">
-		                                    <td></td>
-		                                    <td></td>
-		                                </tr>
-		                            </table>
-		                        </div>
-		                    </div>  
-      
+                <form id="enrollForm" method="post" action="${ contextPath }/document/regist.do" enctype="multipart/form-data" onsubmit="updateDocuContent();">
+		            
+				            <div class="card">
+				                <div class="card-body">
+				                    <div class="top-document">
+				                        <div class="document-title">
+				                            <h1>재택근무 신청서</h1>
+				                        </div>
+				                        <div class="sign-table">
+				                            <table class="table-sign">
+				                                <tr>
+				                                    <th rowspan="5" style="width:20px;">결 재 선</th>
+				                                </tr>
+				                                <tr>
+				                                    <th>작 성 자</th>
+				                                    <th>결 재 자</th>
+				                                </tr>
+				                                <tr class="sign">
+				                                    <td>
+						                                		<img src="${contextPath}${loginUser.sigImgPath}">
+				                                    </td>
+				                                    <td></td>
+				                                </tr>
+				                            </table>
+				                        </div>
+				                    </div>  
+		      
 		                        <div class="document-info">
 		
 		                            <div class="info-1">
 		                                <table class="table-info-1">
 		                                    <tr>
-		                                        <th width="120px;">부서</th>
-		                                        <td width="266px;">경영지원</td>    
+		                                        <th width="120px;"> 부서 </th>
+		                                        <td width="266px;"> ${loginUser.deptName} </td>    
 		                                    </tr>
 		                                    <tr>
-		                                        <th>직급</th>
-		                                        <td>대리</td>
+		                                        <th> 직급 </th>
+                                            <td> ${loginUser.memGrade} </td>
 		                                    </tr>
 		                                    <tr>
-		                                        <th>신청자</th>
-		                                        <td>유주찬</td>
+		                                        <th> 신청자 </th>
+		                                        <td> ${loginUser.memName} </td>
 		                                    </tr>
 		                                    <tr>
-		                                        <th>신청일</th>
-		                                        <td>2024-05-13 (월)</td>
+		                                        <th> 신청일 </th>
+		                                        <td> ${document.registDate} </td>
 		                                    </tr>
 		                                </table>
 		                                
@@ -217,22 +221,22 @@
 		                            <div class="info-2">
 		                                <table class="table-info-2">
 		                                    <tr>
-		                                        <th width="120px;">참조인</th>
-		                                        <td width="266px;">경영지원 김성한 팀장</td>
-		                                    </tr>
-		                                    <tr>
-		                                        <th>보존연한</th>
-		                                        <td>기안일로부터 5년</td>
-		                                    </tr>
-		                                    <tr>
-		                                        <th>전화번호</th>
-		                                        <td>
-		                                            <input type="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" style="width:100%; height: 20px; border:0;" placeholder="본인 전화번호 기입">
+                                            <th width="120px;"> 참조인 </th>
+		                                        <td width="266px;">
+                                            		<input type="text" id="refDeptNo" name="refDeptNo" placeholder="참조인 사번 입력">
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
-		                                        <th>결재일</th>
-		                                        <td>2024-05-14 (화)</td>
+                                            <th> 보존연한 </th>
+                                            <td> 기안일로부터 5년 </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 전화번호 </th>
+		                                        <td> ${loginUser.phone} </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <th> 결재일 </th>
+		                                        <td></td>
 		                                    </tr>
 		                                </table>
 		                            </div>
@@ -242,10 +246,10 @@
                             <div class="table-2">
                                 <table class="table-2-1">
                                     <tr>
-                                        <th width="120px;">제목</th>
-                                        <td width="655px;">
-                                            <input type="text" name="title" size="20" style="width:100%; border:0;" value="기안자 작성란">
-                                        </td>
+                                        <th width="120px;"> 제목 </th>
+                                          <td width="655px;">
+                                              <input type="text" name="docuTitle" size="20" style="width:100%; border:0;" placeholder="제목을 입력하세요.">
+                                          </td>
                                     </tr>
                                 </table>
                             </div>
@@ -259,8 +263,8 @@
                                         <tr>
                                             <th style="text-align:center; width:90px;"> 근 무 일 </th>
                                             <td style="text-align:left;">
-                                                <input type="date" id="startDate" size="20" style="width:100px; border:0;"> ~
-                                                <input type="date" id="endDate" size="20" style="width:100px; border:0;">
+                                                <input type="date" id="startDate" name="docuStartDate" size="20" style="width:100px; border:0;"> ~
+                                                <input type="date" id="endDate" name="docuEndDate" size="20" style="width:100px; border:0;">
                                             </td>
                                         </tr>
     
@@ -269,31 +273,33 @@
                                                 신청사유 <br>및<br> 근무내용
                                             </th>
                                             <td style="height:250px; width:655px; text-align:left;">
-                                                <div id="editor" style="height:250px;">
-                                                    기안자 작성란
+                                            		<input type="hidden" id="docuContent" name="docuContent">
+                                                <div id="editor" contenteditable="true" style="height:250px;">
+                                                
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th style="text-align:center;"> 비 고 </th>
                                             <td>
-                                                <input type="text" name="etc-box" size="20" style="width:655px; border:0;" value="기안자 작성란">
+                                                <input type="text" name="docuRemark" size="20" style="width:655px; border:0;" value="기안자 작성란">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th style="text-align:center;">첨 부</th>
+                                            <th style="text-align:center;"> 첨 부 </th>
                                             <td><input type="file" style="width:645px;" id="upfile" class="form-control-file border file" name="uploadFiles" multiple></td>
-                                            <!--
-                                                <td>
-                                                    <c:forEach var="at" items="${ board.attachList }">
-                                                        <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a>
-                                                    </c:forEach>
-                                                </td>
-                                            -->
                                         </tr>
                                     </tbody>
                                 </table>
                             </div> <!-- 내용 작성하기 끝-->
+                            
+                            <!-- 텍스트에디터로 입력된 내용이 hidden 요소인 docuContent 필드로 업데이트됨 -->
+														<script>
+														    function updateDocuContent() {
+														        var content = document.getElementById("editor").innerText;
+																		document.getElementById("docuContent").value = content;
+														    }
+														</script>
                                                       
       
                             <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 재택근무를 신청하고자 하오니 허락하여 주시기 바랍니다.</p>
@@ -306,7 +312,7 @@
                                                 처 리 <br> 사 유
                                             </th>
                                             <td>
-                                                <textarea rows="5" style="border:0; width:655px; resize:none;" readonly>결재 시 결재권자만 작성할 수 있도록 처리</textarea>
+                                                <textarea rows="5" style="border:0; width:655px; resize:none;" readonly></textarea>
                                             </td>
                                         </tr>
                                 </table>
@@ -331,7 +337,7 @@
 	                                          <div class="modal-footer">
 	                                              <div class="btn-group-3">
 	                                                  <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-	                                                  <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
+	                                                  <button type="button" class="btn btn-primary waves-effect waves-light write" onclick="history.back();">확인</button>
 	                                              </div>
 	                                          </div>
 	                                      </div><!-- /.modal-content -->
@@ -352,19 +358,19 @@
 	                                          <div class="modal-footer">
 	                                              <div class="btn-group-3">
 	                                                  <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-	                                                  <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
+	                                                  <button type="submit" class="btn btn-primary waves-effect waves-light write">확인</button>
 	                                              </div>
 	                                          </div>
 	                                      </div><!-- /.modal-content -->
 	                                  </div><!-- /.modal-dialog -->
 	                              </div><!-- /.modal -->
-                                  
-                          </div> <!-- 결재 처리사유 끝-->
-                                       
-                      </div>
-                  </div>
-          		</div> <!-- container -->
-      	</div> <!-- content -->
+		                                  
+                        		</div> <!-- 결재 처리사유 끝-->        
+		                		</div>
+		            		</div>
+								</form>
+		    		</div> <!-- container -->
+				</div> <!-- content -->
 		</div> <!-- wrapper -->
 
             
