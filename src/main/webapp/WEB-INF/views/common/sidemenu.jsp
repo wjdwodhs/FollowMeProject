@@ -102,7 +102,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="${contextPath}/board/boardList.page" class="menu-link">
+                <a href="${contextPath}/board/list.do" class="menu-link">
                     <span class="menu-icon"><i data-feather="clipboard"></i></span>
                     <span class="menu-text"> 게시판 </span>
                 </a>
