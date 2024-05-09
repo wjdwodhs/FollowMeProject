@@ -18,6 +18,13 @@
 	
 	<dependencies>
 	
+	<!-- *스프링 웹소켓 라이브러리 -->
+		<dependency>
+	   <groupId>org.springframework</groupId>
+	   <artifactId>spring-websocket</artifactId>
+	   <version>${org.springframework-version}</version>
+		</dependency>
+	
 	<!-- 엑셀 다운 라이브러리 -->
 	<dependency>
     <groupId>org.apache.poi</groupId>
