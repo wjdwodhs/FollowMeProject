@@ -181,7 +181,7 @@
                                 
                                 <!-- 예약 조회-->
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body" id="car-list">
                                         <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>법인차량 목록</b> | <small>COMPANY CAR LIST</small></h5>
                                        
                                         <button type="button" class="btn w-sm btn-success waves-effect waves-light" 
@@ -276,7 +276,8 @@
                                            <br>
                                         	<button type="submit" class="btn w-sm btn-success waves-effect waves-light" 
                                         					style="background-color: #FFBE98; border: none; margin-left: 45%;">수정</button>
-                                        	<button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+                                        	<button type="button" class="btn w-sm btn-light waves-effect" 
+                                        	        data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
                                         </form>
                                         </div> <!-- end card -->
                                         
@@ -362,9 +363,36 @@
        </div>
    </div>
    <!-- /.차량추가 모달 끝 -->
+   
+   
+  <!-- 차량삭제 모달 -->
+	<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">법인차량 삭제</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            선택하신 차량을 삭제하시겠습니까?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
+            <button type="button" id="deletebtn"class="btn btn-primary" 
+                    style="background-color: #FFBE98; border: none;">삭제</button>
+        </div>
+      </div>
+    </div>
+	</div>
+	<!-- 차량 모달 삭제 -->
+   
+   
+   
+   
+   
 
 	<script>
-			
+	
 			// 체크박스 일괄 선택
 			$(document).on('click', '#allCheckBox', function() {
 		    if($(this).prop("checked")) {
@@ -424,9 +452,10 @@
 			// 차량 등록정보 수정
 			$("#modifyCar").submit(function(event){
 			
-				event.preventDefault();
+				event.preventDefault();  // submit 바로 넘어가지 않도록 설정
 				
-				let formData = new FormData(this);
+				// form에 담겨있는 데이터가 모두 담기게됨 FormData{}
+				let formData = new FormData(this);  
 				
 				$.ajax({
 						url:"${contextPath}/asset/modifycar.do",
@@ -439,6 +468,7 @@
 							console.log(result);
 							
 							if(result>0){
+								location.reload();
 								alert("차량정보가 수정 되었습니다.");
 							}else{
 								alert("차량정보 수정에 실패하였습니다.");
@@ -454,7 +484,32 @@
 			
 			
 			// 차량 삭제
-			
+			$("#deletebtn").on("click", function(){
+				
+				 var assetNo = $("#assetNo").val();
+				
+				$.ajax({
+					
+					url:"${contextPath}/asset/deletecar.do",
+					type:"get",
+					data:{no:assetNo},
+					success:function(result){
+						console.log(result);
+						if(result>0){
+							$('#deleteModal').modal('hide');
+							location.reload();
+							
+							alert("선택하신 차량이 삭제되었습니다.");
+							
+						}else{
+							alert("차량삭제에 실패하였습니다.");
+						}
+					},
+					error:function(){
+						consloe.log("차량 삭제 ajax 통신실패");
+					}
+				})
+			})
 			
 			
 			

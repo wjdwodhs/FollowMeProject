@@ -25,5 +25,7 @@ public interface AssetService {
 	int selectCarReservationListCount();
 	List<AssetReservationDto> selectCarReservationList(PageInfoDto pi);
 	
+	// 차량삭제
+	int deleteCar(int no);
 	
 }
