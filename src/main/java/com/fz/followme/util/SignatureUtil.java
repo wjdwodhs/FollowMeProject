@@ -16,7 +16,7 @@ public class SignatureUtil {
 	
 	public Map<String, String> fileUpload(MultipartFile uploadFile, String folderName) {
 
-    	// 전달된 파일 업로드 처리 
+		// 전달된 파일 업로드 처리 
 		// 1) 업로드시킬 폴더 (외부경로 : /upload/profile|board/yyyy/MM/dd)
 		String filePath = "/upload/" + folderName + new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
 		
@@ -48,11 +48,12 @@ public class SignatureUtil {
 	}
 	
 	// 파일 삭제 처리
-	public void deleteFile(String filePath) {
-	    File file = new File(filePath);
-	    if(file.exists()) {
-	        file.delete();
-	    }
-	}
+    public void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if(file.exists()) {
+            file.delete();
+        }
+    }
+
 
 }
