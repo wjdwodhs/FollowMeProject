@@ -52,6 +52,12 @@ public class AssetServiceImpl implements AssetService {
 	public List<AssetReservationDto> selectCarReservationList(PageInfoDto pi) {
 		return assetDao.selectCarReservationList(pi);
 	}
+
+
+	@Override
+	public int deleteCar(int no) {
+		return assetDao.deleteCar(no);
+	}
 	
 	
 	
