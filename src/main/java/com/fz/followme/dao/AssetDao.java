@@ -53,7 +53,9 @@ public class AssetDao {
 	}
 	
 	
-	
+	public int deleteCar(int no) {
+		return sqlSessionTemplate.delete("assetMapper.deleteCar", no);
+	}
 	
 	
 	

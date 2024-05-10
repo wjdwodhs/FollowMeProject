@@ -120,6 +120,11 @@
 	  ORDER BY RSVN_DATE DESC
 </select>
 
+<delete id="deleteCar">
+	delete
+	  from tb_asset
+	 where asset_no = #{no}
+</delete>
 
 
 

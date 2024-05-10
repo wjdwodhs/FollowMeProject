@@ -99,12 +99,7 @@ public class MemberController {
 			}
 			
 			out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
-			
-			if(loginUser.getAuthLevel().equals("3")) {
-				out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
-			} else {
-				out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
-			}
+			out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
 			
 		} else {
 			out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
@@ -342,7 +337,7 @@ public class MemberController {
 		String originalProfileURL = loginUser.getProfileImgPath();
 		
 		// 파일업로드 
-		Map<String, String> map = profileUtil.fileUpload(uploadFile);
+		Map<String, String> map = profileUtil.fileUpload(uploadFile, "profile");
 		loginUser.setProfileImgPath(map.get("filePath") + "/" + map.get("filesystemName"));
 				
 		int result = memberService.updateProfileImg(loginUser);
@@ -369,7 +364,7 @@ public class MemberController {
 		String originalSigImgPath = loginUser.getSigImgPath();
 		
 		// 파일 업로드
-		Map<String, String> map = signatureUtil.fileUpload(uploadFile);
+		Map<String, String> map = signatureUtil.fileUpload(uploadFile, "signature");
 		loginUser.setSigImgPath(map.get("filePath") + "/" + map.get("filesystemName"));
 		
 		int result = memberService.updateSigImg(loginUser);
