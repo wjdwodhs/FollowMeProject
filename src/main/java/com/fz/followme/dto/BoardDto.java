@@ -17,7 +17,8 @@ import lombok.ToString;
 @Builder
 public class BoardDto {
 
-	private int boardNo;
+	private String boardNo;
+	private int subNo;
 	private String boardTitle;
 	private String boardContent;
 	private String boardType;

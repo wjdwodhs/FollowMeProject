@@ -228,7 +228,7 @@
 		                                                		<c:otherwise>
 		                                                			<c:forEach var="b" items="${ list }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ b.boardNo }</td>
+		                                                					<td class="list-item1">${ b.subNo }</td>
 		                                                					<td class="list-item2">${ b.boardTitle }</td>
 		                                                					<td class="list-item3">${ b.memNo }</td>
 		                                                					<td class="list-item4">${ b.enrollDate }</td>

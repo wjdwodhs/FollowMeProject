@@ -234,6 +234,7 @@
 
                                              <!-- end col-->
                                             
+                                            <!-- 최신글 목록 조회(5개) -->
                                             <div class="col-lg-3" >
                                                 <ul class="list-group" >
                                                 <c:forEach var="nn" items="${ newList }">
