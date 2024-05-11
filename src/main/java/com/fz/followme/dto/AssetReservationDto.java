@@ -1,6 +1,7 @@
 package com.fz.followme.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,9 @@ public class AssetReservationDto {
 	// 관리자페이지 예약조회를 위한 필드
 	private String assetName;
 	private String deptName;
+	
+	// 예약관리 선택 번호
+	private int[] checkedRsvn;
 	
 	
 }

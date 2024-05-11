@@ -58,7 +58,9 @@ public class AssetDao {
 	}
 	
 	
-	
+	public int deleteRsvnList(int[] checkedRsvn) {
+		return sqlSessionTemplate.delete("assetMapper.deleteRsvnList", checkedRsvn);
+	}
 	
 	
 }

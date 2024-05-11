@@ -126,6 +126,19 @@
 	 where asset_no = #{no}
 </delete>
 
+<delete id="deleteRsvnList">
+		delete
+		  from tb_asset_rsvn
+		 where rsvn_no in
+		 <foreach item="checkedRsvn" collection="array" open="(" separator="," close=")">
+		 		#{checkedRsvn}
+		 </foreach>
+</delete>
+
+
+
+
+
 
 
 

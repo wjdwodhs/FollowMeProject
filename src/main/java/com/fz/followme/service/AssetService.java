@@ -28,4 +28,7 @@ public interface AssetService {
 	// 차량삭제
 	int deleteCar(int no);
 	
+	// 차량예약 내역 선택 삭제
+	int deleteRsvnList(int[] checkedRsvnArr);
+	
 }

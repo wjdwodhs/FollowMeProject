@@ -101,11 +101,11 @@
 
                                            <br>
 
-                                           <button type="button" class="btn w-sm btn-light waves-effect">.xlsx 다운로드</button>
-                                           <button class="btn btn-danger waves-effect waves-light btn-group"
-                                           style="background-color: #FFBE98; border: none; margin-left:75%;">삭제</button>
+                                           <button type="button" class="btn w-sm btn-light waves-effect" id="excelDownloadButton" onclick="exportSelectedToExcel();">.xlsx 다운로드</button>
+                                           <button class="btn btn-danger waves-effect waves-light btn-group" style="background-color: #FFBE98; border: none; margin-left:75%;" 
+                                           				 data-bs-toggle="modal" data-bs-target="#reservation-delMobal">삭제</button>
                                            <br><br>
-                                            <table class="table table-sm table-bordered">
+                                            <table class="table table-sm table-bordered" id="reservation-table">
                                             	<thead>  
                                                 <tr align="center">
                                                 		<th style="width: 20px;">
@@ -130,6 +130,7 @@
                                                       <div class="form-check">
                                                           <input type="checkbox" class="form-check-input" id="customCheck2">
                                                           <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                          <input type="hidden" class="form-check-input" id="rsvnNo" value="${r.rsvnNo}">
                                                       </div>
                                                     </td>
                                                     <td>${ r.assetName }</td>
@@ -374,7 +375,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            선택하신 차량을 삭제하시겠습니까?
+            삭제하시면 정보를 다시 불러올 수 없습니다. <br>
+            선택하신 차량을 삭제하시겠습니까? 
         </div>
         <div class="modal-footer">
             <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
@@ -384,9 +386,28 @@
       </div>
     </div>
 	</div>
-	<!-- 차량 모달 삭제 -->
+	<!-- 차량 삭제 모달 -->
    
-   
+  <!-- 선택예약 삭제 모달 -->
+	<div id="reservation-delMobal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="standard-modalLabel">예약내역 삭제</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>삭제하시면 정보를 다시 불러올 수 없습니다.</p>
+                <p>선택하신 이용내역을 삭제하시겠습니까?</p></div>
+            <div class="modal-footer">
+                <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="reservation-delBtn" class="btn btn-primary" 
+                        style="background-color: #FFBE98; border: none;">삭제</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+	<!-- 선택예약 삭제 모달 -->
    
    
    
@@ -401,6 +422,107 @@
 		        $("input[type=checkbox]").prop("checked",false);
 		    }
 			});
+			
+			
+			// 엑셀 다운로드
+			var contextPath = "${ contextPath }";
+			
+			function exportSelectedToExcel() {
+				// 선택한 요소의 데이터를 담을 배열 생성
+				var selectedData = [];
+				
+				// 데이블 요소 선택 
+				var table = document.getElementById("reservation-table");
+				
+				// 테이블의 체크된 체크박스 요소를 찾아서 선택한 행의 데이터를 수집
+				var checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
+				 checkboxes.forEach(function(checkbox) {
+					 var row = checkbox.closest('tr');
+					 var rowData = [];
+						
+				// 각 행의 셀 데이터를 수집하여 배열에 추가
+	        for (var j = 0; j < row.cells.length; j++) {
+	            rowData.push(row.cells[j].innerText.trim());
+	        }
+						
+       // 선택한 행의 데이터 배열을 전체 데이터 배열에 추가
+          selectedData.push(rowData);
+      });
+				
+				// 선택한 데이터를 서버로 전송하여 엑셀 파일 생성 요청
+			  sendSelectedDataToServer(selectedData);
+			}
+			
+			 function sendSelectedDataToServer(selectedData){
+				// 서버로 선택한 데이터를 전송하여 엑셀 파일 생성 요청
+				fetch(contextPath + '/asset/excelDownload', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify(selectedData)
+       })
+       .then(response => response.blob())
+			 .then(blob => {
+					// 엑셀 파일 다운로드 링크 생성
+					var url = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+					a.download = 'mileage_logbook.xlsx';
+					document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+				})
+				.catch(error => console.error('Error:', error));
+			}
+			
+			 
+			// 법인차량 예약 내역 삭제
+			$("#reservation-delBtn").on("click", function(){
+					
+				var checkedRsvn = [];
+				// 체크된 목록들을 담기
+				$("#reservation-table tbody input[type=checkbox]:checked").each(function(){
+						var rsvnNo = $(this).closest("tr").find("#rsvnNo").val();
+						checkedRsvn.push(rsvnNo);
+						console.log(checkedRsvn);
+				});
+				
+				if(checkedRsvn == null || checkedRsvn.length == 0){
+					$('#reservation-delMobal').modal('hide');
+					alert("선택된 내용이 없습니다.");
+					return;
+				}
+				
+				// 계속 값을 넘기는데에 있어 오류가 나서 string으로 엮어서 넘기기
+				var checkedRsvnStr = checkedRsvn.join(",");
+				
+				$.ajax({
+					url:"${contextPath}/asset/deletersvn.do",
+					type:"post",
+					data:{checkedRsvnStr:checkedRsvnStr},
+					success:function(result){
+						console.log(result);
+						if(result>0){
+							$('#reservation-delMobal').modal('hide');
+							alert("선택하신 예약내역이 삭제되었습니다.");
+							location.reload();
+						}else{
+							$('#reservation-delMobal').modal('hide');							
+							alert("차량삭제에 실패하였습니다.");
+						}
+						
+						
+					},
+					error:function(){
+
+					}
+				})
+			})
+			
+			 
+			 
+			 
 	
 	
 			// 차량상세조회

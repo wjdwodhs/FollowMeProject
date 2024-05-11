@@ -1,12 +1,22 @@
 package com.fz.followme.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -118,13 +128,55 @@ public class AssetController {
 	@ResponseBody
 	@GetMapping(value="/deletecar.do")
 	public int deleteCar(int no) {
-		
 		int result = assetService.deleteCar(no);
-		
 		return result;
 	}
 	
+	// 엑셀 다운로드
+	@PostMapping("/excelDownload")
+	 public ResponseEntity<byte[]> excelDownload(@RequestBody List<List<String>> data) throws IOException {
+		// 엑셀 워크북 생성
+		 Workbook workbook = new XSSFWorkbook();
+	     Sheet sheet = workbook.createSheet("Data");
+		
+		// 데이터를 엑셀에 기록하는 작업
+        for (int i = 0; i < data.size(); i++) {
+            List<String> rowData = data.get(i);
+            Row row = sheet.createRow(i);
+            for (int j = 0; j < rowData.size(); j++) {
+                Cell cell = row.createCell(j);
+                cell.setCellValue(rowData.get(j));
+            }
+        }
+		
+		// 엑셀파일을 byte 배열로 변환하여 HTTP 응답으로 반환
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        workbook.write(out);
+        byte[] bytes = out.toByteArray();
+        workbook.close();
+		
+        return ResponseEntity
+                .ok()
+                .contentLength(bytes.length)
+                .header("Content-Disposition", "attachment; filename=data.xlsx")
+                .body(bytes);
 	
+	}
+	
+	
+	 
+	 // 차량이용내역 선택 삭제
+	 @ResponseBody
+	 @PostMapping(value="/deletersvn.do", produces ="application/json; charset=utf-8")
+	 public int deleteRsvnList(@RequestParam("checkedRsvnStr") int[] checkedRsvn) {
+		 
+		 log.debug("checkedRsvn:{}", checkedRsvn);
+		 return assetService.deleteRsvnList(checkedRsvn);
+	 }
+	 
+	 
+	 
+	 
 	
 	
 	// --------------------------------------------------------------------

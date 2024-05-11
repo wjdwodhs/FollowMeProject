@@ -58,6 +58,12 @@ public class AssetServiceImpl implements AssetService {
 	public int deleteCar(int no) {
 		return assetDao.deleteCar(no);
 	}
+
+
+	@Override
+	public int deleteRsvnList(int[] checkedRsvn) {
+		return assetDao.deleteRsvnList(checkedRsvn);
+	}
 	
 	
 	
