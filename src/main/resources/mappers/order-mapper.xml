@@ -19,7 +19,7 @@
   	where order_date between trunc(sysdate)-7 and trunc(sysdate)-1
   </select>
   
-  <!-- 최근 1주일치 매출액 높은 순으로 정렬 -->
+  <!-- 최근 1주일치 매출액 가장 높은 것 1개 뽑기용 -->
   <select id="selectRevenue" resultMap="orderResult">
   	select * from
   	(
@@ -29,7 +29,7 @@
      where order_date between trunc(sysdate)- 7 and trunc(sysdate)
      order by revenue desc
     ) 
-    where rownum <![CDATA[<=]]> 6
+    where rownum <![CDATA[<=]]> 1
   </select>
   
   <!-- 오늘의 매출액, 오늘의 판매량 구하는용 -->

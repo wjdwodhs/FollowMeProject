@@ -31,10 +31,27 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-<script>
 
-</script>
+<!-- 캘린더 -->
+			<!-- fullcalendar -->
+     <link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet"/>
+     <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
+		 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
+		 
+		 
+	   <!-- jquery CDN -->  
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     
+     <!-- fullcalendar 언어 CDN -->  
+     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+     
+     <!-- Bootstrap JavaScript -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<style>
+
+</style>
 </head>
 <body>
 <!-- Begin page -->
@@ -48,318 +65,231 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-      <div class="content-page">
+      <div class="content-page" style="background-color:#F2E8DA;">
+		    <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
+			    <div class="content" style="background-color:#F2E8DA;">
+			        <div class="container-fluid">
+			            <div class="row">
+			                <div class="col-12">
+			                    <div class="page-title-box">
+			                        <div class="page-title-right">
+			                        </div>
+			                        <h4 class="page-title"></h4>
+			                    </div>
+			                </div>
+			            </div>     
+			            <div class="row">
+			                <div class="col-3">
+			                    <div class="card">
+			                        <div class="card-body" style="height: 400px; text-align:center">
+			                            
+			                            <div style="display: flex; justify-content: center; margin-top: 20px;">
+	                                    <h4 style="margin-right: 20px;">04월 28일 <br> 오전 7:47:03</h4>
+	                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
+	                                </div>
+	                                <div style="margin-top: 20px;">
+	                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
+	                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
+	                                </div>
+	                                <div style="margin-top: 30px;"> 
+	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="업무">업무</button>&nbsp &nbsp 
+	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="회의">회의</button>
+	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외출">외출</button>&nbsp &nbsp 
+	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외근">외근</button>
+	                                </div>
+			                            
+			                            <!-- 출근하기 버튼 모달 -->
+					                        <div id="in-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+					                            <div class="modal-dialog modal-top">
+					                                <div class="modal-content">
+					                                    <div class="modal-header">
+					                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
+					                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					                                    </div>
+					                                    <div class="modal-body">
+					                                        <h5>출근하시겠습니까?</h5>
+					                                        <p>확인을 누르시면 근무형태가 '출근'으로 변경됩니다.</p>
+					                                    </div>
+					                                    <div class="modal-footer">
+					                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+					                                        <button type="button" class="btn btn-primary">확인</button>
+					                                    </div>
+					                                </div><!-- /.modal-content -->
+					                            </div><!-- /.modal-dialog -->
+					                        </div><!-- /.modal -->
+					
+					                        <!-- 퇴근하기 버튼 모달 -->
+					                        <div id="out-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+					                            <div class="modal-dialog modal-top">
+					                                <div class="modal-content">
+					                                    <div class="modal-header">
+					                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
+					                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					                                    </div>
+					                                    <div class="modal-body">
+					                                        <h5>퇴근하시겠습니까?</h5>
+					                                        <p>확인을 누르시면 근무형태가 '퇴근'으로 변경됩니다.</p>
+					                                    </div>
+					                                    <div class="modal-footer">
+					                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+					                                        <button type="button" class="btn btn-primary">확인</button>
+					                                    </div>
+					                                </div><!-- /.modal-content -->
+					                            </div><!-- /.modal-dialog -->
+					                        </div><!-- /.modal -->
+					
+					                        <!-- 근무변경 modal content -->
+					                        <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+					                            <div class="modal-dialog">
+					                                <div class="modal-content">
+					                                    <div class="modal-body">
+					                                        <form action="#" class="px-3">
+					                                            <p><br>근무 변경을 위한 본인확인 절차가 필요합니다. <br></p>
+					                                            <div class="mb-3">
+					                                                <label for="checkPwd" class="form-label">비밀번호</label>
+					                                                <input class="form-control" type="password" required="" id="checkPwd" placeholder="비밀번호를 입력해주세요.">
+					                                            </div>
+					
+					                                            <div class="mb-2 text-center">
+					                                                <button class="btn rounded-pill btn-primary" type="submit">확인</button>
+					                                            </div>
+					
+					                                        </form>
+					                                    </div>
+					                                </div><!-- /.modal-content -->
+					                            </div><!-- /.modal-dialog -->
+					                        </div><!-- /.modal -->                        
+							                            
+			                            
+			                        </div>
+			                    </div> <!-- end card -->
+			                </div> <!-- end col-->
+			                
+			                
+			                <div class="col-5">
+			                    <div class="card">
+			                        <div class="card-body" style="height: 400px;"> <!-- 달력 표시용 -->
+			                            <div class="row" style="display:flex; justify-content:center;">
+                                      
+                                    	<div id="calendar" style="width: 100%; height:400px;"></div>
+                                     
+                                  </div>  <!-- end row -->
+		                          </div>
+			                    </div> <!-- end card-->
+			                </div> <!-- end col -->
+			                
+			                
+			                <div class="col-4">
+			                    <div class="card">
+			                        <div class="card-body" >
+			                            <div class="dropdown float-end">
+			                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+			                                    <i class="mdi mdi-dots-vertical"></i>
+			                                </a>
+			                                <div class="dropdown-menu dropdown-menu-end">
+			                                    <!-- item-->
+			                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
+			                                    <!-- item-->
+			                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
+			                                </div>
+			                            </div>
+			                            <h4 class="header-title mb-3">Weekly Best Item</h4>
+			                            <div class="table-responsive">
+			                                <table class="table table-striped table-sm table-nowrap table-centered mb-0">
+			                                    <thead>
+			                                        <tr>
+			                                            <th>상품명</th>
+			                                            <th>판매량</th>
+			                                            <th>매출액</th>
+			                                        </tr>
+			                                    </thead>
+			                                    <tbody>
+			                                        <tr>
+			                                            <td>
+			                                                <h5 class="font-15 my-1 fw-normal">${revenueList.proName}</h5>
+			                                            </td>
+			                                            <td style="text-align:center;">${revenueList.orderAmount}</td>
+			                                            <td>${revenueList.revenue}</td>
+			                                        </tr>
+			                                    </tbody>
+			                                </table>
+			                            </div>
+			                        </div>
+			                    </div> <!-- end card-->
+			                </div> <!-- end col -->
+			            </div> <!-- end row -->
+			            <div class="row">
+			                <div class="col-3">
+			                    <div class="card">
+			                        <div class="card-body" style="height: 200px;">
+			                        		<h4 class="header-title">오늘의 결재</h4>
+			                            <div> 
+	                                    <button type="button" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="대기">대기</button>&nbsp &nbsp 
+	                                    <button type="button" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="완료">완료</button>
+	                                    <button type="button" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="예정">예정</button>&nbsp &nbsp 
+	                                    <button type="button" class="btn btn-outline-blue waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="진행">진행</button>
+	                                </div>
+			                        </div>
+			                    </div> <!-- end card-->
+			                </div> <!-- end col -->
+			                
+			                <div class="col-5">
+			                    <div class="card">
+			                        <div class="card-body" style="height: 200px;">
+			                            
+			                            
+			                            
+			                            
+			                            
+			                        </div>
+			                    </div> <!-- end card-->
+			                </div> <!-- end col -->
+			                
+			                
+			                <div class="col-4">
+			                    <div class="card" style="margin-top:-202px;">
+			                        <div class="card-body">
+			                            <h4 class="header-title">오늘의 패션 뉴스</h4>
+			                            <div id="news-container" style="height: 330px; overflow-y:auto;"></div>
+			                            <script>
+			                                $(document).ready(function() {
+			                                    $.ajax({
+			                                        url: '${contextPath}/chart/naverNews.do', 
+			                                        method: 'GET',
+			                                        success: function(response) {
+			                                            displayBlog(response, 'news-container');
+			                                        },
+			                                        error: function(xhr, status, error) {
+			                                            console.error('Error fetching blog:', error);
+			                                        }
+			                                    });
+			                                });
+			                                function displayBlog(newsData, containerId) {
+			                                    var newsContainer = document.getElementById(containerId);
+			                                    var newsHtml = '';
+			                                    if (!Array.isArray(newsData.items)) {
+			                                    	newsData.items = [newsData.items];
+			                                    }
+			                                    newsData.items.forEach(function(item) {
+			                                        if (item.title.includes('패션')) {
+			                                        	newsHtml += '<div class="blog-item">' +
+			                                                '<h5><a href="' + item.link + '" target="_blank">' + item.title + '</a></h5>' +
+			                                                '<p>' + item.description + '</p>' +
+			                                                '</div>';
+			                                        }
+			                                    });
+			                                    newsContainer.innerHTML = newsHtml;
+			                                }
+			                            </script>
+				                        </div>
+				                    </div>
+				                </div>	
+				            </div> <!-- end row -->
+				        </div> <!-- container -->
+				    </div> <!-- content -->
+				</div>
+		</div>
 
-         <!-- topbar include -->
-         <jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
-         
-         <div class="content" style="background-color:#F2E8DA;">
-
-                    <!-- Start Content-->
-                    <div class="container-fluid">
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        
-                                    </div>
-                                    <h4 class="page-title"></h4>
-                                </div>
-                            </div>
-                        </div>     
-
-                        <div class="row">
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#febe98; border-color:#febe98;">
-                                                    <i class="fe-heart font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span id="revenue" data-plugin="counterup">${todayInfo.revenue}</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 매출액</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#de8286; border-color:#de8286;">
-                                                    <i class="fe-shopping-cart font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">${todayInfo.orderAmount}</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 판매량</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#fa9a85; border-color:#fa9a85;">
-                                                    <i class="fe-bar-chart-line- font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">10</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 결재</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-
-                            <div class="col-md-6 col-xl-3">
-                                <div class="widget-rounded-circle card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="avatar-lg rounded-circle" style="background-color:#ffb2a5; border-color:#ffb2a5;">
-                                                    <i class="fe-eye font-22 avatar-title"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-end">
-                                                    <h3 class="text-dark mt-1"><span data-plugin="counterup">5</span></h3>
-                                                    <p class="text-muted mb-1 text-truncate">오늘의 일정</p>
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row-->
-                                    </div>
-                                </div> <!-- end widget-rounded-circle-->
-                            </div> <!-- end col-->
-                        </div>
-                        <!-- end row-->
-
-                        <div class="row">
-                            
-
-                            <div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 450px;">
-                                        <h4 class="header-title">베스트 상품</h4>
-                                        <p class="sub-header"> </p>
-                                        
-                                        <!--  추후 기능 구현 시 판매량 높은 순으로 정렬 -->
-                                        <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner" role="listbox">
-                                            	<c:forEach var="r" items="${revenueList}" varStatus="status">
-																			            <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
-																			                <img src="${contextPath}${r.proImgPath}" class="d-block" style="width:700px;height:350px;">
-																			                <div class="carousel-caption d-none d-md-block">
-																			                    <h3 class="text-white"></h3>
-																			                </div>
-																			            </div>
-																			        </c:forEach>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div> <!-- end card -->
-                            </div> <!-- end col-->
-                            
-                            <div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 450px;">
-                                        
-                                        <h4 class="header-title mb-0">베스트 상품 현황</h4>
-                                        
-                                        <div class="row justify-content-end">
-                                            
-                                        </div>
-                                        
-                                        <div id="cardCollpase5" class="collapse show">
-                                            <div class="table-responsive pt-3">
-                                                <table class="table table-hover table-centered mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>상품명</th>
-                                                            <th>판매가</th>
-                                                            <th>판매량</th>
-                                                            <th>총 매출액</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    	<c:forEach var="r" items="${revenueList}">
-                                                        <tr>
-                                                            <td>${r.proName}</td>
-                                                            <td><fmt:formatNumber value="${r.proPrice}" pattern="#,##0"/>원</td>
-                                                            <td style="text-align:center;">${r.orderAmount}</td>
-                                                            <td><fmt:formatNumber value="${r.revenue}" pattern="#,##0"/>원</td>
-                                                        </tr>
-                                                       </c:forEach>                                    
-                                                    </tbody>
-                                                </table>
-                                            </div> <!-- end table responsive-->
-                                        </div> <!-- collapsed end -->
-                                    </div> <!-- end card-body -->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-                            
-														<div class="col-xl-6">
-                                <div class="card">
-                                    <div class="card-body" style="height: 400px;">
-                                        
-                                        <h4 class="header-title">일별 판매 현황</h4>
-                                        
-                                        <div>
-																				  <canvas id="myChart" style="border: none !important;outline: none !important;"></canvas>
-																				</div>
-																				
-																				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-																				
-																				<script>
-																			    $(document).ready(function(){
-																			        $.ajax({
-																			            url: '${contextPath}/chart/revenue.do',
-																			            method: 'GET',
-																			            success: function(data){
-																			                
-																			                var dates = data.map(function(item) {
-																			                		var orderDate = new Date(item.orderDate);
-																			                    return orderDate.toLocaleDateString();
-																			                });
-																			                var orderAmount = data.map(function(item) {
-																			                    return item.orderAmount
-																			                });
-																			
-																			                var ctx = document.getElementById('myChart').getContext('2d');
-																			                var myChart = new Chart(ctx, {
-																			                    type: 'bar',
-																			                    data: {
-																			                        labels: dates,
-																			                        datasets: [{
-																			                            label: '총 판매량',
-																			                            data: orderAmount,
-																			                            backgroundColor: '#febe98', 
-																			                            borderWidth: 0
-																			                        }]
-																			                    },
-																			                    options: {
-																			                        scales: {
-																			                            yAxes: [{
-																			                                ticks: {
-																			                                    beginAtZero: true,
-																			                                    max: 100 // 최대 값 설정
-																			                                }
-																			                            }]
-																			                        }
-																			                    }
-																			                });
-																			            },
-																			            error: function(xhr, status, error){
-																			                console.error(error);
-																			            }
-																			        });
-																			    });
-																			</script>
-
-                                        
-                                        
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div> <!-- end col -->
-
-                            <div class="col-xl-6">
-													    <div class="card">
-													        <div class="card-body" style="height: 400px;">
-													            <h4 class="header-title">오늘의 패션 뉴스</h4>
-													            <div id="news-container" style="height: 330px; overflow-y:auto;"></div> <!-- 뉴스를 보여줄 영역 -->
-													             <script>
-													                $(document).ready(function() {
-													                    $.ajax({
-													                        url: '${contextPath}/chart/naverNews.do', 
-													                        method: 'GET',
-													                        success: function(response) {
-													                            displayNews(response); 
-													                        },
-													                        error: function(xhr, status, error) {
-													                            console.error('Error fetching news:', error);
-													                        }
-													                    });
-													                });
-													                
-													                // 받은 데이터를 웹사이트에 표시하는 함수
-													                function displayNews(newsData) {
-													                    var newsContainer = document.getElementById('news-container');
-													                    var newsHtml = '';
-													
-													                    // 만약 newsData가 배열이 아니라면, 배열로 변환
-													                    if (!Array.isArray(newsData.items)) {
-													                        newsData.items = [newsData.items];
-													                    }
-													
-													                    // JSON 데이터를 순회하며 HTML로 변환
-													                    newsData.items.forEach(function(item) {
-													                    	if (item.title.includes('패션')) { // 패션 키워드로 검색
-													                            newsHtml += '<div class="news-item">' +
-													                                            '<h5><a href="' + item.link + '" target="_blank">' + item.title + '</a></h5>' +
-													                                            '<p>' + item.description + '</p>' +
-													                                        '</div>';
-													                        }
-													                    });
-													
-													                    // 변환된 HTML을 뉴스 컨테이너에 추가
-													                    newsContainer.innerHTML = newsHtml;
-													                }
-													            </script>
-													            
-													        </div>
-													    </div> <!-- end card-->
-													</div> <!-- end col -->
-
-
-
-                            
-                        </div>
-                        <!-- end row -->
-
-
-
-                            
-                        
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-
-               
-            </div>
-
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
-
-        </div>
-        <!-- END wrapper -->
 
         <!-- Theme Settings -->
         <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
@@ -831,7 +761,7 @@
         
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        
+        <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
 
@@ -850,7 +780,9 @@
         <!-- Dashboard init JS -->
         <script src="${ contextPath }/assets/js/pages/dashboard-3.init.js"></script>
         
-        
+        <!-- Calendar init -->
+		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
+       
        
 
 </body>

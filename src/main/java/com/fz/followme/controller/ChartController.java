@@ -53,4 +53,27 @@ public class ChartController {
         ResponseEntity<String> response = restTemplate.exchange(req, String.class);
         return response;
     }
+	
+	@GetMapping("/naverBlog.do")
+	public ResponseEntity<String> getNaverBlog() {
+        String clientId = "Icsu9Z4AFgHEk4gCROsJ"; // 애플리케이션 클라이언트 아이디
+        String clientSecret = "v7cwu7ppik"; // 애플리케이션 클라이언트 시크릿
+        String query = "패션"; // 검색어
+
+        String encodedQuery = java.net.URLEncoder.encode(query, StandardCharsets.UTF_8);
+        String apiUrl = "https://openapi.naver.com/v1/search/blog.json?query=" + encodedQuery + "&display=100&start=1&sort=date";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Naver-Client-Id", clientId);
+        headers.add("X-Naver-Client-Secret", clientSecret);
+
+        RequestEntity<Void> req = RequestEntity
+                .get(URI.create(apiUrl))
+                .headers(headers)
+                .build();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(req, String.class);
+        return response;
+    }
 }

@@ -31,7 +31,7 @@ public class HomeController {
 	@RequestMapping("/ceoMain.page")
 	public String ceoMainPage(Model model) {
 		
-		List<OrderDto> revenueList = orderService.selectRevenue();
+		OrderDto revenueList = orderService.selectRevenue();
 		OrderDto todayInfo = orderService.selectTodayInfo();
 		
 		model.addAttribute("revenueList", revenueList);	

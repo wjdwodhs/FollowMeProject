@@ -99,7 +99,12 @@ public class MemberController {
 			}
 			
 			out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
-			out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
+			if(loginUser.getAuthLevel().equals("3")) {
+				out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
+			} else {
+				out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
+			}
+			
 			
 		} else {
 			out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
@@ -458,6 +463,24 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	// 인사관리 페이지 - 키워드 검색어가 없을 경우 전체 리스트 호출
+	@GetMapping("/allList")
+	@ResponseBody
+	public Map<String, Object> ajaxSearchList(@RequestParam(value="pageNo", defaultValue="1") int currentPage) {
+		
+		int listCount = memberService.selectMemberListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+		List<MemberDto> memberList = memberService.selectMemberList(pi);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("memberList", memberList);
+		response.put("pi", pi);
+		
+		return response;
+    }
+	
+	
 	
 	// 인사관리 페이지 - 검색처리
 	@GetMapping("/searchList")

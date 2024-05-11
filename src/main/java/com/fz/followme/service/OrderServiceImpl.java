@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderDto> selectRevenue() {
+	public OrderDto selectRevenue() {
 		return orderDao.selectRevenue();
 	}
 

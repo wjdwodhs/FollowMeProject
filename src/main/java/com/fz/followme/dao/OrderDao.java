@@ -19,8 +19,8 @@ public class OrderDao {
 		return sqlSessionTemplate.selectList("orderMapper.selectOrder");
 	}
 	
-	public List<OrderDto> selectRevenue() {
-		return sqlSessionTemplate.selectList("orderMapper.selectRevenue");
+	public OrderDto selectRevenue() {
+		return sqlSessionTemplate.selectOne("orderMapper.selectRevenue");
 	}
 	
 	public OrderDto selectTodayInfo() {
