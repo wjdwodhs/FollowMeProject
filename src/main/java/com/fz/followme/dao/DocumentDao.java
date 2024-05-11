@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
@@ -43,6 +44,19 @@ public class DocumentDao {
 		
 		return sqlSessionTemplate.selectList("documentMapper.selectSearchList", search, rowBounds);
 	}
+	
+	// status에 따른 검색 리스트조회
+	public int statusSearchListCount(Map<String, String> search) {
+		return sqlSessionTemplate.selectOne("documentMapper.statusSearchListCount", search);
+	}
+
+	public List<DocumentDto> statusSearchList(Map<String, String> search, PageInfoDto pi) {
+		int limit = pi.getBoardLimit();
+		int offset= (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds= new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("documentMapper.statusSearchList", search, rowBounds);
+	}	
 	
 	// 진행중 리스트조회 -----------------------------------------------
 	public int selectPendListCount(MemberDto m) {
@@ -109,5 +123,32 @@ public class DocumentDao {
 		
 		return sqlSessionTemplate.selectList("documentMapper.selectRefList", memNo, rowBounds);
 	}
+	
+	// 미처리 리스트조회 -----------------------------------------------
+	public int selectNotDoneListCount(String memNo) {
+		return sqlSessionTemplate.selectOne("documentMapper.selectNotDoneListCount", memNo);
+	}
+
+	public List<DocumentDto> selectNotDoneList(PageInfoDto pi, String memNo) {
+		int limit = pi.getBoardLimit();
+		int offset= (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds= new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("documentMapper.selectNotDoneList", memNo, rowBounds);
+	}
+
+	public int insertDocument(DocumentDto document) {
+		return sqlSessionTemplate.insert("documentMapper.insertDocument", document);
+	}
+
+	public int insertAttach(AttachmentDto at) {
+		return sqlSessionTemplate.insert("documentMapper.insertAttach", at);
+	}
+
+	public String selectApprover(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("documentMapper.selectApprover", map);
+	}
+
+
 	
 }

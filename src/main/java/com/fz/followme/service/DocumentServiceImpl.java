@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.DocumentDao;
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
@@ -39,6 +40,18 @@ public class DocumentServiceImpl implements DocumentService {
 	public List<DocumentDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		return documentDao.selectSearchList(search, pi);
 	}
+	
+	// status에 따른 검색 리스트조회 -----------------------------------------------
+	@Override
+	public int statusSearchListCount(Map<String, String> search) {
+		return documentDao.statusSearchListCount(search);
+	}
+
+	@Override
+	public List<DocumentDto> statusSearchList(Map<String, String> search, PageInfoDto pi) {
+		return documentDao.statusSearchList(search, pi);
+	}
+
 	
 	// 진행중 리스트조회 -----------------------------------------------
 	@Override
@@ -94,6 +107,37 @@ public class DocumentServiceImpl implements DocumentService {
 	public List<DocumentDto> selectRefList(PageInfoDto pi, String memNo) {
 		return documentDao.selectRefList(pi, memNo);
 	}
+	
+	// 미결재 리스트조회 -----------------------------------------------
+	@Override
+	public int selectNotDoneListCount(String memNo) {
+		return documentDao.selectRefListCount(memNo);
+	}
+
+	@Override
+	public List<DocumentDto> selectNotDoneList(PageInfoDto pi, String memNo) {
+		return documentDao.selectRefList(pi, memNo);
+	}
+
+	
+	// 글 작성하기
+	@Override
+	public int insertDocument(DocumentDto document) {
+		// board insert
+		int result1 = documentDao.insertDocument(document);
+		// attach insert
+		int result2 = 1;
+		if(!document.getAttachList().isEmpty()) {
+			result2 = 0;
+			for(AttachmentDto at : document.getAttachList()) {
+				result2 += documentDao.insertAttach(at);
+			}
+		}
+		
+		return result1 * result2;
+	}
+
+
 
 
 

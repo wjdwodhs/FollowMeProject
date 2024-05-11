@@ -1,5 +1,7 @@
 package com.fz.followme.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,11 +9,16 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
@@ -65,7 +72,6 @@ public class DocumentController {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		
 		log.debug("search: {}", search);
-		search.put("status", status);
 		search.put("memNo", loginUser.getMemNo());
 		search.put("deptNo", String.valueOf(loginUser.getDeptNo()));
 		search.put("memGrade", loginUser.getMemGrade());
@@ -79,6 +85,50 @@ public class DocumentController {
 		  .addObject("list", list)
 		  .addObject("search", search)
 		  .setViewName("document/list");
+		
+		return mv;
+	}
+	
+	// status에 따른 검색 리스트조회 -----------------------------------------------
+	@GetMapping("/status")
+	public ModelAndView statusSearch(@RequestParam Map<String, String> search
+							 , @RequestParam(value="page", defaultValue="1") int currentPage
+							 , ModelAndView mv, HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		
+		log.debug("search: {}", search);
+		search.put("status", status);
+		search.put("memNo", loginUser.getMemNo());
+		search.put("deptNo", String.valueOf(loginUser.getDeptNo()));
+		search.put("memGrade", loginUser.getMemGrade());
+		
+		int listCount = documentService.statusSearchListCount(search);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		
+		List<DocumentDto> list = documentService.statusSearchList(search, pi);
+
+		  if(status.equals("0")) {
+			  mv.addObject("pi",pi)
+				.addObject("list", list)
+				.addObject("search", search)
+				.setViewName("document/pendList");
+		  }else if(status.equals("1")) {
+			  mv.addObject("pi",pi)
+				.addObject("list", list)
+				.addObject("search", search)			  
+				.setViewName("document/approvalList");
+		  }else if(status.equals("2")) {
+			  mv.addObject("pi",pi)
+				.addObject("list", list)
+				.addObject("search", search)
+				.setViewName("document/reject");
+		  }else if(status.equals("3")) {
+			  mv.addObject("pi",pi)
+				.addObject("list", list)
+				.addObject("search", search)
+				.setViewName("document/recall");
+		  }
 		
 		return mv;
 	}
@@ -115,7 +165,7 @@ public class DocumentController {
 			, @RequestParam(value="status", defaultValue="1") String status   
 			, ModelAndView mv, HttpSession session) {
 	
-		this.status = status;
+		this.status = status;	
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		MemberDto m = new MemberDto();
 		m.setMemNo(loginUser.getMemNo());
@@ -128,7 +178,7 @@ public class DocumentController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("list",list)
-		  .setViewName("document/ApprovalList");
+		  .setViewName("document/approvalList");
 		
 		return mv;
 	}
@@ -186,7 +236,7 @@ public class DocumentController {
 	
 	// 참조 리스트조회 -----------------------------------------------
 	@GetMapping("/refList.page")
-	public ModelAndView List(@RequestParam(value="page", defaultValue="1") int currentPage
+	public ModelAndView refList(@RequestParam(value="page", defaultValue="1") int currentPage
 		       , ModelAndView mv, HttpSession session) {
 	
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
@@ -204,16 +254,105 @@ public class DocumentController {
 		return mv;
 	}
 
-//	
-//	@RequestMapping("/notDoneList.page")
-//	public void notDoneList() {
-//		
-//	}
+	// 미결재 리스트조회 -----------------------------------------------
+	@GetMapping("/notDoneList.page")
+	public ModelAndView notDoneList(@RequestParam(value="page", defaultValue="1") int currentPage
+		       , ModelAndView mv, HttpSession session) {
 	
-//	@RequestMapping("/insertForm.page")
-//	public void insertForm() {
-//		
-//	}
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String memNo = loginUser.getMemNo();
+		
+		int listCount = documentService.selectNotDoneListCount(memNo);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		List<DocumentDto> list = documentService.selectNotDoneList(pi, memNo);
+	
+		mv.addObject("pi", pi)
+		  .addObject("list",list)
+		  .setViewName("document/notDoneList");
+		
+		return mv;
+	}
+	
+	// 글 작성 관련 ---------------------------------------------------
+	@GetMapping("/insertForm.page")
+	public void insertForm() {
+
+	}
+	
+	/*
+	@GetMapping("/submitCategory")
+	public String insertForm(@RequestParam("docuCategory") int docuCategory
+						  , HttpSession session
+						  , Model model) {
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("documentCategory", docuCategory);
+		map.put("loginUser", loginUser);
+		documentService.selectApprover(map);
+		
+		return "document/insertForm";
+	}
+	*/
+		
+	@PostMapping("/insert.do")
+	public String regist(DocumentDto document
+					   , String[] docuSpendDate
+					   , String[] docuSpendItems
+					   , String[] docuSpendPrice
+					   , String[] docuSpendRemark
+					   , List<MultipartFile> uploadFiles
+			      	   , HttpSession session
+			      	   , RedirectAttributes redirectAttributes) {
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		document.setMemNo(loginUser.getMemNo());
+		log.debug("document: {}", docuSpendDate[0]);
+		log.debug("document: {}", docuSpendDate[1]);
+		log.debug("document: {}", docuSpendDate[2]);
+		if(document.getDocuCategory() == 4) {
+			document.setDocuStartDate(String.join(",", docuSpendDate));
+			document.setDocuItem(String.join(",", docuSpendItems));
+			document.setDocuEtcCost(String.join(",", docuSpendPrice));
+			document.setDocuRemark(String.join(",", docuSpendRemark));
+		}else if(document.getDocuCategory() == 5) {
+			
+		}
+		
+		List<AttachmentDto> attachList = new ArrayList<>();
+		log.debug("document: {}", document);
+		for(MultipartFile uploadFile : uploadFiles) {
+			if(uploadFile != null && !uploadFile.isEmpty()) {
+				// 파일 업로드
+				Map<String, String> map = fileUtil.fileUpload(uploadFile, "document");
+				
+				// insert할 데이터 => AttachDto객체 만들고 => attachList쌓기
+				attachList.add(AttachmentDto.builder()
+									    .filePath(map.get("filePath"))
+									    .systemName(map.get("systemName"))
+									    .originName(map.get("originName"))
+									    .type("D")
+									    .build());
+			}
+		}
+		
+		document.setAttachList(attachList); // 첨부파일이 없었을 경우 텅빈 리스트가 담김
+		
+		int result = documentService.insertDocument(document);
+		
+		// 성공시 => alert메세지와 함께 목록페이지로 이동
+		// 실패시 => alert메세지와 함께 작성페이지에 그대로
+		
+		redirectAttributes.addFlashAttribute("alertTitle", "게시판 작성 서비스");
+		if(attachList.isEmpty() && result == 1 || !attachList.isEmpty() && result == attachList.size()) {
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서 등록에 성공하셨습니다.");
+		} else {
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서 등록에 실패했습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+		}
+		
+		return "redirect:/document/list.page";
+	}
 //	
 //	@RequestMapping("/detailForm.page")
 //	public void detailForm() {

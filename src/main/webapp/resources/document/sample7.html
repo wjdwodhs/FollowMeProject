@@ -63,6 +63,10 @@
         margin-left: 2px;
     }
     
+    .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td {
+    		height: 40px;
+    }
+    
     .table-2-1{
         border: 1px solid rgb(102, 88, 221);
         border-collapse: collapse;
@@ -152,6 +156,13 @@
         --ct-btn-disabled-border-color: #f3f7f9;
 
     }
+    
+		#refDeptNo, #refMemNo	 {
+		    flex: 1; /* 자식 요소를 꽉 채우도록 설정합니다. */
+		    border: 0;
+		 
+		    font-size:14px;
+		}
 </style>
 </head>
 <body>
@@ -169,8 +180,8 @@
             <!-- Start Content-->
             <div class="container-fluid" style="display:flex; justify-content: center;">
                 
-                <form id="enrollForm" method="post" action="${ contextPath }/document/regist.do" enctype="multipart/form-data" onsubmit="updateDocuContent();">
-                
+                <form id="insertForm" method="post" enctype="multipart/form-data" onsubmit="updateDocuContent();">
+                	<input type="hidden" name="docuCategory" value='7'>
 		                <div class="card">
 		                    <div class="card-body">
 		                        <div class="top-document">
@@ -188,7 +199,7 @@
 		                                    </tr>
 		                                    <tr class="sign">
 		                                        <td>
-	                                          		<img src="${contextPath}${loginUser.sigImgPath}">
+		                                        		<!-- <img src="${contextPath}${loginUser.sigImgPath}"> -->
 		                                        </td>
 		                                        <td></td>
 		                                    </tr>
@@ -199,22 +210,37 @@
 		                        <div class="document-info">
 		
 		                            <div class="info-1">
+                                		
 		                                <table class="table-info-1">
 		                                    <tr>
 		                                        <th width="120px;"> 수신부서 </th>
-		                                        <td width="266px;"> ${document.refDeptName} </td>    
+                                            <td width="266px;">
+                                            		<select id="refDeptNo" name="refDeptNo" class="form-select form-select-sm">
+																									<option value="">부서 선택</option>
+																									<option value="1">영업팀</option>
+																									<option value="2">마케팅팀</option>
+																									<option value="3">경영지원팀</option>
+																									<option value="4">물류팀</option>
+																								</select>
+                                            </td>    
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 발신부서 </th>
-		                                        <td> ${loginUser.deptName} </td>
+		                                        <td> 
+                                            		<input type="text" id="memDeptName" name="memDeptName" value="" style="border:0;" readonly>
+                                            </td> 
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 담당자 </th>
-		                                        <td> ${loginUser.memName} ${loginUser.memGrade} </td>
+                                            <td> 
+                                            		<input type="text" id="mem" name="mem" value="" style="border:0;" readonly> 
+                                            </td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 기안일 </th>
-                                            <td> ${document.registDate} </td>
+                                            <td>
+                                            		<input type="text" id="registDate" name="registDate" value="" style="border:0;" readonly> 
+                                            </td>
 		                                    </tr>
 		                                </table>
 		                                
@@ -224,12 +250,16 @@
 		                                    <tr>
 		                                        <th width="120px;"> 참조인 </th>
 		                                        <td width="266px;">
-                                            		<input type="text" id="refDeptNo" name="refDeptNo" placeholder="참조인 사번 입력">
-		                                        </td>
+                                            		<select id="refMemNo" name="refMemNo" class="form-select form-select-sm">
+																									<!-- 직원 목록 사번 / 부서 / 이름으로 조회 forEach문 -->
+																									<option value="">참조인 선택</option>
+
+																								</select>
+																						</td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 결재자 </th>
-		                                        <td> ${document.approverInf} </td>
+		                                        <td>  </td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 보존연한 </th>

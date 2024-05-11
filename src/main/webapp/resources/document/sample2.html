@@ -62,6 +62,10 @@
         margin-left: 2px;
     }
     
+    .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td {
+    		height: 40px;
+    }
+    
     .table-2-1{
         border: 1px solid rgb(102, 88, 221);
         border-collapse: collapse;
@@ -168,8 +172,8 @@
 		        <!-- Start Content-->
 		        <div class="container-fluid" style="display:flex; justify-content: center;">
 		            
-                <form id="enrollForm" method="post" action="${ contextPath }/document/regist.do" enctype="multipart/form-data" onsubmit="updateDocuContent();">
-		            
+                <form id="insertForm" method="post" enctype="multipart/form-data" onsubmit="updateDocuContent();">
+                	<input type="hidden" name="docuCategory" value='2'>
 				            <div class="card">
 				                <div class="card-body">
 				                    <div class="top-document">
@@ -187,7 +191,7 @@
 				                                </tr>
 				                                <tr class="sign">
 				                                    <td>
-						                                		<img src="${contextPath}${loginUser.sigImgPath}">
+		                                        		<!-- <img src="${contextPath}${loginUser.sigImgPath}"> -->
 				                                    </td>
 				                                    <td></td>
 				                                </tr>
@@ -198,23 +202,32 @@
 		                        <div class="document-info">
 		
 		                            <div class="info-1">
+                                			                            
 		                                <table class="table-info-1">
 		                                    <tr>
 		                                        <th width="120px;"> 부서 </th>
-		                                        <td width="266px;"> ${loginUser.deptName} </td>    
+		                                        <td width="266px;">
+                                            		<input type="text" id="memDeptName" name="memDeptName" value="" style="border:0;" readonly>
+		                                        </td>    
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 직급 </th>
-                                            <td> ${loginUser.memGrade} </td>
-		                                    </tr>
+                                            <td> 
+                                            		<input type="text" id="memGrade" name="memGrade" value="" style="border:0;" readonly> 
+                                            </td>		                                    
+                                        </tr>
 		                                    <tr>
 		                                        <th> 신청자 </th>
-		                                        <td> ${loginUser.memName} </td>
-		                                    </tr>
+                                            <td> 
+                                            		<input type="text" id="memName" name="memName" value="" style="border:0;" readonly> 
+                                            </td>		                                    
+                                        </tr>
 		                                    <tr>
 		                                        <th> 신청일 </th>
-		                                        <td> ${document.registDate} </td>
-		                                    </tr>
+                                            <td>
+                                            		<input type="text" id="registDate" name="registDate" value="" style="border:0;" readonly> 
+                                            </td>		                                    
+                                        </tr>
 		                                </table>
 		                                
 		                            </div>
@@ -223,7 +236,7 @@
 		                                    <tr>
                                             <th width="120px;"> 참조인 </th>
 		                                        <td width="266px;">
-                                            		<input type="text" id="refDeptNo" name="refDeptNo" placeholder="참조인 사번 입력">
+                                            		<input type="text" id="refMemNo" name="refMemNo" placeholder="참조인 사번 입력" style="border:0;">
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
@@ -232,8 +245,10 @@
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 전화번호 </th>
-		                                        <td> ${loginUser.phone} </td>
-		                                    </tr>
+                                            <td>
+                                            		<input type="text" id="memPhone" value="" style="border:0;" readonly> 
+                                            </td>
+                                        </tr>
 		                                    <tr>
 		                                        <th> 결재일 </th>
 		                                        <td></td>
@@ -273,7 +288,7 @@
                                                 신청사유 <br>및<br> 근무내용
                                             </th>
                                             <td style="height:250px; width:655px; text-align:left;">
-                                            		<input type="hidden" id="docuContent" name="docuContent">
+                                            		<input type="hidden" id="docuContent" name="docuContent" value="">
                                                 <div id="editor" contenteditable="true" style="height:250px;">
                                                 
                                                 </div>
@@ -282,7 +297,7 @@
                                         <tr>
                                             <th style="text-align:center;"> 비 고 </th>
                                             <td>
-                                                <input type="text" name="docuRemark" size="20" style="width:655px; border:0;" value="기안자 작성란">
+                                                <input type="text" id="docuRemark" name="docuRemark" size="20" style="width:655px; border:0;" value="기안자 작성란">
                                             </td>
                                         </tr>
                                         <tr>
@@ -292,14 +307,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- 내용 작성하기 끝-->
-                            
-                            <!-- 텍스트에디터로 입력된 내용이 hidden 요소인 docuContent 필드로 업데이트됨 -->
-														<script>
-														    function updateDocuContent() {
-														        var content = document.getElementById("editor").innerText;
-																		document.getElementById("docuContent").value = content;
-														    }
-														</script>
+                          
                                                       
       
                             <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 재택근무를 신청하고자 하오니 허락하여 주시기 바랍니다.</p>

@@ -70,10 +70,11 @@
         text-align:left;
     }
     
-    #top-list{
+    .items{
         justify-content: space-between;
         display: flex;
         align-items: flex-end; /* 아이템들을 오른쪽으로 정렬합니다. */ 
+        width: 300px;
     }
     
     .btn-group>a{
@@ -176,22 +177,23 @@
                                             </p>
                                         </div>
     
-                                        <div class="mb-2">
+                                        <div class="mb-2" style="display: flex; justify-content: space-between;">
                                             <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
-                                                                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get">
+                                                
+                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get" style="margin-top: 10px;">
                                                 		<div style="display:flex;">
                                                     		<input type="hidden" name="page">
-		                                                    <div class="col-12 text-sm-center" style="width:auto;">
+		                                                    <div class="col-12 text-sm-center items">
 		                                                        <c:choose>
 		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
-						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
 						                                                            <option value="docu_category">문서유형</option>
 						                                                            <option value="docu_title">문서제목</option>
 						                                                        </select>
 		                                                        		</c:when>
 		                                                        		<c:otherwise>
 		                                                        				<!-- 팀장, 대표일 경우 -->
-						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm">
+						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
 						                                                            <option value="docu_category">문서유형</option>
 						                                                            <option value="docu_title">문서제목</option>
 						                                                            <option value="mem_name">기안자</option>
@@ -199,13 +201,10 @@
 						                                                        </select>
 				                                                        </c:otherwise>
 		                                                        </c:choose>
+		                                                        <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on" style="width:150px;">
+		                                                        <button type="button" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
+		                                                        
 		                                                    </div>
-		                                                    <div>
-		                                                    		<button type="button" class="btn btn-soft-secondary waves-effect">검색</button>
-		                                                    </div>
-		                                                </div>
-		                                                <div class="col-12" id="top-middle" style="width:auto;">
-		                                                    <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
 		                                                </div>
                                                 </form>
                                                 
@@ -257,32 +256,34 @@
 						                                            		<c:forEach var="d" items="${ list }">
 								                                                <tr onclick="location.href='${contextPath}/document/detail.page?no=${d.docuNo}';">
 								                                                    <td>${d.docuNo}</td>
-								                                                    <td style="text-align: left;">${d.docuCategoryName}</td>
+								                                                    <td>${d.docuCategoryName}</td>
 								                                                    <td style="text-align: left;">${d.docuTitle}</td>
 								                                                    <td>${d.memName}</td>
-								                                                    <td>${d.deptName}</td>
+								                                                    <td>${d.memDeptName}</td>
 								                                                    <td>${d.registDate}</td>
-								                                                    <td><span class="badge label-table bg-secondary">${d.status}</span></td>
+								                                                    <td>
+										                                                    <c:if test="${d.status eq '0'}">
+										                                                    		<span class="badge label-table bg-warning">진행중</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '1'}">
+										                                                    		<span class="badge label-table bg-success">승인</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '2'}">
+										                                                    		<span class="badge label-table bg-danger">반려</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '3'}">
+										                                                    		<span class="badge label-table bg-secondary">회수</span>
+										                                                    </c:if>
+								                                                    </td>
 								                                                    <td>${d.finalApproveDate}</td>
 								                                                </tr>
 								                                            </c:forEach>
 						                                            </c:otherwise>
 		                                                </c:choose>
-
-    
                                                 </tbody>
-                                                <tfoot>
-		                                                <tr class="active">
-		                                                    <td colspan="5">
-		                                                        <div class="text-end">
-		                                                            <ul class="pagination pagination-rounded justify-content-end footable-pagination mb-0"></ul>
-		                                                        </div>
-		                                                    </td>
-		                                                </tr>
-                                                </tfoot>
                                             </table>
                                         </div> <!-- end .table-responsive-->
-                                        <div id="pagingArea">
+                                        <div id="pagingArea" style=" display: flex; justify-content: center; margin-top: 20px;">
 														                <ul class="pagination">
 														                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage - 1}">Previous</a></li>
 														                    

@@ -38,23 +38,23 @@ public class DocumentDto {
 	private String status;
 	private String midApproveStatus;
 	private String finalApproveStatus;
-	private int docuCost;
+	private String docuCost;
 	private String docuRemark;
-	private Date docuStartDate;
-	private Date docuEndDate;
+	private String docuStartDate;
+	private String docuEndDate;
 	private String docuStartPlace;
 	private String docuEndPlace;
 	private String docuEmergencyCall;
 	private String docuAnnualLeave;
 	private String docuItem;
-	private int docuTransportCost;
-	private int docuFuelCost;
-	private int docuFoodCost;
-	private int docuRoomCost;
-	private int docuEtcCost;
+	private String docuTransportCost;
+	private String docuFuelCost;
+	private String docuFoodCost;
+	private String docuRoomCost;
+	private String docuEtcCost;
 	private String docuText;
 	private String docuTextNote;
-	private int docuCount;
+	private String docuCount;
 	
 	private List<AttachmentDto> attachList;
 	
@@ -64,4 +64,6 @@ public class DocumentDto {
 	private String refMemName;
 	private String memDeptName;
 	private String refDeptName;
+	private String memSig;
+	
 }

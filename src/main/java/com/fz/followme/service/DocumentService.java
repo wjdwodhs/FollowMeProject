@@ -17,6 +17,10 @@ public interface DocumentService {
 	int selectSearchListCount(Map<String, String> search);
 	List<DocumentDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	
+	// status에 따른 게시판검색리스트 조회 서비스 (페이징)
+	int statusSearchListCount(Map<String, String> search);
+	List<DocumentDto> statusSearchList(Map<String, String> search, PageInfoDto pi);
+	
 	// 진행중 리스트 조회
 	int selectPendListCount(MemberDto m);
 	List<DocumentDto> selectPendList(PageInfoDto pi, MemberDto m);
@@ -36,4 +40,14 @@ public interface DocumentService {
 	// 참조 리스트 조회
 	int selectRefListCount(String memNo);
 	List<DocumentDto> selectRefList(PageInfoDto pi, String memNo);
+	
+	// 미처리 리스트 조회
+	int selectNotDoneListCount(String memNo);
+	List<DocumentDto> selectNotDoneList(PageInfoDto pi, String memNo);
+	
+	// 새로운 글 작성 기능
+	int insertDocument(DocumentDto document);
+	
+	// 글 작성페이지
+
 }

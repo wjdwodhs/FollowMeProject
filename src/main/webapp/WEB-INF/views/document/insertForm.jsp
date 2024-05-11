@@ -168,28 +168,28 @@ tr>th, tr>td {
 										<p class="sub-header">Access write Electronic documents</p>
 									</div>
 
-
 									<div class="mb-2" style="display: flex; justify-content: center;">
 											<div class="row row-cols-sm-auto g-2 align-items-center">
-												<div style="display: flex;">
-													<div class="col-12 text-sm-center" style="width: auto;">
-														<select id="selectDocument" name="selectDocument" class="form-select form-select-sm" style="width: auto; height: 37px;">
-															<option value="">전자결재 양식 선택</option>
-															<option value="1">품의서</option>
-															<option value="2">재택근무 신청서</option>
-															<option value="3">휴가 신청서</option>
-															<option value="4">지출 결의서</option>
-															<option value="5">구매 신청서</option>
-															<option value="6">출장 보고서</option>
-															<option value="7">협조문</option>
-														</select>
+													<div style="display: flex;">
+															<div class="col-12 text-sm-center" style="width: auto;">
+																	<select id="docuCategoryNo" name="docuCategoryNo" class="form-select form-select-sm" style="width: auto; height: 37px;">
+																		<option value=''>전자결재 양식 선택</option>
+																		<option value='1'>품의서</option>
+																		<option value='2'>재택근무 신청서</option>
+																		<option value='3'>휴가 신청서</option>
+																		<option value='4'>지출 결의서</option>
+																		<option value='5'>구매 신청서</option>
+																		<option value='6'>출장 보고서</option>
+																		<option value='7'>협조문</option>
+																	</select>
+															</div>
 													</div>
-												</div>
-												<div class="btn-group">
-													<button type="button" class="btn btn-primary waves-effect waves-light" onclick="load();">불러오기</button>
-												</div>
+													<div class="btn-group">
+														<button type="button" class="btn btn-primary waves-effect waves-light" onclick="load();">불러오기</button>
+													</div>
+															
 											</div>
-
+		
 									</div>
 									<div id="documentContent" style="width:auto;">
 
@@ -201,7 +201,7 @@ tr>th, tr>td {
     <script>
         function load() {
         	
-            var selectBox = document.getElementById("selectDocument");
+            var selectBox = document.getElementById("docuCategoryNo");
             var selectedValue = selectBox.options[selectBox.selectedIndex].value;
             if(selectedValue>0){
             	fetch("${contextPath}/resources/document/sample" + selectedValue + ".html")
@@ -210,23 +210,48 @@ tr>th, tr>td {
                     	document.getElementById('documentContent').innerHTML = htmlText;
                 	})	
             	.finally(() => {
-            			
+            			var today = new(Date);
+
+        				document.getElementById('memDeptName').value = '${ loginUser.deptName }';
+        				document.getElementById('registDate').value = today.toISOString().split('T')[0];
+
+            		
             			if(selectedValue == 1){
             				textEditorInit();
+            				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+            				document.getElementById('memName').value = '${ loginUser.memName }';
             			}else if(selectedValue == 2){
             				textEditorInit();
             				homework();
+            				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+            				document.getElementById('memName').value = '${ loginUser.memName }';
+            				document.getElementById('memPhone').value = '${ loginUser.phone }';
             			}else if(selectedValue == 3){
             				textEditorInit();
                   	holiday();
+				    				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+				    				document.getElementById('memName').value = '${ loginUser.memName }';                  	
+    								document.getElementById('memPhone').value = '${ loginUser.phone }';
+                  }else if(selectedValue == 4){
+				    				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+				    				document.getElementById('memName').value = '${ loginUser.memName }';  
+                  }else if(selectedValue == 5){
+				    				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+				    				document.getElementById('memName').value = '${ loginUser.memName }';  				    				
                 	}else if(selectedValue == 6){
                 		textEditorInit();
                 		changeTotalCost();
-                	}else if(selectedValue == 7){
+		        				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+		        				document.getElementById('memName').value = '${ loginUser.memName }';
+		        			}else if(selectedValue == 7){
                 		textEditorInit();
                 		workingLetter();
+                		document.getElementById('mem').value = '${loginUser.memName}'+' '+'${loginUser.memGrade}';
+                		
                 	}
-            			
+            			            			
+            		 document.getElementById("insertForm").action = "${contextPath}/document/insert.do";
+            	
             	});
            }
         }
@@ -238,6 +263,14 @@ tr>th, tr>td {
         }
 
     </script>
+    
+		<!-- 텍스트에디터로 입력된 내용이 hidden 요소인 docuContent 필드로 업데이트됨 -->
+		<script>
+		    function updateDocuContent() {
+		        var content = document.getElementById("editor").innerText;
+						document.getElementById("docuContent").value = content;
+		    }
+		</script>
 		
   	<!-- 2. 재택근무 신청서 날짜 선택 스크립트 -->
     <script> 

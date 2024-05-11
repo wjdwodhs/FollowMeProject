@@ -28,7 +28,7 @@
 	<!-- * interceptor 등록 -->
 	<interceptors>
 		<interceptor>
-			<mapping path="/document/.."/>
+			<mapping path="/document/**"/>
 			
 			<beans:bean class="com.fz.followme.interceptor.LoginCheckInterceptor" id="loginCheckInterceptor" />
 		</interceptor>

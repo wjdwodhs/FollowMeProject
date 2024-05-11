@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="DocumentMapper">
+<mapper namespace="documentMapper">
 
 	<resultMap id="attachmentResultMap" type="AttachmentDto">
 		<id column="file_no" property="fileNo"/>
@@ -11,7 +11,7 @@
 		<result column="ref_no" property="refNo"/>
 		<result column="upload_date" property="uploadDate"/>
 	</resultMap>
-
+	
 	<resultMap id="documentResultMap" type="DocumentDto">
 	
 		<id column="docu_no" property="docuNo" />
@@ -53,20 +53,24 @@
 		<result column="docu_count" property="docuCount" />
 		<result column="count" property="count"/>
 		<result column="mem_name" property="memName"/>
-		<result column="mem_dept_name" property="memDeptName"/>
+		<result column="dept_name" property="memDeptName"/>
 		<result column="ref_dept_name" property="refDeptName"/>
 		<result column="ref_mem_name" property="refMemName"/>
 		<result column="docu_category_name" property="docuCategoryName" />
-
+		<result column="mem_sig_path" property="memSig" />
+		
 		<collection resultMap="attachmentResultMap" property="attachList" />
+		
 	</resultMap>
+	
+	
 	
 	<!-- 전체 리스트 조회 -->
 	<select id="selectDocumentListCount" resultType="_int">
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where (
 			      d.mem_no = #{memNo}
 					 )
@@ -107,7 +111,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where ${condition} like '%' ||#{keyword}||'%'
 		   and (
 		   			d.mem_no = #{memNo}
@@ -150,7 +154,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where ${condition} like '%' ||#{keyword}||'%'
 		   and (
 		   			d.mem_no = #{memNo}
@@ -197,7 +201,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where (
 			      d.status = '0'
 			      and d.mem_no = #{memNo}
@@ -242,7 +246,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where (
 			      d.status = '1'
 			      and d.mem_no = #{memNo}
@@ -285,7 +289,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where (
 			      d.status = '2'
 			      and d.mem_no = #{memNo}
@@ -328,7 +332,7 @@
 		select 
 					 count(*)
 		  from tb_document d
-		  join tb_mem m
+		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where d.status = '3'
 			     and d.mem_no = #{memNo}
 					 
@@ -415,6 +419,175 @@
 		    by docu_no desc
 	</select>
 	
+	
+	<!--  글 등록하기  -->
+	<insert id="insertDocument">
+					insert 
+					  into tb_document
+					  (
+					    docu_no
+					  , docu_category
+					  , mem_no
+					  , mem_dept_no
+					  , ref_mem_no
+					  , docu_title
+		<choose>
+			<when test="docuCategory == 1">
+					  , docu_content
+					  , docu_cost
+					  , docu_remark
+
+			</when>
+			<when test="docuCategory == 2">
+						, docu_content
+						, docu_start_date
+						, docu_end_date
+						, docu_remark	
+			</when>
+			<when test="docuCategory == 3">
+						, docu_content
+						, docu_start_date
+						, docu_end_date
+						, docu_end_place
+						, docu_emergency_call
+						, docu_annual_leave
+			</when>
+			<when test="docuCategory == 4">
+						, docu_cost
+						, docu_start_date
+						, docu_item
+						, docu_etc_cost
+						, docu_remark
+			</when>
+			<when test="docuCategory == 5">
+						, docu_item
+						, docu_count
+						, docu_etc_cost
+						, docu_cost
+						, docu_remark
+			</when>
+			<when test="docuCategory == 6">
+						, docu_start_date
+						, docu_end_date
+						, docu_start_place
+						, docu_end_place
+						, docu_content
+						, docu_transport_cost
+						, docu_food_cost
+						, docu_fuel_cost
+						, docu_room_cost
+						, docu_etc_cost
+						, docu_cost
+			</when>	
+			
+			<when test="docuCategory == 7">
+						, docu_start_date
+						, docu_end_date
+						, docu_text
+						, docu_text_note
+						, docu_content
+			</when>
+		</choose>
+					  )
+					  values
+					  (
+						  seq_docno.nextval
+						, #{docuCategory}
+						, #{memNo}
+						, #{memDeptNo}
+						, #{refMemNo}
+						, #{docuTitle}
+						
+		<choose>
+			<when test="docuCategory == 1">
+					  , #{docuContent}
+					  , #{docuCost}
+					  , #{docuRemark}
+			</when>
+			<when test="docuCategory == 2">
+					  , #{docuContent}
+						, #{docuStartDate}
+						, #{docuEndDate}
+						, #{docuRemark}
+			</when>
+			<when test="docuCategory == 3">
+					  , #{docuContent}
+						, #{docuStartDate}
+						, #{docuEndDate}
+						, #{docuEndPlace}
+						, #{docuEmergencyCall}
+						, #{docuAnnualLeave}
+						, #{finalApprover}
+			</when>
+			<when test="docuCategory == 4">
+						, #{docuCost}
+						, #{docuStartDate}
+						, #{docuItem}
+						, #{docuEtcCost}
+						, #{docuRemark}
+			</when>
+			<when test="docuCategory == 5">
+						, #{docuItem}
+						, #{docuCount}
+						, #{docuEtcCost}
+						, #{docuCost}
+						, #{docuRemark}
+			</when>
+			<when test="docuCategory == 6">
+						, #{docuStartDate}
+						, #{docuEndDate}
+						, #{docuStartPlace}
+						, #{docuEndPlace}
+						, #{docuContent}
+						, #{docuTransportCost}
+						, #{docuFoodCost}
+						, #{docuFuelCost}
+						, #{docuRoomCost}
+						, #{docuEtcCost}
+						, #{docuCost}
+			</when>	
+			
+			<when test="docuCategory == 7">
+						, #{docuStartDate}
+						, #{docuEndDate}
+						, #{docuText}
+						, #{docuTextNote}
+						, #{docuContent}
+			</when>
+		</choose>
+
+					  )
+					
+	</insert>
+	
+	<insert id="insertAttach">
+		insert
+		  into attachment
+		  (
+		  	file_no
+		  , file_path
+		  , origin_name
+		  , system_nsame
+		  , type
+		  , ref_no
+		  )
+		  values
+		  (
+		  	seq_ano.nextval
+		  , #{filePath}
+		  , #{fileSystemName}
+		  , #{originalName}
+		  , #{type}
+		  <choose>
+		  	<when test="refNo == 0">
+		  		, seq_docno.currval
+		  	</when>
+		  	<otherwise>
+		  		, #{refNo}
+		  	</otherwise>
+		  </choose>
+		  )
+	</insert>
 
 
 

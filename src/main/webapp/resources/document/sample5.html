@@ -61,6 +61,10 @@
     .table-info-2{
         margin-left: 2px;
     }
+
+    .table-info-1 th, .table-info-1 td, .table-info-2 th, .table-info-2 td {
+    		height: 40px;
+    }
     
     .table-2-1{
         border: 1px solid rgb(102, 88, 221);
@@ -171,8 +175,8 @@
             <!-- Start Content-->
             <div class="container-fluid" style="display:flex; justify-content: center;">
                 
-                <form id="enrollForm" method="post" action="${ contextPath }/document/regist.do" enctype="multipart/form-data" onsubmit="updateDocuContent();">
-                
+                <form id="insertForm" method="post" enctype="multipart/form-data" onsubmit="updateDocuContent();">
+                	<input type="hidden" name="docuCategory" value='5'>
 		                <div class="card">
 		                    <div class="card-body">
 		                        <div class="top-document">
@@ -190,7 +194,7 @@
 		                                    </tr>
 		                                    <tr class="sign">
 	                                          <td>
-	                                          		<img src="${contextPath}${loginUser.sigImgPath}">
+		                                        		<!-- <img src="${contextPath}${loginUser.sigImgPath}"> -->
 	                                          </td>
 		                                        <td></td>
 		                                    </tr>
@@ -201,22 +205,32 @@
 		                        <div class="document-info">
 		
 		                            <div class="info-1">
+		                            
+		                            
 		                                <table class="table-info-1">
 		                                    <tr>
                                             <th width="120px;"> 부서 </th>
-                                            <td width="266px;"> ${loginUser.deptName} </td>    
+                                            <td width="266px;"> 
+                                            		<input type="text" id="memDeptName" name="memDeptName" value="" style="border:0;" readonly>
+                                            </td>      
 		                                    </tr>
 		                                    <tr>
                                             <th> 직급 </th>
-                                            <td> ${loginUser.memGrade} </td>
+                                            <td> 
+                                            		<input type="text" id="memGrade" name="memGrade" value="" style="border:0;" readonly> 
+                                            </td>
 		                                    </tr>
 		                                    <tr>
 	                                          <th> 신청자 </th>
-                                            <td> ${loginUser.memName} </td>
+                                            <td> 
+                                            		<input type="text" id="memName" name="memName" value="" style="border:0;" readonly> 
+                                            </td>
 		                                    </tr>
 		                                    <tr>
 	                                          <th> 신청일 </th>
-                                            <td> ${document.registDate} </td>
+                                            <td>
+                                            		<input type="text" id="registDate" name="registDate" value="" style="border:0;" readonly> 
+                                            </td>
 		                                    </tr>
 		                                </table>
 		                                
@@ -226,12 +240,12 @@
 		                                    <tr>
 		                                        <th width="120px;"> 참조인 </th>
                                             <td width="266px;"> 
-                                            		<input type="text" id="refDeptNo" name="refDeptNo" placeholder="참조인 사번 입력">
+                                            		<input type="text" id="refMemNo" name="refMemNo" placeholder="참조인 사번 입력" style="border:0;">
                                             </td>	     
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 결재자 </th>
-		                                        <td> ${document.approverInf} </td>
+		                                        <td></td>
 		                                    </tr>
 		                                    <tr>
 		                                        <th> 보존연한 </th>
@@ -265,7 +279,7 @@
 		                                    <tr>
 		                                        <th width="60px;"> 추 가 </th>
 		                                        <th style="text-align:center"> 품 목 </th>
-		                                        <th style="text-align:center;"> 수 량</th>
+		                                        <th style="text-align:center;"> 수 량 </th>
 		                                        <th style="text-align:center;"> 단 가 </th>
 		                                        <th style="text-align:center;"> 금 액 (원) </th>
 		                                        <th style="text-align:center;"> 비 고 </th>
