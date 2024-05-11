@@ -1,3 +1,9 @@
+.fc-event{
+	background-color:#FFBE98;
+}
+.fc-daygrid-event-harness{
+	background-color: transparent;
+}
 .fc-button{	
 		--fc-button-bg-color:#FFBE98;		 
 		--fc-button-bg:#FFBE98;

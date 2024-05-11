@@ -171,7 +171,7 @@
 			                        <div class="card-body" style="height: 400px;"> <!-- 달력 표시용 -->
 			                            <div class="row" style="display:flex; justify-content:center;">
                                       
-                                    	<div id="calendar" style="width: 100%; height:400px;"></div>
+                                    	<div id="calendar"></div>
                                      
                                   </div>  <!-- end row -->
 		                          </div>
