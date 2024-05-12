@@ -212,7 +212,7 @@
 			                        <div class="card-body" style="height: 250px;">
 			                        	<div class="ribbon ribbon-danger float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 결재</div>&nbsp &nbsp
 			                        		<div class="ribbon-content">
-			                        			<div style="margin-top:30px;"> 
+			                        			<div style="margin-top:30px; margin-left:5px;"> 
 	                                    <a href="${contextPath}/document/notDoneList.page" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >미처리</a>&nbsp &nbsp 
 	                                    <a href="${contextPath}/document/pendList.page" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >진행중</a>
 	                                    <a href="${contextPath}/document/approvalList.page" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >승인</a>&nbsp &nbsp 
