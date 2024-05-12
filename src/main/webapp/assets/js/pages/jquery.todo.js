@@ -1,4 +1,4 @@
-! function(t) {
+!function(t) {
   "use strict";
 
   function o() {
@@ -12,10 +12,14 @@
     for (var e = 0; e < this.$todoData.length; e++) this.$todoData[e].id == t && (this.$todoData[e].done = o)
   }, o.prototype.addTodo = function(t) {
     this.$todoData.push({
-      id: this.$todoData.length,
+      id: this.$todoData.length + 1, // 각 항목에 고유한 id를 할당
       text: t,
       done: !1
     }), this.generate()
+  }, o.prototype.deleteTodo = function(t) {
+    this.$todoData = this.$todoData.filter(function(e) {
+      return e.id != t;
+    }), this.generate();
   }, o.prototype.archives = function() {
     this.$todoUnCompletedData = [];
     for (var t = 0; t < this.$todoData.length; t++) {
@@ -29,7 +33,7 @@
       var e = this.$todoData[o];
       if (!e.done) {
         t += 1;
-        this.$todoList.prepend('<li class="list-group-item border-0 ps-0"><div class="form-check"><input type="checkbox" class="form-check-input todo-done" id="' + e.id + '"><label class="form-check-label" for="' + e.id + '">' + e.text + "</label></div></li>");
+        this.$todoList.prepend('<li class="list-group-item border-0 ps-0"><div class="form-check"><input type="checkbox" class="form-check-input todo-done" id="todo-' + e.id + '"><label class="form-check-label" for="todo-' + e.id + '">' + e.text + "</label></div></li>");
       }
     }
     this.$todoTotal.text(this.$todoData.length), this.$todoRemaining.text(t)
@@ -41,9 +45,9 @@
       return t.preventDefault(), o.archives(), !1
     }), t(document).on("change", this.$todoDonechk, function() {
       if (this.checked) {
-        o.markTodo(t(this).attr("id"), !0);
+        var todoId = t(this).attr("id").replace("todo-", ""); // 체크된 체크박스의 id에서 'todo-'를 제거하여 실제 todo의 id를 추출
+        o.deleteTodo(todoId);
       }
-      o.generate();
     }), o.$todoForm.on("submit", function(t) {
       return t.preventDefault(), "" == o.$todoInput.val() || void 0 === o.$todoInput.val() || null == o.$todoInput.val() ? (o.$todoInput.focus(), !1) : (o.addTodo(o.$todoInput.val()), o.$todoInput.val(""), o.$todoForm.removeClass("was-validated"), setTimeout(function() {
         o.$todoForm.removeClass("was-validated")
