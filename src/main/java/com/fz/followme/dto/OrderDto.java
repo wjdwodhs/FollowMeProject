@@ -28,5 +28,10 @@ public class OrderDto {
 	private int revenue;
 	private String proImgPath;
 	
+	// 금주의 판매왕 구하는 join문용 추가
+	private String memName;
+	private String memGrade;
+	private String profileImgPath;
+	
 
 }

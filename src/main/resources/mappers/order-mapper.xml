@@ -11,6 +11,9 @@
 		<result column="pro_price" property="proPrice"/>
 		<result column="revenue" property="revenue"/>
 		<result column="pro_img_path" property="proImgPath"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_grade" property="memGrade"/>
+		<result column="profile_img_path" property="profileImgPath"/>
 	</resultMap>
   
   <select id="selectOrder" resultMap="orderResult">
@@ -19,13 +22,14 @@
   	where order_date between trunc(sysdate)-7 and trunc(sysdate)-1
   </select>
   
-  <!-- 최근 1주일치 매출액 가장 높은 것 1개 뽑기용 -->
+  <!-- 최근 1주일치 매출액 가장 높은 사원 1명 뽑기용 -->
   <select id="selectRevenue" resultMap="orderResult">
   	select * from
   	(
-		select p.pro_no, pro_name, pro_price, order_amount, (pro_price * order_amount) as revenue, order_date, pro_img_path
+		select p.pro_no, mem_name, mem_grade, pro_name, pro_price, order_amount, (pro_price * order_amount) as revenue, order_date, pro_img_path, profile_img_path
   	  from tb_product p
       left join tb_order o on (p.pro_no = o.pro_no)
+      left join tb_mem m on (p.mem_no = m.mem_no)
      where order_date between trunc(sysdate)- 7 and trunc(sysdate)
      order by revenue desc
     ) 

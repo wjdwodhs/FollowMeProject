@@ -12,12 +12,16 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <!-- App favicon -->
 <link rel="shortcut icon" href="assets/images/favicon.ico">
 
 <!-- Plugins css -->
 <link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
 <link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
 
 <!-- Theme Config Js -->
 <script src="${ contextPath }/assets/js/head.js"></script>
@@ -38,20 +42,19 @@
      <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
 		 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
 		 
-		 
-	   <!-- jquery CDN -->  
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     
      <!-- fullcalendar 언어 CDN -->  
      <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
      
      <!-- Bootstrap JavaScript -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <style>
+.ribbon-box .ribbon-primary {
+    background: #6658dd;
+}
 
 </style>
+
 </head>
 <body>
 <!-- Begin page -->
@@ -80,23 +83,26 @@
 			            </div>     
 			            <div class="row">
 			                <div class="col-3">
-			                    <div class="card">
+			                    <div class="card ribbon-box">
 			                        <div class="card-body" style="height: 400px; text-align:center">
-			                            
-			                            <div style="display: flex; justify-content: center; margin-top: 20px;">
+			                           <div class="ribbon ribbon-info float-start"><i class="mdi mdi-access-point me-1"></i> 근태관리</div>&nbsp &nbsp
+			                           		<div class="ribbon-content">
+			                           			<div style="display: flex; justify-content: center; margin-top: 20px;">
 	                                    <h4 style="margin-right: 20px;">04월 28일 <br> 오전 7:47:03</h4>
 	                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
-	                                </div>
-	                                <div style="margin-top: 20px;">
-	                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
-	                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
-	                                </div>
-	                                <div style="margin-top: 30px;"> 
-	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="업무">업무</button>&nbsp &nbsp 
-	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="회의">회의</button>
-	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외출">외출</button>&nbsp &nbsp 
-	                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외근">외근</button>
-	                                </div>
+			                                </div>
+			                                <div style="margin-top: 20px;">
+			                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
+			                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
+			                                </div>
+			                                <div style="margin-top: 30px;"> 
+			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="업무">업무</button>&nbsp &nbsp 
+			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="회의">회의</button>
+			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외출">외출</button>&nbsp &nbsp 
+			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외근">외근</button>
+			                                </div>
+			                           		</div>
+			                            
 			                            
 			                            <!-- 출근하기 버튼 모달 -->
 					                        <div id="in-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -180,77 +186,85 @@
 			                
 			                
 			                <div class="col-4">
-			                    <div class="card">
-			                        <div class="card-body" >
-			                            <div class="dropdown float-end">
-			                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-			                                    <i class="mdi mdi-dots-vertical"></i>
-			                                </a>
-			                                <div class="dropdown-menu dropdown-menu-end">
-			                                    <!-- item-->
-			                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-			                                    <!-- item-->
-			                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-			                                </div>
-			                            </div>
-			                            <h4 class="header-title mb-3">Weekly Best Item</h4>
-			                            <div class="table-responsive">
-			                                <table class="table table-striped table-sm table-nowrap table-centered mb-0">
-			                                    <thead>
-			                                        <tr>
-			                                            <th>상품명</th>
-			                                            <th>판매량</th>
-			                                            <th>매출액</th>
-			                                        </tr>
-			                                    </thead>
-			                                    <tbody>
-			                                        <tr>
-			                                            <td>
-			                                                <h5 class="font-15 my-1 fw-normal">${revenueList.proName}</h5>
-			                                            </td>
-			                                            <td style="text-align:center;">${revenueList.orderAmount}</td>
-			                                            <td>${revenueList.revenue}</td>
-			                                        </tr>
-			                                    </tbody>
-			                                </table>
-			                            </div>
+			                    <div class="card ribbon-box">
+			                        <div class="card-body" style="height: 120px;">
+			                          <div class="ribbon ribbon-warning float-start"><i class="mdi mdi-access-point me-1"></i> 금주의 판매왕</div>
+			                           
+			                           <div class="row align-items-center">
+                                     <div class="col-auto">
+                                         <div class="avatar-lg">
+                                             <img src="${contextPath}${revenueList.profileImgPath}" class="img-fluid rounded-circle" alt="user-img" />
+                                         </div>
+                                     </div>
+                                     <div class="col">
+                                         <h5 class="mb-1 mt-2">${revenueList.memName}</h5>
+                                         <p class="mb-2 text-muted">${revenueList.memGrade}</p>
+                                     </div>
+                                 </div> <!-- end row-->
+			                          
 			                        </div>
 			                    </div> <!-- end card-->
 			                </div> <!-- end col -->
 			            </div> <!-- end row -->
 			            <div class="row">
 			                <div class="col-3">
-			                    <div class="card">
-			                        <div class="card-body" style="height: 200px;">
-			                        		<h4 class="header-title">오늘의 결재</h4>
-			                            <div> 
-	                                    <button type="button" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="대기">대기</button>&nbsp &nbsp 
-	                                    <button type="button" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="완료">완료</button>
-	                                    <button type="button" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="예정">예정</button>&nbsp &nbsp 
-	                                    <button type="button" class="btn btn-outline-blue waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" value="진행">진행</button>
-	                                </div>
+			                    <div class="card ribbon-box">
+			                        <div class="card-body" style="height: 250px;">
+			                        	<div class="ribbon ribbon-danger float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 결재</div>&nbsp &nbsp
+			                        		<div class="ribbon-content">
+			                        			<div style="margin-top:30px;"> 
+	                                    <a href="${contextPath}/document/notDoneList.page" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >미처리</a>&nbsp &nbsp 
+	                                    <a href="${contextPath}/document/pendList.page" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >진행중</a>
+	                                    <a href="${contextPath}/document/approvalList.page" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >승인</a>&nbsp &nbsp 
+	                                    <a href="${contextPath}/document/rejectList.page" class="btn btn-outline-danger waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">반려</a>
+	                               	 </div>
+			                        		</div>
+			                            
 			                        </div>
 			                    </div> <!-- end card-->
 			                </div> <!-- end col -->
 			                
 			                <div class="col-5">
-			                    <div class="card">
-			                        <div class="card-body" style="height: 200px;">
+			                    <div class="card ribbon-box">
+			                        <div class="card-body" style="min-height: 250px;">
+																<div class="ribbon ribbon-primary float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 일정</div>&nbsp &nbsp
+																	<div class="ribbon-content">
+																		<div class="todoapp">
+
+                                        <div style="max-height: 310px;" data-simplebar>
+                                            <ul class="list-group list-group-flush todo-list" id="todo-list"></ul>
+                                        </div>
+
+                                        <form name="todo-form" id="todo-form" class="needs-validation mt-3" novalidate>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" 
+                                                        placeholder="새로운 일정 추가하기" required>
+                                                    <div class="invalid-feedback">
+                                                        오늘의 일정을 입력하세요
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto d-grid">
+                                                    <button class="btn-primary btn-md btn waves-effect waves-light" type="submit" id="todo-btn-submit">추가</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div> <!-- end .todoapp-->
 			                            
-			                            
-			                            
-			                            
-			                            
+																	</div>
 			                        </div>
 			                    </div> <!-- end card-->
 			                </div> <!-- end col -->
 			                
 			                
 			                <div class="col-4">
-			                    <div class="card" style="margin-top:-202px;">
+			                    <div class="card ribbon-box" style="margin-top:-280px;">
 			                        <div class="card-body">
-			                            <h4 class="header-title">오늘의 패션 뉴스</h4>
-			                            <div id="news-container" style="height: 330px; overflow-y:auto;"></div>
+			                            <div class="ribbon ribbon-success float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 패션 뉴스</div>&nbsp &nbsp
+			                            <div class="ribbon-content">
+                                     <div id="news-container" style="height: 438px; overflow-y:auto;"></div>
+                                  </div>
+			                            
 			                            <script>
 			                                $(document).ready(function() {
 			                                    $.ajax({
@@ -763,6 +777,12 @@
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="${ contextPath }/assets/libs/peity/jquery.peity.min.js"></script>
+        <script src="${ contextPath }/assets/libs/jquery-knob/jquery.knob.min.js"></script>
+        <script src="${ contextPath }/assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+        <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
+        <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
+        <script src="${ contextPath }/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
 
         <!-- Chart JS -->
@@ -771,18 +791,15 @@
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
 
-        <!-- Chat app -->
-        <script src="${ contextPath }/assets/js/pages/jquery.chat.js"></script>
 
         <!-- Todo app -->
         <script src="${ contextPath }/assets/js/pages/jquery.todo.js"></script>
 
-        <!-- Dashboard init JS -->
-        <script src="${ contextPath }/assets/js/pages/dashboard-3.init.js"></script>
-        
         <!-- Calendar init -->
 		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
        
+        <!-- Widgets demo js-->
+        <script src="${ contextPath }/assets/js/pages/widgets.init.js"></script>
        
 
 </body>
