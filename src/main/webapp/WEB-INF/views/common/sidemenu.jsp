@@ -41,13 +41,13 @@
     <!-- Brand Logo -->
     <div class="logo-box">
         <!-- Brand Logo Light -->
-        <a href="${contextPath }/employeeMain.page" class="logo-light">
+        <a href="${contextPath }/ceoMain.page" class="logo-light">
             <img src="${ contextPath }/assets/images/logo-light.png" alt="logo" class="logo-lg">
             <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
 
         <!-- Brand Logo Dark -->
-        <a href="${contextPath }/employeeMain.page" class="logo-dark">
+        <a href="${contextPath }/ceoMain.page" class="logo-dark">
             <img src="${ contextPath }/assets/images/logo-follow.png" alt="dark logo" class="logo-lg">
             <img src="${ contextPath }/assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
