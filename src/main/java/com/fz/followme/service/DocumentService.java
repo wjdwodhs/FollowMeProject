@@ -45,9 +45,10 @@ public interface DocumentService {
 	int selectNotDoneListCount(String memNo);
 	List<DocumentDto> selectNotDoneList(PageInfoDto pi, String memNo);
 	
-	// 새로운 글 작성 기능
+	// 글 작성 기능
 	int insertDocument(DocumentDto document);
 	
-	// 글 작성페이지
+	// 상세 페이지 조회
+	DocumentDto selectDocument(int docuNo);
 
 }

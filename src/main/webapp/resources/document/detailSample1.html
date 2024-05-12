@@ -168,20 +168,19 @@
 				<!-- 전자결재 상세조회 페이지 category == 1 품의서 -->
 				<!-- ============================================================== -->
 	
-	      <!-- docu_category가 1일때-->
-	      <!--
+
 	      <c:choose>
 	          <c:when test="${ (document.docuCategory eq 1) 
 	                    and ((loginUser.memNo eq document.memNo) 
 	                          or (loginUser.memNo eq document.midApprover) 
 	                          or (loginUser.memNo eq document.finalApprover)
-	                          or (loginUser.memDeptNo eq document.memDeptNo and loginUser.grade == '1') <-- 이부분은 수정이필요함
-	                         )}>
+	                          or (loginUser.deptNo eq document.memDeptNo and loginUser.memGrade == '팀장')
+	                         )}">
 	
-	      -->
+
 	      
 								<div class="content">
-							
+								<input type="hidden" name="docuCategory" value="1">
 							
 				            <!-- Start Content-->
 				            <div class="container-fluid" style="display:flex; justify-content: center;">
@@ -283,9 +282,7 @@
 		                                                품의사유 <br>및<br> 상세내용
 		                                            </th>
 		                                            <td style="height:250px; width:655px; text-align:left;">
-		                                                <div id="editor" style="height:250px;">
-		                                                    ${document.docuContent}
-		                                                </div>
+																										${document.docuContent}
 		                                            </td>
 		                                        </tr>
 		                                        
@@ -305,7 +302,7 @@
 		                                            <th style="text-align:center;"> 첨 부 </th>
 		                                            <td>
 		                                                <c:forEach var="at" items="${ document.attachList }">
-		                                                    <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a><br>
+		                                                    <a href="${ contextPath }${ at.filePath }/${ at.systemName }" download="${ at.originName }">[${ at.originName }]</a><br>
 		                                                </c:forEach>
 		                                            </td>
 		                                        </tr>
@@ -322,7 +319,7 @@
 		
 		                                -->
 		                                <c:choose>
-		                                    <c:when test="${document.status == 0 and loginUser == document.finalApprover}">
+		                                    <c:when test="${document.status == '0' and loginUser.memNo == document.finalApprover}">
 		                                        <div style="text-align: right;">
 		                                            <button class="btn btn-primary waves-effect waves-light">등록</button>
 		                                        </div>

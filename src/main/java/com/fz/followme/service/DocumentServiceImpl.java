@@ -137,6 +137,14 @@ public class DocumentServiceImpl implements DocumentService {
 		return result1 * result2;
 	}
 
+	@Override
+	public DocumentDto selectDocument(int docuNo) {
+		
+		return documentDao.selectDocument(docuNo);
+		
+
+	}
+
 
 
 

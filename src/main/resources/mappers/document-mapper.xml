@@ -517,7 +517,6 @@
 						, #{docuEndPlace}
 						, #{docuEmergencyCall}
 						, #{docuAnnualLeave}
-						, #{finalApprover}
 			</when>
 			<when test="docuCategory == 4">
 						, #{docuCost}
@@ -562,21 +561,21 @@
 	
 	<insert id="insertAttach">
 		insert
-		  into attachment
+		  into tb_attachment
 		  (
 		  	file_no
 		  , file_path
 		  , origin_name
-		  , system_nsame
+		  , system_name
 		  , type
 		  , ref_no
 		  )
 		  values
 		  (
-		  	seq_ano.nextval
+		  	seq_fileno.nextval
 		  , #{filePath}
-		  , #{fileSystemName}
-		  , #{originalName}
+		  , #{systemName}
+		  , #{originName}
 		  , #{type}
 		  <choose>
 		  	<when test="refNo == 0">
@@ -588,6 +587,16 @@
 		  </choose>
 		  )
 	</insert>
+	
+	<!--
+	<select id="selectDocument" resultMap="documentResultMap">
+	
+		select *
+		  from tb_document
+		  
+	
+	</select>
+  -->
 
 
 

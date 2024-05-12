@@ -298,25 +298,25 @@ public class DocumentController {
 		
 	@PostMapping("/insert.do")
 	public String regist(DocumentDto document
-					   , String[] docuSpendDate
-					   , String[] docuSpendItems
-					   , String[] docuSpendPrice
-					   , String[] docuSpendRemark
+					   , String[] docuSpendDate, String[] docuSpendItems, String[] docuSpendPrice, String[] docuSpendRemark
+					   , String[] docuBuyItems, String[] docuBuyCount, String[] docuBuyPrice, String[] docuBuySumPrice, String[] docuBuyRemark
 					   , List<MultipartFile> uploadFiles
 			      	   , HttpSession session
 			      	   , RedirectAttributes redirectAttributes) {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		document.setMemNo(loginUser.getMemNo());
-		log.debug("document: {}", docuSpendDate[0]);
-		log.debug("document: {}", docuSpendDate[1]);
-		log.debug("document: {}", docuSpendDate[2]);
+
 		if(document.getDocuCategory() == 4) {
 			document.setDocuStartDate(String.join(",", docuSpendDate));
 			document.setDocuItem(String.join(",", docuSpendItems));
 			document.setDocuEtcCost(String.join(",", docuSpendPrice));
 			document.setDocuRemark(String.join(",", docuSpendRemark));
 		}else if(document.getDocuCategory() == 5) {
-			
+			document.setDocuItem(String.join(",", docuBuyItems));
+			document.setDocuCount(String.join(",", docuBuyCount));
+			document.setDocuEtcCost(String.join(",", docuBuyPrice));
+			document.setDocuCost(String.join(",", docuBuySumPrice));
+			document.setDocuRemark(String.join(",", docuBuyRemark));
 		}
 		
 		List<AttachmentDto> attachList = new ArrayList<>();
@@ -329,8 +329,8 @@ public class DocumentController {
 				// insert할 데이터 => AttachDto객체 만들고 => attachList쌓기
 				attachList.add(AttachmentDto.builder()
 									    .filePath(map.get("filePath"))
-									    .systemName(map.get("systemName"))
-									    .originName(map.get("originName"))
+									    .systemName(map.get("filesystemName"))
+									    .originName(map.get("originalName"))
 									    .type("D")
 									    .build());
 			}
@@ -353,10 +353,11 @@ public class DocumentController {
 		
 		return "redirect:/document/list.page";
 	}
-//	
-//	@RequestMapping("/detailForm.page")
-//	public void detailForm() {
+
+	@RequestMapping("/detail.do")
+	public String detail(int no, Model model) {
 		
-	
-	
+		model.addAttribute("document", documentService.selectDocument(no));
+		return "document/detailForm";
+	}
 }

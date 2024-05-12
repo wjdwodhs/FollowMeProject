@@ -149,6 +149,10 @@ public class DocumentDao {
 		return sqlSessionTemplate.selectOne("documentMapper.selectApprover", map);
 	}
 
+	public DocumentDto selectDocument(int docuNo) {
+		return sqlSessionTemplate.selectOne("documentMapper.selectDocument", docuNo);
+	}
+
 
 	
 }

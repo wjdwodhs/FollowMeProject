@@ -351,16 +351,16 @@ tr>th, tr>td {
                 <span class="menu-icon" onclick="removeRow(this);"><b>━</b></span> 
             </td>
             <td style="width:95px; text-align:center;">
-                <input type="date" id="starDate" size="20" style="border:0; width:100px;">
+                <input type="date" id="starDate" name="docuSpendDate" size="20" style="border:0; width:100px;">
             </td>
             <td style="width:270px;">
-                <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
+                <input type="text" name="docuSpendItems" size="20" style=" border:0;" value="">
             </td>
             <td>
-                <input type="text" name="-box" size="20" style="border:0; width:90px; text-align:center;" value="500,000">
+                <input type="text" name="docuSpendPrice" size="20" style="border:0; width:90px; text-align:center;" value="">
             </td>
             <td style="width:100px; text-align:center;">
-                <input type="text" name="-box" size="20" style=" border:0;" value="기안자 작성란">
+                <input type="text" name="docuSpendRemark" size="20" style=" border:0;" value="">
             </td>
             
         `;
@@ -382,19 +382,19 @@ tr>th, tr>td {
 	            <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span> 
 	        </td>
 	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center;" width="130px;" value="간식">
+	            <input type="text" name="docuItem" size="20" style=" border:0; text-align:center;" width="130px;" value="">
 	        </td>
 	        <td>
-	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:45px;" value="5">ea
+	            <input type="text" name="docuCount" size="20" style="border:0; text-align:center; width:45px;" value="">ea
 	        </td>
 	        <td>
-	            <input type="text" name="-box" size="20" style="border:0; text-align:center; width:90px;" value="300,000">원
+	            <input type="text" name="docuEtcCost" size="20" style="border:0; text-align:center; width:90px;" value="">원
 	        </td>
 	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:100px;" value="1,500,000">원
+	            <input type="text" name="docuCost" size="20" style=" border:0; text-align:center; width:100px;" value="">원
 	        </td>
 	        <td>
-	            <input type="text" name="-box" size="20" style=" border:0; text-align:center; width:120px;">
+	            <input type="text" name="docuRemark" size="20" style=" border:0; text-align:center; width:120px;">
 	        </td>  
 	        `;
 	    }
