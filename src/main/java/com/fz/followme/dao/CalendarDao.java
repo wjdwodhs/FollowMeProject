@@ -24,4 +24,12 @@ public class CalendarDao {
 	public int insertCalendar(CalendarDto calendar) {
 		return sqlSessionTemplate.insert("calendarMapper.insertCalendar", calendar);
 	}
+
+	public int updateCalendar(CalendarDto calendar) {
+		return sqlSessionTemplate.update("calendarMapper.updateCalendar",calendar);
+	}
+
+	public int deleteCalendar(int calNo) {
+		return sqlSessionTemplate.delete("calendarMapper.deleteCalendar",calNo);
+	}
 }

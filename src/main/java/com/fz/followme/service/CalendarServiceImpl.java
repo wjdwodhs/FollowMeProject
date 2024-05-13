@@ -26,6 +26,16 @@ public class CalendarServiceImpl implements CalendarService{
 		return calendarDao.insertCalendar(calendar);
 	}
 
+	@Override
+	public int updateCalendar(CalendarDto calendar) {
+		return calendarDao.updateCalendar(calendar);
+	}
+
+	@Override
+	public int deleteCalendar(int calNo) {
+		return calendarDao.deleteCalendar(calNo);
+	}
+
 	
 
 }
