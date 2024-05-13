@@ -108,7 +108,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="${contextPath}/calendar.page" class="menu-link">
+                <a href="${contextPath}/calendar/calendar.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="calendar"></i></span>
                     <span class="menu-text"> 일정관리 </span>
                 </a>
