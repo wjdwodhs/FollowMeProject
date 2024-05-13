@@ -12,38 +12,16 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <!-- Plugin css -->
-
-    <!-- Theme Config Js -->
-    <script src="assets/js/head.js"></script>
 
      <!-- fullcalendar CDN -->
-     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
-     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+     <link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+	 <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
+	 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
 
-    <!-- Bootstrap css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
-    <!-- App css -->
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- Icons css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 <style>
 .btn-group>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
 .fc-toolbar-chunk>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
- .fc-day-sun  {
-  color: red;
-  text-decoration: none;
-}
 
-.fc-day-sat  {
-  color: blue;
-  text-decoration: none;
-}
 </style>
 </head>
 <body>
@@ -81,29 +59,24 @@
                            </div>
                        </div>
                    </div>
-                   <!-- end page title -->
-                   <div class="row">
+                   <div class="row" style="justify-content:center;">
                        <!--근태 현황 start-->
-                       <div class="col-xl-4 col-md-12">
+                       <div class="col-xl-10 col-md-12">
                            <div class="menu-item mb-1">
                                    <span class="menu-icon"><i data-feather="list"></i></span>
                                    <span class="menu-text">올해 근태현황 </span>
                            </div>
                            <div class="card">
                                <div class="card-body d-flex" style="justify-content:center">
-                                   <div style="margin-right: 30px;">
+                                   <div style="margin-right: 50px;">
                                        <h4>지각</h4>
                                        <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>10</span>회</h4>
                                    </div>
-                                   <div style="margin-right: 30px;">
+                                   <div style="margin-right: 50px;">
                                        <h4>결근</h4>
                                        <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>13</span>회</h4>
                                    </div>
-                                   <div style="margin-right: 30px;">
-                                       <h4>외출</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>3</span>회</h4>
-                                   </div>
-                                   <div style="margin-right: 30px;">
+                                   <div style="margin-right: 50px;">
                                        <h4>퇴근미체크</h4>
                                        <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>5</span>회</h4>
                                    </div>
@@ -111,8 +84,12 @@
                            </div> <!-- end card-->
                        </div> <!-- end col-->
                        <!--근태 현황 end-->
+                   </div>
+                   <!-- end row -->
+                   <!-- end page title -->
+                   <div class="row" style="justify-content:center;">
                        <!-- 휴가 현황 start -->
-                       <div class="col-xl-4 col-md-12">
+                       <div class="col-xl-5 col-md-12">
                            <div class="menu-item mb-1">
                                <span class="menu-icon"><i data-feather="layers"></i></span>
                                <span class="menu-text">올해 휴가현황 </span>
@@ -136,7 +113,7 @@
                        </div> <!-- end col-->
                        <!-- 휴가 현황 end -->
                        <!-- 근무 현황 start -->
-                       <div class="col-xl-4 col-md-12">
+                       <div class="col-xl-5 col-md-12">
                            <div class="menu-item mb-1">
                                <span class="menu-icon"><i data-feather="list"></i></span>
                                <span class="menu-text">올해 근무현황 </span>
@@ -162,9 +139,9 @@
                        <!-- 근무 현황 end -->
                    </div>
                    <!-- end row -->
-                   <div class="row">
+                   <div class="row" style="justify-content:center;">
                        <!-- 주간 근무시간 start-->
-                       <div class="col-xl-6 col-md-12">
+                       <div class="col-xl-5 col-md-12">
                            <div class="menu-item mb-1">
                                    <span class="menu-icon"><i data-feather="clock"></i></span>
                                    <span class="menu-text">주간 근무시간 </span>
@@ -180,7 +157,7 @@
                        </div> <!-- end col-->
                        <!-- 주간 근무시간 end-->
                        <!-- 월간 근무시간 start -->
-                       <div class="col-xl-6 col-md-12">
+                       <div class="col-xl-5 col-md-12">
                            <div class="menu-item mb-1">
                                <span class="menu-icon"><i data-feather="clock"></i></span>
                                <span class="menu-text">월간 근무시간 </span>
@@ -199,13 +176,9 @@
                    <!-- end row -->
                    <div class="row">
                        <div class="col-12">
-
                            <div class="card">
                                <div class="card-body">
-                                   <div class="row" style="justify-content: center;">
-                                           <div id="external-events">
-                                             
-                                           </div>
+                                   <div class="row" style="display:flex; justify-content:center;">
                                        <div class="col-lg-9">
                                            <div id="calendar"></div>
                                        </div> <!-- end col -->
@@ -745,17 +718,16 @@
    </div>
    
    <!-- Vendor js -->
-   <script src="assets/js/vendor.min.js"></script>
+   <script src="${ contextPath }/assets/js/vendor.min.js"></script>
 
    <!-- App js -->
-   <script src="assets/js/app.min.js"></script>
+   <script src="${ contextPath }/assets/js/app.min.js"></script>
 
    <!-- plugin js -->
-   <script src="assets/libs/moment/min/moment.min.js"></script>
+   <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
   
-
    <!-- Calendar init -->
-    <script src="assets/js/pages/calendar.jjo.js"></script>
+    <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
 
 </body>
 </html>
