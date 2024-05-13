@@ -311,6 +311,7 @@
 			from tb_mem
 			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
 		 where status = 'Y'
+		 order by mem_no asc
 	</select>
 	
 	<!-- 인사관리 - 검색기능 결과 조회용 -->
@@ -339,6 +340,7 @@
         or enroll_date like '%' || #{keyword} || '%'
         or status like '%' || #{keyword} || '%'
     			)
+    	order by mem_no asc
 	</select>
 	
 	<!-- 인사관리 - 검색 시 멤버 리스트 수 조회용 -->
