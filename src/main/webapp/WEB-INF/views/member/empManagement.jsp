@@ -106,7 +106,6 @@
 	   }
 	   
 	   
-	   // 키워드 검색에 따른 결과 요청 및 표시 (검색바 검색기능)
 	   $(document).ready(function() {
 		    var keyword = $("#keyword").val();
 		    if (keyword === "") {
@@ -117,90 +116,110 @@
 		        searchList(pageNo);
 		    }
 		});
-	   
-	   function searchAllList() {
+
+		function displayUserList(response) {
+		    let value = "";
+		    // 유저 정보
+		    for (let i = 0; i < response.memberList.length; i++) {
+		        // enrollDate를 타임스탬프에서 Date 객체로 변환
+		        var date = new Date(response.memberList[i].enrollDate);
+
+		        // 날짜를 "yyyy-mm-dd" 형식으로 포맷팅
+		        var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+
+		        value += "<tr>" +
+		        		"<input type='hidden' class='deptNo' value='" + response.memberList[i].deptNo + "'>" +
+		            "<td><div class='form-check'>" +
+		            "<input type='checkbox' class='form-check-input' id='customCheck2'>" +
+		            "<label class='form-check-label' for='customCheck2'>&nbsp;</label>" +
+		            "</div></td>" +
+		            "<td class='table-user'><img src='${ contextPath }" + response.memberList[i].profileImgPath + "' class='me-2 rounded-circle'>" +
+		            "<a href='javascript:void(0);' class='text-body fw-semibold'>" + response.memberList[i].memName + "</a></td>" +
+		            "<td> " + response.memberList[i].memNo + "</td>" +
+		            "<td> " + response.memberList[i].authLevel + "</td>" +
+		            "<td> " + response.memberList[i].deptName + "</td>" +
+		            "<td> " + response.memberList[i].memGrade + "</td>" +
+		            "<td> " + (response.memberList[i].memRole == null ? '' : response.memberList[i].memRole) + "</td>" +
+		            "<td> " + (response.memberList[i].memSalary == null ? '' : response.memberList[i].memSalary) + "</td>" +
+		            "<td> " + formattedDate + "</td>" +
+		            "<td><span class='badge bg-soft-success text-success'>" + (response.memberList[i].status == 'Y' ? "재직" : "퇴사") + "</span></td>" +
+		            "<td><a href='javascript:void(0);' class='action-icon edit-icon' data-memNo='" + response.memberList[i].memNo + "'  data-bs-toggle='modal' data-bs-target='#employee-modify-modal'>" +
+		            "<i class='mdi mdi-square-edit-outline'></i></a>" +
+		            "<a href='javascript:void(0);' class='action-icon delete-icon' data-memNo='" + response.memberList[i].memNo + "'>" +
+		            "<i class='mdi mdi-delete' data-bs-toggle='modal' data-bs-target='#employee-delete-modal'></i></a>" +
+		            "</td>" +
+		            "</tr>";
+		    }
+
+		    
+		    $('#products-datatable tbody').html(value);
+
+		    var paginationHtml = "";
+		    if (response.pi.currentPage == 1) {
+		        paginationHtml += "<li class='page-item disabled'>" +
+		            "<a class='page-link' href='#' aria-label='Previous'>" +
+		            "<span aria-hidden='true'>«</span>" +
+		            "<span class='visually-hidden'>Previous</span>" +
+		            "</a>" +
+		            "</li>";
+		    } else {
+		        paginationHtml += "<li class='page-item'>" +
+		            "<a class='page-link' href='#' aria-label='Previous' id='searchPage2' data-page='" + (response.pi.currentPage - 1) + "'>" +
+		            "<span aria-hidden='true'>«</span>" +
+		            "<span class='visually-hidden'>Previous</span>" +
+		            "</a>" +
+		            "</li>";
+		    }
+
+		    for (var p = response.pi.startPage; p <= response.pi.endPage; p++) {
+		        paginationHtml += "<li class='page-item " + (response.pi.currentPage == p ? 'active' : '') + "'><a class='page-link' href='#' id='searchPage'>" + p + "</a></li>";
+		    }
+
+		    if (response.pi.currentPage == response.pi.maxPage) {
+		        paginationHtml += "<li class='page-item disabled'>" +
+		            "<a class='page-link' href='#' aria-label='Next'>" +
+		            "<span aria-hidden='true'>»</span>" +
+		            "<span class='visually-hidden'>Next</span>" +
+		            "</a>" +
+		            "</li>";
+		    } else {
+		        paginationHtml += "<li class='page-item'>" +
+		            "<a class='page-link' href='#' aria-label='Next' id='searchPage2' data-page='" + (response.pi.currentPage + 1) + "'>" +
+		            "<span aria-hidden='true'>»</span>" +
+		            "<span class='visually-hidden'>Next</span>" +
+		            "</a>" +
+		            "</li>";
+		    }
+
+		    $("#pageBar").html(paginationHtml);
+		}
+
+		function searchAllList() {
 		    $.ajax({
 		        type: "get",
 		        url: "${contextPath}/member/allList",
 		        success: function(response) {
-		        	let value="";
-	              	//유저정보
-	                for(let i=0; i<response.memberList.length; i++){
-	                	
-	                	// enrollDate를 타임스탬프에서 Date 객체로 변환
-	                	var date = new Date(response.memberList[i].enrollDate);
+		            displayUserList(response);
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Ajax 오류:", error);
+		        }
+		    });
+		}
 
-	                	// 날짜를 "yyyy-mm-dd" 형식으로 포맷팅
-	                	var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-										
-	                	
-	                	value += "<tr>" 
-	                        + "<td><div class='form-check'>" 
-	                        + "<input type='checkbox' class='form-check-input' id='customCheck2'>" 
-	                        + "<label class='form-check-label' for='customCheck2'>&nbsp;</label>" 
-	                        + "</div></td>"
-	                        + "<td class='table-user'><img src='${ contextPath }" + response.memberList[i].profileImgPath + "' class='me-2 rounded-circle'>"
-	                        + "<a href='javascript:void(0);' class='text-body fw-semibold'>" + response.memberList[i].memName + "</a></td>"
-	                        + "<td> " + response.memberList[i].memNo + "</td>"
-	                        + "<td> " + response.memberList[i].authLevel + "</td>"
-	                        + "<td> " + response.memberList[i].deptName + "</td>"
-	                        + "<td> " + response.memberList[i].memGrade + "</td>"
-	                        + "<td> " + (response.memberList[i].memRole == null ? '' : response.memberList[i].memRole) + "</td>" 
-	                        + "<td> " + (response.memberList[i].memSalary == null ? '' : response.memberList[i].memSalary) + "</td>" 
-	                        + "<td> " + formattedDate + "</td>" 
-	                        + "<td><span class='badge bg-soft-success text-success'>" + (response.memberList[i].status == 'Y' ? "재직" : "퇴사") + "</span></td>"
-	                        + "<td><a href='javascript:void(0);' class='action-icon edit-icon' data-memNo='" + response.memberList[i].memNo + "' data-bs-toggle='modal' data-bs-target='#employee-modify-modal'>"
-	                        + "<i class='mdi mdi-square-edit-outline'></i></a>"
-	                        + "<a href='javascript:void(0);' class='action-icon delete-icon' data-memNo='" + response.memberList[i].memNo + "'>"
-	                        + "<i class='mdi mdi-delete' data-bs-toggle='modal' data-bs-target='#employee-delete-modal'></i></a>"
-	                        + "</td>"
-	                        + "</tr>";
+		function searchList(pageNo) {
+		    var keyword = $("#keyword").val();
 
-                            
-	                }
-	                
-		            	$('#products-datatable tbody').html(value);
-		            	
-		            	var paginationHtml = "";
-		            	if (response.pi.currentPage == 1) {
-		            	    paginationHtml += "<li class='page-item disabled'>" +
-		            	        "<a class='page-link' href='#' aria-label='Previous'>" +
-		            	        "<span aria-hidden='true'>«</span>" +
-		            	        "<span class='visually-hidden'>Previous</span>" +
-		            	        "</a>" +
-		            	        "</li>";
-		            	} else {
-		            	    paginationHtml += "<li class='page-item'>" +
-		            	        "<a class='page-link' href='#' aria-label='Previous' id='searchPage2' data-page='" + (response.pi.currentPage-1) + "'>" +
-		            	        "<span aria-hidden='true'>«</span>" +
-		            	        "<span class='visually-hidden'>Previous</span>" +
-		            	        "</a>" +
-		            	        "</li>";
-		            	}
-
-		            	for (var p = response.pi.startPage; p <= response.pi.endPage; p++) {
-		            	    paginationHtml += "<li class='page-item " + (response.pi.currentPage == p ? 'active' : '') + "'><a class='page-link' href='#' id='searchPage'>" + p + "</a></li>";
-		            	}
-
-		            	if (response.pi.currentPage == response.pi.maxPage) {
-		            	    paginationHtml += "<li class='page-item disabled'>" +
-		            	        "<a class='page-link' href='#' aria-label='Next'>" +
-		            	        "<span aria-hidden='true'>»</span>" +
-		            	        "<span class='visually-hidden'>Next</span>" +
-		            	        "</a>" +
-		            	        "</li>";
-		            	} else {
-		            	    paginationHtml += "<li class='page-item'>" +
-		            	        "<a class='page-link' href='#' aria-label='Next' id='searchPage2' data-page='" + (response.pi.currentPage+1) + "'>" +
-		            	        "<span aria-hidden='true'>»</span>" +
-		            	        "<span class='visually-hidden'>Next</span>" +
-		            	        "</a>" +
-		            	        "</li>";
-		            	}
-
-		            	$("#pageBar").html(paginationHtml);
-		            	
-		            	
+		    $.ajax({
+		        type: "get",
+		        url: "${contextPath}/member/searchList",
+		        data: {
+		            keyword: keyword,
+		            pageNo: pageNo
+		        },
+		        timeout: 5000,
+		        success: function(response) {
+		            displayUserList(response);
 		        },
 		        error: function(xhr, status, error) {
 		            console.error("Ajax 오류:", error);
@@ -228,37 +247,41 @@
 		 		// 모달 창 클릭 시 정보 받아오기
 		    $(document).on('click', '.edit-icon', function() {
 		        var row = $(this).closest('tr');
-		        var memNo = row.find('td:eq(2)').text();
-		        var memName = row.find('td:eq(1) a').text();
-		        var profileImgPath = row.find('td:eq(1)').find('img').attr('src');
-		        var authLevel = row.find('td:eq(3)').text();
-		        var deptName = row.find('td:eq(4)').text();
-		        var memGrade = row.find('td:eq(5)').text();
-		        var memRole = row.find('td:eq(6)').text();
-		        var memSalary = row.find('td:eq(7)').text();
-		        var enrollDate = row.find('td:eq(8)').text();
+		        var memNo = row.find('td:eq(2)').text().trim();
+		        var memName = row.find('td:eq(1) a').text().trim();
+		        var profileImgPath = row.find('td:eq(1)').find('img').attr('src').trim();
+		        var authLevel = row.find('td:eq(3)').text().trim();
+		        var deptName = row.find('td:eq(4)').text().trim();
+		        var memGrade = row.find('td:eq(5)').text().trim();
+		        var memRole = row.find('td:eq(6)').text().trim();
+		        var memSalary = row.find('td:eq(7)').text().trim();
+		        var enrollDate = row.find('td:eq(8)').text().trim();
 		        
-
+		     		// 부서번호를 추출
+		        var deptNo = row.find('.deptNo').val();
+		        
 		        $('#employee-modify-modal #profileImg').attr('src', profileImgPath);
 		        $('#employee-modify-modal #memNo').val(memNo);
 		        $('#employee-modify-modal #memName').val(memName);
 		        $('#employee-modify-modal #authLevelSelect').val(authLevel);
-		        $('#employee-modify-modal #deptSelect').val(deptName);
 		        $('#employee-modify-modal #memGrade').val(memGrade);
 		        $('#employee-modify-modal #memRole').val(memRole);
 		        $('#employee-modify-modal #memSalary').val(memSalary);
 		        $('#employee-modify-modal #enrollDate').val(enrollDate);
 		        
-		     		
+		        // 모달 hidden input 에서 memNo 넘기기용
+		        $('#employee-modify-modal input[name="memNo"]').val(memNo);
+		        
+		     		// 부서 번호를 select 요소에 설정
+		        $('#employee-modify-modal #deptSelect').val(deptNo);
 		        
 		    });
-		 		
-		 		
+						
 		 		
 
 		    $(document).on('click', '.delete-icon', function() {
 		        var row = $(this).closest('tr');
-		        var memNo = row.find('td:eq(2)').text();
+		        var memNo = row.find('td:eq(2)').text().trim(); // memNo에서 공백 제거
 		        $('#employee-delete-modal input[name="memNo"]').val(memNo);
 		        
 		        var employeeInfoText = "선택한 직원정보 (사번: " + memNo + ")를 삭제하시겠습니까?";
@@ -266,126 +289,6 @@
 		    });
 		});
 
-		// 검색 결과 요청
-		function searchList(pageNo) {
-		    var keyword = $('#keyword').val();
-
-		    $.ajax({
-		        type: 'get',
-		        url: '${contextPath}/member/searchList',
-		        data: {
-		            keyword: keyword,
-		            pageNo: pageNo
-		        },
-		        timeout: 5000,
-		        success: function(response) {
-		            // 검색 결과 표시 등의 작업 수행
-		        },
-		        error: function(xhr, status, error) {
-		            console.error('Ajax 오류:', error);
-		        }
-		    });
-		}
-
-	   
-	   // 검색 결과 요청
-	   function searchList(pageNo) {
-	    var keyword = document.getElementById("keyword").value;
-	
-	    $.ajax({
-	        type: "get",
-	        url: "${ contextPath }/member/searchList",
-	        data: {
-	            keyword: keyword,
-	            pageNo: pageNo
-	        },
-	        timeout: 5000,
-	        success: function(response) {
-			        	let value="";
-		              	//유저정보
-		                for(let i=0; i<response.memberList.length; i++){
-		                	
-		                	// enrollDate를 타임스탬프에서 Date 객체로 변환
-		                	var date = new Date(response.memberList[i].enrollDate);
-	
-		                	// 날짜를 "yyyy-mm-dd" 형식으로 포맷팅
-		                	var formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-											
-		                	
-		                	value += "<tr>" 
-		                        + "<td><div class='form-check'>" 
-		                        + "<input type='checkbox' class='form-check-input' id='customCheck2'>" 
-		                        + "<label class='form-check-label' for='customCheck2'>&nbsp;</label>" 
-		                        + "</div></td>"
-		                        + "<td class='table-user'><img src='${ contextPath }" + response.memberList[i].profileImgPath + "' class='me-2 rounded-circle'>"
-		                        + "<a href='javascript:void(0);' class='text-body fw-semibold'>" + response.memberList[i].memName + "</a></td>"
-		                        + "<td> " + response.memberList[i].memNo + "</td>"
-		                        + "<td> " + response.memberList[i].authLevel + "</td>"
-		                        + "<td> " + response.memberList[i].deptName + "</td>"
-		                        + "<td> " + response.memberList[i].memGrade + "</td>"
-		                        + "<td> " + (response.memberList[i].memRole == null ? '' : response.memberList[i].memRole) + "</td>" 
-		                        + "<td> " + (response.memberList[i].memSalary == null ? '' : response.memberList[i].memSalary) + "</td>" 
-		                        + "<td> " + formattedDate + "</td>" 
-		                        + "<td><span class='badge bg-soft-success text-success'>" + (response.memberList[i].status == 'Y' ? "재직" : "퇴사") + "</span></td>"
-		                        + "<td><a href='javascript:void(0);' class='action-icon edit-icon' data-memNo='" + response.memberList[i].memNo + "'  data-bs-toggle='modal' data-bs-target='#employee-modify-modal'>"
-		                        + "<i class='mdi mdi-square-edit-outline'></i></a>"
-		                        + "<a href='javascript:void(0);' class='action-icon delete-icon' data-memNo='" + response.memberList[i].memNo + "'>"
-		                        + "<i class='mdi mdi-delete' data-bs-toggle='modal' data-bs-target='#employee-delete-modal'></i></a>"
-		                        + "</td>"
-		                        + "</tr>";
-	
-	                            
-		                }
-		                
-			            	$('#products-datatable tbody').html(value);
-			            	
-			            	var paginationHtml = "";
-			            	if (response.pi.currentPage == 1) {
-			            	    paginationHtml += "<li class='page-item disabled'>" +
-			            	        "<a class='page-link' href='#' aria-label='Previous'>" +
-			            	        "<span aria-hidden='true'>«</span>" +
-			            	        "<span class='visually-hidden'>Previous</span>" +
-			            	        "</a>" +
-			            	        "</li>";
-			            	} else {
-			            	    paginationHtml += "<li class='page-item'>" +
-			            	        "<a class='page-link' href='#' aria-label='Previous' id='searchPage2' data-page='" + (response.pi.currentPage-1) + "'>" +
-			            	        "<span aria-hidden='true'>«</span>" +
-			            	        "<span class='visually-hidden'>Previous</span>" +
-			            	        "</a>" +
-			            	        "</li>";
-			            	}
-	
-			            	for (var p = response.pi.startPage; p <= response.pi.endPage; p++) {
-			            	    paginationHtml += "<li class='page-item " + (response.pi.currentPage == p ? 'active' : '') + "'><a class='page-link' href='#' id='searchPage'>" + p + "</a></li>";
-			            	}
-	
-			            	if (response.pi.currentPage == response.pi.maxPage) {
-			            	    paginationHtml += "<li class='page-item disabled'>" +
-			            	        "<a class='page-link' href='#' aria-label='Next'>" +
-			            	        "<span aria-hidden='true'>»</span>" +
-			            	        "<span class='visually-hidden'>Next</span>" +
-			            	        "</a>" +
-			            	        "</li>";
-			            	} else {
-			            	    paginationHtml += "<li class='page-item'>" +
-			            	        "<a class='page-link' href='#' aria-label='Next' id='searchPage2' data-page='" + (response.pi.currentPage+1) + "'>" +
-			            	        "<span aria-hidden='true'>»</span>" +
-			            	        "<span class='visually-hidden'>Next</span>" +
-			            	        "</a>" +
-			            	        "</li>";
-			            	}
-			            		
-			            	$("#pageBar").html(paginationHtml);
-			            	
-				        },
-				        error: function(xhr, status, error) {
-				            console.error("Ajax 오류:", error);
-				        }
-				    });
-				}
-	   
-	   
 	   
 	   
 	   
@@ -641,7 +544,7 @@
                     </div>
                     <div class="modal-body p-4">
                         <form action="${ contextPath }/member/modifyEmpInfo" method="post">
-                        		<input type="hidden" name="memNo" value="">
+                        		<input type="hidden" name="memNo">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start mb-3">
@@ -650,14 +553,20 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="memName" class="form-label">이름</label>
-                                                        <input type="text" class="form-control" id="memName" name="memName" value="">
+                                                        <input type="text" class="form-control" id="memName" name="memName">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                       <div class="authLevelSelect">
                                                      		<label for="authLevelSelect" class="form-label">권한레벨</label>
-																		                    	<input type="text" class="form-control" id="authLevelSelect" name="authLevel">
+																		                    	<select class="form-select" id="authLevelSelect" name="authLevel" aria-label="Default select example">
+																													    <option value="0" <c:if test="${authLevelSelect eq '0'}">selected</c:if>>0</option>
+																													    <option value="1" <c:if test="${authLevelSelect eq '1'}">selected</c:if>>1</option>
+																													    <option value="2" <c:if test="${authLevelSelect eq '2'}">selected</c:if>>2</option>
+																													    <option value="3" <c:if test="${authLevelSelect eq '3'}">selected</c:if>>3</option>
+																													</select>
+
 																		                	</div> 
                                                     </div>
                                                 </div>
@@ -669,9 +578,15 @@
                                             <div class="col-md-6">
                                                 <div class="mb-2">
                                                     <div class="deptSelect">
-                                                     		<label for="deptSelect" class="form-label">부서명</label>
-																		                    	<input type="text" class="form-control" id="deptSelect" name="deptNo">
-																		                </div> 
+																										    <label for="deptSelect" class="form-label">부서명</label>
+																										    <select class="form-select" id="deptSelect" name="deptNo" aria-label="Default select example">
+																										        <option value="1" <c:if test="${deptSelect eq '1'}">selected</c:if>>영업팀</option>
+																										        <option value="2" <c:if test="${deptSelect eq '2'}">selected</c:if>>마케팅팀</option>
+																										        <option value="3" <c:if test="${deptSelect eq '3'}">selected</c:if>>경영지원팀</option>
+																										        <option value="4" <c:if test="${deptSelect eq '4'}">selected</c:if>>물류팀</option>
+																										        <option value="5" <c:if test="${deptSelect eq '5'}">selected</c:if>>대기발령</option>
+																										    </select>
+																										</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -726,8 +641,8 @@
                     </div>
                     <div class="modal-body p-4">
                     	<form action="${ contextPath }/member/deleteEmpInfo" method="post">
-                    		<input type="hidden" name="memNo" value="">
-                        <p id="employee-info">선택한 직원정보 (사번: )를 삭제하시겠습니까?</p>
+                    		<input type="hidden" name="memNo">
+                        <p id="employee-info"></p>
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">삭제</button>

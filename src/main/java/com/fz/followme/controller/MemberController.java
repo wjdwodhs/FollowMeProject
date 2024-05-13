@@ -534,6 +534,7 @@ public class MemberController {
 	public String modifyEmp(MemberDto m
 						   , RedirectAttributes redirectAttributes) {
 		
+		
 		int result = memberService.modifyEmpInfo(m);
 		
 		if(result > 0) {
@@ -551,7 +552,8 @@ public class MemberController {
 	public String deleteEmpInfo(String memNo
 							  , RedirectAttributes redirectAttributes) {
 		
-		int result = memberService.deleteEmpInfo(memNo);
+		
+		int result = memberService.deleteEmpInfo(memNo.trim());
 		
 		if(result > 0) {
 			redirectAttributes.addFlashAttribute("alertMsg", "직원 정보 삭제에 성공했습니다.");

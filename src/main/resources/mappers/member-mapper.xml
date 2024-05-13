@@ -60,7 +60,7 @@
   <!-- 로그인용 (암호화 적용)-->
   <select id="selectMember" resultMap="memberResult">
 		select
-			 	 mem_no, mem_pwd, dept_name,
+			 	 mem_no, mem_pwd, dept_name, tb_mem.dept_no,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
@@ -78,7 +78,7 @@
 	
 	<select id="memEmailCheck" resultMap="memberResult">
 		select
-			 	 mem_no, mem_pwd, dept_name,
+			 	 mem_no, mem_pwd, dept_name,tb_mem.dept_no,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
@@ -117,7 +117,7 @@
   <!-- 사용자가 입력한 이메일 중복확인용 -->
   <select id="memEmailDoubleCheck" resultMap="memberResult">
   	select
-			 	 mem_no, mem_pwd, dept_name,
+			 	 mem_no, mem_pwd, dept_name,tb_mem.dept_no,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
@@ -298,7 +298,7 @@
 	<!-- 멤버 리스트 조회용 -->
 	<select id="selectMemberList" resultMap="memberResult">
 		select
-			 	 mem_no, mem_pwd, dept_name,
+			 	 mem_no, mem_pwd, dept_name,tb_mem.dept_no,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
@@ -317,7 +317,7 @@
 	<!-- 인사관리 - 검색기능 결과 조회용 -->
 	<select id="searchMemberList" resultMap="memberResult">
 		select
-			 	 mem_no, mem_pwd, dept_name,
+			 	 mem_no, mem_pwd, dept_name,tb_mem.dept_no,
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
