@@ -81,14 +81,73 @@
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
 
-                               <!-- 부트스트랩 modal 부분 -->
+                               <!-- 부트스트랩 modal 추가 부분 -->
 															     <!-- start modal -->
-															     <div class="modal fade" id="event-modal" tabindex="-1">
+															     <div class="modal fade" id="event-addmodal" tabindex="-1">
 															      <div class="modal-dialog">
 															          <div class="modal-content">
 															              <div class="modal-header py-3 px-4 border-bottom-0 d-block">
 															                  <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
 															                  <h5 class="modal-title" id="modal-title">일정 추가</h5>
+															              </div>
+															              <div class="modal-body px-4 pb-4 pt-0">
+															                  <form class="needs-validation" name="event-form" id="form-event" novalidate>
+															                      <div class="row">
+															                          <div class="col-12">
+															                              <div class="mb-3">
+															                                  <label class="form-label">일정 제목</label>
+															                                  <input class="form-control" type="text" name="title" id="event-title" required />
+															                              </div>
+															                          </div>
+															                          <div class="col-12">
+															                            <div class="mb-3">
+															                              <label class="form-label">일정 내용</label>
+															                              <textarea class="form-control" name="content" id="event-content" style="resize: none;"></textarea>
+															                          </div>
+															                        </div>
+															                        <div class="col-12">
+															                          <div class="mb-3">
+															                            <label class="form-label">시작 일자</label>
+															                            <input class="form-control" type="datetime-local" name="start" id="event-start" />
+															                        </div>
+															                      </div>
+															                      <div class="col-12">
+															                        <div class="mb-3">
+															                          <label class="form-label">종료 일자</label>
+															                          <input class="form-control" type="datetime-local" name="end" id="event-end" />
+															                      </div>
+															                    </div>
+															                          <div class="col-12">
+															                              <div class="mb-3">
+															                                  <label class="form-label">카테고리</label>
+															                                  <select class="form-select" name="category" id="event-category" required>
+															                                      <option value="red" selected>직원</option>
+															                                      <option value="blue">부서</option>
+															                                      <option value="purple">회사</option>
+															                                  </select>
+															                              </div>
+															                          </div>
+															                      </div>
+															                      <div class="row mt-2">
+															                          <div class="col-md-12 col-8 text-end">
+															                              <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
+															                              <button type="button" class="btn" style="background-color: #FFBE98; color: white;" id="btn-save-event">Save</button>
+															                          </div>
+															                      </div>
+															                  </form>
+															              </div>
+															          </div> <!-- end modal-content-->
+															      </div> <!-- end modal dialog-->
+															  </div>
+															  <!-- end modal-->
+															    <!-- 부트스트랩 modal 수정 부분 -->
+															     <!-- start modal -->
+															     <div class="modal fade" id="event-modifymodal" tabindex="-1">
+															      <div class="modal-dialog">
+															          <div class="modal-content">
+															              <div class="modal-header py-3 px-4 border-bottom-0 d-block">
+															                  <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+															                  <h5 class="modal-title" id="modal-title">일정 수정</h5>
 															              </div>
 															              <div class="modal-body px-4 pb-4 pt-0">
 															                  <form class="needs-validation" name="event-form" id="form-event" novalidate>
@@ -629,9 +688,196 @@
         <!-- plugin js -->
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         
-        <!-- Calendar init -->
-		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
+       <script>
+		       document.addEventListener('DOMContentLoaded', function () {
+		           $(function () { // 일정 리스트 조회
+		               var request = $.ajax({
+		                   url: "/follow/calendar/calendar.do", 
+		                   method: "GET",
+		                   dataType: "json"
+		               });
+		
+		               request.done(function (data) {
+		                   console.log(data); 
+		                   const targetDiv = document.getElementById('calendar');
+		                   const holidaySource = {
+		                       googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+		                       backgroundColor: 'red'  // rgb code 대체 가능
+		                   }
+		
+		                   // event 함수 정의
+		                   const dateClickEvent = (info) => { // clickevent => 공휴일버튼 클릭, dateclick => 달력 날짜클릭
+		                       // todo 
+		                       const selectedDate = new Date(info.dateStr); // ex 05/07 
+		                       info.backgroundColor='red';
+		                       // 일요일 체크
+		                       if (selectedDate.getDay() === 0) { // 일요일 0 
+		                           alert('일요일');
+		                           return;
+		                       }
+		
+		                       // 토요일 체크
+		                       if (selectedDate.getDay() === 6) { // 토요일 6
+		                           alert('토요일');
+		                           return;
+		                       }
+		
+		                       // 공휴일 체크
+		                       const isHoliday = holidayList.includes(selectedDate.getTime()); // 페이지 로드시 배열안에 있는 유닉스코드면 공휴일로 지정
+		                       if (isHoliday ===  true) {
+		                           alert('공휴일');
+		                           return;
+		                       } 
+		                   }
+		
+		                   const eventClickEvent = (info) => { // fucntion(info)
+		                	   
+		                	   	$("#event-modifymodal").modal("show");
+		                       // todo 
+		                       // alert(`선택하신 날은 ${info.event.title} 입니다`);
+		                	   /* if(info.backgroundColor === red){
+		                           // 클릭한 박스가 공휴일이면(backgroundColor = red)
+		                         }else{
+		                           // 클릭한 박스가 공휴일이아닌 등록되어있는 일정이면 (backgroundColor = #FFBE98)
+		                         }
+		                         $("#event-modal").modal("show"); // 공휴일이아닌 작성되어있는 일정일시 title=> 일정수정하기 ( 기존 데이터 보여지는 모달 ) */
+		                   }
+		
+		
+		                   // 캘린더 설정
+		                   const calendar = new FullCalendar.Calendar(targetDiv, {
+		                       slotDuration: "00:15:00",
+		                       slotMinTime: "08:00:00",
+		                       slotMaxTime: "19:00:00",
+		                       themeSystem: "bootstrap",
+		                       customButtons:{
+		                       PlusButton:{
+		                         text:"일정 추가하기",
+		                         click : function(){
+		                               //부트스트랩 모달 열기
+		                               $("#event-addmodal").modal("show");              
+		                         }
+		                       },
+		                       SaveButton:{ // 생성된 이벤트 DB에 저장
+		                         text:"저장하기",
+		                         click: async function () {
+		                           if (confirm("저장하시겠습니까?")) {
+		                             //지금까지 생성된 모든 이벤트 저장하기
+		                             var allEvent = calendar.getEvents();
+		                             console.log("모든 이벤트들", allEvent);
+		                             //이벤트 저장하기
+		                             const saveEvent = await axios({ // ajax로 변경
+		                               method: "GEt",
+		                               url: "/calendarAd.do",
+		                               data: allEvent,
+		                             });
+		                           }
+		                         },
+		                       }
+		                     },
+		                       bootstrapFontAwesome: false,
+		                       buttonText: {
+		                           today: "오늘",
+		                           month: "월별",
+		                           week: "주간",
+		                           day: "일별",
+		                           list: "오늘의 일정",
+		                           prev: "이전",
+		                           next: "다음"
+		                       },
+		                       initialView: "dayGridMonth", // 초기 로드 될때 보이는 캘린더 화면 (기본설정 : 달)
+		                       titleFormat: function (date) { // title부문 한글로 Ex) 2024년 5월
+		                         year = date.date.year;
+		                         month = date.date.month + 1;
+		
+		                         return year + "년 " + month + "월";
+		                       },
+		                       handleWindowResize: true,
+		                       headerToolbar: {
+		                           left: "prev,next today,PlusButton,SaveButton",
+		                           center: "title",
+		                           right: "dayGridMonth,timeGridWeek,timeGridDay"
+		                       },
+		                       eventSources: [holidaySource], // 공휴일 추가
+		                       //locale:'ko', 한국어 설정
+		                       editable: false,
+		                       droppable: false,
+		                       selectable: true,
+		                       events:data, // DB에서 data로 넘겨주는부분
+		                       dateClick: function(eventInfo) {     // 날짜 선택 이벤트
+		                           // info data 확인
+		                           // console.log(eventInfo);
+		                           console.log(eventInfo);
+		                           dateClickEvent(eventInfo);
+		                       },
+		                       eventClick: function(eventInfo) {    // 일정 선택 이벤트
+		                           // 구글 캘린더로 자동이동을 막음
+		                           eventInfo.jsEvent.preventDefault();      
+		
+		                           // info data 확인
+		                           // console.log(eventInfo);
+		                           eventClickEvent(eventInfo);
+		                       },
+		                       googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo'
+		                   });
+		                   //모달창 이벤트 화면에 생성
+		                     $("#btn-save-event").on("click", function () {
+		                           var eventData = {
+		                             title: $("#event-title").val(),
+		                             content: $("#event-content").val(),
+		                             start: $("#event-start").val(),
+		                             end: $("#event-end").val(),
+		                             category: $("#event-category").val(),
+		                           };
+		                           //빈값입력시 오류
+		                           if (
+		                             eventData.title == "" ||
+		                             eventData.start == "" ||
+		                             eventData.end == ""
+		                           ) {
+		                             alert("입력하지 않은 값이 있습니다.");
+		
+		                             //끝나는 날짜가 시작하는 날짜보다 값이 크면 안됨
+		                           } else if ($("#start").val() > $("#end").val()) {
+		                             alert("시간을 잘못입력 하셨습니다.");
+		                           } else { // 이벤트 추가
+		                        	   $.ajax({
+		                                   url: "/follow/calendar/calendarInsert.do", // 여기에 서버 엔드포인트 URL을 입력하세요.
+		                                   type: "POST",
+		                                   contentType: "application/json; charset=utf-8",
+		                                   data: JSON.stringify(eventData),
+		                                   dataType: "json",
+		                                   success: function (result) {
+		                                	  	 console.log(result)
+		                                       // 성공적으로 서버로부터 응답을 받았을 때 실행할 코드
+		                                       console.log('일정이 성공적으로 추가되었습니다.');
+		                                       alert('일정이 성공적으로 추가되었습니다.');
+		                                       calendar.addEvent(eventData);
+		                                       $("#event-modal").modal("hide");
+		                                       $("#event-title").val("");
+		                                       $("#event-content").val("");
+		                                       $("#event-start").val("");
+		                                       $("#event-end").val("");
+		                                       $("#event-category").val("");
+		                                   },
+		                                   error: function (xhr, status, error) {
+		                                       // 서버 요청 중 오류가 발생했을 때 실행할 코드
+		                                       console.error('일정 추가 중 오류가 발생했습니다:', error);
+		                                       alert('일정을 추가하는 도중 오류가 발생했습니다.');
+		                                   }
+		                               });
+		                             
+		                           }
+		                         });
+		                   
+		                   calendar.render();
+		               });
+		
+		           });
+		
+		       });
        
+       </script>
         
 	
 

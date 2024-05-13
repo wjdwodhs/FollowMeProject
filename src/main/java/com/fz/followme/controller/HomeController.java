@@ -40,10 +40,6 @@ public class HomeController {
 		return "ceoMain";
 	}
 	
-	@RequestMapping("/calendar.page")
-	public String calendarPage() {
-		return "calendar/calendar";
-	}
 	
 	@RequestMapping("/attendance.page")
 	public String attendancePage() {

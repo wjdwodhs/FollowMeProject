@@ -13,11 +13,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CalendarServiceImpl implements CalendarService{
 
-	private final CalendarDao CalendarDao;
+	private final CalendarDao calendarDao;
 	
 	@Override
 	public List<CalendarDto> selectCalendarList() {
-		return  CalendarDao.selectCalendarList();
+		return  calendarDao.selectCalendarList();
 	}
+
+	@Override
+	public int insertCalendar(CalendarDto calendar) {
+		
+		return calendarDao.insertCalendar(calendar);
+	}
+
+	
 
 }

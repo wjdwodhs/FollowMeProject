@@ -1,5 +1,8 @@
 package com.fz.followme.dto;
 
+
+
+
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -21,11 +24,11 @@ public class CalendarDto {
 	
 	private int calNo;
     private String memNo;
-    private String calTitle;
-    private String calContent;
+    private String title;
+    private String content;
     private Timestamp calDate;
-    private Date startDate;
-    private Date endDate;
+    private Date start;
+    private Date end;
     private String category;
     private String type;
 }
