@@ -17,7 +17,6 @@ public class AssetServiceImpl implements AssetService {
 
 	private final AssetDao assetDao;
 
-
 	@Override
 	public List<AssetDto> selectcarList() {
 		return assetDao.selectcarList();
@@ -64,6 +63,10 @@ public class AssetServiceImpl implements AssetService {
 	public int deleteRsvnList(int[] checkedRsvn) {
 		return assetDao.deleteRsvnList(checkedRsvn);
 	}
+
+
+	
+
 	
 	
 	

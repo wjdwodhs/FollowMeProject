@@ -25,8 +25,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AssetDto;
 import com.fz.followme.dto.AssetReservationDto;
+import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.service.AssetService;
+import com.fz.followme.service.ReservationService;
 import com.fz.followme.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AssetController {
 
 	private final AssetService assetService;
+	private final ReservationService reservationService;
 	private final PagingUtil pagingUtil;
 
 	// * 관리자 차량관리 -------------------------------------------------------
@@ -184,9 +187,39 @@ public class AssetController {
 	
 	// * 사용자 차량예약 --------------------------------
 	@RequestMapping("/carsReservation.page")
-	public String carsReservation() {
+	public String carsReservation(HttpServletRequest request, HttpSession session) {
+		
+		List<AssetDto> carlist = assetService.selectcarList();
+		session.setAttribute("carlist", carlist);
+		
+		MemberDto loginUser = (MemberDto)request.getSession().getAttribute("loginUser");
+		session.setAttribute("loginUser", loginUser);
+		
+		for(AssetDto ad:carlist) {
+			if(ad.getStatus().equals("Y")) {
+				ad.setStatus("이용가능");
+			}else if(ad.getStatus().equals("N")) {
+				ad.setStatus("이용불가");
+			}
+		}
+		session.setAttribute("carlist", carlist);
+		
 		return "assetManagement/carsReservation";
 	}
+	
+	
+	// * 차량 예약하기
+	@PostMapping(value = "/insertrsvncar.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public int insertRsvnCar(@RequestBody AssetReservationDto ard) {
+		
+		log.debug("ard : {}", ard);
+		
+		return reservationService.addReservation(ard);
+	}
+	
+	
+	
 	// ------------------------------------------------------
 	
 	

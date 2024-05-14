@@ -104,7 +104,7 @@
 	SELECT
 	       RSVN_NO 
 	     , ASSET_NAME 
-	     , RSVN_DATE 
+	     , to_char(rsvn_Date,'YYYY/MM/DD') rsvn_Date
 	     , START_DIVISION 
 	     , TO_CHAR(START_DATE, 'HH:MI AM') START_DATE
 	     , END_DIVISION 
@@ -135,9 +135,43 @@
 		 </foreach>
 </delete>
 
+<insert id="insertRsvnCar">
+insert
+  into tb_asset_rsvn
+  (
+    rsvn_no
+  , asset_no
+  , rsvn_name
+  , rsvn_date
+  , start_division
+  , start_date
+  , end_division
+  , end_date
+  , rsvn_content
+  )
+  values
+  (
+    seq_assetresno.nextval
+  , (select asset_no
+       from tb_asset
+      where asset_name = #{assetName})
+  , #{rsvnName}
+  , to_date(#{rsvnDate},'YYYY/MM/DD')
+  , #{startDivision}
+  , to_date(#{startDate},'YYYY/MM/DD HH24')
+  , #{endDivision}
+  , to_date(#{endDate},'YYYY/MM/DD HH24')
+  , #{rsvnContent}
+  )
+</insert>
 
-
-
+<select id="doublecheckReservation" resultType="_int"  parameterType="com.fz.followme.dto.AssetReservationDto">
+  SELECT COUNT(*)
+    FROM tb_asset_rsvn
+   WHERE rsvn_date = to_date(#{rsvnDate},'YYYY/MM/DD')
+     AND start_date = TO_DATE(#{startDate}, 'YYYY-MM-DD HH24')
+     AND end_date = TO_DATE(#{endDate}, 'YYYY-MM-DD HH24')
+</select>
 
 
 

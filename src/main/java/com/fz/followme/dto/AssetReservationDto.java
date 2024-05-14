@@ -21,7 +21,7 @@ public class AssetReservationDto {
 	private int rsvnNo;
 	private int assetNo;
 	private String rsvnName;
-	private Date rsvnDate;
+	private String rsvnDate;
 	private String startDivision;
 	private String startDate;
 	private String endDivision;

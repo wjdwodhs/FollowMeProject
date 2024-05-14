@@ -45,7 +45,7 @@
 	
 	<!--  3) aop 등록 -->
 	<aop:config>
-		<aop:pointcut expression="execution (* com.br.spring.service.*Impl.*(..))" id="txPointCut"/>
+		<aop:pointcut expression="execution (* com.fz.followme.service.*Impl.*(..))" id="txPointCut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
 	</aop:config>
 	

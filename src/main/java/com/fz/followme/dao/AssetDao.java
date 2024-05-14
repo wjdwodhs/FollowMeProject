@@ -62,5 +62,17 @@ public class AssetDao {
 		return sqlSessionTemplate.delete("assetMapper.deleteRsvnList", checkedRsvn);
 	}
 	
+	public int insertRsvnCar(AssetReservationDto ard) {
+		return sqlSessionTemplate.insert("assetMapper.insertRsvnCar", ard);
+	}
+	
+	
+	public int doublecheckReservation(AssetReservationDto ard) {
+		return sqlSessionTemplate.selectOne("assetMapper.doublecheckReservation", ard);
+	}
+	
+	
+	
+	
 	
 }

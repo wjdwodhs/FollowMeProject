@@ -12,6 +12,7 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
+
 <!-- App favicon -->
 <link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
@@ -71,10 +72,10 @@
                               		<li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
                                   <li class="breadcrumb-item"><a href="javascript: void(0);">자산관리</a></li>
                                   <li class="breadcrumb-item"><a href="javascript: void(0);">차량</a></li>
-                                  <li class="breadcrumb-item active">법인차량 관리</li>
+                                  <li class="breadcrumb-item active">법인차량 예약</li>
                               </ol>
                           </div>
-                          <h4 class="page-title"><b>법인차량 관리</b></h4>
+                          <h4 class="page-title"><b>법인차량 예약</b></h4>
                       </div>
                   </div>
               </div>
@@ -97,31 +98,28 @@
                                   <br><br>
                                    -->
                                   <table class="table table-striped table-hover">
+                                    <thead>  
                                       <tr align="center">
                                           <th>차종</th>
                                           <th>차량번호</th>
                                           <th>탑승인원(명)</th>
                                           <th>비고</th>
                                       </tr>
-                                      <tr  align="center">
-                                          <td>캐스퍼</td>
-                                          <td>111가1234</td>
-                                          <td>4</td>
-                                          <td>이용가능</td>
-                                      </tr>
-                                      <tr  align="center">
-                                          <td>아반떼</td>
-                                          <td>222나6789</td>
-                                          <td>5</td>
-                                          <td>이용가능</td>
-                                      </tr>
-                                      <tr  align="center">
-                                          <td>스타렉스</td>
-                                          <td>333다4321</td>
-                                          <td>9</td>
-                                          <td>이용가능</td>
-                                      </tr>
-                                    </table>
+                                    </thead>
+                                    <tbody>
+	                                    <c:forEach var="c" items="${ carlist }">
+	                                      <tr  align="center" onclick="assetCarList('${ c.assetName }');">
+	                                          <td>
+	                                          	<input type="hidden" value="${ c.assetNo }">
+	                                          	${ c.assetName }
+	                                          </td>
+	                                          <td>${ c.carNo }</td>
+	                                          <td>${ c.noMem }</td>
+	                                          <td>${ c.status }</td>
+	                                      </tr>
+	                                   	</c:forEach>    
+                                    </tbody>  
+                                  </table>
                               
                               </div>
 
@@ -139,7 +137,7 @@
                               <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회 / 취소</b> | <small>RESERVAION INQUIRY / CANCE</small></h5>
                                   
                               <label style="margin-left: 25px; margin-right: 10px;"><b>희망예약일</b></label>
-                              <input type="date" name="reservationDate" min="" style="border: 0.5px solid lightgray; 
+                              <input type="date" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
                                                  border-radius: 3px; color: gray; height: 30px;">
                               <br><br>
                                   <table class="table-sm" style="margin-left: 20px;">
@@ -179,100 +177,103 @@
 
                               </div>
                       </div> <!-- end col-->
-
+											</form>
 
                       <!-- 예약 신청 -->
                       <div class="card">
                           <div class="card-body">
                               <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 신청</b> | <small>RESERVAIONL</small></h5>
+															
+															<form id="reservationForm">
+	                              <table class="table-sm" style="margin-left: 20px;">
+	                                  <tr>
+	                                      <th>예약자</th>
+	                                      <td style="width: 150px;">
+	                                          <input type="text" name="rsvnName" value="${ loginUser.memName }"class="form-control" readonly>    
+	                                      </td>
+	                                      <td></td>
+	                                      <th>소속부서</th>
+	                                      <td  style="width: 150px;">
+	                                          <input type="text" name="deptName" value="${ loginUser.deptName }" class="form-control" readonly  >     
+	                                      </td>
+	                                  </tr>
+	                                  <tr>
+	                                      <th>예약차종</th>
+	                                      <td colspan="4">
+	                                          <input type="text"id="insert-assetName" name="assetName" class="form-control"
+	                                           placeholder="법인차량목록에서 클릭해주세요.">  
+	                                      </td>
+	                                  </tr>
+	                                  <tr> 
+	                                      <th>예약날짜</th>
+	                                      <td colspan="4">
+	                                          <input type="date" id="rsvnDate" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
+	                                                 border-radius: 3px; color: gray; height: 30px;">
+	                                      </td>
+	                                  </tr>
+	                                  <tr>
+	                                      <th>예약시간</th>
+                                        <td>
+                                            <select class="reservation-select class="form-control" name="startDivision" id="startDivision"
+                                                    style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
+                                                    <option value="오전">오전</option>
+                                                    <option value="오후">오후</option>
+                                            </select>
+                                            <select class="reservation-select class="form-control" id="startDate"
+                                                    style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
+                                                    <option value="01">01시</option>
+                                                    <option value="02">02시</option>
+                                                    <option value="03">03시</option>
+                                                    <option value="04">04시</option>
+                                                    <option value="05">05시</option>
+                                                    <option value="06">06시</option>
+                                                    <option value="07">07시</option>
+                                                    <option value="08">08시</option>
+                                                    <option value="09">09시</option>
+                                                    <option value="10">10시</option>
+                                                    <option value="11">11시</option>
+                                                    <option value="12">12시</option>
+                                            </select>
+                                        </td>
+                                        <td>~</td>
+                                        <td colspan="2"  style="width: 150px;">
+                                            <select class="reservation-select class="form-control" name="endDivision" id="endDivision"
+                                                    style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
+                                                    <option value="오전">오전</option>
+                                                    <option value="오후">오후</option>
+                                            </select>
+                                            <select class="reservation-select class="form-control" id="endDate"
+                                                    style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
+                                                    <option value="01">01시</option>
+                                                    <option value="02">02시</option>
+                                                    <option value="03">03시</option>
+                                                    <option value="04">04시</option>
+                                                    <option value="05">05시</option>
+                                                    <option value="06">06시</option>
+                                                    <option value="07">07시</option>
+                                                    <option value="08">08시</option>
+                                                    <option value="09">09시</option>
+                                                    <option value="10">10시</option>
+                                                    <option value="11">11시</option>
+                                                    <option value="12">12시</option>
+                                            </select>
+                                        </td>
+                                        <td></td>
+	                                  </tr>
+	                                  <tr>
+	                                      <th>이용목적</th>
+	                                      <td colspan="4">
+	                                          <input type="text" name="rsvnContent" class="form-control">
+	                                      </td>
+	                                  </tr>
+	                              </table>
+	                              <br>
 
-                              <table class="table-sm" style="margin-left: 20px;">
-                                  <tr>
-                                      <th>예약자</th>
-                                      <td style="width: 150px;">
-                                          <input type="text" value="ㅇㅇㅇ" class="form-control" readonly>    
-                                      </td>
-                                      <td></td>
-                                      <th>소속부서</th>
-                                      <td  style="width: 150px;">
-                                          <input type="text" value="xxxx" class="form-control" readonly  >     
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <th>예약차종</th>
-                                      <td colspan="4">
-                                          <input type="text" value="캐스퍼" class="form-control">         
-                                      </td>
-                                  </tr>
-                                  <tr> 
-                                      <th>예약날짜</th>
-                                      <td colspan="4">
-                                          <input type="date" name="reservationDate" min="" style="border: 0.5px solid lightgray; 
-                                                 border-radius: 3px; color: gray; height: 30px;">
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <th>예약시간</th>
-                                                <td>
-                                                
-                                                    <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
-                                                            <option value="오전">오전</option>
-                                                            <option value="오후">오후</option>
-                                                    </select>
-                                                    <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
-                                                            <option value="">01시</option>
-                                                            <option value="">02시</option>
-                                                            <option value="">03시</option>
-                                                            <option value="">04시</option>
-                                                            <option value="">05시</option>
-                                                            <option value="">06시</option>
-                                                            <option value="">07시</option>
-                                                            <option value="">08시</option>
-                                                            <option value="">09시</option>
-                                                            <option value="">10시</option>
-                                                            <option value="">11시</option>
-                                                            <option value="">12시</option>
-                                                    </select>
-                                                </td>
-                                                <td>~</td>
-                                                <td colspan="2"  style="width: 150px;">
-                                                    <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray;">
-                                                            <option value="">오전</option>
-                                                            <option value="">오후</option>
-                                                    </select>
-                                                    <select class="reservation-select class="form-control" name="condition"
-                                                            style="border: 0.5px solid lightgray; border-radius: 3px; width:70px; height: 30px; color: gray;">
-                                                            <option value="">01시</option>
-                                                            <option value="">02시</option>
-                                                            <option value="">03시</option>
-                                                            <option value="">04시</option>
-                                                            <option value="">05시</option>
-                                                            <option value="">06시</option>
-                                                            <option value="">07시</option>
-                                                            <option value="">08시</option>
-                                                            <option value="">09시</option>
-                                                            <option value="">10시</option>
-                                                            <option value="">11시</option>
-                                                            <option value="">12시</option>
-                                                    </select>
-                                                </td>
-                                                <td></td>
-                                  </tr>
-                                  <tr>
-                                      <th>이용목적</th>
-                                      <td colspan="4">
-                                          <input type="text" value="외근" class="form-control">
-                                      </td>
-                                  </tr>
-                              </table>
-                              <br>
-
-                                  <div class="text-center mb-3">
-                                      <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
-                                  </div>
+																<!-- 이용불가 차량은 버튼 안눌리게 해야함 -->
+                                <div class="text-center mb-3">
+                                    <button type="submit" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;">예약</button>
+                                </div>
+                              </form>
                               
                               </div> <!-- end card -->
                               
@@ -282,7 +283,6 @@
                       <!-- end row -->
 
                       </div>
-                  </form>     
 
               <!-- end row -->
 
@@ -300,6 +300,124 @@
 		document.querySelectorAll('input[type="date"]').forEach(function(minday){
 			minday.min = new Date().toISOString().split('T')[0];
 		})
+		
+		
+		// 차량목록 행을 클릭했을때 내용 input에 출력
+		function assetCarList(assetName){
+			document.getElementById("insert-assetName").value = assetName;
+		}
+		
+		
+		
+		// 차량예약, 예약시간 변경
+		$("#reservationForm").on('submit', function(event){
+			
+			// 기본 폼 제출 막기
+			event.preventDefault();
+			
+			// startDate, endDate 변환 
+			var rsvnDate = document.getElementById("rsvnDate").value;
+
+			// start 변환
+			var startDivision = document.getElementById("startDivision").value;
+			var startDt = document.getElementById("startDate").value;
+
+			// end
+			var endDivision = document.getElementById("endDivision").value;
+			var endDt = document.getElementById("endDate").value;
+
+			// startDate에 합치기
+			var startDate = rsvnDate + " ";
+			if(startDivision == "오전" ){
+				if(startDt == "12"){
+					startDate += "00";  // 12시는 00으로 변경
+				}else{
+					startDate += startDt.padStart(2, '0'); // 한자리수 시간 앞에 0추가
+				}
+			}else if(startDivision == "오후"){
+				if(startDt != "12"){
+					startDate += (parseInt(startDt) + 12).toString().padStart(2,'0');
+				}else{
+					startDate += startDt; // 12시는 그대로 유지
+				}
+			}
+			
+			var endDate = rsvnDate + " ";
+			if(endDivision == "오전"){
+				if(endDt == "12"){
+					endDate += "00";
+				}else{
+					endDate += endDt.padStart(2,'0');
+				}
+			}else if(endDivision == "오후"){
+				if(endDt != "12"){
+					endDate += (parseInt(endDt) + 12).toString().padStart(2,'0');
+				}else{
+					endDate += endDt;
+				}
+			}
+			
+			/*
+			// startDate input hidden생성
+		  var hiddenStartDate = $('<input>').attr({
+				type:'hidden',
+				name:'startDate',
+				value:startDate
+		  });
+		  
+			// endDate input hidden생성
+			var hiddenEndDate = $('<input>').arrt({
+				type:'hidden',
+				name:'endDate',
+				value:endDate
+			});
+			
+			// 폼에 hidden input 생성
+			$(this).append(hiddenStartDate);
+			$(this).append(hiddenEndDate);
+			*/
+			
+			
+			// 폼 데이터 객체로 변환
+			var formData = $(this).serializeArray();
+			var data = {};
+			formData.forEach(function(item){
+				data[item.name] = item.value;
+			});
+			
+			data.startDate = startDate;
+			data.endDate = endDate;
+			
+			console.log(data);
+			
+			$.ajax({
+				url:"${contextPath}/asset/insertrsvncar.do",
+				type:"post",
+				contentType:"application/json",
+				data: JSON.stringify(data),
+				success:function(result){
+					
+					if(result > 0){
+						alert("차량예약에 성공하였습니다.");
+					}else{
+						alert("차량예약에 실패하였습니다. 예약정보를 다시 확인해주세요.");
+					}
+					
+					location.reload();
+					
+				},
+				error:function(er){
+					console.log("차량예약 실패 ajax");
+					if(er.status == 409){
+						alert("예약이 중복 되었습니다. 예약정보를 다시 확인해주세요.");
+					}else{
+						alert("예약 처리 중 오류가 발생했습니다. 예약 내용을 다시 확인해주세요.");
+					}
+				}
+			});
+			
+		})
+		
    </script>
 
 
@@ -317,468 +435,7 @@
 		</div>
 	</div>
 	
-	<!-- Theme Settings -->
-        <div class="offcanvas offcanvas-end right-bar" tabindex="-1" id="theme-settings-offcanvas">
-            <div class="d-flex align-items-center w-100 p-0 offcanvas-header">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs nav-bordered nav-justified w-100" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link py-2" data-bs-toggle="tab" href="#chat-tab" role="tab">
-                            <i class="mdi mdi-message-text d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link py-2" data-bs-toggle="tab" href="#tasks-tab" role="tab">
-                            <i class="mdi mdi-format-list-checkbox d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link py-2 active" data-bs-toggle="tab" href="#settings-tab" role="tab">
-                            <i class="mdi mdi-cog-outline d-block font-22 my-1"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="offcanvas-body p-3 h-100" data-simplebar>
-                <!-- Tab panes -->
-                <div class="tab-content pt-0">
-                    <div class="tab-pane" id="chat-tab" role="tabpanel">
-
-                        <form class="search-bar">
-                            <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="mdi mdi-magnify"></span>
-                            </div>
-                        </form>
-
-                        <h6 class="fw-medium mt-2 text-uppercase">Group Chats</h6>
-
-                        <div>
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-                                <span class="mb-0 mt-1">App Development</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-warning"></i>
-                                <span class="mb-0 mt-1">Office Work</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 mb-2 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-danger"></i>
-                                <span class="mb-0 mt-1">Personal Group</span>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item ps-3 d-block">
-                                <i class="mdi mdi-checkbox-blank-circle-outline me-1"></i>
-                                <span class="mb-0 mt-1">Freelance</span>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium mt-3 text-uppercase">Favourites <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
-
-                        <div>
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Andrew Mackie</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Rory Dalyell</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To an English person, it will seem like simplified</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jaxon Dunhill</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium mt-3 text-uppercase">Other Chats <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-end mdi mdi-plus-circle"></i></a></h6>
-
-                        <div class="pb-4">
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Jackson Therry</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Charles Deakin</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Ryan Salting</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">If several languages coalesce the grammar of the resulting.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status online"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Sean Howse</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status busy"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Dean Coward</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">The new common language will be more simple.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset notification-item">
-                                <div class="d-flex align-items-start noti-user-item">
-                                    <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                        <i class="mdi mdi-circle user-status away"></i>
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <h6 class="mt-0 mb-1 font-14">Hayley East</h6>
-                                        <div class="font-13 text-muted">
-                                            <p class="mb-0 text-truncate">One could refuse to pay expensive translators.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <div class="text-center mt-3">
-                                <a href="javascript:void(0);" class="btn btn-sm btn-white">
-                                    <i class="mdi mdi-spin mdi-loading me-2"></i>
-                                    Load more
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane" id="tasks-tab" role="tabpanel">
-                        <h6 class="fw-medium p-3 m-0 text-uppercase">Working Tasks</h6>
-                        <div class="px-2">
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">App Development<span class="float-end">75%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Database Repair<span class="float-end">37%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Backup Create<span class="float-end">52%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <h6 class="fw-medium mb-0 mt-4 text-uppercase">Upcoming Tasks</h6>
-
-                        <div>
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Sales Reporting<span class="float-end">12%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">Redesign Website<span class="float-end">67%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-
-                            <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
-                                <p class="text-muted mb-0">New Admin Design<span class="float-end">84%</span></p>
-                                <div class="progress mt-2" style="height: 4px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="p-3 mt-2 d-grid">
-                            <a href="javascript: void(0);" class="btn btn-success waves-effect waves-light">Create Task</a>
-                        </div>
-
-                    </div>
-
-                    <div class="tab-pane active" id="settings-tab" role="tabpanel">
-
-                        <div class="mt-n3">
-                            <h6 class="fw-medium py-2 px-3 font-13 text-uppercase bg-light mx-n3 mt-n3 mb-3">
-                                <span class="d-block py-1">Theme Settings</span>
-                            </h6>
-                        </div>
-
-                        <div class="alert alert-warning" role="alert">
-                            <strong>Customize </strong> the overall color scheme, sidebar menu, etc.
-                        </div>
-
-                        <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Color Scheme</h5>
-
-                        <div class="colorscheme-cardradio">
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-bs-theme" id="layout-color-light" value="light">
-                                    <label class="form-check-label" for="layout-color-light">Light</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-bs-theme" id="layout-color-dark" value="dark">
-                                    <label class="form-check-label" for="layout-color-dark">Dark</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Content Width</h5>
-                        <div class="d-flex flex-column gap-2">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="data-layout-width" id="layout-width-default" value="default">
-                                <label class="form-check-label" for="layout-width-default">Fluid (Default)</label>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="data-layout-width" id="layout-width-boxed" value="boxed">
-                                <label class="form-check-label" for="layout-width-boxed">Boxed</label>
-                            </div>
-                        </div>
-
-                        <div id="layout-mode">
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Layout Mode</h5>
-
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-layout-mode" id="layout-mode-default" value="default">
-                                    <label class="form-check-label" for="layout-mode-default">Default</label>
-                                </div>
-
-
-                                <div id="layout-detached">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="data-layout-mode" id="layout-mode-detached" value="detached">
-                                        <label class="form-check-label" for="layout-mode-detached">Detached</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Topbar Color</h5>
-
-                        <div class="d-flex flex-column gap-2">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="data-topbar-color" id="topbar-color-light" value="light">
-                                <label class="form-check-label" for="topbar-color-light">Light</label>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="data-topbar-color" id="topbar-color-dark" value="dark">
-                                <label class="form-check-label" for="topbar-color-dark">Dark</label>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="data-topbar-color" id="topbar-color-brand" value="brand">
-                                <label class="form-check-label" for="topbar-color-brand">Brand</label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Menu Color</h5>
-
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-color" id="leftbar-color-light" value="light">
-                                    <label class="form-check-label" for="leftbar-color-light">Light</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-color" id="leftbar-color-dark" value="dark">
-                                    <label class="form-check-label" for="leftbar-color-dark">Dark</label>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-color" id="leftbar-color-brand" value="brand">
-                                    <label class="form-check-label" for="leftbar-color-brand">Brand</label>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-color" id="leftbar-color-gradient" value="gradient">
-                                    <label class="form-check-label" for="leftbar-color-gradient">Gradient</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="menu-icon-color">
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Menu Icon Color</h5>
-
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-two-column-color" id="twocolumn-menu-color-light" value="light">
-                                    <label class="form-check-label" for="twocolumn-menu-color-light">Light</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-two-column-color" id="twocolumn-menu-color-dark" value="dark">
-                                    <label class="form-check-label" for="twocolumn-menu-color-dark">Dark</label>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-two-column-color" id="twocolumn-menu-color-brand" value="brand">
-                                    <label class="form-check-label" for="twocolumn-menu-color-brand">Brand</label>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-two-column-color" id="twocolumn-menu-color-gradient" value="gradient">
-                                    <label class="form-check-label" for="twocolumn-menu-color-gradient">Gradient</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Menu Icon Tone</h5>
-
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-icon" id="menu-icon-default" value="default">
-                                    <label class="form-check-label" for="menu-icon-default">Default</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-menu-icon" id="menu-icon-twotone" value="twotones">
-                                    <label class="form-check-label" for="menu-icon-twotone">Twotone</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="sidebar-size">
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Sidebar Size</h5>
-
-                            <div class="d-flex flex-column gap-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-sidenav-size" id="leftbar-size-default" value="default">
-                                    <label class="form-check-label" for="leftbar-size-default">Default</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-sidenav-size" id="leftbar-size-compact" value="compact">
-                                    <label class="form-check-label" for="leftbar-size-compact">Compact (Medium Width)</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-sidenav-size" id="leftbar-size-small" value="condensed">
-                                    <label class="form-check-label" for="leftbar-size-small">Condensed (Icon View)</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-sidenav-size" id="leftbar-size-full" value="full">
-                                    <label class="form-check-label" for="leftbar-size-full">Full Layout</label>
-                                </div>
-
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="data-sidenav-size" id="leftbar-size-fullscreen" value="fullscreen">
-                                    <label class="form-check-label" for="leftbar-size-fullscreen">Fullscreen Layout</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="sidebar-user">
-                            <h5 class="fw-medium font-14 mt-4 mb-2 pb-1">Sidebar User Info</h5>
-
-                            <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" name="data-sidebar-user" id="sidebaruser-check">
-                                <label class="form-check-label" for="sidebaruser-check">Enable</label>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="offcanvas-footer border-top py-2 px-2 text-center">
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-light w-50" id="reset-layout">Reset</button>
-                    <a href="https://1.envato.market/uboldadmin" class="btn btn-danger w-50" target="_blank"><i class="mdi mdi-basket me-1"></i> Buy</a>
-                </div>
-            </div>
-        </div>
-        
+  
         <!-- Vendor js -->
         <script src="${contextPath}/assets/js/vendor.min.js"></script>
 

@@ -31,4 +31,6 @@ public interface AssetService {
 	// 차량예약 내역 선택 삭제
 	int deleteRsvnList(int[] checkedRsvnArr);
 	
+
+	
 }
