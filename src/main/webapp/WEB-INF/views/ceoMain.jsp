@@ -41,9 +41,48 @@
 
 
 </head>
-<body>
+<body onload="printClock();">
+
+<script>
 
 
+	// 화면에 시계 표시
+	function printClock() {
+	    
+	    var clock = document.getElementById("clock");            // 출력할 장소 선택
+	    var currentDate = new Date();                                     // 현재시간
+	    var calendar = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate() // 현재 날짜
+	    var amPm = 'AM'; // 초기값 AM
+	    var currentHours = addZeros(currentDate.getHours(),2); 
+	    var currentMinute = addZeros(currentDate.getMinutes() ,2);
+	    var currentSeconds =  addZeros(currentDate.getSeconds(),2);
+	    
+	    if(currentHours >= 12){ // 시간이 12보다 클 때 PM으로 세팅, 12를 빼줌
+	    	amPm = 'PM';
+	    	currentHours = addZeros(currentHours - 12,2);
+	    }
+	
+	    if(currentSeconds >= 50){// 50초 이상일 때 색을 변환해 준다.
+	       currentSeconds = '<span style="color:#de1951;">'+currentSeconds+'</span>'
+	    }
+	    clock.innerHTML = currentHours+":"+currentMinute+":"+currentSeconds +" <span style='font-size:23px;'>"+ amPm+"</span>"; //날짜를 출력해 줌
+	    
+	    setTimeout("printClock()",1000);         // 1초마다 printClock() 함수 호출
+	}
+	
+	function addZeros(num, digit) { // 자릿수 맞춰주기
+		  var zero = '';
+		  num = num.toString();
+		  if (num.length < digit) {
+		    for (i = 0; i < digit - num.length; i++) {
+		      zero += '0';
+		    }
+		  }
+		  return zero + num;
+	}
+
+
+</script>
 
 <!-- Begin page -->
   <div id="wrapper">
@@ -76,14 +115,15 @@
 			                           <div class="ribbon ribbon-info float-start"><i class="mdi mdi-access-point me-1"></i> 근태관리</div>&nbsp &nbsp
 			                           		<div class="ribbon-content">
 			                           			<div style="display: flex; justify-content: center; margin-top: 20px;">
-	                                    <h4 style="margin-right: 20px;">04월 28일 <br> 오전 7:47:03</h4>
+																				<div style="border:none; width:150px; height:50px; color:#666; font-size:23px; text-align:center; margin-top:20px;" id="clock">
+																			</div>
 	                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
 			                                </div>
 			                                <div style="margin-top: 20px;">
 			                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
 			                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
 			                                </div>
-			                                <div style="margin-top: 30px;"> 
+			                                <div style="margin-top: 10px;"> 
 			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="업무">업무</button>&nbsp &nbsp 
 			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="회의">회의</button>
 			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외출">외출</button>&nbsp &nbsp 
