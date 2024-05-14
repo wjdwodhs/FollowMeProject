@@ -29,12 +29,18 @@
             $('#todo-input-text').val('');
             $('#todo-input-text').removeClass('is-invalid');
            
-            // 서버에서 반환한 데이터를 사용하여 To-do를 추가
-            self.$todoData.push({
-                id: self.$todoData.length + 1,
-                text: todoText,
-                done: false
-            });
+            // 서버에서 받은 번호를 사용하여 Todo를 추가
+						for (var i = 0; i < response.length; i++) {
+						    var newTodo = {
+						        id: response[i].todoNo,
+						        text: response[i].content,
+						        done: response[i].todoDone
+						    };
+						
+						    self.$todoData.push(newTodo);
+						}
+
+            self.$todoData.push(newTodo);
             
             // 새로운 To-do를 추가한 후 UI를 갱신
             self.generate();
@@ -45,19 +51,19 @@
     });
 };
 
-  o.prototype.deleteTodo = function(todoNo) {
+  o.prototype.deleteTodo = function(t) {
     var self = this;
 
     // 서버에 삭제 요청 보내기
     $.ajax({
         type: 'POST',
         url: 'ceoMain/deleteTodo', 
-        data: { todoNo: todoNo }, 
+        data: { todoNo: t }, 
         success: function(response) {
             console.log('To-do가 성공적으로 삭제되었습니다.');
             // 서버에서의 삭제가 성공했을 때에만 클라이언트의 UI를 갱신
             self.$todoData = self.$todoData.filter(function(e) {
-                return e.id != todoNo;
+                return e.id != t;
             });
             self.generate(); // UI 갱신
         },
