@@ -39,4 +39,11 @@
   	   and mem_no = #{memNo}
   </select>
   
+  <select id="selectTodo" resultMap="todoResult">
+  	select
+  				todo_no, mem_no, content
+  		from tb_todo
+  	 where content = #{todoText}  
+  </select>
+  
 </mapper>

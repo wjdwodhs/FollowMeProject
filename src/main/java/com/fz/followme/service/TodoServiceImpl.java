@@ -30,4 +30,9 @@ public class TodoServiceImpl implements TodoService {
 		return todoDao.getTodo(memNo);
 	}
 
+	@Override
+	public TodoDto selectTodo(String todoText) {
+		return todoDao.selectTodo(todoText);
+	}
+
 }

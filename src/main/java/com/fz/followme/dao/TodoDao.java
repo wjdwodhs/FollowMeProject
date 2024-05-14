@@ -29,4 +29,9 @@ public class TodoDao {
 	public List<TodoDto> getTodo(String memNo) {
 		return sqlSessionTemplate.selectList("todoMapper.getTodo", memNo);
 	}
+	
+	// insert한 todo 1건 조회
+	public TodoDto selectTodo(String todoText) {
+		return sqlSessionTemplate.selectOne("todoMapper.selectTodo", todoText);
+	}
 }

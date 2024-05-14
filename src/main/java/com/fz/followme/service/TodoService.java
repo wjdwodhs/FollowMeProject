@@ -14,4 +14,7 @@ public interface TodoService {
 	
 	// to-do 불러오기
 	List<TodoDto> getTodo(String memNo);
+	
+	// insert 한 to-do 1건 조회
+	TodoDto selectTodo(String todoText);
 }

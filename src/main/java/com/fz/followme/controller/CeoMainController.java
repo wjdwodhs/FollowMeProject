@@ -29,39 +29,37 @@ public class CeoMainController {
 
 	@ResponseBody
 	@PostMapping("/insertTodo")
-	public String todoInsert(String todoText, HttpServletRequest request) {
-		
-		MemberDto loginUser = (MemberDto)request.getSession().getAttribute("loginUser");
-		String memNo = loginUser.getMemNo();
-		
-		TodoDto newTodo = new TodoDto();
-		newTodo.setContent(todoText);
-		newTodo.setMemNo(memNo);
-		
-		log.debug("newTodo : {}", newTodo);
-		
-		int result = todoService.insertTodo(newTodo);
-		
-		if(result > 0) {
-			return "오늘의 일정 추가에 성공했습니다.";
-		}else {
-			return "오늘의 일정 추가에 실패했습니다.";
-		}
-		
+	public TodoDto todoInsert(String todoText, HttpServletRequest request) {
+	    MemberDto loginUser = (MemberDto)request.getSession().getAttribute("loginUser");
+	    String memNo = loginUser.getMemNo();
+	    
+	    TodoDto newTodo = new TodoDto();
+	    newTodo.setContent(todoText);
+	    newTodo.setMemNo(memNo);
+	    
+	    int result = todoService.insertTodo(newTodo);
+	    
+	    TodoDto insertedTodo = todoService.selectTodo(todoText);
+	    		
+	    log.debug("newTodo : {}", newTodo);
+	    log.debug("insertedTodo : {}", insertedTodo);
+	    
+	    if(result > 0) {
+	        return insertedTodo; // 새로 생성된 Todo의 정보를 반환
+	    } else {
+	        return null;
+	    }
 	}
+
 	
 	
 	@ResponseBody
 	@PostMapping("/deleteTodo")
-	public String deleteTodo(int todoNo) {
+	public int deleteTodo(int todoNo) {
 		
 		int result = todoService.deleteTodo(todoNo);
 		
-		if(result > 0) {
-			return "오늘의 일정 삭제에 성공했습니다.";
-		}else {
-			return "오늘의 일정 삭제에 실패했습니다.";
-		}
+		return result;
 		
 	}
 	

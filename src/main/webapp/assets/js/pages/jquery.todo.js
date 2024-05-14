@@ -25,31 +25,29 @@
         url: 'ceoMain/insertTodo',
         data: { todoText: todoText },
         success: function(response) {
-            
             $('#todo-input-text').val('');
             $('#todo-input-text').removeClass('is-invalid');
-           
-            // 서버에서 받은 번호를 사용하여 Todo를 추가
-						for (var i = 0; i < response.length; i++) {
-						    var newTodo = {
-						        id: response[i].todoNo,
-						        text: response[i].content,
-						        done: response[i].todoDone
-						    };
-						
-						    self.$todoData.push(newTodo);
-						}
 
-            self.$todoData.push(newTodo);
-            
-            // 새로운 To-do를 추가한 후 UI를 갱신
-            self.generate();
+            // 서버에서 받은 번호를 사용하여 Todo를 추가
+            if (response != null && response.todoNo !== undefined) {
+                // 서버로부터 받은 응답이 null이 아닌 경우에만 처리
+                var newTodo = {
+                    id: response.todoNo,
+                    text: response.content,
+                    done: response.todoDone
+                };
+                self.$todoData.push(newTodo);
+
+                // 새로운 To-do를 추가한 후 UI를 갱신
+                self.generate();
+            }
         },
         error: function(xhr, status, error) {
             console.error('Todo 추가 중 오류가 발생했습니다:', error);
         }
     });
 };
+
 
   o.prototype.deleteTodo = function(t) {
     var self = this;
@@ -60,6 +58,7 @@
         url: 'ceoMain/deleteTodo', 
         data: { todoNo: t }, 
         success: function(response) {
+        		console.log(response);
             console.log('To-do가 성공적으로 삭제되었습니다.');
             // 서버에서의 삭제가 성공했을 때에만 클라이언트의 UI를 갱신
             self.$todoData = self.$todoData.filter(function(e) {
@@ -72,6 +71,7 @@
         }
     });
 };
+
   
   o.prototype.loadTodos = function() {
     var self = this;

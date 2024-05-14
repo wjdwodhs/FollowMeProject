@@ -36,16 +36,6 @@
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-
-<!-- 캘린더 -->
-<!-- fullcalendar -->
-<link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet"/>
-<script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
-<script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
-
-<!-- fullcalendar 언어 CDN -->  
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-
 <!-- Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -811,8 +801,6 @@
         <!-- Todo app -->
         <script src="${ contextPath }/assets/js/pages/jquery.todo.js" data-context-path="${contextPath}"></script>
 
-        <!-- Calendar init -->
-		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
        
         <!-- Widgets demo js-->
         <script src="${ contextPath }/assets/js/pages/widgets.init.js"></script>
