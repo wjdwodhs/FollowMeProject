@@ -38,26 +38,23 @@
 
 
 <!-- 캘린더 -->
-			<!-- fullcalendar -->
-     <link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet"/>
-     <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
-		 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
-		 
-     <!-- fullcalendar 언어 CDN -->  
-     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-     
-     <!-- Bootstrap JavaScript -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- fullcalendar -->
+<link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet"/>
+<script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
+<script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
 
-<style>
-.ribbon-box .ribbon-primary {
-    background: #6658dd;
-}
+<!-- fullcalendar 언어 CDN -->  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 
-</style>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 <body>
+
+
+
 <!-- Begin page -->
   <div id="wrapper">
 
@@ -239,7 +236,7 @@
                                         <form name="todo-form" id="todo-form" class="needs-validation mt-3" novalidate>
                                             <div class="row">
                                                 <div class="col">
-                                                    <input type="text" id="todo-input-text" name="todo-input-text" class="form-control" 
+                                                    <input type="text" id="todo-input-text" name="todoInput" class="form-control" 
                                                         placeholder="새로운 일정 추가하기" required>
                                                     <div class="invalid-feedback">
                                                         오늘의 일정을 입력하세요
@@ -794,7 +791,7 @@
 
 
         <!-- Todo app -->
-        <script src="${ contextPath }/assets/js/pages/jquery.todo.js"></script>
+        <script src="${ contextPath }/assets/js/pages/jquery.todo.js" data-context-path="${contextPath}"></script>
 
         <!-- Calendar init -->
 		 	  <script src="${ contextPath }/assets/js/pages/calendar.init.js"></script>
