@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.OrderDto;
+import com.fz.followme.service.NoticeService;
 import com.fz.followme.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class HomeController {
 	
 	private final OrderService orderService;
+	private final NoticeService noticeService;
 	
 	@RequestMapping("/")
 	public String mainPage() {
@@ -36,6 +39,10 @@ public class HomeController {
 		
 		model.addAttribute("revenueList", revenueList);	
 		model.addAttribute("todayInfo", todayInfo);
+		
+		List<BoardDto> latestNoticeList = noticeService.selectLatestPostList();
+		
+		model.addAttribute("latestNoticeList", latestNoticeList);
 		
 		return "ceoMain";
 	}

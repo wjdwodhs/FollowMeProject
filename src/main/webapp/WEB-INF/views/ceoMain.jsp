@@ -171,14 +171,32 @@
 			                
 			                
 			                <div class="col-5">
-			                    <div class="card">
-			                        <div class="card-body" style="height: 400px;"> <!-- 달력 표시용 -->
-			                            <div class="row" style="display:flex; justify-content:center;">
-                                      
-                                    	<div id="calendar"></div>
-                                     
-                                  </div>  <!-- end row -->
-		                          </div>
+			                    <div class="card ribbon-box">
+			                        <div class="card-body" style="height: 400px;"> <!-- 달력 혹은 최근 공지글 표시용 -->
+				                        <div class="ribbon ribbon-blue float-start"><i class="mdi mdi-access-point me-1"></i> 최근 공지글</div>&nbsp &nbsp
+		                           		<div class="ribbon-content">
+				                                <div class="table-responsive">
+				                                	
+				                                    <table class="table table-centered table-nowrap table-hover mb-0">
+				                                        <thead>
+				                                            <tr>
+				                                                <th>제목</th>
+				                                                <th>작성일</th>
+				                                            </tr>
+				                                        </thead>
+				                                       <c:forEach var="newList" items="${ latestNoticeList }">
+				                                        <tbody>
+				                                            <tr>
+				                                                <td>${newList.boardTitle}</td>
+				                                                <td>${newList.enrollDate}</td>
+				                                            </tr>
+				                                        </tbody>
+				                                       </c:forEach>
+				                                    </table>
+				                                  
+				                                 </div>
+				                          </div>
+				                       </div>
 			                    </div> <!-- end card-->
 			                </div> <!-- end col -->
 			                

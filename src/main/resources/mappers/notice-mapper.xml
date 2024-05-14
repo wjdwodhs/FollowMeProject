@@ -50,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 				board_type
 			  , board_title
+			  , enroll_date
 			  from(
 			  select *
 			  from tb_board
