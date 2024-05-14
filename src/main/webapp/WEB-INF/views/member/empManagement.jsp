@@ -310,7 +310,7 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			<div class="content">
+			<div class="content" style="background: #F2E8DA;">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
