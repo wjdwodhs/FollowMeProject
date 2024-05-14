@@ -1,6 +1,7 @@
 package com.fz.followme.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,23 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> selectBoardList(PageInfoDto pi) {
 		return boardDao.selectBoardList(pi);
 	}
+
+	@Override
+	public List<BoardDto> selectLatestPostList() {
+		return boardDao.selectLatestPostList();
+	}
+
+	@Override
+	public int searchBoardListCount(String keyword) {
+		return boardDao.searchBoardListCount(keyword);
+	}
+
+	@Override
+	public List<BoardDto> searchBoardList(String keyword, PageInfoDto pi) {
+		return boardDao.searchBoardList(keyword, pi);
+	}
+
+	
 
 
 }

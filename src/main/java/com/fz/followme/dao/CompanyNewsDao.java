@@ -30,4 +30,8 @@ public class CompanyNewsDao {
 		return sqlSessionTemplate.selectList("companyNewsMapper.selectCompanyNewsList", null, rowBounds);
 	}
 	
+	public List<BoardDto> selectLatestPostList(){
+		return sqlSessionTemplate.selectList("companyNewsMapper.selectLatestPostList");
+	}
+	
 }

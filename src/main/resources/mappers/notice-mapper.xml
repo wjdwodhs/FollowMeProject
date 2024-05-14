@@ -50,13 +50,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 				board_type
 			  , board_title
-		   from (
-		   	select *
-		   	from tb_board b
-		   	order
-		   	   by b.enroll_date desc
-		   )
-		   where rownum between 1 and 5
+			  from(
+			  select *
+			  from tb_board
+			  order
+			  	 by enroll_date desc
+			  )
+			  where rownum between 1 and 5
+                 
 	</select>
 	
 	

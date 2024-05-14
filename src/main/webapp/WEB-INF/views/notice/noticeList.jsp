@@ -114,58 +114,19 @@
                                         <div class="row">
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>
                                             </div>
                                             
 
                                             <div class="col-lg-3"  >
-                                                <p>최근공지글 | 최근본글</p>
+                                                <p>최근공지글</p>
                                             </div>
                                         </div>
                                         
-                                        <script>
                                         
-                                        	$(document).ready(function(){
-                                        		$('.ajax-pageMove').click(function(event){
-                                        			event.preventDefault(); // 링크 이벤트x
-                                        			
-                                        			var url = $(this).data('url');
-                                        			loadPage(url);
-                                        		});
-                                        	});
-                                        	
-                                        	function loadPage(url){
-                                        		$.ajax({
-                                        			url: url,
-                                        			type: 'get' ,
-                                        			success: function(response){
-                                        				$('#list-page').empty();
-                                        				
-                                        				var list = $(response).find('#list-page').html();
-                                        				$('#list-page').html(list);
-                                        			},
-                                        			error: function(){
-                                        				console.log("전체글 ajax 통신 실패")
-                                        			}
-                                        		})
-                                        		
-                                        	}
-                                        
-	                                        function activateMenuItem(element) {
-	                                        	  // 모든 메뉴 항목의 활성 클래스 제거
-	                                        	  var categoryItems = document.querySelectorAll('.category a');
-	                                        	  categoryItems.forEach(function(item) {
-	                                        	    item.classList.remove('active');
-	                                        	  });
-	                                        	  
-	                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
-	                                        	  element.classList.add('active');
-	                                        	}
-                                        
-                                        </script>
                                         
                                         
                                         <div class="row" id="list-page" >                                        
@@ -181,9 +142,7 @@
                                                     	</div>
                                                     	<!-- 글 작성 페이지로 이동 -->
                                                     	<script>
-                                                    		function insertPage(){
-                                                    			location.href ="${contextPath}/board/boardInsert.page"
-                                                    		}
+                                                    		
                                                     	</script>
                                                     	
                                                         <select name="" id="" style="float:right">
@@ -238,7 +197,8 @@
                                             <div class="col-lg-3" >
                                                 <ul class="list-group" >
                                                 <c:forEach var="nn" items="${ newList }">
-                                                    <li class="list-group-item">${ nn.boardType }${ nn.boardTitle }</li>
+                                                    <c:set var="boardTypeLabel" value="${nn.boardType == 'CO' ? '[사내]' : (nn.boardType == 'NO' ? '[공지]' : '')}" />
+													<li class="list-group-item">${boardTypeLabel}${nn.boardTitle}</li>
                                                 </c:forEach> 
                                                 </ul>
 
@@ -265,6 +225,25 @@
 	                                                </a>
 	                                            </li>
 	                                        </ul>
+	                                        
+	                                        <!-- Vendor js -->
+									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+											
+											<!-- App js -->
+									        <script src="${ contextPath }/assets/js/app.min.js"></script>
+										
+											<!-- Plugins js-->
+									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+									        
+									        <!-- Dashboar 1 init js-->
+									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+									        
+									        <!-- Plugins js -->
+									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+									
+									        <!-- Init js-->
+									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
                                             
                                         </div>  <!-- end row -->
                                         
@@ -823,25 +802,60 @@
             </div>
         </div>
         
-        <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-		
-		<!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
-	
-		<!-- Plugins js-->
-        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
         
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
         
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+        <script>
+    		 // 게시글 페이지 이동 (ajax)                   
+        	$(document).ready(function(){
+        		$('.ajax-pageMove').click(function(event){
+        			event.preventDefault(); // 링크 이벤트x
+        			
+        			var url = $(this).data('url');
+        			loadPage(url);
+        		});
+        	});
+        	
+        	// 게시글 페이지 이동 (ajax)
+        	function loadPage(url){
+        		
+        		console.log(url);
+        		
+        		$.ajax({
+        			url: url,
+        			type: 'get' ,
+        			success: function(response){
+        				$('#list-page').empty();
+        				
+        				
+        				console.log(response);
+        				var list = $(response).find('#list-page').html();
+        				$('#list-page').html(list);
+        			},
+        			error: function(){
+        				console.log("전체글 ajax 통신 실패")
+        			}
+        		})
+        		
+        	}
+        	
+         // 게시글 카테고리 밑줄 활성화
+         function activateMenuItem(element) {
+         	  // 모든 메뉴 항목의 활성 클래스 제거
+         	  var categoryItems = document.querySelectorAll('.category a');
+         	  categoryItems.forEach(function(item) {
+         	    item.classList.remove('active');
+         	  });
+         	  
+         	  // 클릭한 메뉴 항목에 활성 클래스 추가
+         	  element.classList.add('active');
+         	}
+         
+      	 // 글쓰기 페이지로 이동
+         function insertPage(){
+ 			location.href ="${contextPath}/board/boardInsert.page"
+ 		}
         
+        </script>
         
     </body>
 </html>

@@ -28,4 +28,10 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return companyNewsDao.selectCompanyNewsList(pi);
 	}
 
+
+	@Override
+	public List<BoardDto> selectLatestPostList() {
+		return companyNewsDao.selectLatestPostList();
+	}
+
 }

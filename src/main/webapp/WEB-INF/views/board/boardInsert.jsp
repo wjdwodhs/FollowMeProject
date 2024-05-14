@@ -47,6 +47,20 @@
         width: 90%; 
         margin: 8px 0;
     }
+    
+    .editorbox{
+    	min-height: 500px;
+    }
+    
+    .button>button{
+       background-color: #FFBE98;
+        border: 1px solid #FFBE98; /* 테두리 */
+        --ct-btn-active-bg:#FA9A85;    
+        --ct-btn-active-border-color:#FA9A85;
+        --ct-btn-hover-bg:#FA9A85;
+        --ct-btn-hover-border-color:#FA9A85;   
+}    
+    
 </style>
 </head>
 <body>
@@ -143,7 +157,7 @@
                                                                                     <div>
                                                                                         <span>
                                                                                             파일을 선택하세요
-                                                                                            <input type="file" title="파일선택">
+                                                                                            <input type="file" title="upfile" class="form-control-file border file">
                                                                                         </span>
                                                                                         
                                                                                     </div>
@@ -159,9 +173,18 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
+                                                            <div class="mb-3">
+                                            <label for="product-description" class="form-label">Product Description <span class="text-danger">*</span></label>
+                                            <div id="snow-editor" style="height: 150px;"></div> <!-- end Snow-editor-->
+                                        </div>
+                                                            
                                                         </table>
-                                             			<textarea id="summernote" name="editordata"></textarea>
+                                             			
                                                     </fieldset>
+                                                   <!--   <textarea class="form-control" required name="boardContent" id="content" rows="10" style="resize:none;"></textarea>-->
+                                                    
+                                                    
+                                                    <button class="btn btn-primary btn-sm">등록하기</button>
                                                 </form>
                                             </div> <!-- end col-->
                                             
@@ -171,35 +194,7 @@
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
 									<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-                                    <script src="${contextPath }/assets/summernote-0.8.18/summernote.min.js"></script>
-                                    <script>
-                                    $(document).ready(function() {
-										//여기 아래 부분
-										$('#summernote').summernote();
-										
-									});
-                                    /* 
-                                 // 서머노트에 text 쓰기
-                                    $('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
-
-
-                                    // 서머노트 쓰기 비활성화
-                                    $('#summernote').summernote('disable');
-
-                                    // 서머노트 쓰기 활성화
-                                    $('#summernote').summernote('enable');
-
-
-                                    // 서머노트 리셋
-                                    $('#summernote').summernote('reset');
-
-
-                                    // 마지막으로 한 행동 취소 ( 뒤로가기 )
-                                    $('#summernote').summernote('undo');
-                                    // 앞으로가기
-                                    $('#summernote').summernote('redo');
-                                     */
-                                    </script>
+                                    
                                 </div> <!-- end card -->
 
                                 <!-- end page content -->
@@ -751,6 +746,27 @@
                 </div>
             </div>
         </div>
+        
+        
+        <!-- Vendor js -->
+									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+											
+											<!-- App js -->
+									        <script src="${ contextPath }/assets/js/app.min.js"></script>
+										
+											<!-- Plugins js-->
+									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+									        
+									        <!-- Dashboar 1 init js-->
+									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+									        
+									        <!-- Plugins js -->
+									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+									
+									        <!-- Init js-->
+									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
         
         
     </body>

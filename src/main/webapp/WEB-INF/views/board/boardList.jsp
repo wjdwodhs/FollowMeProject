@@ -57,6 +57,9 @@
         --ct-btn-hover-border-color:#FA9A85;   
 }    
 
+.position-relative>input{
+	margin-bottom:15px;
+}
     
 </style>
 
@@ -112,77 +115,33 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                    	<div class="col-9">
-                                    		<span>
-                                            	<select class="form-select form-select-sm" style="width:auto">
-                                            		<option>게시판</option>
-                                            		<option>통합검색</option>
-                                            	</select> 	
-                                            </span>
-                                                <input type="text" class="form-control form-control-sm" style="width: 100px">
+                                    	<div class="col-2">
+                                    	<!-- search-bar (검색) -->
+                                    		<form action="${ contextPath }/board/search.do" id="searchForm" class="search-bar">
+                                    			<input type="hidden" name="page" value="1">
+					                            <div class="position-relative">
+					                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
+					                                <span class="mdi mdi-magnify"></span>
+					                            </div>
+					                        </form>
                                     	</div>
                                         <div class="row">
                                         
                                             <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
                                                 <ul class="category">
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
-                                                	<li><a href="#" class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
+                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
                                                 </ul>                                              
                                                 
                                             </div>
 
                                             <div class="col-lg-3"  >
-                                                <p>최근공지글 | 최근본글</p>
+                                                <p>최근공지글</p>
                                             </div>
                                         </div>
                                         
-                                        <script>
-                                        $(document).ready(function(){
-                                    		$('.ajax-pageMove').click(function(event){
-                                    			event.preventDefault(); // 링크 이벤트x
-                                    			
-                                    			// 모든 메뉴 항목에서 active 클래스 제거
-                                    	        $('.ajax-pageMove').removeClass('active');
-                                    	        
-                                    	        // 클릭한 메뉴 항목에 active 클래스 추가
-                                    	        $(this).addClass('active');
-                                    			
-                                    			var url = $(this).data('url');
-                                    			loadPage(url);
-                                    		});
-                                    	});
-                                    	
-                                    	function loadPage(url){
-                                    		$.ajax({
-                                    			url: url,
-                                    			type: 'get' ,
-                                    			success: function(response){
-                                    				$('#list-page').empty();
-                                    				
-                                    				var list = $(response).find('#list-page').html();
-                                    				$('#list-page').html(list);
-                                    			},
-                                    			error: function(){
-                                    				
-                                    			}
-                                    		})
-                                    		
-                                    	}
                                         
-                                        
-                                        function activateMenuItem(element) {
-                                        	  // 모든 메뉴 항목의 활성 클래스 제거
-                                        	  var categoryItems = document.querySelectorAll('.category a');
-                                        	  categoryItems.forEach(function(item) {
-                                        	    item.classList.remove('active');
-                                        	  });
-                                        	  
-                                        	  // 클릭한 메뉴 항목에 활성 클래스 추가
-                                        	  element.classList.add('active');
-                                        	}
-                                        
-                                        </script>
                                         
                                         
                                         <div class="row" id="list-page">                                        
@@ -196,14 +155,7 @@
                                                     		<span class="menu-icon"><i data-feather="edit-3"></i></span>글쓰기
                                                     	</button>
                                                     	</div>
-                                                    	
-                                                    	<script>
-
-                                                    		function insertPage(){
-                                                    			location.href ="${contextPath}/board/boardInsert.page"
-                                                    		}
-                                                    	</script>
-                                                        
+                                                    	                                                        
                                                         <select name="" id="" style="float:right">
                                                             <option value="">20</option>
                                                             <option value="">40</option>
@@ -220,19 +172,19 @@
                                                         
                                                         <tbody>
                                                             <c:choose>
-                                                				<c:when test="${ empty list }">
+                                                				<c:when test="${ empty allList }">
 		                                                			<tr>
 		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="b" items="${ list }">
+		                                                			<c:forEach var="ab" items="${ allList }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ b.subNo }</td>
-		                                                					<td class="list-item2">${ b.boardTitle }</td>
-		                                                					<td class="list-item3">${ b.memNo }</td>
-		                                                					<td class="list-item4">${ b.enrollDate }</td>
-		                                                					<td class="list-item5">${ b.readCount }</td>
+		                                                					<td class="list-item1">${ ab.subNo }</td>
+		                                                					<td class="list-item2">${ ab.boardTitle }</td>
+		                                                					<td class="list-item3">${ ab.memNo }</td>
+		                                                					<td class="list-item4">${ ab.enrollDate }</td>
+		                                                					<td class="list-item5">${ ab.readCount }</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 				</c:otherwise>
@@ -246,18 +198,17 @@
                                             
                                             <div class="col-lg-3" >
                                                 <ul class="list-group" >
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <c:forEach var="nb" items="${ newList }">
+                                                    	<c:set var="boardTypeLabel" value="${nb.boardType == 'CO' ? '[사내]' : (nb.boardType == 'NO' ? '[공지]' : '')}" />
+														<li class="list-group-item">${boardTypeLabel}${nb.boardTitle}</li>
+                                                	</c:forEach>
                                                 </ul>
 
                                             </div>
                                              
                                             <!-- end col -->
                                             
-                                            <ul class="pagination pagination-rounded justify-content-end mb-0">
+                                            <ul id="pagingBar" class="pagination pagination-rounded justify-content-end mb-0">
 	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
 	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}" aria-label="Previous">
 	                                                    <span aria-hidden="true">«</span>
@@ -276,6 +227,26 @@
 	                                                </a>
 	                                            </li>
 	                                        </ul>
+	                                        
+	                                        <!-- Vendor js -->
+									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+											
+											<!-- App js -->
+									        <script src="${ contextPath }/assets/js/app.min.js"></script>
+										
+											<!-- Plugins js-->
+									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+									        
+									        <!-- Dashboar 1 init js-->
+									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+									        
+									        <!-- Plugins js -->
+									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+									
+									        <!-- Init js-->
+									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
@@ -811,25 +782,77 @@
             </div>
         </div>
         
-        <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-		
-		<!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
-	
-		<!-- Plugins js-->
-        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
         
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
         
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+        <script>
+        
+        	// 게시글 페이지 이동 (ajax)
+       $(document).ready(function(){
+   		$('.ajax-pageMove').click(function(event){
+   			event.preventDefault(); // 링크 이벤트x
+   			
+   			// 모든 메뉴 항목에서 active 클래스 제거
+   	        $('.ajax-pageMove').removeClass('active');
+   	        
+   	        // 클릭한 메뉴 항목에 active 클래스 추가
+   	        $(this).addClass('active');
+   			
+   			var url = $(this).data('url');
+   			loadPage(url);
+   			
+   			});
+	   	});
+	   	
+	    // 게시글 페이지 이동 (ajax)
+	   	function loadPage(url){
+	   		$.ajax({
+	   			url: url,
+	   			type: 'get' ,
+	   			success: function(response){
+	   				$('#list-page').empty();
+	   				
+	   				var list = $(response).find('#list-page').html();
+	   				$('#list-page').html(list);
+	   			},
+	   			error: function(){
+	   				
+	   			}
+	   		})
+	   		
+	   	}
+	       
+	       // 게시글 카테고리 밑줄 활성화
+	       function activateMenuItem(element) {
+	       	  // 모든 메뉴 항목의 활성 클래스 제거
+	       	  var categoryItems = document.querySelectorAll('.category a');
+	       	  categoryItems.forEach(function(item) {
+	       	    item.classList.remove('active');
+	       	  });
+	       	  
+	       	  // 클릭한 메뉴 항목에 활성 클래스 추가
+	       	  element.classList.add('active');
+	       	}
+	       
+	       
+	       // 글쓰기 페이지로 이동
+	       function insertPage(){
+   			location.href ="${contextPath}/board/boardInsert.page"
+   		}
+	       
+	      
+	       $(document).ready(function(){
+	    	   $("#searchForm #keyword").val("${keyword}");
+	    	
+	       		$("#pagingBar a").on("click", function(){
+	       			$("#searchForm input[name=page]").val($(this).text());	            		
+	       			$("#searchForm").submit();
+	       			
+	       			return false; 
+	       		})  
+	       })
+	     
+       
+       </script>
         
 	
     </body>

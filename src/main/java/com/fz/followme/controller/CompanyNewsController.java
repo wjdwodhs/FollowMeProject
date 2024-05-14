@@ -29,10 +29,12 @@ public class CompanyNewsController {
 		
 		int companyNewsListCount = companyNewsService.selectCompanyNewsListCount();
 		PageInfoDto pi = pagingUtil.getPageInfoDto(companyNewsListCount, page, 5, 20);
-		List<BoardDto> list = companyNewsService.selectCompanyNewsList(pi);
+		List<BoardDto> allList = companyNewsService.selectCompanyNewsList(pi);
+		List<BoardDto> newList = companyNewsService.selectLatestPostList();
 		
 		mv.addObject("pi", pi)
-		  .addObject("list", list)
+		  .addObject("allList", allList)
+		  .addObject("newList", newList)
 		  .setViewName("/companyNews/companyNewsList");
 		
 		return mv;

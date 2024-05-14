@@ -10,6 +10,8 @@ public interface CompanyNewsService {
 	int selectCompanyNewsListCount();
 	List<BoardDto> selectCompanyNewsList(PageInfoDto pi);
 	
+	List<BoardDto> selectLatestPostList();
+	
 	
 	
 }

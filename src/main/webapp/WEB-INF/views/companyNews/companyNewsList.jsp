@@ -122,7 +122,7 @@
                                             </div>
 
                                             <div class="col-lg-3"  >
-                                                <p>최근공지글 | 최근본글</p>
+                                                <p>최근공지글</p>
                                             </div>
                                         </div>
                                         
@@ -206,19 +206,19 @@
                                                         
                                                         <tbody>
                                                             <c:choose>
-                                                				<c:when test="${ empty list }">
+                                                				<c:when test="${ empty allList }">
 		                                                			<tr>
 		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="c" items="${ list }">
+		                                                			<c:forEach var="ac" items="${ allList }">
 		                                                				<tr>
-		                                                					<td class="list-item1">${ c.boardNo }</td>
-		                                                					<td class="list-item2">${ c.boardTitle }</td>
-		                                                					<td class="list-item3">${ c.memNo }</td>
-		                                                					<td class="list-item4">${ c.enrollDate }</td>
-		                                                					<td class="list-item5">${ c.readCount }</td>
+		                                                					<td class="list-item1">${ ac.boardNo }</td>
+		                                                					<td class="list-item2">${ ac.boardTitle }</td>
+		                                                					<td class="list-item3">${ ac.memNo }</td>
+		                                                					<td class="list-item4">${ ac.enrollDate }</td>
+		                                                					<td class="list-item5">${ ac.readCount }</td>
 		                                                				</tr>
 		                                                			</c:forEach>
                                                 				</c:otherwise>
@@ -232,11 +232,10 @@
                                             
                                             <div class="col-lg-3" >
                                                 <ul class="list-group" >
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
-                                                    <li class="list-group-item">최신공지글 | 최근본글...</li>
+                                                    <c:forEach var="nc" items="${ newList }">
+                                                   		<c:set var="boardTypeLabel" value="${nc.boardType == 'CO' ? '[사내]' : (nc.boardType == 'NO' ? '[공지]' : '')}" />
+														<li class="list-group-item">${boardTypeLabel}${nc.boardTitle}</li>
+                                                	</c:forEach> 
                                                 </ul>
 
                                             </div>
@@ -263,6 +262,25 @@
 	                                            </li>
 	                                        </ul>
                                             
+                                            <!-- Vendor js -->
+									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+											
+											<!-- App js -->
+									        <script src="${ contextPath }/assets/js/app.min.js"></script>
+										
+											<!-- Plugins js-->
+									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+									        
+									        <!-- Dashboar 1 init js-->
+									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+									        
+									        <!-- Plugins js -->
+									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+									
+									        <!-- Init js-->
+									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
@@ -818,25 +836,7 @@
             </div>
         </div>
         
-        <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-		
-		<!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
-	
-		<!-- Plugins js-->
-        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
         
-        <!-- Dashboar 1 init js-->
-        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-        
-        <!-- Plugins js -->
-        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-
-        <!-- Init js-->
-        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
         
         
     </body>
