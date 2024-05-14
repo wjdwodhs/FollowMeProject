@@ -18,8 +18,8 @@
 		<result column="docu_category" property="docuCategory" />
 		<result column="docu_title" property="docuTitle" />
 		<result column="docu_content" property="docuContent" />
-		<result column="mem_no " property="memNo" />
-		<result column="mem_dept_no" property="memDeptName" />
+		<result column="mem_no" property="memNo" />
+		<result column="dept_no" property="deptNo" />
 		<result column="regist_date" property="registDate" />
 		<result column="ref_mem_no" property="refMemName" />
 		<result column="ref_dept_no" property="refDeptName" />
@@ -58,6 +58,9 @@
 		<result column="ref_mem_name" property="refMemName"/>
 		<result column="docu_category_name" property="docuCategoryName" />
 		<result column="mem_sig_path" property="memSig" />
+		<result column="mem_grade" property="memGrade" />
+		<result column="mem_phone" property="memPhone" />
+		
 		
 		<collection resultMap="attachmentResultMap" property="attachList" />
 		
@@ -75,7 +78,7 @@
 			      d.mem_no = #{memNo}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
 						)
@@ -99,9 +102,14 @@
 			      d.mem_no = #{memNo}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
+						)
+				or (
+						d.status != '3'
+						and '대표' = #{memGrade}
+						and final_approver = #{memNo}
 						)
 		 order
 		    by docu_no desc
@@ -117,7 +125,7 @@
 		   			d.mem_no = #{memNo}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
 						)
@@ -142,7 +150,7 @@
 			      d.mem_no = #{memNo}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
 						)
@@ -161,7 +169,7 @@
 		   			and d.status = #{status}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status = #{status}
 			    	and d.status != '3'
@@ -188,7 +196,7 @@
 			      and d.status = #{status}
 					 )
 				or (
-			    	d.mem_dept_no = #{deptNo}
+			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status = #{status}
 						)
@@ -208,7 +216,7 @@
 					 )
 				or (
 			    	d.status = '0'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 	</select>
@@ -234,7 +242,7 @@
 					 )
 				or (
 			    	d.status = '0'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 		 order
@@ -253,7 +261,7 @@
 					 )
 				or (
 			    	d.status = '1'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 	</select>
@@ -277,7 +285,7 @@
 					 )
 				or (
 			    	d.status = '1'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 		 order
@@ -296,7 +304,7 @@
 					 )
 				or (
 			    	d.status = '2'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 	</select>
@@ -320,7 +328,7 @@
 					 )
 				or (
 			    	d.status = '2'
-			    	and d.mem_dept_no = #{deptNo}
+			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
 		 order
@@ -389,13 +397,22 @@
 	</select>
 
 	<!-- 본인이 결재권자일때 미처리 리스트 조회 -->
-	<select id="selectNotDoneCount" resultType="_int">
+	<select id="selectNotDoneListCount" resultType="_int">
 		select 
 					 count(*)
 		  from tb_document d
-		 where (d.status = '0' and mid_approve_status = 'N' and mid_approver = #{memNo})
-			  or (mid_approve_status = 'Y' and final_approve_status = 'N' and final_approver = #{memNo})
-			  or (mid_approver is null and final_approve_status = 'N' AND final_approver = #{memNo})
+		 where (d.status = '0' 
+		 				and mid_approve_status = 'N' 
+		 				and mid_approver = #{memNo})
+			  or (
+			  		mid_approve_status = 'Y' 
+			  		and final_approve_status = 'N' 
+			  		and final_approver = #{memNo}
+			  		)
+			  or (d.status = '0'
+			  	  and mid_approver is null 
+			  	  and final_approve_status = 'N' 
+			  	  and final_approver = #{memNo})
 					 
 	</select>
 
@@ -412,9 +429,19 @@
      left join tb_document_category dc on d.docu_category = dc.docu_category
 		 left join tb_mem m on (d.mem_no = m.mem_no)
 		 left join tb_department dp on (m.dept_no = dp.dept_no)
-		 where (d.status = '0' and mid_approve_status = 'N' and mid_approver = #{memNo})
-			  or (mid_approve_status = 'Y' and final_approve_status = 'N' and final_approver = #{memNo})
-			  or (mid_approver is null and final_approve_status = 'N' AND final_approver = #{memNo})
+		 where (d.status = '0' 
+		 				and mid_approve_status = 'N' 
+		 				and mid_approver = #{memNo})
+			  or (
+			  		mid_approve_status = 'Y' 
+			  		and final_approve_status = 'N' 
+			  		and final_approver = #{memNo}
+			  		)
+			  or (d.status = '0'
+			  	  and mid_approver is null 
+			  	  and final_approve_status = 'N' 
+			  	  and final_approver = #{memNo})
+			  				
 		 order
 		    by docu_no desc
 	</select>
@@ -428,7 +455,7 @@
 					    docu_no
 					  , docu_category
 					  , mem_no
-					  , mem_dept_no
+					  , dept_no
 					  , ref_mem_no
 					  , docu_title
 		<choose>
@@ -494,7 +521,7 @@
 						  seq_docno.nextval
 						, #{docuCategory}
 						, #{memNo}
-						, #{memDeptNo}
+						, #{deptNo}
 						, #{refMemNo}
 						, #{docuTitle}
 						
@@ -588,15 +615,103 @@
 		  )
 	</insert>
 	
-	<!--
+	
 	<select id="selectDocument" resultMap="documentResultMap">
 	
-		select *
-		  from tb_document
-		  
-	
+		select docu_no, docu_category, d.mem_no, m.mem_name, m.mem_grade, d.dept_no, dept_name, to_char(regist_date, 'YYYY-MM-DD') as regist_date
+				 , mid_approver, mid_approve_date, final_approver, final_approve_date, docu_title, docu_content, docu_cost, docu_remark, m.phone as mem_phone
+				 , docu_start_date, docu_end_date, docu_start_place, docu_end_place, docu_emergency_call, docu_annual_leave, docu_item, docu_etc_cost
+				 , docu_count, docu_transport_cost, docu_fuel_cost, docu_food_cost, docu_room_cost, docu_text, docu_text_note
+				 , (select mem_name 
+				      from tb_mem m 
+				      join tb_document d on m.mem_no = d.mem_no
+				     where m.mem_no = ref_mem_no) as ref_mem_name
+				 , (select sig_img_path
+						  from tb_mem
+						 where mem_no = d.mem_no) as mem_sig_path
+				 , (select sig_img_path as mid_approver_sig
+				 			from tb_mem m
+				 			join tb_document d on m.mem_no = d.mem_no
+				 		 where m.mem_no = d.mid_approver)
+				 , (select sig_img_path as final_approver_sig	
+				 			from tb_mem m
+				 			join tb_document d on m.mem_no = d.mem_no
+				 		 where m.mem_no = d.final_approver) 			 		 
+				 , process_reason
+				 , d.status
+				 , mid_approve_status
+				 , final_approve_status
+				 , file_no
+		     , file_path
+		     , system_name
+		     , origin_name
+		     
+		  from tb_document d
+		  left join tb_mem m on d.mem_no = m.mem_no
+		  left join tb_department dp on m.dept_no = dp.dept_no
+		  left join tb_attachment on (type = 'D' and ref_no = docu_no)
+         where docu_no = #{docuNo}
+
 	</select>
-  -->
+	
+	<!-- 작성자 본인 글 회수하기 -->
+	<update id="recallDocument">
+		update
+					 tb_document
+			 set status = '3'
+		 where docu_no = #{docuNo}
+	</update>
+	
+	<!-- 중간결재자 전자문서 '승인' 기능 -->
+	<update id="updateMidApprove">
+		update
+					 tb_document
+			 set mid_approve_status = 'Y'
+			   , mid_approve_date = sysdate
+		 where docu_no = #{docuNo}
+	</update>	
+  
+  <!-- 최종결재자 전자문서 '승인' 기능 -->
+	<update id="updateFinalApprove">
+		update
+					 tb_document
+			 set final_approve_status = 'Y'
+			   , status = '1'
+			   , final_approve_date = sysdate
+		 where docu_no = #{docuNo}
+	</update>	
+	
+	<!-- 중간결재자 전자문서 '반려' 기능 -->
+	<update id="updateMidReject">
+		update
+					 tb_document
+			 set mid_approve_status = 'N'
+			   , status = '2'
+		 where docu_no = #{docuNo}
+	</update>	
+  
+  <!-- 최종결재자 전자문서 '반려' 기능 -->
+	<update id="updateFinalReject">
+		update
+					 tb_document
+			 set final_approve_status = 'N'
+			 	 , status = '2'
+		 where docu_no = #{docuNo}
+	</update>	
+	
+	<!-- 중간결재자 불러오기 -->
+	<select id="selectMidApprover" resultType="java.lang.String">
+		select mid_approver
+			from tb_document
+		 where docu_no = #{docuNo}
+	</select>
+	
+	<!-- 최종결재자 불러오기 -->
+	<select id="selectFinalApprover" resultType="java.lang.String">
+		select final_approver
+			from tb_document
+		 where docu_no = #{docuNo}
+	</select>
 
 
 

@@ -173,14 +173,14 @@ tr>th, tr>td {
 													<div style="display: flex;">
 															<div class="col-12 text-sm-center" style="width: auto;">
 																	<select id="docuCategoryNo" name="docuCategoryNo" class="form-select form-select-sm" style="width: auto; height: 37px;">
-																		<option value=''>전자결재 양식 선택</option>
-																		<option value='1'>품의서</option>
-																		<option value='2'>재택근무 신청서</option>
-																		<option value='3'>휴가 신청서</option>
-																		<option value='4'>지출 결의서</option>
-																		<option value='5'>구매 신청서</option>
-																		<option value='6'>출장 보고서</option>
-																		<option value='7'>협조문</option>
+																			<option value=''>전자결재 양식 선택</option>
+																			<option value='1'>품의서</option>
+																			<option value='2'>재택근무 신청서</option>
+																			<option value='3'>휴가 신청서</option>
+																			<option value='4'>지출 결의서</option>
+																			<option value='5'>구매 신청서</option>
+																			<option value='6'>출장 보고서</option>
+																			<option value='7'>협조문</option>
 																	</select>
 															</div>
 													</div>
@@ -192,7 +192,6 @@ tr>th, tr>td {
 		
 									</div>
 									<div id="documentContent" style="width:auto;">
-
                   </div>
                   
                   
@@ -214,7 +213,7 @@ tr>th, tr>td {
 
         				document.getElementById('memDeptName').value = '${ loginUser.deptName }';
         				document.getElementById('registDate').value = today.toISOString().split('T')[0];
-
+								document.getElementById('deptNo').value = ${loginUser.deptNo};
             		
             			if(selectedValue == 1){
             				textEditorInit();
@@ -229,7 +228,7 @@ tr>th, tr>td {
             			}else if(selectedValue == 3){
             				textEditorInit();
                   	holiday();
-				    				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
+                  	document.getElementById('memGrade').value = '${ loginUser.memGrade }';
 				    				document.getElementById('memName').value = '${ loginUser.memName }';                  	
     								document.getElementById('memPhone').value = '${ loginUser.phone }';
                   }else if(selectedValue == 4){
@@ -340,6 +339,19 @@ tr>th, tr>td {
     startDateField.addEventListener('change', checkEndDate);
     }
 		</script>
+		<script>
+		  function handleCheckbox() {
+			    var checkbox = document.getElementById("checkbox");
+			  	var docuAnnualLeave = document.getElementById("docuAnnualLeave");
+		 		if (checkbox.checked) {
+		 			docuAnnualLeave.value = 'a';
+				}else{
+		 			docuAnnualLeave.value = 'b';
+				}	
+		  	
+		  }
+		</script>
+
 
 		<!-- 04. 지출 결의서 줄 추가/삭제 -->
 		<script>

@@ -1,8 +1,6 @@
 package com.fz.followme.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +40,7 @@ public class DocumentController {
 	private String status;
 	
 	// 전체 리스트조회 -----------------------------------------------
-	@GetMapping("/list.page")
+	@GetMapping("/list")
 	public ModelAndView list(@RequestParam(value="page", defaultValue="1") int currentPage
 			       , ModelAndView mv, HttpSession session) {
 		
@@ -53,7 +51,7 @@ public class DocumentController {
 		m.setMemGrade(loginUser.getMemGrade());
 		
 		int listCount = documentService.selectDocumentListCount(m);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectDocumentList(pi, m);
 
 		mv.addObject("pi", pi)
@@ -77,7 +75,7 @@ public class DocumentController {
 		search.put("memGrade", loginUser.getMemGrade());
 		
 		int listCount = documentService.selectSearchListCount(search);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<DocumentDto> list = documentService.selectSearchList(search, pi);
 		
@@ -104,7 +102,7 @@ public class DocumentController {
 		search.put("memGrade", loginUser.getMemGrade());
 		
 		int listCount = documentService.statusSearchListCount(search);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<DocumentDto> list = documentService.statusSearchList(search, pi);
 
@@ -134,7 +132,7 @@ public class DocumentController {
 	}
 	
 	// 진행중 리스트조회 -----------------------------------------------
-	@GetMapping("/pendList.page")
+	@GetMapping("/pendList")
 	public ModelAndView pendList(@RequestParam(value="page", defaultValue="1") int currentPage
 			   , @RequestParam(value="status", defaultValue="0") String status
 		       , ModelAndView mv, HttpSession session) {
@@ -149,7 +147,7 @@ public class DocumentController {
 		m.setMemGrade(loginUser.getMemGrade());
 		
 		int listCount = documentService.selectPendListCount(m);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectPendList(pi, m);
 	
 		mv.addObject("pi", pi)
@@ -160,7 +158,7 @@ public class DocumentController {
 	}
 	
 	// 승인 리스트조회 -----------------------------------------------
-	@GetMapping("/approvalList.page")
+	@GetMapping("/approvalList")
 	public ModelAndView approvalList(@RequestParam(value="page", defaultValue="1") int currentPage
 			, @RequestParam(value="status", defaultValue="1") String status   
 			, ModelAndView mv, HttpSession session) {
@@ -173,7 +171,7 @@ public class DocumentController {
 		m.setMemGrade(loginUser.getMemGrade());
 		
 		int listCount = documentService.selectApprovalListCount(m);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectApprovalList(pi, m);
 		
 		mv.addObject("pi", pi)
@@ -184,7 +182,7 @@ public class DocumentController {
 	}
 	
 	// 반려 리스트조회 -----------------------------------------------
-	@GetMapping("/rejectList.page")
+	@GetMapping("/rejectList")
 	public ModelAndView rejectList(@RequestParam(value="page", defaultValue="1") int currentPage
 			 , @RequestParam(value="status", defaultValue="2") String status   
 			 , ModelAndView mv, HttpSession session) {
@@ -197,7 +195,7 @@ public class DocumentController {
 		m.setMemGrade(loginUser.getMemGrade());
 		
 		int listCount = documentService.selectRejectListCount(m);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectRejectList(pi, m);
 		
 		mv.addObject("pi", pi)
@@ -208,7 +206,7 @@ public class DocumentController {
 	}
 	
 	// 회수 리스트조회 -----------------------------------------------
-	@GetMapping("/recallList.page")
+	@GetMapping("/recallList")
 	public ModelAndView recallList(@RequestParam(value="page", defaultValue="1") int currentPage
 			 , @RequestParam(value="status", defaultValue="3") String status   
 			 , ModelAndView mv, HttpSession session, DocumentDto d) {
@@ -221,7 +219,7 @@ public class DocumentController {
 		m.setMemGrade(loginUser.getMemGrade());
 		
 		int listCount = documentService.selectRecallListCount(m);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectRecallList(pi, m);
 		
 		mv.addObject("pi", pi)
@@ -235,7 +233,7 @@ public class DocumentController {
 	
 	
 	// 참조 리스트조회 -----------------------------------------------
-	@GetMapping("/refList.page")
+	@GetMapping("/refList")
 	public ModelAndView refList(@RequestParam(value="page", defaultValue="1") int currentPage
 		       , ModelAndView mv, HttpSession session) {
 	
@@ -244,7 +242,7 @@ public class DocumentController {
 		
 		
 		int listCount = documentService.selectRefListCount(memNo);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectRefList(pi, memNo);
 		
 		mv.addObject("pi", pi)
@@ -255,7 +253,7 @@ public class DocumentController {
 	}
 
 	// 미결재 리스트조회 -----------------------------------------------
-	@GetMapping("/notDoneList.page")
+	@GetMapping("/notDoneList")
 	public ModelAndView notDoneList(@RequestParam(value="page", defaultValue="1") int currentPage
 		       , ModelAndView mv, HttpSession session) {
 	
@@ -263,7 +261,7 @@ public class DocumentController {
 		String memNo = loginUser.getMemNo();
 		
 		int listCount = documentService.selectNotDoneListCount(memNo);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		List<DocumentDto> list = documentService.selectNotDoneList(pi, memNo);
 	
 		mv.addObject("pi", pi)
@@ -274,27 +272,10 @@ public class DocumentController {
 	}
 	
 	// 글 작성 관련 ---------------------------------------------------
-	@GetMapping("/insertForm.page")
+	@GetMapping("/insertForm")
 	public void insertForm() {
 
 	}
-	
-	/*
-	@GetMapping("/submitCategory")
-	public String insertForm(@RequestParam("docuCategory") int docuCategory
-						  , HttpSession session
-						  , Model model) {
-		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
-		
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("documentCategory", docuCategory);
-		map.put("loginUser", loginUser);
-		documentService.selectApprover(map);
-		
-		return "document/insertForm";
-	}
-	*/
 		
 	@PostMapping("/insert.do")
 	public String regist(DocumentDto document
@@ -305,7 +286,7 @@ public class DocumentController {
 			      	   , RedirectAttributes redirectAttributes) {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		document.setMemNo(loginUser.getMemNo());
-
+		
 		if(document.getDocuCategory() == 4) {
 			document.setDocuStartDate(String.join(",", docuSpendDate));
 			document.setDocuItem(String.join(",", docuSpendItems));
@@ -351,13 +332,149 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
 		}
 		
-		return "redirect:/document/list.page";
+		return "redirect:/document/list";
 	}
 
-	@RequestMapping("/detail.do")
+	@RequestMapping("/detail")
 	public String detail(int no, Model model) {
 		
 		model.addAttribute("document", documentService.selectDocument(no));
 		return "document/detailForm";
 	}
+	
+	@PostMapping("/recall.do")
+	public String recallDocument(DocumentDto document, RedirectAttributes redirectAttributes) {
+		int result = documentService.recallDocument(document);
+		
+		redirectAttributes.addFlashAttribute("alertTitle", "문서 상태 변경");
+		if(result > 0) {
+			// 성공시
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 회수 처리 되었습니다.");			
+		}else {
+			// 실패시
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서 회수에 실패했습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();	
+	}
+	
+	// 전자문서 중간결재자 승인처리
+	@PostMapping("/midApprove.do")
+	public String updateMidApprove(DocumentDto document 
+								 , RedirectAttributes redirectAttributes
+								 , HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String midApprover = documentService.selectMidApprover(document);
+		// 로그인유저가 중간결재자일때
+		//log.debug("midApprover: {}", midApprover);
+		//log.debug("login: {}", loginUser.getMemNo());
+		if(midApprover != null && midApprover.equals(loginUser.getMemNo())){
+			
+			int result = documentService.updateMidApprove(document);
+			
+			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
+			if(result > 0) {
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");			
+			}else {
+				// 실패시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 승인 처리에 실패했습니다.");
+				redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+			}
+		}else { // 중간결재자가 아닐때
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();
+	}
+	
+	// 전자문서 최종결재자 승인처리
+	@PostMapping("/finalApprove.do")
+	public String updateFinalApprove(DocumentDto document 
+								 , RedirectAttributes redirectAttributes
+								 , HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String finalApprover = documentService.selectFinalApprover(document);
+		// 로그인유저가 최종결재자일때
+		if(finalApprover != null && finalApprover.equals(loginUser.getMemNo())){
+			
+			int result = documentService.updateFinalApprove(document);
+			
+			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
+			if(result > 0) {
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");			
+			}else {
+				// 실패시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 승인 처리에 실패했습니다.");
+				redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+			}
+		}else { // 최종결재자가 아닐때
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();
+	}
+	
+	// 전자문서 중간결재자 반려처리
+	@PostMapping("/midReject.do")
+	public String updateMidReject(DocumentDto document 
+								 , RedirectAttributes redirectAttributes
+								 , HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String midApprover = documentService.selectMidApprover(document);
+
+		if(midApprover != null && midApprover.equals(loginUser.getMemNo())){
+			
+			int result = documentService.updateMidReject(document);
+			
+			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
+			if(result > 0) {
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");			
+			}else {
+				// 실패시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 반려 처리에 실패했습니다.");
+				redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+			}
+		}else { // 중간결재자가 아닐때
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();
+	}
+	
+	// 전자문서 최종결재자 반려 처리 
+	@PostMapping("/finalReject.do")
+	public String updateFinalReject(DocumentDto document 
+								 , RedirectAttributes redirectAttributes
+								 , HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String finalApprover = documentService.selectFinalApprover(document);
+		// 로그인유저가 최종결재자일때
+		if(finalApprover != null && finalApprover.equals(loginUser.getMemNo())){
+			
+			int result = documentService.updateFinalReject(document);
+			
+			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
+			if(result > 0) {
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");			
+			}else {
+				// 실패시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서 반려 처리에 실패했습니다.");
+				redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+			}
+		}else { // 최종결재자가 아닐때
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();
+	}
+	
 }

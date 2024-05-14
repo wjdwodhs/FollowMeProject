@@ -111,12 +111,12 @@ public class DocumentServiceImpl implements DocumentService {
 	// 미결재 리스트조회 -----------------------------------------------
 	@Override
 	public int selectNotDoneListCount(String memNo) {
-		return documentDao.selectRefListCount(memNo);
+		return documentDao.selectNotDoneListCount(memNo);
 	}
 
 	@Override
 	public List<DocumentDto> selectNotDoneList(PageInfoDto pi, String memNo) {
-		return documentDao.selectRefList(pi, memNo);
+		return documentDao.selectNotDoneList(pi, memNo);
 	}
 
 	
@@ -145,6 +145,85 @@ public class DocumentServiceImpl implements DocumentService {
 
 	}
 
+	
+	// 글 회수하기
+	@Override
+	public int recallDocument(DocumentDto document) {
+		
+		int result = 0;
+		
+		try {
+			result = documentDao.recallDocument(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+
+	@Override
+	public int updateMidApprove(DocumentDto document) {
+		int result = 0;
+		
+		try {
+			result = documentDao.updateMidApprove(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateFinalApprove(DocumentDto document) {
+		int result = 0;
+		
+		try {
+			result = documentDao.updateFinalApprove(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+
+	@Override
+	public int updateMidReject(DocumentDto document) {
+		int result = 0;
+		
+		try {
+			result = documentDao.updateMidReject(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateFinalReject(DocumentDto document) {
+		int result = 0;
+		
+		try {
+			result = documentDao.updateFinalReject(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public String selectMidApprover(DocumentDto document) {
+		return documentDao.selectMidApprover(document);
+	}
+
+	@Override
+	public String selectFinalApprover(DocumentDto document) {
+		return documentDao.selectFinalApprover(document);
+	}
 
 
 

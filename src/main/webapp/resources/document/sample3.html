@@ -204,9 +204,10 @@
 	                                  <table class="table-info-1">
 	                                      <tr>
                                             <th width="120px;"> 부서 </th>
-		                                        <td width="266px;">
+                                            <td width="266px;"> 
+                                            		<input type="hidden" id="deptNo" name="deptNo" value="">
                                             		<input type="text" id="memDeptName" name="memDeptName" value="" style="border:0;" readonly>
-		                                        </td>      
+                                            </td>      
 	                                      </tr>
 	                                      <tr>
                                             <th> 직급 </th>
@@ -289,13 +290,14 @@
                                         <tr>
                                             <th> 비상 <br> 연락망 </th>
                                             <td>
-                                                <input type="tel" name="docuEmergencyCall" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" style="width:655px; border:0;" placeholder="비상연락망 기입">
+                                                <input type="text" name="docuEmergencyCall" style="width:655px; border:0;" placeholder="비상연락망 기입">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th> 구분 </th>
                                             <td style="text-align: left;">
-                                                <input type="checkbox" name="docuAnnualLeave" style="width: 15px; height: 15px;"> 연차
+                                                <input type="checkbox" id="checkbox" style="width: 15px; height: 15px;"> 연차
+                                                <input type="hidden" name="docuAnnualLeave" id="docuAnnualLeave">
                                             </td>
                                         </tr>
                                         <tr>
@@ -316,15 +318,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- 내용 작성하기 끝-->
-                            
-	                          <script>
-															function handleCheckbox() {
-															    var checkbox = document.getElementById("annualLeave");
-															    var valueToSubmit = checkbox.checked ? 'Y' : 'N';
-															    // 여기에서 valueToSubmit을 원하는 필드로 전달하거나 처리할 수 있습니다.
-															    // 예: document.getElementById("hiddenField").value = valueToSubmit;
-															}
-														</script>
+
                                                
                             <p style="text-align:center; font-size:16px; margin-top:20px;">상기 본인은 위의 사유로 인하여 휴가를 신청하고자 합니다.</p>
                             <!--결재 처리사유-->

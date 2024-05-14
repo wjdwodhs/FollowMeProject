@@ -111,50 +111,50 @@
                 <div style="margin-top:50px;">
                     <ul class="menu">
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/insertForm.page" class="menu-link">
+                            <a href="${ contextPath }/document/insertForm" class="menu-link">
                                 <span class="menu-icon"><i data-feather="edit-3"></i></span>
                                 <span class="menu-text"> 문서 작성하기 </span>
                             </a>
                         </li>
                         <li class="menu-item" style="margin-top:50px;">
-                            <a href="${ contextPath }/document/list.page" class="menu-link">
+                            <a href="${ contextPath }/document/list" class="menu-link">
                                 <span class="menu-icon"><i data-feather="archive"></i></span>
                                 <span class="menu-text"> 전체 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/pendList.page" class="menu-link">
+                            <a href="${ contextPath }/document/pendList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="refresh-cw"></i></span>
                                 <span class="menu-text"> 진행중인 문서 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/approvalList.page" class="menu-link">
+                            <a href="${ contextPath }/document/approvalList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="check-circle"></i></span>
                                 <span class="menu-text"> 승인 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/rejectList.page" class="menu-link">
+                            <a href="${ contextPath }/document/rejectList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="x"></i></span>
                                 <span class="menu-text"> 반려 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/recallList.page" class="menu-link">
+                            <a href="${ contextPath }/document/recallList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="trash-2"></i></span>
                                 <span class="menu-text"> 회수 문서함 </span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/refList.page" class="menu-link">
+                            <a href="${ contextPath }/document/refList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="link"></i></span>
                                 <span class="menu-text"> 참조 문서함 </span>
                             </a>
                         </li>
                         <!-- 결재권한 있는 멤버만 보임 -->
                         <li class="menu-item">
-                            <a href="${ contextPath }/document/notDoneList.page" class="menu-link">
+                            <a href="${ contextPath }/document/notDoneList" class="menu-link">
                                 <span class="menu-icon"><i data-feather="user-x"></i></span>
                                 <span class="menu-text"> <b>미처리 결재함</b> </span>
                             </a>
@@ -225,7 +225,7 @@
 																			          </c:if>
                                             </div>
                                             <div class="btn-group">
-                                            		<a href="${ contextPath }/document/insertForm.page" class="btn btn-primary btn-middle"> 작성하기 </a>
+                                            		<a href="${ contextPath }/document/insertForm" class="btn btn-primary btn-middle"> 작성하기 </a>
                                             </div>
                                         </div>
                                         
@@ -255,7 +255,7 @@
 						                                            </c:when>
 						                                            <c:otherwise>
 						                                            		<c:forEach var="d" items="${ list }">
-								                                                <tr onclick="location.href='${contextPath}/document/detail.page?no=${d.docuNo}';">
+								                                                <tr onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';">
 								                                                    <td>${d.docuNo}</td>
 								                                                    <td>${d.docuCategoryName}</td>
 								                                                    <td style="text-align: left;">${d.docuTitle}</td>
@@ -286,13 +286,13 @@
                                         </div> <!-- end .table-responsive-->
                                         <div id="pagingArea" style=" display: flex; justify-content: center; margin-top: 20px;">
 														                <ul class="pagination">
-														                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage - 1}">Previous</a></li>
+														                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/notDoneList?page=${pi.currentPage - 1}">Previous</a></li>
 														                    
 														                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-														                    <li class="page-item ${ pi.currentPage == p ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/list.do?page=${p}">${ p }</a></li>
+														                    <li class="page-item ${ pi.currentPage == p ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/document/notDoneList?page=${p}">${ p }</a></li>
 														                    </c:forEach>
 														                    
-														                    <li class="page-item ${ pi.currentPage >= pi.maxPage ? 'disabled':''}" ><a class="page-link" href="${ contextPath }/document/list.do?page=${pi.currentPage + 1}">Next</a></li>
+														                    <li class="page-item ${ pi.currentPage >= pi.maxPage ? 'disabled':''}" ><a class="page-link" href="${ contextPath }/document/notDoneList?page=${pi.currentPage + 1}">Next</a></li>
 														                </ul>
 														            </div>
                                     </div>

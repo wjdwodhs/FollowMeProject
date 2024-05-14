@@ -275,14 +275,74 @@
 										<p class="sub-header">Access read Electronic documents</p>
 									</div>
 
-									<div id="documentContent" style="width:auto;">
-
-                  </div>
-                  
+										<script>
+										console.log("document.docuNo : ", '${document.docuNo}');
+										console.log("loginUser.memNo : ", '${loginUser.memNo}');
+										console.log("document.memNo : ", "${document.memNo}");
+										console.log("document.docuCategory : ", ${document.docuCategory});
+										//console.log("path : ", "${contextPath}/resources/document/detailSample" + ${document.docuCategory} + ".html");
+										console.log("document.midApprover : ", '${document.midApprover}');
+										console.log("document.finalApprover ", '${document.finalApprover}');
+										//console.log("loginUser.deptNo : ", ${loginUser.deptNo});
+										//console.log("document.deptNo : ", ${document.deptNo});
+										//console.log("document.memGrade : ", '${document.memGrade}');
+										</script>
+									
+								 
+						      <c:choose>
+						         <c:when test="${loginUser.memNo eq document.memNo
+						                      or loginUser.memNo eq document.midApprover
+						                      or loginUser.memNo eq document.finalApprover
+						                      or (loginUser.deptNo eq document.deptNo && loginUser.memGrade eq '팀장')
+						                      }">
+									
+												<div id="documentContent" style="width:auto;">
+														<input type="hidden" id="memNo">
+														<input type="hidden" name="no" value="${ document.docuNo }">
+			                  </div>
+                  	
+                  	
+                  	</c:when>
+                  	<c:otherwise>
+		        						접근할 수 없는 페이지입니다.
+                  	</c:otherwise>
+                  </c:choose>
+							    
+							    
 							    <script>				
 							        function load() {
-//							            fetch("${contextPath}/resources/document/detailSample" + ${document.category} + ".html")
-							            fetch("${contextPath}/resources/document/detailSample1.html")
+					                var loginUserMemNo = "${loginUser.memNo}";
+					                var documentMemNo = "${document.memNo}";
+					                var documentStatus = "${document.status}";
+					                var midApproveStatus = "${document.midApproveStatus}";
+					                var finalApproveStatus = "${document.finalApproveStatus}";
+					                var midApprover = "${document.midApprover}";
+					                var finalApprover = "${document.finalApprover}";
+
+					                console.log(loginUserMemNo);
+					                console.log(documentMemNo);
+
+					                if (loginUserMemNo === documentMemNo) {
+					                    var recallButton = document.getElementById('recall');
+					                    if (recallButton) {
+					                        recallButton.style.display = (documentStatus === '0' && midApproveStatus === 'N') ? 'block' : 'none';
+					                    }
+					                } else {
+					                    var rejectButton = document.getElementById('reject');
+					                    var pendButton = document.getElementById('pend');
+					                    
+					                    if (rejectButton && pendButton) {
+					                        var isMidApprover = (loginUserMemNo === midApprover && midApproveStatus === 'N');
+					                        var isFinalApprover = (loginUserMemNo === finalApprover && finalApproveStatus === 'N');
+					                        
+					                        rejectButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
+					                        pendButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
+					                    }
+					                }
+							        	
+													document.getElementById('memNo').value = '${document.memNo}';
+							        	
+							            fetch("${contextPath}/resources/document/detailSample" + ${document.docuCategory} + ".html")
 							                .then(response => response.text())
 							                .then(htmlText => {
 							                    document.getElementById('documentContent').innerHTML = htmlText;
@@ -291,12 +351,219 @@
 							                    console.error('HTML 파일을 로드하는 중 오류가 발생했습니다:', error);
 							                })
 							                .finally(() => {
+							               	document.getElementById('no').value = '${document.docuNo}';
+							                document.getElementById('memDeptName').innerText = '${document.memDeptName}';
+							                document.getElementById('memGrade').innerText = '${document.memGrade}';
+							        				document.getElementById('registDate').innerText = '${document.registDate}'; //today.toISOString().split('T')[0];
+							        				document.getElementById('memNo').value =  '${document.memNo}';
+							        				document.getElementById('memName').innerText =  '${document.memName}';
+							                document.getElementById('memSig').src = '${contextPath}${document.memSig}';
+															document.getElementById('finalApproverSig').src = '${contextPath}${document.finalApproverSig}';
+															document.getElementById('refMemName').innerText = '${document.refMemName}';
+															document.getElementById('finalApproveDate').innerText = '${document.finalApproveDate}';
+															document.getElementById('docuTitle').innerText = '${document.docuTitle}';
+															document.getElementById('processReason').innerText = '${document.processReason}';
+							        				
+							        				if(${document.docuCategory} == '1'){
+																document.getElementById('midApproverSig').src = '${contextPath}${document.midApproverSig}';
+																document.getElementById('midApproveDate').innerText = '${document.midApproveDate}';
+																document.getElementById('docuContent').innerText = '${document.docuContent}';
+																document.getElementById('docuCost').innerText = '${document.docuCost}';
+																document.getElementById('docuRemark').innerText = '${document.docuRemark}';
+							        				}else if(${document.docuCategory} == '2'){
+																document.getElementById('docuContent').innerText = '${document.docuContent}';
+																document.getElementById('docuRemark').innerText = '${document.docuRemark}';
+																document.getElementById('memPhone').innerText = '${document.memPhone}';
+																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
+																
+																
+							        				}
+															
+															
+															document.getElementById('goList').href = "${contextPath}/document/list";
+																														
+															var loginUserMemNo = "${loginUser.memNo}";
+							                var documentMemNo = "${document.memNo}";
+							                var documentStatus = "${document.status}";
+							                var midApproveStatus = "${document.midApproveStatus}";
+							                var finalApproveStatus = "${document.finalApproveStatus}";
+							                var midApprover = "${document.midApprover}";
+							                var finalApprover = "${document.finalApprover}";
 
+							                console.log(loginUserMemNo);
+							                console.log(documentMemNo);
+
+							                if (loginUserMemNo === documentMemNo) {
+							                    var recallButton = document.getElementById('recall');
+							                    if (recallButton) {
+							                        recallButton.style.display = (documentStatus === '0' && midApproveStatus === 'N') ? 'block' : 'none';
+							                    }
+							                } else {
+							                    var rejectButton = document.getElementById('reject');
+							                    var pendButton = document.getElementById('pend');
+							                    
+							                    if (rejectButton && pendButton) {
+							                        var isMidApprover = (loginUserMemNo === midApprover && midApproveStatus === 'N');
+							                        var isFinalApprover = (loginUserMemNo === finalApprover && finalApproveStatus === 'N');
+							                        
+							                        rejectButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
+							                        pendButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
+							                    }
+							                }
 							                });
 							        }
 							        window.onload = load();
 							    </script>
 
+									<script>
+								    document.addEventListener("DOMContentLoaded", function() {
+								        let attachList = ${document.attachList}; // 서버에서 받아온 첨부 파일 목록
+								        let attachTd = document.getElementById("attachTd");
+
+								        attachList.forEach(function(at) {
+								            let link = document.createElement("a");
+								            link.href = `${contextPath}${at.filePath}/${at.systemName}`;
+								            link.download = at.originName;
+								            link.textContent = `[${at.originName}]`;
+
+								            let br = document.createElement("br");
+
+								            attachTd.appendChild(link);
+								            attachTd.appendChild(br);
+								        });
+								    });
+								    
+									function showProcessReason() {
+									    var documentStatus = "${document.status}";
+									    var loginUserMemNo = "${loginUser.memNo}";
+									    var finalApprover = "${document.finalApprover}";
+
+									    var registerButton = document.getElementById('registerButton');
+									    var processReasonText = document.getElementById('processReasonText');
+
+									    if (registerButton && processReasonText && registerButton.style.display !== 'none' && !processReasonText.hasAttribute('hidden')) {
+									        if (documentStatus === '0' && loginUserMemNo === finalApprover) {
+									            registerButton.style.display = 'block';
+									            processReasonText.removeAttribute('hidden');
+									        } else {
+									            registerButton.style.display = 'none';
+									            processReasonText.setAttribute('hidden', 'true');
+									        }
+									    } else {
+									        
+									    }
+									}
+									// 페이지 로드 시 버튼 상태를 확인하여 표시
+									window.onload = showProcessReason;
+									
+									
+									</script>
+									
+                  <script>
+								    function updateStatus(){
+								    	$("#frm").attr("action", "${contextPath}/document/recall.do");
+								    	
+								    }
+								    
+								    function rejectStatus(){
+								    	if("${document.midApprover}" != "" && ${loginUser.memNo} === "${document.midApprover}"){
+								    		$("#frm2").attr("action", "${contextPath}/document/midReject.do");
+								    	}else if(${loginUser.memNo} === ${document.finalApprover}){
+								    		$("#frm2").attr("action", "${contextPath}/document/finalReject.do");
+								    	}
+								    }								    
+								    
+								    function approvalStatus(){
+								    	if("${document.midApprover}" != "" && ${loginUser.memNo} === "${document.midApprover}"){
+								    		$("#frm3").attr("action", "${contextPath}/document/midApprove.do");
+								    	}else if(${loginUser.memNo} === ${document.finalApprover}){
+								    		$("#frm3").attr("action", "${contextPath}/document/finalApprove.do");
+								    	}
+								    }
+									</script>
+
+									
+									
+                  <!-- 회수하기 버튼-->
+                  <form id="frm" action="" method="post">
+                  		<input type="hidden" name="docuNo" value="${ document.docuNo }">
+		                  <div class="modal fade" id="recall-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		                      <div class="modal-dialog modal-dialog-centered">
+		                          <div class="modal-content">
+		                              <div class="modal-header">
+		                                  <h4 class="modal-title" id="topModalLabel">문서를 회수하시겠습니까?</h4>
+		                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                              </div>
+		                              <div class="modal-body">
+		                                  <h5 style="text-align:left;">문서 회수 시 결재 상태가 더이상 진행되지 않습니다.</h5>
+		                                  
+		                              </div>
+		                              <div class="modal-footer">
+		                                  <div class="btn-group-3">
+		                                      <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+		                                      <button type="submit" class="btn btn-primary waves-effect waves-light write" onclick="updateStatus();">확인</button>
+		                                  </div>
+		                              </div>
+		                          </div><!-- /.modal-content -->
+		                      </div><!-- /.modal-dialog -->
+		                  </div><!-- /.modal -->
+                  </form>
+                  
+
+                  
+                  <!-- 반려 버튼-->
+                  <form id="frm2" action="" method="post">
+		                  <div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		                      <div class="modal-dialog modal-dialog-centered">
+		                          <div class="modal-content">
+		                              <div class="modal-header">
+		                                  <h4 class="modal-title" id="topModalLabel">반려하시겠습니까?</h4>
+		                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                              </div>
+		                              <div class="modal-body">
+		                                  <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 반려됩니다.</h5>
+		                                  
+		                              </div>
+		                              <div class="modal-footer">
+		                                  <div class="btn-group-3">
+		                                      <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+		                                      <button type="submit" class="btn btn-primary waves-effect waves-light write" onclick="rejectStatus();">확인</button>
+		                                  </div>
+		                              </div>
+		                          </div><!-- /.modal-content -->
+		                      </div><!-- /.modal-dialog -->
+		                  </div><!-- /.modal -->
+		              </form>
+
+									
+                  <!-- 승인 버튼-->
+                  <form id="frm3" action="" method="post">
+                  		<input type="hidden" name="docuNo" value="${ document.docuNo }">
+		                  <div class="modal fade" id="pend-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		                      <div class="modal-dialog modal-dialog-centered">
+		                          <div class="modal-content">
+		                              <div class="modal-header">
+		                                  <h4 class="modal-title" id="topModalLabel">승인하시겠습니까?</h4>
+		                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                              </div>
+		                              <div class="modal-body">
+		                                  <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 승인됩니다.</h5>
+		                              </div>
+		                              <div class="modal-footer">
+		                                  <div class="btn-group-3">
+		                                      <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
+		                                      <button type="submit" class="btn btn-primary waves-effect waves-light write" onclick="approvalStatus();">확인</button>
+		                                  </div>
+		                              </div>
+		                        		</div><!-- /.modal-content -->
+		                    		</div><!-- /.modal-dialog -->
+		                		</div><!-- /.modal -->
+		                </form>
+                  
+                  
+                  
+                  
+                  
 								</div>
 							</div>
 							<!-- end card -->

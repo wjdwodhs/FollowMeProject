@@ -50,5 +50,29 @@ public interface DocumentService {
 	
 	// 상세 페이지 조회
 	DocumentDto selectDocument(int docuNo);
+	
+	// 글 회수(삭제) 기능 (update status)
+	int recallDocument(DocumentDto document);
+	
+	// 전자문서 중간 결재 [승인] 기능 (update midApproveStatus)
+	int updateMidApprove(DocumentDto document);
+	
+	// 전자문서 최종 결재 [승인] 기능 (update finalApproveStatus)
+	int updateFinalApprove(DocumentDto document);
+		
+	// 전자문서 최종 결재 [반려] 기능 (update midApproveStatus)
+	int updateMidReject(DocumentDto document);
 
+	// 전자문서 최종 결재 [반려] 기능 (update finalApproveStatus)
+	int updateFinalReject(DocumentDto document);
+	
+	// 중간결재자 불러오기
+	String selectMidApprover(DocumentDto document);
+
+	// 최종결재자 불러오기
+	String selectFinalApprover(DocumentDto document);
+	
+	
+	
+	
 }

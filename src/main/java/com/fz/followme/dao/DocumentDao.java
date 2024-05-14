@@ -153,6 +153,33 @@ public class DocumentDao {
 		return sqlSessionTemplate.selectOne("documentMapper.selectDocument", docuNo);
 	}
 
+	public int recallDocument(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.recallDocument", document);
+	}
+
+	public int updateMidApprove(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.updateMidApprove", document);
+	}
+
+	public int updateFinalApprove(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.updateFinalApprove", document);
+	}
+
+	public int updateMidReject(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.updateMidReject", document);
+	}
+
+	public int updateFinalReject(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.updateFinalReject", document);
+	}
+
+	public String selectMidApprover(DocumentDto document) {
+		return sqlSessionTemplate.selectOne("documentMapper.selectMidApprover", document);
+	}
+
+	public String selectFinalApprover(DocumentDto document) {
+		return sqlSessionTemplate.selectOne("documentMapper.selectFinalApprover", document);
+	}
 
 	
 }

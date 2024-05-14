@@ -23,7 +23,7 @@ public class DocumentDto {
 	private String docuTitle;
 	private String docuContent;
 	private String memNo;
-	private int memDeptNo;
+	private int deptNo;
 	private Date registDate;
 	private String refMemNo;
 	private int refDeptNo;
@@ -65,5 +65,7 @@ public class DocumentDto {
 	private String memDeptName;
 	private String refDeptName;
 	private String memSig;
+	private String memGrade;
+	private String memPhone;
 	
 }
