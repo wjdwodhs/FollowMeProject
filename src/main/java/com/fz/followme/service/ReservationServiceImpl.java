@@ -29,6 +29,11 @@ public class ReservationServiceImpl implements ReservationService {
 		return assetDao.insertRsvnCar(ard);
 	}
 
+	@Override
+	public int updateAssetStatus() {
+		return assetDao.updateAssetStatus();
+	}
+
 
 
 

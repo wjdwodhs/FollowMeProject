@@ -135,7 +135,7 @@
 		 </foreach>
 </delete>
 
-<insert id="insertRsvnCar">
+<insert id="insertRsvnCar" parameterType="AssetReservationDto">
 insert
   into tb_asset_rsvn
   (
@@ -172,6 +172,16 @@ insert
      AND start_date = TO_DATE(#{startDate}, 'YYYY-MM-DD HH24')
      AND end_date = TO_DATE(#{endDate}, 'YYYY-MM-DD HH24')
 </select>
+
+<update id="updateAssetStatus">
+	<![CDATA[
+		update tb_asset
+	     set status = 'Y'
+	   where asset_no IN ( select asset_no
+	                         from tb_asset_rsvn
+	                        where end_date <= sysdate)
+	]]>
+</update>
 
 
 

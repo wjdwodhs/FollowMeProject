@@ -213,7 +213,7 @@ public class AssetController {
 	@ResponseBody
 	public int insertRsvnCar(@RequestBody AssetReservationDto ard) {
 		
-		log.debug("ard : {}", ard);
+		//log.debug("ard : {}", ard);
 		
 		return reservationService.addReservation(ard);
 	}

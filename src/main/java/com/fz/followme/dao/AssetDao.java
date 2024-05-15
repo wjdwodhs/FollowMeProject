@@ -71,7 +71,9 @@ public class AssetDao {
 		return sqlSessionTemplate.selectOne("assetMapper.doublecheckReservation", ard);
 	}
 	
-	
+	public int updateAssetStatus() {
+		return sqlSessionTemplate.update("assetMapper.updateAssetStatus");
+	}
 	
 	
 	
