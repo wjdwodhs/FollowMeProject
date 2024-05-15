@@ -27,7 +27,9 @@
 
 <!-- Icons css -->
 <link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
+<script>
+	var loginUserName = '${loginUser.memName}';
+</script>
 <style>
 	.a.nav-link.active{backgroun-color:#FEBE98;}
 	.active>.page-link, .page-link.active {
@@ -91,12 +93,6 @@
                               <div style="border: 1px solid none; width: 100%; height: 770px; box-sizing:border-box;">
 
                                   <br>
-                                  <!-- 관리자에게만 보여지도록 -->
-                                  <!--
-                                  <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 89%;">추가</button>
-                                 
-                                  <br><br>
-                                   -->
                                   <table class="table table-striped table-hover">
                                     <thead>  
                                       <tr align="center">
@@ -131,52 +127,45 @@
                   <div class="col-lg-6">
                       
                       <!-- 예약 조회-->
-                  <form action="">
+                  <form action="selectCarList-form">
                       <div class="card">
                           <div class="card-body">
                               <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>예약 조회 / 취소</b> | <small>RESERVAION INQUIRY / CANCE</small></h5>
                                   
                               <label style="margin-left: 25px; margin-right: 10px;"><b>희망예약일</b></label>
-                              <input type="date" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
+                              <input type="date" id="selectCarList-date" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
                                                  border-radius: 3px; color: gray; height: 30px;">
                               <br><br>
-                                  <table class="table-sm" style="margin-left: 20px;">
-                                      <tr>
-                                          <th>차종</th>
-                                          <td></td>
-                                          <td colspan="2">아반떼</td>
-                                      </tr>
-                                      <tr>
-                                          <th>차량번호</th>
-                                          <td></td>
-                                          <td colspan="2">222나6789</td>
-                                      </tr>
-                                      <tr>
-                                          <th>예약상태</th>
-                                          <td></td>
-                                          <td colspan="2"><b>사용중</b></td>  <!--글씨색상 다르게 설정-->
-                                      </tr>
-                                      <tr>
-                                          <th>예약시간</th>
-                                          <td></td>
-                                          <td>11:00</td>
-                                          <td> ~ </td>
-                                          <td>15:00</td>
-                                      </tr>
-                                      <tr>
-                                          <th>이용목적</th>
-                                          <td></td>
-                                          <td colspan="2">외근</td>
-                                      </tr>
-                                  </table> 
+                                      <table class="table table-sm table-bordered" id="reservationSelect-table">
+																        <thead>  
+																        <tr align="center">
+																                <th style="width: 20px;">
+																                <div class="form-check">
+																                    <input type="checkbox" id="allCheckBox" class="form-check-input" id="customCheck1">
+																                    <label class="form-check-label" for="customCheck1">&nbsp;</label>
+																                </div>
+																            </th>
+																            <th>차종</th>
+																            <th colspan="2">사용시간</th>
+																            <th colspan="2">반납시간</th>
+																            <th>예약자</th>
+																            <th>소속부서</th>
+																            <th>이용사유</th>
+																        </tr>
+																      </thead>
+																     	<tbody>
+																     	 
+																      </tbody>    
+																    </table>
                                   <br>
-                                  <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
+                                  <button type="button" id="selectCarList-btn" class="btn w-sm btn-success waves-effect waves-light" 
+                                          style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
                                   
                                   <!--예약한 사원번호가 일치할 시 표시-->
-                                  <button type="button" class="btn w-sm btn-light waves-effect">삭제</button>
+                                  <button type="button" class="btn w-sm btn-light waves-effect">선택삭제</button>
 
                               </div>
-                      </div> <!-- end col-->
+                      	</div> <!-- end col-->
 											</form>
 
                       <!-- 예약 신청 -->
@@ -201,7 +190,7 @@
 	                                      <th>예약차종</th>
 	                                      <td colspan="4">
 	                                          <input type="text"id="insert-assetName" name="assetName" class="form-control"
-	                                           placeholder="법인차량목록에서 클릭해주세요.">  
+	                                           placeholder="법인차량목록에서 클릭해주세요." required>  
 	                                      </td>
 	                                  </tr>
 	                                  <tr> 
@@ -417,6 +406,66 @@
 			});
 			
 		})
+		
+		
+		
+		// 예약 조회
+		$("#selectCarList-btn").on("click", function(){
+				
+			$.ajax({
+					url:"${contextPath}/asset/reservationlist.do",
+					type:"get",
+					data:{ rsvnDate : $("#selectCarList-date").val() },
+					success:function(dList){
+						
+						console.log(Array.isArray(dList));
+						
+						var tr = "";
+						if(dList.length == 0){
+							tr += "<tr>"
+									+ "<td colspan='9'>" + "조회된 예약이 없습니다." + "</td>"
+									+ "</tr>"
+						}else{
+							
+							for(let i=0; i<dList.length; i++){
+							
+								let checkbox = "<div><input type='checkbox' class='form-check-input' id='customCheck2'>"
+			                         + "<label class='form-check-label' for='customCheck2'>&nbsp;</label>"
+			                         + "<input type='hidden' class='form-check-input' id='rsvnNo' value='" + dList[i].rsvnNo + "'></div>";	
+							
+								tr += "<tr>" 
+								       + "<td>" + checkbox + "</td>"
+								       + "<td>" + dList[i].assetName + "</td>"
+								       + "<td>" + dList[i].startDivision + "</td>"
+								       + "<td>" + dList[i].startDate + "</td>"
+								       + "<td>" + dList[i].endDivision + "</td>"
+								       + "<td>" + dList[i].endDate + "</td>"
+								       + "<td>" + dList[i].rsvnName + "</td>"
+								       + "<td>" + dList[i].deptName + "</td>"
+								       + "<td>" + dList[i].rsvnContent + "</td>"
+								    + "</tr>";
+								
+								// 로그인 사원과 예약자가 일치할 시 체크박스 활성화
+								if(dList[i].rsvnName == loginUserName){
+									$(checkbox).find("input").prop("disabled", false);
+								}else{
+									$(checkbox).find("input").prop("disabled", true);
+								};
+							}
+							
+							$("#reservationSelect-table tbody").html(tr);
+							
+						}
+
+					},
+					error:function(){
+						console.log("예약조회 ajax실패");
+					}
+			})
+			
+		})
+		
+
 		
    </script>
 

@@ -17,10 +17,17 @@ public class ReservationScheduler {
 	
 	
 	
-	@Scheduled(fixedRate = 60000)  // 1분마다 실행
+	@Scheduled(cron = "0 0 * * * *") // 자정에서부터 1시간마다 실행
+	public void updateAssetstartDateStatus() {
+		int result = reservationService.updateAssetstartDateStatus();
+		log.debug("시작일 업데이트 결과: {}", result);
+	}
+	
+	
+	@Scheduled(cron = "0 0 * * * *")  
 	public void checkUpdateAssetStatus() {
-		int result = reservationService.updateAssetStatus();
-		log.debug("종료된 예약 수 : {}", result);
+		int result = reservationService.updateAssetendDateStatus();
+		log.debug("종료일 업데이트 결과: {}", result);
 	}
 	
 	

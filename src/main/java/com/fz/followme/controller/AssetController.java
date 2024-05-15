@@ -220,6 +220,24 @@ public class AssetController {
 	
 	
 	
+	// * 예약 차량 목록 조회
+	@GetMapping(value = "/reservationlist.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public List<AssetReservationDto> selectListReservationCar(HttpSession session, HttpServletRequest request,
+															  String rsvnDate ){
+		
+		List<AssetReservationDto> dList = assetService.selectDateList(rsvnDate);
+		MemberDto loginUser = (MemberDto)request.getSession().getAttribute("loginUser");
+		session.setAttribute("loginUser", loginUser);
+		//log.debug("dList : {}", dList);
+		
+		return dList;
+	}
+	
+	
+	
+	
+	
 	// ------------------------------------------------------
 	
 	

@@ -30,8 +30,13 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public int updateAssetStatus() {
-		return assetDao.updateAssetStatus();
+	public int updateAssetendDateStatus() {
+		return assetDao.updateAssetendDateStatus();
+	}
+
+	@Override
+	public int updateAssetstartDateStatus() {
+		return assetDao.updateAssetstartDateStatus();
 	}
 
 

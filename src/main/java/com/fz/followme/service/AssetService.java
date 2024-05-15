@@ -8,29 +8,31 @@ import com.fz.followme.dto.PageInfoDto;
 
 public interface AssetService {
 
-	// 차량조회 
+	// 차량조회
 	List<AssetDto> selectcarList();
 	
 	
-	// 차량등록
+	// 차량등록(관리자)
 	int insertCar(AssetDto ad);
 	
-	// 차량 상세조회
+	// 차량 상세조회(관리자)
 	AssetDto selectCar(int no);
 	
-	// 차량 정보 수정
+	// 차량 정보 수정(관리자)
 	int updatecar(AssetDto ad);
 	
-	// 차량 이용내역 조회,페이징
+	// 차량 이용내역 조회,페이징(관리자)
 	int selectCarReservationListCount();
 	List<AssetReservationDto> selectCarReservationList(PageInfoDto pi);
 	
-	// 차량삭제
+	// 차량삭제(관리자)
 	int deleteCar(int no);
 	
-	// 차량예약 내역 선택 삭제
+	// 차량예약 내역 선택 삭제(관리자)
 	int deleteRsvnList(int[] checkedRsvnArr);
 	
 
+	// 차량 예약내역 조회(사용자)
+	List<AssetReservationDto> selectDateList(String rsvnDate);
 	
 }

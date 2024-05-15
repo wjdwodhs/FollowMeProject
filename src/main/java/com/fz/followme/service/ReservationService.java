@@ -14,8 +14,11 @@ public interface ReservationService {
 	int addReservation(AssetReservationDto reservationDto) throws DataAccessException;
 
 	 
+	// 시작된 예약상태 수정
+	int updateAssetstartDateStatus();
+	
 	// 종료된 예약상태 수정
-	int updateAssetStatus();
+	int updateAssetendDateStatus();
 
 
 

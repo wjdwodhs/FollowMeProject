@@ -71,8 +71,17 @@ public class AssetDao {
 		return sqlSessionTemplate.selectOne("assetMapper.doublecheckReservation", ard);
 	}
 	
-	public int updateAssetStatus() {
-		return sqlSessionTemplate.update("assetMapper.updateAssetStatus");
+	public int updateAssetstartDateStatus() {
+		return sqlSessionTemplate.update("assetMapper.updateAssetstartDateStatus");
+	}
+	
+	public int updateAssetendDateStatus() {
+		return sqlSessionTemplate.update("assetMapper.updateAssetendDateStatus");
+	}
+	
+	
+	public List<AssetReservationDto> selectDateList(String rsvnDate){
+		return sqlSessionTemplate.selectList("assetMapper.selectDateList", rsvnDate);
 	}
 	
 	

@@ -173,15 +173,50 @@ insert
      AND end_date = TO_DATE(#{endDate}, 'YYYY-MM-DD HH24')
 </select>
 
-<update id="updateAssetStatus">
+<update id="updateAssetendDateStatus">
 	<![CDATA[
 		update tb_asset
 	     set status = 'Y'
 	   where asset_no IN ( select asset_no
 	                         from tb_asset_rsvn
-	                        where end_date <= sysdate)
+	                        where end_date <= #{currentDateTime})
 	]]>
 </update>
+
+<update id="updateAssetstartDateStatus">
+	<![CDATA[
+		update tb_asset
+		   set status = 'N'
+		 where asset_no IN ( select asset_no
+		                       from tb_asset_rsvn
+		                      where start_date > #{currentDateTime}) 
+	]]>
+</update>
+
+
+
+<select id="selectDateList" resultMap="assetReservationResult">
+	SELECT
+		       RSVN_NO 
+		     , ASSET_NAME 
+		     , TO_CHAR(RSVN_DATE,'YYYY/MM/DD') RSVN_DATE
+		     , START_DIVISION 
+		     , TO_CHAR(START_DATE, 'HH:MI AM') START_DATE
+		     , END_DIVISION 
+		     , TO_CHAR(END_DATE, 'HH:MI AM') END_DATE
+		     , RSVN_NAME 
+		     , DEPT_NAME
+		     , RSVN_CONTENT
+		  FROM TB_ASSET_RSVN A
+		  JOIN TB_ASSET USING (ASSET_NO)
+		  LEFT JOIN TB_MEM M ON (A.RSVN_NAME = M.MEM_NAME )
+		  LEFT JOIN TB_DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
+		  WHERE ASSET_TYPE = 'C'
+	        AND RSVN_DATE = TO_DATE(#{rsvnDate}, 'YYYY-MM-DD')
+</select>
+
+
+
 
 
 

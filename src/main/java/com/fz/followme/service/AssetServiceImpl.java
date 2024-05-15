@@ -65,6 +65,12 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
+	@Override
+	public List<AssetReservationDto> selectDateList(String rsvnDate) {
+		return assetDao.selectDateList(rsvnDate);
+	}
+
+
 	
 
 	
