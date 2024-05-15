@@ -27,8 +27,8 @@ public class CalendarDto {
     private String title;
     private String content;
     private Timestamp calDate;
-    private Date start;
-    private Date end;
+    private Timestamp start;
+    private Timestamp end;
     private String category;
     private String type;
 }

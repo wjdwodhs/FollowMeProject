@@ -1,12 +1,11 @@
 package com.fz.followme.controller;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fz.followme.dto.CalendarDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.service.CalendarService;
-import com.fz.followme.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +33,11 @@ public class CalendarController {
 	private final CalendarService calendarService;
 	
 			@RequestMapping("/calendar.page")
-			public ModelAndView calendarPage(ModelAndView mv) {
-				List<CalendarDto> list = calendarService.selectCalendarList();
+			public ModelAndView calendarPage(ModelAndView mv, HttpSession session) {
+				MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+			    String memNo = loginUser.getMemNo();
+			    
+				List<CalendarDto> list = calendarService.selectCalendarList(memNo);
 				mv.addObject("list",list)
 				  .setViewName("calendar/calendar");
 				
@@ -45,8 +47,12 @@ public class CalendarController {
 			// 일정 조회
 			@GetMapping(value="/list.do", produces="application/json; charset=utf-8")
 		    @ResponseBody
-			public List<Map<String, Object>> calendarList() {
-			    List<CalendarDto> list = calendarService.selectCalendarList();
+			public List<Map<String, Object>> calendarList(HttpSession session) {
+				
+				 MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+			     String memNo = loginUser.getMemNo();
+			     List<CalendarDto> list = calendarService.selectCalendarList(memNo);
+			
 			    List<Map<String, Object>> jsonArr = new ArrayList<>();
 			    log.debug("list: {}",list);
 	
@@ -58,6 +64,41 @@ public class CalendarController {
 			        map.put("end", dto.getEnd());
 			        map.put("content",dto.getContent());
 			        map.put("category", dto.getCategory());
+			        map.put("memNo", dto.getMemNo());
+			        map.put("backgroundColor", dto.getCategory());
+			        jsonArr.add(map);
+			    }
+			        log.debug("jsonArrCheck: {}", jsonArr);
+			        return jsonArr;
+			}
+			
+			// 일정 카테고리별 조회
+			@GetMapping(value="/listType.do", produces="application/json; charset=utf-8")
+		    @ResponseBody
+			public List<Map<String, Object>> calendarList(@RequestParam String type, HttpSession session) {
+				MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+			    String memNo = loginUser.getMemNo();
+				log.debug("type:{}",type);
+				
+				  CalendarDto calendar = CalendarDto.builder()
+		                    .memNo(memNo)
+		                    .type(type)
+		                    .build();
+				
+			    List<CalendarDto> list = calendarService.selectCalendarTypeList(calendar);
+			
+			    List<Map<String, Object>> jsonArr = new ArrayList<>();
+			    
+	
+			    for (CalendarDto dto : list) {
+			        Map<String, Object> map = new HashMap<>();
+			        map.put("calNo", dto.getCalNo());
+			        map.put("title", dto.getTitle());
+			        map.put("start", dto.getStart());
+			        map.put("end", dto.getEnd());
+			        map.put("content",dto.getContent());
+			        map.put("category", dto.getCategory());
+			        map.put("memNo", dto.getMemNo());
 			        map.put("backgroundColor", dto.getCategory());
 			        jsonArr.add(map);
 			    }
@@ -78,7 +119,7 @@ public class CalendarController {
 		        String content = eventData.getContent();
 		        String category = eventData.getCategory();
 		        String type = null;
-		        // category == red이면 E(직원), blue이면, D(부서), purple이면 C(회사)
+		        // category == CA848A이면 E(직원), A78C7B이면, D(부서), 나머지 C(회사)
 		        if(category.equals("#CA848A")) {
 		        	type="E";
 		        }else if(category.equals("#A78C7B")) {
@@ -86,8 +127,11 @@ public class CalendarController {
 		        }else {
 		        	type="C";
 		        }
-		        Date start = eventData.getStart();
-		        Date end = eventData.getEnd();
+		        Timestamp start = eventData.getStart();
+		        Timestamp end = eventData.getEnd();
+		        
+		        start.setTime(start.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초 단위로 뺌
+		        end.setTime(end.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초 단위로 뺌
 		        CalendarDto calendar = CalendarDto.builder()
 	                    .memNo(memNo)
 	                    .title(title)
@@ -110,6 +154,8 @@ public class CalendarController {
 		        
 		    }
 		    
+		    
+		    
 		    // 일정 수정
 		    @PostMapping(value = "/update.do", produces = "application/json; charset=utf-8")
 		    @ResponseBody
@@ -124,8 +170,10 @@ public class CalendarController {
 		        int calNo = eventData.getCalNo();
 		        String title = eventData.getTitle();
 		        String content = eventData.getContent();
-		        Date start = eventData.getStart();
-		        Date end = eventData.getEnd();
+		        Timestamp start = eventData.getStart();
+		        Timestamp end = eventData.getEnd();
+		        start.setTime(start.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초 단위로 뺌
+		        end.setTime(end.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초 단위로 뺌
 		        String category = eventData.getCategory();
 		        String type = null;
 		        // category == red이면 E(직원), blue이면, D(부서), purple이면 C(회사)
@@ -148,9 +196,7 @@ public class CalendarController {
 	                    .type(type)
 	                    .build();
 
-		        // 여기서 DB 업데이트 로직 수행
-		        // updateCalendar 메서드는 이벤트의 ID를 기준으로 DB에서 해당 이벤트를 찾아 업데이트합니다.
-		        // 업데이트가 성공하면 true를 반환하고, 실패하면 false를 반환합니다.
+		       
 		        int result = calendarService.updateCalendar(calendar);
 		        
 		        if (result > 0) {
@@ -174,10 +220,10 @@ public class CalendarController {
 		        int result = calendarService.deleteCalendar(calNo);
 		        
 		        if (result > 0) {
-		            // 성공적으로 일정을 수정한 경우
+		            // 성공적으로 일정을 삭제한 경우
 		            return "{\"result\": \"success\"}";
 		        } else {
-		            // 일정 수정 실패한 경우
+		            // 일정 삭제 실패한 경우
 		            return "{\"result\": \"fail\"}";
 		        }
 		        

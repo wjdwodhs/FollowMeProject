@@ -17,8 +17,8 @@ public class CalendarDao {
 
 	private final SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<CalendarDto> selectCalendarList() {
-		return sqlSessionTemplate.selectList("calendarMapper.selectCalendarList");
+	public List<CalendarDto> selectCalendarList(String memNo) {
+		return sqlSessionTemplate.selectList("calendarMapper.selectCalendarList",memNo);
 	}
 
 	public int insertCalendar(CalendarDto calendar) {
@@ -31,5 +31,9 @@ public class CalendarDao {
 
 	public int deleteCalendar(int calNo) {
 		return sqlSessionTemplate.delete("calendarMapper.deleteCalendar",calNo);
+	}
+
+	public List<CalendarDto> selectCalendarTypeList(CalendarDto calendar) {
+		return sqlSessionTemplate.selectList("calendarMapper.selectCalendarTypeList",calendar);
 	}
 }

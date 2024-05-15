@@ -16,8 +16,8 @@ public class CalendarServiceImpl implements CalendarService{
 	private final CalendarDao calendarDao;
 	
 	@Override
-	public List<CalendarDto> selectCalendarList() {
-		return  calendarDao.selectCalendarList();
+	public List<CalendarDto> selectCalendarList(String memNo) {
+		return  calendarDao.selectCalendarList(memNo);
 	}
 
 	@Override
@@ -34,6 +34,11 @@ public class CalendarServiceImpl implements CalendarService{
 	@Override
 	public int deleteCalendar(int calNo) {
 		return calendarDao.deleteCalendar(calNo);
+	}
+
+	@Override
+	public List<CalendarDto> selectCalendarTypeList(CalendarDto calendar) {
+		return calendarDao.selectCalendarTypeList(calendar);
 	}
 
 	
