@@ -116,7 +116,7 @@
 	                                   	</c:forEach>    
                                     </tbody>  
                                   </table>
-                              
+                              		<p> * 비고의 차량상태는 현재시각 기준 입니다. 자세한 내용은 <b>예약조회</b>에서 확인해주세요.</p>
                               </div>
 
 
@@ -141,8 +141,6 @@
 																        <tr align="center">
 																                <th style="width: 20px;">
 																                <div class="form-check">
-																                    <input type="checkbox" id="allCheckBox" class="form-check-input" id="customCheck1">
-																                    <label class="form-check-label" for="customCheck1">&nbsp;</label>
 																                </div>
 																            </th>
 																            <th>차종</th>
@@ -162,7 +160,8 @@
                                           style="background-color: #FFBE98; border: none; margin-left: 45%;">조회</button>
                                   
                                   <!--예약한 사원번호가 일치할 시 표시-->
-                                  <button type="button" class="btn w-sm btn-light waves-effect">선택삭제</button>
+                                  <button type="button" class="btn w-sm btn-light waves-effect" id="selectCarList-delMobal-btn"
+                                          data-bs-toggle="modal" data-bs-target="#selectCarList-delMobal" disabled>선택삭제</button>
 
                               </div>
                       	</div> <!-- end col-->
@@ -279,6 +278,34 @@
 
       </div> <!-- content -->
   </div>
+  
+  <!-- 선택예약 삭제 모달 -->
+	<div id="selectCarList-delMobal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="standard-modalLabel">예약내역 삭제</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>삭제하시면 정보를 다시 불러올 수 없습니다.</p>
+                <p>선택하신 이용내역을 삭제하시겠습니까?</p></div>
+            <div class="modal-footer">
+                <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="selectCarList-delBtn" class="btn btn-primary" 
+                        style="background-color: #FFBE98; border: none;">삭제</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+	<!-- 선택예약 삭제 모달 -->
+  
+  
+  
+  
+  
+  
+  
 
 
 
@@ -398,9 +425,9 @@
 				error:function(er){
 					console.log("차량예약 실패 ajax");
 					if(er.status == 409){
-						alert("예약이 중복 되었습니다. 예약정보를 다시 확인해주세요.");
+						alert("예약이 중복 되었습니다. 예약정보를 확인하시고 다시 예약해주세요.");
 					}else{
-						alert("예약이 중복 되었습니다. 예약정보를 다시 확인해주세요.");
+						alert("예약이 중복 되었습니다. 예약정보를 확인하시고 다시 예약해주세요.");
 					}
 				}
 			});
@@ -410,7 +437,7 @@
 		
 		
 		// 예약 조회
-		$("#selectCarList-btn").on("click", function(){
+		$("#selectCarList-btn").off("click").on("click", function(){
 				
 			$.ajax({
 					url:"${contextPath}/asset/reservationlist.do",
@@ -420,42 +447,53 @@
 						
 						console.log(Array.isArray(dList));
 						
-						var tr = "";
+						$("#reservationSelect-table tbody").empty();
+						
 						if(dList.length == 0){
-							tr += "<tr>"
-									+ "<td colspan='9'>" + "조회된 예약이 없습니다." + "</td>"
-									+ "</tr>"
+							var tr = "<tr align='center'>"
+										 + "<td colspan='9'>" + "조회된 예약이 없습니다." + "</td>"
+								   	 + "</tr>"
+								$("#reservationSelect-table tbody").html(tr);
 						}else{
 							
 							for(let i=0; i<dList.length; i++){
 							
-								let checkbox = "<div><input type='checkbox' class='form-check-input' id='customCheck2'>"
-			                         + "<label class='form-check-label' for='customCheck2'>&nbsp;</label>"
+								let checkbox = "<div><input type='checkbox' class='form-check-input' id='customCheck" + i + "'>"
+			                         + "<label class='form-check-label' for='customCheck" + i + "'>&nbsp;</label>"
 			                         + "<input type='hidden' class='form-check-input' id='rsvnNo' value='" + dList[i].rsvnNo + "'></div>";	
 							
-								tr += "<tr>" 
-								       + "<td>" + checkbox + "</td>"
-								       + "<td>" + dList[i].assetName + "</td>"
-								       + "<td>" + dList[i].startDivision + "</td>"
-								       + "<td>" + dList[i].startDate + "</td>"
-								       + "<td>" + dList[i].endDivision + "</td>"
-								       + "<td>" + dList[i].endDate + "</td>"
-								       + "<td>" + dList[i].rsvnName + "</td>"
-								       + "<td>" + dList[i].deptName + "</td>"
-								       + "<td>" + dList[i].rsvnContent + "</td>"
-								    + "</tr>";
+								var tr = $("<tr></tr>");
+									tr.append("<td>" + checkbox + "</td>");
+									tr.append("<td>" + dList[i].assetName + "</td>");
+									tr.append("<td>" + dList[i].startDivision + "</td>");
+									tr.append("<td>" + dList[i].startDate.substring(0,5) + "</td>");
+									tr.append("<td>" + dList[i].endDivision + "</td>");
+									tr.append("<td>" + dList[i].endDate.substring(0,5) + "</td>");
+									tr.append("<td>" + dList[i].rsvnName + "</td>");
+									tr.append("<td>" + dList[i].deptName + "</td>");
+									tr.append("<td>" + dList[i].rsvnContent + "</td>");
 								
 								// 로그인 사원과 예약자가 일치할 시 체크박스 활성화
 								if(dList[i].rsvnName == loginUserName){
-									$(checkbox).find("input").prop("disabled", false);
+									tr.find("input[type=checkbox]").prop("disabled", false);
 								}else{
-									$(checkbox).find("input").prop("disabled", true);
-								};
+									tr.find("input[type=checkbox]").prop("disabled", true);
+								}
+							
+							$("#reservationSelect-table tbody").append(tr);
+							
 							}
-							
-							$("#reservationSelect-table tbody").html(tr);
-							
 						}
+						
+						// 체크박스에 체크시 삭제버튼 활성화
+						$("input[type=checkbox]").on("click", function(){
+							var count = $("input[type=checkbox]:checked").length;
+							if(count > 0){
+								$("#selectCarList-delMobal-btn").prop("disabled", false);
+							}else{
+								$("#selectCarList-delMobal-btn").prop("disabled", true);
+							}
+						})
 
 					},
 					error:function(){
@@ -465,7 +503,41 @@
 			
 		})
 		
-
+		
+		
+		// 선택 예약 삭제
+		$("#selectCarList-delBtn").on("click", function(){
+			
+			var checkedRsvn = [];
+			$("#reservationSelect-table tbody input[type=checkbox]:checked").each(function(){
+					var rsvnNo = parseInt($(this).closest("tr").find("#rsvnNo").val());
+					checkedRsvn.push(rsvnNo);
+					console.log(checkedRsvn);
+			});
+			
+			var checkedRsvnStr = checkedRsvn.join(",");
+			
+			$.ajax({
+				url: "${contextPath}/asset/deletereservationcar.do",
+				type:"get",
+				data:{ checkedRsvnStr : checkedRsvnStr },
+				success:function(result){
+					if(result > 0){
+						$("#selectCarList-delMobal").modal('hide');
+						alert("선택하신 예약이 삭제되었습니다.");
+						location.reload();
+					}else{
+						$("#selectCarList-delMobal").modal('hide');
+						alert("차량 삭제에 실패하였습니다.");
+					}
+				},
+				error:function(){
+					console.log("예약삭제 ajax 통신 실패");
+				}
+			})
+		})
+		
+		
 		
    </script>
 

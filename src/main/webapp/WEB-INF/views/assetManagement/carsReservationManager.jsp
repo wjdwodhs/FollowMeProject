@@ -511,8 +511,6 @@
 							$('#reservation-delMobal').modal('hide');							
 							alert("차량삭제에 실패하였습니다.");
 						}
-						
-						
 					},
 					error:function(){
 

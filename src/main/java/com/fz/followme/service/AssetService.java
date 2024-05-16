@@ -35,4 +35,8 @@ public interface AssetService {
 	// 차량 예약내역 조회(사용자)
 	List<AssetReservationDto> selectDateList(String rsvnDate);
 	
+	// 차량 예약내역 선택 삭제(사용자)
+	int deleteRsvnListMember(int[] checkedRsvn);
+	
+	
 }
