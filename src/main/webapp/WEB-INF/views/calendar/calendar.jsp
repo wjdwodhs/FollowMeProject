@@ -30,59 +30,66 @@
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 
 <!-- Bootstrap JavaScript -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <!--dateformat 바꿀 때 필요한 자바스크립트 라이브러리-->
 <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <style>
-   .btn-customA {
-       background-color: #FFBE98;
-       width: 265px;
-       height: 37px;
-       color: white; /* 텍스트 색상 */
-       border: none; /* 버튼 테두리 제거 */
-   }
+ a.fc-event{
+ 	cursor:pointer;
+ }
+ 
+.btn-customE {
+    background-color: #B04C4C; /* 기존보다 조금 더 밝게 */
+    width: 265px;
+    height: 37px;
+    color: white; /* 텍스트 색상 */
+    border: none; /* 버튼 테두리 제거 */
+}
 
-   .btn-customA:hover {
-       background-color: #E6A881; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
-   }
-   .btn-customE {
-       background-color: #CA848A;
-       width: 265px;
-       height: 37px;
-       color: white; /* 텍스트 색상 */
-       border: none; /* 버튼 테두리 제거 */
-   }
+.btn-customE:hover {
+    background-color: #993F3F; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+}
 
-   .btn-customE:hover {
-       background-color: #B76D73; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
-   }
+.btn-customD {
+    background-color: #C55D5D; /* 기존보다 조금 더 밝게 */
+    width: 265px;
+    height: 37px;
+    color: white; /* 텍스트 색상 */
+    border: none; /* 버튼 테두리 제거 */
+}
 
-   .btn-customD {
-       background-color: #A78C7B;
-       width: 265px;
-       height: 37px;
-       color: white; /* 텍스트 색상 */
-       border: none; /* 버튼 테두리 제거 */
-   }
+.btn-customD:hover {
+    background-color: #A64E4E; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+}
 
-   .btn-customD:hover {
-       background-color: #927966; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
-   }
+.btn-customC {
+    background-color: #DE8286; /* 기준 색상 */
+    width: 265px;
+    height: 37px;
+    color: white; /* 텍스트 색상 */
+    border: none; /* 버튼 테두리 제거 */
+}
 
-   .btn-customC {
-       background-color: #964F4C;
-       width: 265px;
-       height: 37px;
-       color: white; /* 텍스트 색상 */
-       border: none; /* 버튼 테두리 제거 */
-   }
+.btn-customC:hover {
+    background-color: #C06B6E; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+}
 
-   .btn-customC:hover {
-       background-color: #843E3B; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
-   }
+.btn-customA {
+    background-color: #FFB2A5; /* 가장 밝은 색상 */
+    width: 265px;
+    height: 37px;
+    color: white; /* 텍스트 색상 */
+    border: none; /* 버튼 테두리 제거 */
+}
+
+.btn-customA:hover {
+    background-color: #E09F93; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+}
+
+
+
 
   </style>
 </head>
@@ -132,10 +139,10 @@
 			                    
 			                    <div class="col-lg-3">
 			                       <div id="external-events" style="margin-top: 50px;">
-	                              <button type="button" class="btn-customA" data-type="">전체</button>
-														    <button type="button" class="btn-customE" data-type="E">직원</button>
-														    <button type="button" class="btn-customD" data-type="D">부서</button>
-														    <button type="button" class="btn-customC" data-type="C">회사</button>
+	                              <button type="button" class="btn-customA" data-type="">전체 일정</button>
+														    <button type="button" class="btn-customC" data-type="C">회사 일정</button>
+														    <button type="button" class="btn-customD" data-type="D">부서 일정</button>
+														    <button type="button" class="btn-customE" data-type="E">개인 일정</button>
 	                          </div>
 			                   </div> 
 			                   
@@ -200,16 +207,16 @@
 													    <select class="form-select" name="category" id="event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#CA848A" selected>직원</option>
-													                <option value="#A78C7B">부서</option>
+													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#C55D5D">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#CA848A" selected>직원</option>
-													                <option value="#A78C7B">부서</option>
-													                <option value="#964F4C">회사</option>
+													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#C55D5D">부서</option>
+													                <option value="#DE8286">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#CA848A" selected>직원</option>
+													                <option value="#B04C4C" selected>직원</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -283,16 +290,16 @@
 													    <select class="form-select" name="category" id="modify-event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#CA848A" selected>직원</option>
-													                <option value="#A78C7B">부서</option>
+													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#C55D5D">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#CA848A" selected>직원</option>
-													                <option value="#A78C7B">부서</option>
-													                <option value="#964F4C">회사</option>
+													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#C55D5D">부서</option>
+													                <option value="#DE8286">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#CA848A" selected>직원</option>
+													                <option value="#B04C4C" selected>직원</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -367,9 +374,9 @@
 															<select
 																class="form-select" name="category" id="chk-event-category"
 																required>
-																<option value="#CA848A" selected>직원</option>
-																<option value="#A78C7B">부서</option>
-																<option value="#964F4C">회사</option>
+																<option value="#B04C4C" selected>직원</option>
+																<option value="#C55D5D">부서</option>
+																<option value="#DE8286">회사</option>
 															</select>
 														</div>
 													</div>
@@ -966,6 +973,7 @@
 	<script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
 	
 	<script>
+	
 			$(function () { // 페이지 로드 시 실행될 함수
 				
 				var currentUserID = "${loginUser.memNo}";
@@ -982,7 +990,7 @@
 		        };
 		        
 		    	// 캘린더 설정
-		        var calendar = new FullCalendar.Calendar(targetDiv, {
+		        const calendar = new FullCalendar.Calendar(targetDiv, {
 		            slotDuration: "00:15:00",
 		            slotMinTime: "08:00:00",
 		            slotMaxTime: "19:00:00",
@@ -1063,6 +1071,7 @@
 				             }
 				         });
 				     });
+			    
 		        // 일정 저장하기 버튼 클릭 시 실행되는 함수
 		        $("#btn-save-event").on("click", function () {
 		            var eventData = {
@@ -1110,35 +1119,42 @@
 		            }
 		        });
 		    
-		        // 이벤트 선택 시 수정 모달 표시
+		        // 이벤트 선택 시 수정 모달 표시 
 		        const eventClickEvent = (info) => {
-		        	// 작성자와 로그인한 아이디가 일치하면 수정 모달
-		        	if (info.event.extendedProps.memNo === currentUserID) {
-		            $("#event-modifymodal").modal("show");
-		            $("#modify-event-title").val(info.event.title);
-		            $("#modify-event-content").val(info.event.extendedProps.content);
-		            $("#modify-event-start").val(formatDate(info.event.start)); 
-		            $("#modify-event-end").val(formatDate(info.event.end)); 
-		            $("#modify-event-category").val(info.event.extendedProps.category);
-		            $("#modify-event-calNo").val(info.event.extendedProps.calNo);
-		            console.log(info.event.start);
-		        	} else{ // 일치하지 않으면 제목과 내용, 카테고리 확인만
-		        			console.log(info.event.extendedProps.category);
-		
-		            		 $("#event-modal").modal("show");
-		            		 $("#chk-event-title").val(info.event.title);
-				             $("#chk-event-content").val(info.event.extendedProps.content);
-				             $("#chk-event-category").val(info.event.extendedProps.category);
-				             $("#chk-event-start").val(formatDate(info.event.start)); 
-				             $("#chk-event-end").val(formatDate(info.event.end)); 
-				             
-				             // 확인 모달에서 입력 필드를 읽기 전용으로 설정
-				             $("#chk-event-title").prop("readonly", true);
-				             $("#chk-event-content").prop("readonly", true);
-				             $("#chk-event-start").prop("readonly", true);
-				             $("#chk-event-end").prop("readonly", true);
-				             $("#chk-event-category").prop("disabled", true);
-		        	}
+		        	
+		        		console.log(info.event.backgroundColor);
+		        		
+			        	if(info.event.backgroundColor === ''){
+			                return;
+			            }
+		        	
+			        	if (info.event.extendedProps.memNo === currentUserID) {
+			            $("#event-modifymodal").modal("show");
+			            $("#modify-event-title").val(info.event.title);
+			            $("#modify-event-content").val(info.event.extendedProps.content);
+			            $("#modify-event-start").val(formatDate(info.event.start)); 
+			            $("#modify-event-end").val(formatDate(info.event.end)); 
+			            $("#modify-event-category").val(info.event.extendedProps.category);
+			            $("#modify-event-calNo").val(info.event.extendedProps.calNo);
+			            console.log(info.event.start);
+			        	} else{ // 일치하지 않으면 제목과 내용, 카테고리 확인만
+			        			
+			
+			            		 $("#event-modal").modal("show");
+			            		 $("#chk-event-title").val(info.event.title);
+					             $("#chk-event-content").val(info.event.extendedProps.content);
+					             $("#chk-event-category").val(info.event.extendedProps.category);
+					             $("#chk-event-start").val(formatDate(info.event.start)); 
+					             $("#chk-event-end").val(formatDate(info.event.end)); 
+					             
+					             // 확인 모달에서 입력 필드를 읽기 전용으로 설정
+					             $("#chk-event-title").prop("readonly", true);
+					             $("#chk-event-content").prop("readonly", true);
+					             $("#chk-event-start").prop("readonly", true);
+					             $("#chk-event-end").prop("readonly", true);
+					             $("#chk-event-category").prop("disabled", true);
+			        	}
+	        	 
 		        };
 							
 		     // 일정 수정 버튼 클릭 시 실행되는 함수
@@ -1168,6 +1184,7 @@
 		            });
 		        });
 		     
+		     // 일정 삭제 버튼 클릭 시 실행되는 함수
 		        $("#btn-delete-event").on("click", function () {
 		            var eventCalNo = $("#modify-event-calNo").val();
 		            var confirmation = confirm("일정을 삭제하시겠습니까?");
@@ -1180,8 +1197,8 @@
 		                    dataType: "json",
 		                    success: function () {
 		                        alert('일정이 성공적으로 삭제되었습니다.');
-		                        calendar.refetchEvents(); // 캘린더 이벤트 다시 로드
 		                        $("#event-modifymodal").modal("hide");
+		                        calendar.refetchEvents();
 		                        location.reload();
 		                    }
 		                });
@@ -1226,6 +1243,7 @@
 		
 			return today.toISOString().slice(0, 16);
 		}
+		
 		
 		function updateCalendar(targetDiv,holidaySource,data){
         	// 캘린더 설정
@@ -1278,6 +1296,7 @@
 	            dateClick: function (eventInfo) {
 	                console.log(eventInfo);
 	                dateClickEvent(eventInfo);
+	               
 	            },
 	            eventClick: function (eventInfo) {
 	                eventInfo.jsEvent.preventDefault();
@@ -1289,6 +1308,7 @@
         	
         	return calendar;
         }
+		
 		
 		
 </script>

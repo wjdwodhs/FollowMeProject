@@ -119,10 +119,9 @@ public class CalendarController {
 		        String content = eventData.getContent();
 		        String category = eventData.getCategory();
 		        String type = null;
-		        // category == CA848A이면 E(직원), A78C7B이면, D(부서), 나머지 C(회사)
-		        if(category.equals("#CA848A")) {
+		        if(category.equals("#B04C4C")) {
 		        	type="E";
-		        }else if(category.equals("#A78C7B")) {
+		        }else if(category.equals("#C55D5D")) {
 		        	type="D";
 		        }else {
 		        	type="C";
@@ -176,10 +175,10 @@ public class CalendarController {
 		        end.setTime(end.getTime() - (9 * 60 * 60 * 1000)); // 9시간을 밀리초 단위로 뺌
 		        String category = eventData.getCategory();
 		        String type = null;
-		        // category == red이면 E(직원), blue이면, D(부서), purple이면 C(회사)
-		        if(category.equals("#CA848A")) {
+		        
+		        if(category.equals("#B04C4C")) {
 		        	type="E";
-		        }else if(category.equals("#A78C7B")) {
+		        }else if(category.equals("#C55D5D")) {
 		        	type="D";
 		        }else {
 		        	type="C";
