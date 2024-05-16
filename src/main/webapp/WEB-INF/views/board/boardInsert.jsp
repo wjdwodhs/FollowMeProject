@@ -116,7 +116,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                        	<form id="insertForm" method="post" action="${ contextPath }/board/insert.do" enctype="multipart/form-data">
+                                        	<form id="insertForm" method="post" action="${ contextPath }/board/insert.do" enctype="multipart/form-data" onclick="submitFunction();">
                                             <div>
                                                 <span>To.</span>
                                                 <span>
@@ -138,7 +138,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th>
-                                                                        <span>제목</span>
+                                                                        <span>제목<span class="text-danger">*</span></span>
                                                                     </th>
                                                                     <td class="cell-width">
                                                                         <table>
@@ -176,18 +176,31 @@
                                                         </table>
                                                         <div class="mb-3">
 				                                            <label for="product-description" class="form-label">내용<span class="text-danger">*</span></label>
-				                                            <div id="snow-editor" name="boardContent" style="height: 150px;"></div> <!-- end Snow-editor-->
+				                                            <input type="hidden" id="boardContent" name="boardContent" value="">
+				                                            <div id="snow-editor" style="height: 150px;">
+				                                            	
+				                                            </div> <!-- end Snow-editor-->
                                         				</div>
                                              			
                                                     </fieldset>
-                                                   <!--   <textarea class="form-control" required name="boardContent" id="content" rows="10" style="resize:none;"></textarea>-->
                                                     
                                                     
                                                     <button class="btn btn-primary btn-sm">등록하기</button>
                                                 </form>
                                             </div> <!-- end col-->
                                             
-                                           
+                                           <script>
+                                             
+                                           function submitFunction() {
+                                        	   
+                                               var content = document.querySelector('.ql-editor').innerHTML;
+                                          		document.getElementById("boardContent").value = content;
+                                          		
+                                          		return true;
+                                               
+                                           }
+
+                                           </script>
 
                                             
                                         </div>  <!-- end row -->
