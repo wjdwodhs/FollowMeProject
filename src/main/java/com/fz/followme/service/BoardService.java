@@ -19,5 +19,7 @@ public interface BoardService {
 	int searchBoardListCount(String keyword);
 	List <BoardDto> searchBoardList(String keyword , PageInfoDto pi);
 	
-	// 
+	// 게시글 작성
+	int insertBoard(BoardDto board);
+	
 }

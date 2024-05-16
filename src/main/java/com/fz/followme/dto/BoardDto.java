@@ -1,6 +1,7 @@
 package com.fz.followme.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +31,7 @@ public class BoardDto {
 	private int replyNo;
 	private int fileNo;
 	private int attachCount;
+	
+	private List<AttachmentDto> attachList;
 	
 }

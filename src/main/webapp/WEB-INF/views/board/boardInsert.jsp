@@ -12,11 +12,12 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
   
-  
+ <!-- Plugins css-->
+ <link href="${contextPath}/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
 
-
-
-<link rel="stylesheet" href="${contextPath }/assets/summernote-0.8.18/summernote.min.css">
 
 
 <style>
@@ -115,19 +116,19 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
+                                        	<form id="insertForm" method="post" action="${ contextPath }/board/insert.do" enctype="multipart/form-data">
                                             <div>
                                                 <span>To.</span>
                                                 <span>
-                                                    <select name="" id="" style="margin-right: 20px">
-                                                        <option value="">공지사항</option>
-                                                        <option value="">사내소식</option>
+                                                    <select name="category" id="category" style="margin-right: 20px">
+                                                        <option value="NO">공지사항</option>
+                                                        <option value="CO">사내소식</option>
                                                     </select>                                                                  
                                                 </span>
                                                 필독 <input type="checkbox">
                                             </div>
                                             <div class="col-lg-12">
                                                 <hr>
-                                                <form action="">
                                                     <fieldset>
                                                         <table class="form-type table-width">
                                                             <colgroup>
@@ -141,11 +142,10 @@
                                                                     </th>
                                                                     <td class="cell-width">
                                                                         <table>
-                                                                            <input type="text" class="text_box">
+                                                                            <input type="text" id="title" name="boardTitle" class="text_box" required>
                                                                         </table>
                                                                     </td>
                                                                 </tr>
-                                                            
                                                                 <tr>
                                                                     <th style="position: relative;">
                                                                         <span style="position: absolute; top: 0; margin: 8px 0;">첨부파일</span>
@@ -153,17 +153,16 @@
                                                                     <td>
                                                                         <table class="table-width">
                                                                             <td class="cell-width" >
-                                                                                <div class="attach_box" style="border: 2px dashed #ddd;" >
+                                                                                <div class="attach_box" id="upfile"  style="border: 2px dashed #ddd;" >
+                                                                                  
                                                                                     <div>
                                                                                         <span>
                                                                                             파일을 선택하세요
-                                                                                            <input type="file" title="upfile" class="form-control-file border file">
+                                                                                            <input type="file" title="upfile" name="uploadFiles" class="form-control-file border file " multiple>
                                                                                         </span>
-                                                                                        
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
-                                                                            
                                                                         </table>
                                                                     </td>
                                                                 </tr>
@@ -173,12 +172,12 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                            <div class="mb-3">
-                                            <label for="product-description" class="form-label">Product Description <span class="text-danger">*</span></label>
-                                            <div id="snow-editor" style="height: 150px;"></div> <!-- end Snow-editor-->
-                                        </div>
                                                             
                                                         </table>
+                                                        <div class="mb-3">
+				                                            <label for="product-description" class="form-label">내용<span class="text-danger">*</span></label>
+				                                            <div id="snow-editor" name="boardContent" style="height: 150px;"></div> <!-- end Snow-editor-->
+                                        				</div>
                                              			
                                                     </fieldset>
                                                    <!--   <textarea class="form-control" required name="boardContent" id="content" rows="10" style="resize:none;"></textarea>-->
@@ -350,7 +349,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -365,7 +364,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -380,7 +379,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -399,7 +398,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -414,7 +413,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -429,7 +428,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -444,7 +443,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -459,7 +458,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -474,7 +473,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -749,24 +748,25 @@
         
         
         <!-- Vendor js -->
-									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-											
-											<!-- App js -->
-									        <script src="${ contextPath }/assets/js/app.min.js"></script>
-										
-											<!-- Plugins js-->
-									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-									        
-									        <!-- Dashboar 1 init js-->
-									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-									        
-									        <!-- Plugins js -->
-									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-									
-									        <!-- Init js-->
-									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="${contextPath}/assets/js/app.min.js"></script>
+
+
+        <!-- Select2 js-->
+        <script src="${contextPath}/assets/libs/select2/js/select2.min.js"></script>
+        <!-- Dropzone file uploads-->
+        <script src="${contextPath}/assets/libs/dropzone/min/dropzone.min.js"></script>
+
+        <!-- Quill js -->
+        <script src="${contextPath}/assets/libs/quill/quill.min.js"></script>
+
+        <!-- Init js-->
+        <script src="${contextPath}/assets/js/pages/form-fileuploads.init.js"></script>
+
+        <!-- Init js -->
+        <script src="${contextPath}/assets/js/pages/add-product.init.js"></script>
         
         
     </body>

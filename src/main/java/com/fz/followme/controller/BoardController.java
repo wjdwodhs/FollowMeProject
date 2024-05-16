@@ -15,10 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.service.BoardService;
+import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class BoardController {
 	
 	private final BoardService boardService;
 	private final PagingUtil pagingUtil;
+	private final FileUtil fileUtil;
 	
 	@RequestMapping("/socialFeed.page")
 	public void socialFeedPage() {}
@@ -77,6 +80,63 @@ public class BoardController {
 	public String boardInsertPage() {
 		return "board/boardInsert";
 	}
+	
+	@PostMapping("/insert.do")
+	public String insertBoard(@RequestParam("category") String boardCategory
+							, BoardDto board
+							, List<MultipartFile> uploadFiles
+							, HttpSession session
+							, RedirectAttributes redirectAttributes) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		board.setMemNo(loginUser.getMemName());
+		board.setBoardType(boardCategory);
+		List<AttachmentDto> attachList = new ArrayList<>();
+		log.debug("attchList:{}",attachList);
+		for(MultipartFile uploadFile : uploadFiles) {
+			if(uploadFile != null && !uploadFile.isEmpty() && boardCategory.equals("NO")) {
+				
+				Map<String, String> map = fileUtil.fileUpload(uploadFile, "notice");
+				
+				attachList.add(AttachmentDto.builder()
+											.filePath(map.get("filePath"))
+											.systemName(map.get("systemName"))
+											.originName(map.get("originName"))
+											.type("N")
+											.build());
+			}else if(uploadFile != null && !uploadFile.isEmpty() && boardCategory.equals("CO")) {
+				
+				Map<String, String> map = fileUtil.fileUpload(uploadFile, "companyNews");
+				
+				attachList.add(AttachmentDto.builder()
+											.filePath(map.get("filePath"))
+											.systemName(map.get("systemName"))
+											.originName(map.get("originName"))
+											.type("C")
+											.build());
+			}
+		}
+		
+		board.setAttachList(attachList);
+		
+		int result = boardService.insertBoard(board); 
+		
+		redirectAttributes.addFlashAttribute("alertTitle","게시판 작성 서비스");
+		if(attachList.isEmpty() && result == 1 || !attachList.isEmpty() && result == attachList.size()) {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시판 작성에 성공하였습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시판 작성에 실패하였습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+		}
+		
+		
+		
+		return "redirect:/board/list.do";
+		
+		
+	}
+	
+	
 	
 
 	

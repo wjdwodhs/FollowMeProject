@@ -100,6 +100,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<insert id="insertBoard" >
+		insert
+		  into tb_board
+		  (
+		    board_no
+		  , board_title
+		  , mem_no
+		  , board_content
+		  , board_type
+		  )
+		  values
+		  (
+		    case
+		    	when #{boardType} = 'NO' then seq_nno.nextval
+		    	when #{boardType} = 'CO' then seq_cno.nextval
+		    end
+		    , #{boardTitle}
+		    , #{memNo}
+		    , #{boardContent}
+		    , #{boardType}
+		     	
+		  )
+		  returning board_no into #{boardNo}  
+	</insert>
+	
+	<insert id="insertAttach">
+		insert
+				into attachment
+				(
+				  file_no
+				, file_path
+				, system_name
+				, origin_name
+				, type
+				, ref_no
+				)
+				values
+				(
+				  seq_fileno.nextval
+				, #{filePath}
+				, #{systemName}
+				, #{originName}
+				, #{type}
+				, 
+				case
+		    	when #{type} = 'N' then seq_nno.currval
+		    	when #{type} = 'C' then seq_cno.currval
+		    	end
+				)
+	
+	</insert>
 	
 
 

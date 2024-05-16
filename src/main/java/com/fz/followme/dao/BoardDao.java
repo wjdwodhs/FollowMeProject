@@ -1,12 +1,12 @@
 package com.fz.followme.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.PageInfoDto;
 
@@ -49,6 +49,14 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
 		return sqlSessionTemplate.selectList("boardMapper.searchBoardList", keyword, rowBounds);
+	}
+	
+	public int insertBoard(BoardDto board) {
+		return sqlSessionTemplate.insert("boardMapper.insertBoard", board);
+	}
+	
+	public int insertAttach(AttachmentDto attach) {
+		return sqlSessionTemplate.insert("boardMapper.insertAttach", attach);
 	}
 	
 	
