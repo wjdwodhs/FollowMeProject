@@ -100,8 +100,8 @@ public class BoardController {
 				
 				attachList.add(AttachmentDto.builder()
 											.filePath(map.get("filePath"))
-											.systemName(map.get("systemName"))
-											.originName(map.get("originName"))
+											.systemName(map.get("filesystemName"))
+											.originName(map.get("originalName"))
 											.type("N")
 											.build());
 			}else if(uploadFile != null && !uploadFile.isEmpty() && boardCategory.equals("CO")) {
@@ -110,8 +110,8 @@ public class BoardController {
 				
 				attachList.add(AttachmentDto.builder()
 											.filePath(map.get("filePath"))
-											.systemName(map.get("systemName"))
-											.originName(map.get("originName"))
+											.systemName(map.get("filesystemName"))
+											.originName(map.get("originalName"))
 											.type("C")
 											.build());
 			}
