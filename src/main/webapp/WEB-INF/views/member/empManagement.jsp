@@ -129,6 +129,7 @@
 
 		        value += "<tr>" +
 		        		"<input type='hidden' class='deptNo' value='" + response.memberList[i].deptNo + "'>" +
+		        		"<input type='hidden' class='statusValue' value='" + response.memberList[i].status + "'>" +
 		            "<td><div class='form-check'>" +
 		            "<input type='checkbox' class='form-check-input' id='customCheck2'>" +
 		            "<label class='form-check-label' for='customCheck2'>&nbsp;</label>" +
@@ -142,7 +143,7 @@
 		            "<td> " + (response.memberList[i].memRole == null ? '' : response.memberList[i].memRole) + "</td>" +
 		            "<td> " + (response.memberList[i].memSalary == null ? '' : response.memberList[i].memSalary) + "</td>" +
 		            "<td> " + formattedDate + "</td>" +
-		            "<td><span class='badge bg-soft-success text-success'>" + (response.memberList[i].status == 'Y' ? "재직" : "퇴사") + "</span></td>" +
+		            "<td><span class='badge " + (response.memberList[i].status == 'Y' ? 'bg-success' : 'bg-danger') + "'>" + (response.memberList[i].status == 'Y' ? "재직" : "휴직") + "</span></td>" +
 		            "<td><a href='javascript:void(0);' class='action-icon edit-icon' data-memNo='" + response.memberList[i].memNo + "'  data-bs-toggle='modal' data-bs-target='#employee-modify-modal'>" +
 		            "<i class='mdi mdi-square-edit-outline'></i></a>" +
 		            "<a href='javascript:void(0);' class='action-icon delete-icon' data-memNo='" + response.memberList[i].memNo + "'>" +
@@ -257,8 +258,13 @@
 		        var memSalary = row.find('td:eq(7)').text().trim();
 		        var enrollDate = row.find('td:eq(8)').text().trim();
 		        
+		        console.log(status);
+		        
 		     		// 부서번호를 추출
 		        var deptNo = row.find('.deptNo').val();
+		     		
+		     		// 재직, 휴직에 해당하는 value 값을 추출
+		     		var status = row.find('.statusValue').val();
 		        
 		        $('#employee-modify-modal #profileImg').attr('src', profileImgPath);
 		        $('#employee-modify-modal #memNo').val(memNo);
@@ -268,6 +274,7 @@
 		        $('#employee-modify-modal #memRole').val(memRole);
 		        $('#employee-modify-modal #memSalary').val(memSalary);
 		        $('#employee-modify-modal #enrollDate').val(enrollDate);
+		        $('#employee-modify-modal #statusSelect').val(status); // 재직, 휴직 여부를 select 요소에 설정
 		        
 		        // 모달 hidden input 에서 memNo 넘기기용
 		        $('#employee-modify-modal input[name="memNo"]').val(memNo);
@@ -611,10 +618,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="w-100 mb-2">
-                                            <label for="memRole" class="form-label">직무</label>
-                                            <input type="text" class="form-control" id="memRole" name="memRole" value="">
+                                        <div class="row">
+                                        		<div class="col-md-6">
+                                                <div class="mb-2">
+                                                    <label for="memRole" class="form-label">직무</label>
+                                                    <input type="text" class="form-control" id="memRole" name="memRole" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-2">
+                                                     <label for="status" class="form-label">상태</label>
+							                                        <select class="form-select" id="statusSelect" name="status">
+							                                            <option value="Y" <c:if test="${statusSelect eq 'Y'}">selected</c:if>>재직</option>
+							                                            <option value="R" <c:if test="${statusSelect eq 'R'}">selected</c:if>>휴직</option>
+							                                        </select>
+                                                </div>
+                                            </div>
                                         </div>
+                                        
                                     </div>
                                 </div> <!-- end card-->
                             
