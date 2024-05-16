@@ -525,7 +525,7 @@
 													        </div>
 													        <div class="mb-3">
 													            <label for="enrollDate" class="form-label">입사일</label>
-													            <input type="text" class="form-control" id="enrollDate" name="enrollDate" required>
+													            <input type="date" class="form-control" id="enrollDate" name="enrollDate" required>
 													        </div>
 													    </div>
 													</div>
@@ -614,7 +614,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-2">
                                                     <label for="enrollDate" class="form-label">입사일</label>
-                                                    <input type="text" class="form-control" id="enrollDate" name="enrollDate" value="">
+                                                    <input type="date" class="form-control" id="enrollDate" name="enrollDate" value="">
                                                 </div>
                                             </div>
                                         </div>

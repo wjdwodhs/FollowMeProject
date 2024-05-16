@@ -2,8 +2,6 @@ package com.fz.followme.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,12 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class SignatureUtil {
-	
-	public Map<String, String> fileUpload(MultipartFile uploadFile, String folderName) {
 
-		// 전달된 파일 업로드 처리 
+    public Map<String, String> fileUpload(MultipartFile uploadFile, String folderName) {
+
+    	// 전달된 파일 업로드 처리 
 		// 1) 업로드시킬 폴더 (외부경로 : /upload/profile|board/yyyy/MM/dd)
-		String filePath = "/upload/" + folderName + new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
+		String filePath = "/upload/" + folderName;
 		
 		File filePathDir = new File(filePath);
 		if(!filePathDir.exists()) {
@@ -48,12 +46,11 @@ public class SignatureUtil {
 	}
 	
 	// 파일 삭제 처리
-    public void deleteFile(String filePath) {
-        File file = new File(filePath);
-        if(file.exists()) {
-            file.delete();
-        }
-    }
-
+	public void deleteFile(String filePath) {
+	    File file = new File(filePath);
+	    if(file.exists()) {
+	        file.delete();
+	    }
+	}
 
 }
