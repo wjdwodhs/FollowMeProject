@@ -102,57 +102,59 @@ tr>th, tr>td {
 				<div style="margin-top: 50px;">
 					<ul class="menu">
 						<li class="menu-item">
-							<a href="${ contextPath }/document/insertForm.page" class="menu-link"> 
+							<a href="${ contextPath }/document/insertForm" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="edit-3"></i></span> 
 								<span class="menu-text"> <b>문서 작성하기</b> </span>
 							</a>
 						</li>
 						<li class="menu-item" style="margin-top: 50px;">
-							<a href="${ contextPath }/document/list.page" class="menu-link">
+							<a href="${ contextPath }/document/list" class="menu-link">
 								<span class="menu-icon"><i data-feather="archive"></i></span> 
 								<span class="menu-text"> 전체 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/pendList.page" class="menu-link">
+							<a href="${ contextPath }/document/pendList" class="menu-link">
 								<span class="menu-icon"><i data-feather="refresh-cw"></i></span>
 								<span class="menu-text"> 진행중인 문서 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/approvalList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/approvalList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="check-circle"></i></span> 
 								<span class="menu-text"> 승인 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/rejectList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/rejectList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="x"></i></span> 
 								<span class="menu-text"> 반려 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/recallList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/recallList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="trash-2"></i></span> 
 								<span class="menu-text"> 회수 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/refList.page" class="menu-link">
+							<a href="${ contextPath }/document/refList" class="menu-link">
 								<span class="menu-icon"><i data-feather="link"></i></span> 
 								<span class="menu-text"> 참조 문서함 </span>
 							</a>
 						</li>
 						
 						<!-- 결재권한 있는 멤버만 보임 -->
-						<li class="menu-item">
-							<a href="${ contextPath }/document/notDoneList.page" class="menu-link">
-								<span class="menu-icon"><i data-feather="user-x"></i></span> 
-								<span class="menu-text"> 미처리 결재함 </span>
-							</a>
-						</li>
-					</ul>
-				</div>
+            <c:if test="${loginUser.memGrade eq '팀장' || loginUser.memGrade eq '대표'}">
+              <li class="menu-item">
+                <a href="${ contextPath }/document/notDoneList" class="menu-link">
+                  <span class="menu-icon"><i data-feather="user-x"></i></span>
+                  <span class="menu-text"> 미처리 결재함 </span>
+                </a>
+              </li>
+            </c:if>
+        	</ul>
+    		</div>
 
 				<!-- Start Content-->
 				<div class="container-fluid"
@@ -230,7 +232,7 @@ tr>th, tr>td {
                   	holiday();
                   	document.getElementById('memGrade').value = '${ loginUser.memGrade }';
 				    				document.getElementById('memName').value = '${ loginUser.memName }';                  	
-    								document.getElementById('memPhone').value = '${ loginUser.phone }';
+    								document.getElementById('memPhone').value = '${ loginUser.phone }';	
                   }else if(selectedValue == 4){
 				    				document.getElementById('memGrade').value = '${ loginUser.memGrade }';
 				    				document.getElementById('memName').value = '${ loginUser.memName }';  
@@ -248,8 +250,11 @@ tr>th, tr>td {
                 		document.getElementById('mem').value = '${loginUser.memName}'+' '+'${loginUser.memGrade}';
                 		
                 	}
-            			            			
-            		 document.getElementById("insertForm").action = "${contextPath}/document/insert.do";
+            			
+            			document.getElementById("insertForm").onsubmit = function() {
+            			    return updateDocuContent();
+            			}
+            		  document.getElementById("insertForm").action = "${contextPath}/document/insert.do";
             	
             	});
            }
@@ -263,11 +268,25 @@ tr>th, tr>td {
 
     </script>
     
-		<!-- 텍스트에디터로 입력된 내용이 hidden 요소인 docuContent 필드로 업데이트됨 -->
+		<!-- 텍스트에디터(#editor)로 입력된 내용이 input type="hidden"요소인 docuContent 필드로 대입하는 스크립트 -->
 		<script>
 		    function updateDocuContent() {
-		        var content = document.getElementById("editor").innerText;
+		        var content = document.querySelector('.ql-editor').innerHTML;
 						document.getElementById("docuContent").value = content;
+						
+						//console.log("content", content);
+						
+                        
+            var docuTitle = document.getElementById("docuTitle");
+            docuTitle.setAttribute('required', 'true');
+
+
+				    
+				    return true;				
+		    }
+		    
+		    function abc(){
+				  console.log(document.getElementById("editor").value);
 		    }
 		</script>
 		

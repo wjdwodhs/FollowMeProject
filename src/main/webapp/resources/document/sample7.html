@@ -180,7 +180,7 @@
             <!-- Start Content-->
             <div class="container-fluid" style="display:flex; justify-content: center;">
                 
-                <form id="insertForm" method="post" enctype="multipart/form-data" onsubmit="updateDocuContent();">
+                <form id="insertForm" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="docuCategory" value='7'>
 		                <div class="card">
 		                    <div class="card-body">
@@ -216,7 +216,6 @@
 		                                        <th width="120px;"> 수신부서 </th>
                                             <td width="266px;">
                                             		<select id="refDeptNo" name="refDeptNo" class="form-select form-select-sm">
-																									<option value="">부서 선택</option>
 																									<option value="1">영업팀</option>
 																									<option value="2">마케팅팀</option>
 																									<option value="3">경영지원팀</option>
@@ -280,7 +279,7 @@
                                     <tr>
                                         <th width="120px;"> 제목 </th>
                                         <td width="655px;">
-                                          	<input type="text" name="docuTitle" size="20" style="width:100%; border:0;" placeholder="제목을 입력하세요.">
+                                            <input type="text" name="docuTitle" id="docuTitle" size="20" style="width:100%; border:0;" placeholder="제목을 입력하세요." required>
                                         </td>
                                     </tr>
                                 </table>

@@ -513,6 +513,7 @@
 						, docu_text
 						, docu_text_note
 						, docu_content
+						, ref_dept_no
 			</when>
 		</choose>
 					  )
@@ -579,6 +580,7 @@
 						, #{docuText}
 						, #{docuTextNote}
 						, #{docuContent}
+						, #{refDeptNo}
 			</when>
 		</choose>
 
@@ -624,27 +626,31 @@
 				 , docu_count, docu_transport_cost, docu_fuel_cost, docu_food_cost, docu_room_cost, docu_text, docu_text_note
 				 , (select mem_name 
 				      from tb_mem m 
-				      join tb_document d on m.mem_no = d.mem_no
 				     where m.mem_no = ref_mem_no) as ref_mem_name
 				 , (select sig_img_path
 						  from tb_mem
 						 where mem_no = d.mem_no) as mem_sig_path
-				 , (select sig_img_path as mid_approver_sig
+				 , (select sig_img_path 
 				 			from tb_mem m
-				 			join tb_document d on m.mem_no = d.mem_no
-				 		 where m.mem_no = d.mid_approver)
-				 , (select sig_img_path as final_approver_sig	
+				 		 where m.mem_no = d.mid_approver) as mid_approver_sig
+				 , (select sig_img_path	
 				 			from tb_mem m
-				 			join tb_document d on m.mem_no = d.mem_no
-				 		 where m.mem_no = d.final_approver) 			 		 
+				 		 where m.mem_no = d.final_approver) as final_approver_sig
+				 , (select dept_name || ' ' || mem_name || ' ' || mem_grade
+				      from tb_mem m
+				     where m.mem_no = d.final_approver) as approver_inf
+				 , (select dept_name
+				 			from tb_department
+				 			where dept_no = ref_dept_no) as ref_dept_name
+				 		
 				 , process_reason
 				 , d.status
 				 , mid_approve_status
 				 , final_approve_status
 				 , file_no
 		     , file_path
-		     , system_name
 		     , origin_name
+		     , system_name
 		     
 		  from tb_document d
 		  left join tb_mem m on d.mem_no = m.mem_no

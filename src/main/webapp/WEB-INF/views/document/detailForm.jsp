@@ -209,57 +209,59 @@
 				<div style="margin-top: 50px;">
 					<ul class="menu">
 						<li class="menu-item">
-							<a href="${ contextPath }/document/insertForm.page" class="menu-link"> 
+							<a href="${ contextPath }/document/insertForm" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="edit-3"></i></span> 
 								<span class="menu-text"> 문서 작성하기 </span>
 							</a>
 						</li>
 						<li class="menu-item" style="margin-top: 50px;">
-							<a href="${ contextPath }/document/list.page" class="menu-link">
+							<a href="${ contextPath }/document/list" class="menu-link">
 								<span class="menu-icon"><i data-feather="archive"></i></span> 
 								<span class="menu-text"> 전체 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/pendList.page" class="menu-link">
+							<a href="${ contextPath }/document/pendList" class="menu-link">
 								<span class="menu-icon"><i data-feather="refresh-cw"></i></span>
 								<span class="menu-text"> 진행중인 문서 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/approvalList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/approvalList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="check-circle"></i></span> 
 								<span class="menu-text"> 승인 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/rejectList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/rejectList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="x"></i></span> 
 								<span class="menu-text"> 반려 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/recallList.page" class="menu-link"> 
+							<a href="${ contextPath }/document/recallList" class="menu-link"> 
 								<span class="menu-icon"><i data-feather="trash-2"></i></span> 
 								<span class="menu-text"> 회수 문서함 </span>
 							</a>
 						</li>
 						<li class="menu-item">
-							<a href="${ contextPath }/document/refList.page" class="menu-link">
+							<a href="${ contextPath }/document/refList" class="menu-link">
 								<span class="menu-icon"><i data-feather="link"></i></span> 
 								<span class="menu-text"> 참조 문서함 </span>
 							</a>
 						</li>
 						
 						<!-- 결재권한 있는 멤버만 보임 -->
-						<li class="menu-item">
-							<a href="${ contextPath }/document/notDoneList.page" class="menu-link">
-								<span class="menu-icon"><i data-feather="user-x"></i></span> 
-								<span class="menu-text"> 미처리 결재함 </span>
-							</a>
-						</li>
-					</ul>
-				</div>
+            <c:if test="${loginUser.memGrade eq '팀장' || loginUser.memGrade eq '대표'}">
+              <li class="menu-item">
+                <a href="${ contextPath }/document/notDoneList" class="menu-link">
+                  <span class="menu-icon"><i data-feather="user-x"></i></span>
+                  <span class="menu-text"> 미처리 결재함 </span>
+                </a>
+              </li>
+            </c:if>
+        	</ul>
+    		</div>
 				
 				<!-- Start Content-->
 				<div class="container-fluid"
@@ -283,6 +285,7 @@
 										//console.log("path : ", "${contextPath}/resources/document/detailSample" + ${document.docuCategory} + ".html");
 										console.log("document.midApprover : ", '${document.midApprover}');
 										console.log("document.finalApprover ", '${document.finalApprover}');
+										console.log("document.refDeptName : ", '${document.refDeptName}');
 										//console.log("loginUser.deptNo : ", ${loginUser.deptNo});
 										//console.log("document.deptNo : ", ${document.deptNo});
 										//console.log("document.memGrade : ", '${document.memGrade}');
@@ -353,32 +356,88 @@
 							                .finally(() => {
 							               	document.getElementById('no').value = '${document.docuNo}';
 							                document.getElementById('memDeptName').innerText = '${document.memDeptName}';
-							                document.getElementById('memGrade').innerText = '${document.memGrade}';
-							        				document.getElementById('registDate').innerText = '${document.registDate}'; //today.toISOString().split('T')[0];
+							                
+							        				document.getElementById('registDate').innerText = '${document.registDate}';
 							        				document.getElementById('memNo').value =  '${document.memNo}';
-							        				document.getElementById('memName').innerText =  '${document.memName}';
 							                document.getElementById('memSig').src = '${contextPath}${document.memSig}';
 															document.getElementById('finalApproverSig').src = '${contextPath}${document.finalApproverSig}';
 															document.getElementById('refMemName').innerText = '${document.refMemName}';
 															document.getElementById('finalApproveDate').innerText = '${document.finalApproveDate}';
 															document.getElementById('docuTitle').innerText = '${document.docuTitle}';
 															document.getElementById('processReason').innerText = '${document.processReason}';
+															showProcessReason();
 							        				
+
+											        
 							        				if(${document.docuCategory} == '1'){
 																document.getElementById('midApproverSig').src = '${contextPath}${document.midApproverSig}';
 																document.getElementById('midApproveDate').innerText = '${document.midApproveDate}';
-																document.getElementById('docuContent').innerText = '${document.docuContent}';
+																document.getElementById('docuContent').innerHTML = `${document.docuContent}`;
+																
 																document.getElementById('docuCost').innerText = '${document.docuCost}';
 																document.getElementById('docuRemark').innerText = '${document.docuRemark}';
+																document.getElementById('memGrade').innerText = '${document.memGrade}';
+										        		document.getElementById('memName').innerText =  '${document.memName}';
 							        				}else if(${document.docuCategory} == '2'){
-																document.getElementById('docuContent').innerText = '${document.docuContent}';
+							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
+								        				document.getElementById('memName').innerText =  '${document.memName}';
+																document.getElementById('docuContent').innerHTML = `${document.docuContent}`;
 																document.getElementById('docuRemark').innerText = '${document.docuRemark}';
 																document.getElementById('memPhone').innerText = '${document.memPhone}';
 																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
+							        				}else if(${document.docuCategory} == '3'){
+							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
+								        				document.getElementById('memName').innerText =  '${document.memName}';
+																document.getElementById('memPhone').innerText = '${document.memPhone}';
+																document.getElementById('docuContent').innerHTML = `${document.docuContent}`;
+																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
+																document.getElementById('docuEndPlace').innerText = '${document.docuEndPlace}';
+																document.getElementById('docuEmergencyCall').innerText = '${document.docuEmergencyCall}';
+																document.getElementById('docuAnnualLeave').value = '${document.docuAnnualLeave}';
+							        				}else if(${document.docuCategory} == '4'){
+							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
+								        				document.getElementById('memName').innerText =  '${document.memName}';
+							        				}else if(${document.docuCategory} == '5'){
+							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
+								        				document.getElementById('memName').innerText =  '${document.memName}';
+							        				}else if(${document.docuCategory} == '6'){
+							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
+								        				document.getElementById('memName').innerText =  '${document.memName}';
+																document.getElementById('midApproverSig').src = '${contextPath}${document.midApproverSig}';
+																document.getElementById('midApproveDate').innerText = '${document.midApproveDate}';
+																document.getElementById('docuContent').innerHTML = `${document.docuContent}`;
+																document.getElementById('docuStartPlace').innerText = '${document.docuStartPlace}';
+																document.getElementById('docuEndPlace').innerText = '${document.docuEndPlace}';
+																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
+																document.getElementById('docuTransportCost').innerText = '${document.docuTransportCost}';
+																document.getElementById('docuFoodCost').innerText = '${document.docuFoodCost}';
+																document.getElementById('docuFuelCost').innerText = '${document.docuFuelCost}';
+																document.getElementById('docuRoomCost').innerText = '${document.docuRoomCost}';
+																document.getElementById('docuEtcCost').innerText = '${document.docuEtcCost}';
 																
-																
+																var transportCost = parseInt(document.getElementById('docuTransportCost').innerText);
+																var foodCost = parseInt(document.getElementById('docuFoodCost').innerText);
+																var fuelCost = parseInt(document.getElementById('docuFuelCost').innerText);
+																var roomCost = parseInt(document.getElementById('docuRoomCost').innerText);
+																var etcCost = parseInt(document.getElementById('docuEtcCost').innerText);
+
+																// 숫자들을 합산합니다.
+																var totalCost = transportCost + foodCost + fuelCost + roomCost + etcCost;
+
+																// 합산된 값을 'docuCost' 요소의 innerText로 설정합니다.
+																document.getElementById('docuCost').innerText = totalCost + '원';
+							        				}else if(${document.docuCategory} == '7'){
+																document.getElementById('mem').innerText = '${document.memName}' + '  ' + '${document.memGrade}'; 
+																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
+																document.getElementById('refDeptName').innerText = '${document.refDeptName}';
+																document.getElementById('approverInf').innerText = '${document.approverInf}';
+																document.getElementById('docuText').innerText = '${document.docuText}';
+																document.getElementById('docuTextNote').innerText = '${document.docuTextNote}';
+																document.getElementById('docuContent').innerHTML = `${document.docuContent}`;
+																document.getElementById('refDeptName').innerText = '${document.refDeptName}';
+							        					
 							        				}
-															
+
 															
 															document.getElementById('goList').href = "${contextPath}/document/list";
 																														
@@ -416,23 +475,8 @@
 							    </script>
 
 									<script>
-								    document.addEventListener("DOMContentLoaded", function() {
-								        let attachList = ${document.attachList}; // 서버에서 받아온 첨부 파일 목록
-								        let attachTd = document.getElementById("attachTd");
 
-								        attachList.forEach(function(at) {
-								            let link = document.createElement("a");
-								            link.href = `${contextPath}${at.filePath}/${at.systemName}`;
-								            link.download = at.originName;
-								            link.textContent = `[${at.originName}]`;
-
-								            let br = document.createElement("br");
-
-								            attachTd.appendChild(link);
-								            attachTd.appendChild(br);
-								        });
-								    });
-								    
+									
 									function showProcessReason() {
 									    var documentStatus = "${document.status}";
 									    var loginUserMemNo = "${loginUser.memNo}";

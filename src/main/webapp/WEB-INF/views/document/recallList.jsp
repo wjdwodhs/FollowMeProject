@@ -152,15 +152,18 @@
                                 <span class="menu-text"> 참조 문서함 </span>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href="${ contextPath }/document/notDoneList" class="menu-link">
-                                <span class="menu-icon"><i data-feather="user-x"></i></span>
-                                <span class="menu-text"> 미처리 결재함 </span>
-                            </a>
-                        </li>
+
+                        <!-- 결재권자만 보이는 메뉴 -->
+                        <c:if test="${loginUser.memGrade eq '팀장' || loginUser.memGrade eq '대표'}">
+		                        <li class="menu-item">
+		                            <a href="${ contextPath }/document/notDoneList" class="menu-link">
+		                                <span class="menu-icon"><i data-feather="user-x"></i></span>
+		                                <span class="menu-text"> 미처리 결재함 </span>
+		                            </a>
+		                        </li>
+                        </c:if>
                     </ul>
                 </div>
-
 
                 
                 <!-- Start Content-->
