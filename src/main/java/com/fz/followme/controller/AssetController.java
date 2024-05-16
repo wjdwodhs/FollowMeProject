@@ -235,8 +235,14 @@ public class AssetController {
 	}
 	
 	
-	
-	
+	// * 예약 선택 삭제
+	@GetMapping(value="/deletereservationcar.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int deleteReservationCar(@RequestParam("checkedRsvnStr") int[] checkedRsvn) {
+		log.debug("chedckedRsvn :{}", checkedRsvn);
+		return assetService.deleteRsvnListMember(checkedRsvn);
+	}
+		
 	
 	// ------------------------------------------------------
 	

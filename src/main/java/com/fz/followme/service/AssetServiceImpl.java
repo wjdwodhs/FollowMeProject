@@ -71,6 +71,12 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
+	@Override
+	public int deleteRsvnListMember(int[] checkedRsvn) {
+		return assetDao.deleteRsvnListMember(checkedRsvn);
+	}
+
+
 	
 
 	

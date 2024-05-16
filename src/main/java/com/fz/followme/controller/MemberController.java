@@ -99,11 +99,7 @@ public class MemberController {
 			}
 			
 			out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
-			if(loginUser.getAuthLevel().equals("3")) {
-				out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
-			} else {
-				out.println("location.href = '" + request.getContextPath() + "/employeeMain.page';");
-			}
+			out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
 			
 			
 		} else {

@@ -295,11 +295,7 @@
                                     </tr>
                                   <tr>
                                       <th style="text-align:center;"> 첨 부 </th>
-                                      <td>
-                                          <c:forEach var="at" items="${ document.attachList }">
-                                              <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a><br>
-                                          </c:forEach>
-                                      </td>
+                                      <td id="attachTd" style="text-align:left;"></td>
                                   </tr>
                                 </tbody>
                             </table>
