@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="attendanceMapper">
+	<resultMap type="attendanceDto" id="attendanceMap">
+		<id column="mem_no" property="memNo"/>
+		<result column="start_time" property="startTime"/>
+		<result column="end_time" property="endTime"/>
+		<result column="work_time" property="workTime"/>
+		<result column="type" property="type"/>
+		<result column="att_date" property="attDate"/>
+		<result column="att_content" property="attContent"/>
+		
+	</resultMap>
+
+	<!-- 출근 시간 등록 -->
+	<insert id="insertWorktime">
+			insert
+					into tb_attendance
+					(
+						mem_no
+					, att_date
+					, type
+					)
+					values
+					(
+					
+					  #{memNo}
+					, sysdate
+					, 'A'
+					)
+	</insert>
+<!-- 퇴근 시간 등록 -->
+<update id="updateWorktime">
+    update 
+    		tb_attendance
+    set 
+    		end_time = CURRENT_TIMESTAMP,
+        type = 'B'
+ 	where mem_no = #{memNo}
+ 	and trunc(att_date) = trunc(sysdate)
+</update>
+	
+<!-- 근태 유형 조회 서비스 -->
+	<select id="selectStatus" resultMap="attendanceMap">
+    SELECT 
+   		 start_time
+   		,end_time
+   		,work_time
+   		,type
+   		,att_date
+   		,att_content
+    FROM 
+    	tb_attendance
+    WHERE mem_no = #{memNo}
+    AND trunc(att_date) = trunc(sysdate)
+</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</mapper>

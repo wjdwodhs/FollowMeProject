@@ -115,9 +115,17 @@
 			                           <div class="ribbon ribbon-info float-start"><i class="mdi mdi-access-point me-1"></i> 근태관리</div>&nbsp &nbsp
 			                           		<div class="ribbon-content">
 			                           			<div style="display: flex; justify-content: center; margin-top: 20px;">
-																				<div style="border:none; width:150px; height:50px; color:#666; font-size:23px; text-align:center; margin-top:20px;" id="clock">
-																			</div>
-	                                    <button type="button" class="btn btn-secondary btn-sm rounded-pill waves-effect waves-light"> 출근 전</button>
+																				<div style="border:none; width:150px; height:50px; color:#666; font-size:23px; text-align:center; margin-top:20px;" id="clock"></div>
+	                                     		<div id="attendanceIndicator" style="border-radius: 50%; width: 100px; height: 90px; background-color: #6c757d; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; margin-left: 20px;">
+																				    <c:choose>
+																				        <c:when test="${Dto.type eq 'A'}">
+																				            출근
+																				        </c:when>
+																				        <c:otherwise>
+																				            출근 전
+																				        </c:otherwise>
+																				    </c:choose>
+																				</div>
 			                                </div>
 			                                <div style="margin-top: 20px;">
 			                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
@@ -146,11 +154,32 @@
 					                                    </div>
 					                                    <div class="modal-footer">
 					                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-					                                        <button type="button" class="btn btn-primary">확인</button>
+					                                        <button type="button" class="btn btn-primary" onclick="startWorktime();" data-bs-dismiss="modal">확인</button>
 					                                    </div>
 					                                </div><!-- /.modal-content -->
 					                            </div><!-- /.modal-dialog -->
 					                        </div><!-- /.modal -->
+					                        
+					                        <script>
+					                        
+					                        
+					                        function startWorktime(){
+					                        
+					                        	$.ajax({
+														             url: "${contextPath}/attendance/insert.do", // 출근하기 버튼 클릭시 출근
+														             method: "POST",
+														             contentType: "application/json; charset=utf-8",
+														             success: function() {
+														            	   console.log('ㅎㅇㅎㅇ');
+														            	   $('#attendanceIndicator').text('출근'); 
+					                        	 				 $('#in-check').modal('hide');
+														   
+														             }
+														         });
+					                        	
+					                        	
+					                        }
+					                        </script>
 					
 					                        <!-- 퇴근하기 버튼 모달 -->
 					                        <div id="out-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -166,11 +195,29 @@
 					                                    </div>
 					                                    <div class="modal-footer">
 					                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
-					                                        <button type="button" class="btn btn-primary">확인</button>
+					                                        <button type="button" class="btn btn-primary" onclick="endWorktime();" data-bs-dismiss="modal">확인</button>
 					                                    </div>
 					                                </div><!-- /.modal-content -->
 					                            </div><!-- /.modal-dialog -->
 					                        </div><!-- /.modal -->
+					                        
+					                        <script>
+					                        function endWorktime(){
+					                        	
+					                        	$.ajax({
+														             url: "${contextPath}/attendance/update.do", // 퇴근하기 버튼 클릭시 출근
+														             method: "GET",
+														             contentType: "application/json; charset=utf-8",
+														             success: function(data) {
+														            	 console.log('ㅂㅇㅂㅇ');
+														            	 $('#attendanceIndicator').text('출근 전'); 
+				                        	 				 $('#out-check').modal('hide'); 
+														             }
+														         });
+					                        	
+					                        }
+					                        </script>
+					                        
 					
 					                        <!-- 근무변경 modal content -->
 					                        <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -814,7 +861,7 @@
         </div>
         
         <!-- Vendor js -->
-        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+       
 
         <!-- App js -->
         <script src="${ contextPath }/assets/js/app.min.js"></script>

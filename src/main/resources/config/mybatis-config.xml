@@ -20,7 +20,7 @@
 		<typeAlias type="com.fz.followme.dto.DocuSpendDto" alias="DocuSpendDto"/>
 		<typeAlias type="com.fz.followme.dto.DocuBuyDto" alias="DocuBuyDto"/>
 		<typeAlias type="com.fz.followme.dto.TodoDto" alias="TodoDto"/>
-		
+		<typeAlias type="com.fz.followme.dto.AttendanceDto" alias="AttendanceDto"/>
 		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
 		<typeAlias type="com.fz.followme.dto.AssetReservationDto" alias="AssetReservationDto"/>
 		
@@ -37,6 +37,7 @@
 		<mapper resource="mappers/companyNews-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/> 
 		<mapper resource="mappers/todo-mapper.xml"/>
+		<mapper resource="mappers/attendance-mapper.xml"/>
 	</mappers>
 
 </configuration>
