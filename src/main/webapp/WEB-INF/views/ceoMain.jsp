@@ -306,10 +306,10 @@
 			                        	<div class="ribbon ribbon-danger float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 결재</div>&nbsp &nbsp
 			                        		<div class="ribbon-content">
 			                        			<div style="margin-top:30px; margin-left:5px;"> 
-	                                    <a href="${contextPath}/document/notDoneList.page" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >미처리</a>&nbsp &nbsp 
-	                                    <a href="${contextPath}/document/pendList.page" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >진행중</a>
-	                                    <a href="${contextPath}/document/approvalList.page" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >승인</a>&nbsp &nbsp 
-	                                    <a href="${contextPath}/document/rejectList.page" class="btn btn-outline-danger waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">반려</a>
+	                                    <a href="${contextPath}/document/notDoneList" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >미처리</a>&nbsp &nbsp 
+	                                    <a href="${contextPath}/document/pendList" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >진행중</a>
+	                                    <a href="${contextPath}/document/approvalList" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;" >승인</a>&nbsp &nbsp 
+	                                    <a href="${contextPath}/document/rejectList" class="btn btn-outline-danger waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">반려</a>
 	                               	 </div>
 			                        		</div>
 			                            
@@ -860,11 +860,7 @@
             </div>
         </div>
         
-        <!-- Vendor js -->
-       
 
-        <!-- App js -->
-        <script src="${ contextPath }/assets/js/app.min.js"></script>
         
         <!-- Plugins js-->
         <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
@@ -872,25 +868,22 @@
         <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
         <script src="${ contextPath }/assets/libs/peity/jquery.peity.min.js"></script>
         <script src="${ contextPath }/assets/libs/jquery-knob/jquery.knob.min.js"></script>
-        <script src="${ contextPath }/assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
         <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
         <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
         <script src="${ contextPath }/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
 
-        <!-- Chart JS -->
-        <script src="${ contextPath }/assets/libs/chart.js/Chart.bundle.min.js"></script>
-
-        <script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
-        <script src="${ contextPath }/assets/libs/jquery.scrollto/jquery.scrollTo.min.js"></script>
-
-
+				<!-- Vendor js -->
+        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+        
+        
+        <!-- App js -->
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
+        
         <!-- Todo app -->
         <script src="${ contextPath }/assets/js/pages/jquery.todo.js" data-context-path="${contextPath}"></script>
 
        
-        <!-- Widgets demo js-->
-        <script src="${ contextPath }/assets/js/pages/widgets.init.js"></script>
        
 
 </body>
