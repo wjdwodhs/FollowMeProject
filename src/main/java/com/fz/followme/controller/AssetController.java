@@ -223,7 +223,7 @@ public class AssetController {
 	// * 예약 차량 목록 조회
 	@GetMapping(value = "/reservationlist.do", produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public List<AssetReservationDto> selectListReservationCar(HttpSession session, HttpServletRequest request,
+	public List<AssetReservationDto> ajaxSelectListReservationCar(HttpSession session, HttpServletRequest request,
 															  String rsvnDate ){
 		
 		List<AssetReservationDto> dList = assetService.selectDateList(rsvnDate);
@@ -256,6 +256,23 @@ public class AssetController {
 	public String seatReservationManager() {
 		return "assetManagement/seatReservationManager";
 	}
+	
+	
+	
+	// * 사무실자리 예약 조회,상세 조회 (관리자)
+	@ResponseBody
+	@GetMapping(value="/searchlistseat.do", produces="application/json; charset=utf-8")
+	public List<AssetReservationDto> ajaxSearchListSeat(String rsvnDate, HttpSession session) {
+		List<AssetReservationDto> slist = assetService.selectSeatList(rsvnDate);
+		
+		return slist;
+	}
+	
+	
+	
+	
+	
+	
 	
 	// -------------------------------------------------------------------
 	

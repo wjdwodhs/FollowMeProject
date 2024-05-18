@@ -247,6 +247,28 @@ insert
 	 </foreach>
 </update>
 
+<!-- 좌석 예약 조회 -->
+<select id="selectSeatList" resultMap="assetReservationResult">
+	SELECT
+	       RSVN_NO
+	     , ASSET_NAME
+	     , RSVN_NAME
+	     , DEPT_NAME
+	     , TO_CHAR(RSVN_DATE,'YYYY-MM-DD') RSVN_DATE
+	     , START_DIVISION
+	     , TO_CHAR(START_DATE,'HH:MI') START_DATE
+	     , END_DIVISION
+	     , TO_CHAR(END_DATE, 'HH:MI') END_DATE
+	     , RSVN_CONTENT
+	     , A.STATUS
+	  FROM TB_ASSET_RSVN R
+	  JOIN TB_ASSET A USING (ASSET_NO)
+	  LEFT JOIN TB_MEM M ON (R.RSVN_NAME = M.MEM_NAME)
+	  LEFT JOIN TB_DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
+	 WHERE A.ASSET_TYPE = 'S'
+	   AND R.RSVN_DATE = TO_DATE(#{rsvnDate}, 'YYYY/MM/DD')
+</select>
+
 
 
 

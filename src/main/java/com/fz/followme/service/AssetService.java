@@ -11,7 +11,6 @@ public interface AssetService {
 	// 차량조회
 	List<AssetDto> selectcarList();
 	
-	
 	// 차량등록(관리자)
 	int insertCar(AssetDto ad);
 	
@@ -37,6 +36,12 @@ public interface AssetService {
 	
 	// 차량 예약내역 선택 삭제(사용자)
 	int deleteRsvnListMember(int[] checkedRsvn);
+	
+	
+	
+	// 좌석 예약내역 조회
+	List<AssetReservationDto> selectSeatList(String rsvnDate);
+	
 	
 	
 }

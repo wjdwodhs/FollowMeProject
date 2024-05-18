@@ -89,4 +89,8 @@ public class AssetDao {
 		return sqlSessionTemplate.update("assetMapper.deleteRsvnListMember",checkedRsvn);
 	}
 	
+	public List<AssetReservationDto> selectSeatList(String rsvnDate){
+		return sqlSessionTemplate.selectList("assetMapper.selectSeatList", rsvnDate);
+	}
+	
 }

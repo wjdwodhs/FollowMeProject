@@ -77,6 +77,12 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
+	@Override
+	public List<AssetReservationDto> selectSeatList(String rsvnDate) {
+		return assetDao.selectSeatList(rsvnDate);
+	}
+
+
 	
 
 	
