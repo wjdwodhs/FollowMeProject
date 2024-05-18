@@ -2,6 +2,7 @@ package com.fz.followme.service;
 
 import org.springframework.dao.DataAccessException;
 
+import com.fz.followme.dto.AssetDto;
 import com.fz.followme.dto.AssetReservationDto;
 
 public interface ReservationService {
@@ -19,6 +20,9 @@ public interface ReservationService {
 	
 	// 종료된 예약상태 수정
 	int updateAssetendDateStatus();
+	
+	// 좌석상태 변경
+	//int updateSeatStatus(AssetDto ad);
 
 
 

@@ -38,10 +38,13 @@ public interface AssetService {
 	int deleteRsvnListMember(int[] checkedRsvn);
 	
 	
-	
 	// 좌석 예약내역 조회
 	List<AssetReservationDto> selectSeatList(String rsvnDate);
+
 	
+	// 좌석 상태변경(관리자)
+	int updateStatusSeat(AssetDto ad);
+
 	
 	
 }

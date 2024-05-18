@@ -93,4 +93,9 @@ public class AssetDao {
 		return sqlSessionTemplate.selectList("assetMapper.selectSeatList", rsvnDate);
 	}
 	
+	public int updateStatusSeat(AssetDto ad) {
+		return sqlSessionTemplate.update("assetMapper.updateStatusSeat", ad);
+	}
+	
+	
 }

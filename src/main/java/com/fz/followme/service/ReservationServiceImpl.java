@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fz.followme.dao.AssetDao;
+import com.fz.followme.dto.AssetDto;
 import com.fz.followme.dto.AssetReservationDto;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,12 @@ public class ReservationServiceImpl implements ReservationService {
 		return assetDao.updateAssetstartDateStatus();
 	}
 
+	/*
+	@Override
+	public int updateSeatStatus(AssetDto ad) {
+		return assetDao.updateStatusSeat(ad);
+	}
+	*/
 
 
 

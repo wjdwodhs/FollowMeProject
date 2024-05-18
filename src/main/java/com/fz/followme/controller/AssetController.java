@@ -269,7 +269,14 @@ public class AssetController {
 	}
 	
 	
-	
+	// * 사무실 자리 상태 변경 (관리자)
+	@PostMapping("/modifyseat.bo")
+	@ResponseBody
+	public int updateStatusSeat(AssetDto ad) {
+		log.debug("ad : {}", ad);
+		int result =  assetService.updateStatusSeat(ad);
+		return result;
+	}
 	
 	
 	

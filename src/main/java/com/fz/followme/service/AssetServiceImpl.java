@@ -83,6 +83,12 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
+	@Override
+	public int updateStatusSeat(AssetDto ad) {
+		return assetDao.updateStatusSeat(ad);
+	}
+
+
 	
 
 	

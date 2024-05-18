@@ -199,7 +199,7 @@ insert
 	     set status = 'Y'
 	   where asset_no IN ( select asset_no
 	                         from tb_asset_rsvn
-	                        where end_date <= SYSDATE)
+	                        where end_date < SYSDATE)
 	]]>
 </update>
 
@@ -268,6 +268,15 @@ insert
 	 WHERE A.ASSET_TYPE = 'S'
 	   AND R.RSVN_DATE = TO_DATE(#{rsvnDate}, 'YYYY/MM/DD')
 </select>
+
+
+<!-- 좌석 상태변경 -->
+<update id="updateStatusSeat">
+		update tb_asset
+		   set status = #{status}
+		     , modify_date = sysdate
+		 where asset_name = #{assetName}
+</update>
 
 
 

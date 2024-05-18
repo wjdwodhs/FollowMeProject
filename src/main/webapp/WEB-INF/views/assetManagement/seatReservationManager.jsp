@@ -40,6 +40,7 @@
 }
 
 .content-page .no-hover{
+		background-color : inital !important;
 		cursor:default !important;
 }
 
@@ -95,7 +96,7 @@
                                     <div class="card-body">
                                         <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>사무실 좌석배치도</b> | <small> Seating Chart</small></h5>
                                         <form id="searchList-seat">
-	                                        <label style="margin-left: 30%; margin-right: 5px;">예약조회</label>
+	                                        <label style="margin-left: 30%; margin-right: 5px;"><b>예약조회</b></label>
 	                                        <input type="date" name="rsvnDate" style="border: 0.5px solid lightgray; border-radius: 3px;">
 	                                        <button type="button" id="searchListSeat-Btn" class="btn btn-primary btn-sm" 
 	                       												  style="background-color: #FFBE98; border: none;">조회</button>
@@ -192,21 +193,23 @@
 
                             <div class="col-lg-6">
                                 
-                            <!-- 예약 조회-->
+                            		<!-- 상태 설정 -->
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2"><b>자리 상태 설정 </b> | <small> Seat setting </small></h5>
-                                        <br>
-                                        	<form action="">
+                                        	<form action="updateSeatStatus">
+                                            <label style="margin-left:25%; color:lightgray;"><h5><b>변경일<b></h5></label>
+                                            <input type="date" name="modifyDate" id="modifyDate" style="border: 0.5px solid lightgray; border-radius: 3px; margin-right: 15px;  margin-left: 10px;" required>
+                                            <br><br>
                                             <table align="center">
                                                 <tr>
                                                     <th>선택 좌석 </th>
-                                                    <td><input type="text" class="form-control" id="seat-no" name="seat-no" style="width: 90px; margin-right: 15px;  margin-left: 10px;"></td>
+                                                    <td><input type="text" class="form-control" id="seat-no" name="seat-no" style="width:90px; height:30px; margin-right: 10px;  margin-left: 10px;" required></td>
                                                     <th>이용상태</th>
                                                     <td>
-                                                        <select class="reservation-select class="form-control" name="condition" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray; margin-left: 10px;">
-                                                            <option value="writer">이용가능</option>
-                                                            <option value="title">이용불가</option>
+                                                        <select class="reservation-select" name="seat-status" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; color: gray; margin-left: 15px;">
+                                                            <option value="Y">이용가능</option>
+                                                            <option value="N">이용불가</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -215,8 +218,9 @@
                                         <br><br>
 
                                         <div class="text-center mb-3">
-                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" style="background-color: #FFBE98; border: none;"
-                                                data-bs-toggle="modal" data-bs-target="#seatStatusModify-modal">변경</button>
+                                        <button type="button" class="btn w-sm btn-success waves-effect waves-light" id="statusModify-btn" 
+                                                style="background-color: #FFBE98; border: none;"
+                                                data-bs-toggle="modal" data-bs-target="#seatStatusModify-modal" disabled>변경</button>
                                         </div>
                                         </form>
                                     </div>
@@ -230,40 +234,22 @@
 
                                         <div class="mb-3">
                                             <form id="detailSeat">
-                                                <table class="table-sm" style="margin-left: 10px;">
-                                                    <tr>
+                                                <table class="table table-sm" id="reservationList-table" style="margin-left: 10px;">
+                                                	<thead>    
+                                                    <tr align="center">
                                                         <th>예약자명</th>
-                                                        <td style="width: 150px;">
-                                                            <input type="text" name="rsvnName" class="form-control" style="height: 30px;" readonly>    
-                                                        </td>
                                                         <th>소속부서</th>
-                                                        <td  style="width: 150px;">
-                                                            <input type="text" name="deptName" class="form-control" style="height: 30px;" readonly  >     
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>예약일자</th>
-                                                        <td>
-	                                                        <input type="text" name="rsvnDate" class="form-control" style="height: 30px;" readonly  > 
-                                                        </td>
                                                         <th>선택좌석</th>
-                                                        <td>
-                                                        	<input type="text" name="assetName" class="form-control" style="height: 30px;" readonly  >    
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
+                                                        <th>예약일자</th>
                                                         <th>예약시간</th>
-                                                        <td colspan="3">
-                                                            <input type="text" name="rsvnTime" class="form-control" style="height: 30px;" readonly  > 
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
                                                         <th>코멘트</th>
-                                                        <td colspan="3">
-                                                            <input type="text" class="form-control" id="product-meta-keywords" name="rsvnContent">
-                                                        </td>
-                                                    </tr>
+                                                		</tr>
+                                                	</thead>
+                                                	<tbody>
+                                                	
+                                                	</tbody>
                                                 </table>
+
                                             </form>
                                                 <br><br>
                                         
@@ -296,12 +282,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>좌석번호 &nbsp<label id="seat-no-label"></label>의 상태를 변경할 날짜를 선택해주세요.</p>
-                <input type="date" id="seatStatusModify-registDate" name="registDate" style="border: 0.5px solid lightgray; border-radius: 3px;" />
+                <p>좌석번호 &nbsp<label id="seat-no-label"></label>의 
+                   상태를 변경하시겠습니까? <br><br>
+                   <small>* 이미 지난 날짜의 상태는 변경이 불가합니다.</small>
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
-                <button type="button" id="selectCarList-delBtn" class="btn btn-primary" 
+                <button type="button" id="updateSeat-Btn" class="btn btn-primary" 
                         style="background-color: #FFBE98; border: none;">확인</button>
             </div>
         </div><!-- /.modal-content -->
@@ -309,6 +297,10 @@
   </div>
 	<!-- 선택좌석 선택 변경 모달 end -->
 			
+			
+			
+			
+	<!-- ------------------------------ script -------------------------------------------- -->		
 			
 			
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -322,58 +314,85 @@
 			$("#seat-no-label").html('<b>' + no + '</b>');
 		})
 		
+		// 상태변경은 이전날짜 선택 안되도록
+		var today = new Date().toISOString().split('T')[0];
+		$("#modifyDate").attr('min', today);		
+		
+		
 	})
 	
 	
 	// 선택 날짜 예약내역 조회, 선택좌석 상세조회
 	$(document).ready(function(){
 		$("#searchListSeat-Btn").on("click", function(){
+			
+			// 변경 버튼 클릭시 모달에 조회한 날짜 표시
+			var modifyDate = $("#searchList-seat input[name='rsvnDate']").val();
+			$("#modifyDate").val(modifyDate);
+			
 			$.ajax({
 				url:"${ contextPath }/asset/searchlistseat.do",
 				type:"get",
 				data: {rsvnDate : $("#searchList-seat input[type=date]").val()},
 				success:function(slist){
-					console.log("서버로부터 받은 예약 리스트:", slist);
+					//console.log("서버로부터 받은 예약 리스트:", slist);
 					
 					$(".seatingNum td").each(function(){
 						var seat = $(this);
 						var seatNo = seat.text().trim();
-						console.log("좌석번호:", seatNo);
+						//console.log("좌석번호:", seatNo);
 						
 						// 스타일 초기화
 						seat.css("background-color", "transparent");
-						seat.removeClass("searchListSeat");
-						seat.removeClass("no-hover");
+						seat.removeClass("searchListSeat no-hover");
 						
 						// 예약된 좌석인지 확인
-						var reservation = slist.find(function(reservation){
+						var reservation = slist.filter(function(reservation){
 							return reservation.assetName == seatNo;
 						});
 						
-						if(reservation){ // 클래스 생서해서 스타일 부여 
-							console.log("예약된 좌석:", seatNo);
-							seat.addClass("searchListSeat");
-							seat.addClass("no-hover");
+						
+						if(reservation.length > 0){ // 클래스 생서해서 스타일 부여 
+							//console.log("예약된 좌석:", seatNo);
+							seat.addClass("searchListSeat no-hover");
 						
 							// 예약된 좌석 클릭시 상세조회
-							seat.on("click", function(){
-								var rsvnTime = reservation.startDivision + " " + reservation.startDate + " ~ " + reservation.endDivision + " " + reservation.endDate;
-								$("input[name='rsvnName']").val(reservation.rsvnName);
-								$("input[name='deptName']").val(reservation.deptName);
-								$("input[name='rsvnDate']").val(reservation.rsvnDate);
-								$("input[name='assetName']").val(reservation.assetName);
-								$("input[name='rsvnTime']").val(rsvnTime);
-								$("input[name='rsvnContent']").val(reservation.rsvnContent);
-							})
-						}else if(!reservation){
+							seat.off("click").on("click", function(){
+							$("#reservationList-table tbody").empty();
+								
+							reservation.forEach(function(rsvn){
+								var tr = $("<tr align='center'></tr>");
+									tr.append("<td>" + rsvn.rsvnName + "</td>");
+									tr.append("<td>" + rsvn.deptName + "</td>");
+									tr.append("<td>" + rsvn.assetName + "</td>");
+									tr.append("<td>" + rsvn.rsvnDate + "</td>");
+									tr.append("<td>" + rsvn.startDivision 
+											             + " " + rsvn.startDate  
+											             + " ~ " + rsvn.endDivision  
+											             + " " + rsvn.endDate + "</td>");
+									tr.append("<td>" + rsvn.rsvnContent + "</td>");
+									
+									$("#reservationList-table tbody").append(tr);
+								
+							});
 							
-							seat.on("click", function(){
-								$("input[name='rsvnName']").val('');
-								$("input[name='deptName']").val('');
-								$("input[name='rsvnDate']").val('');
-								$("input[name='assetName']").val('');
-								$("input[name='rsvnTime']").val('');
-								$("input[name='rsvnContent']").val('');
+							 $("input[name='rsvnName'], input[name='deptName'], input[name='assetName'], input[name='rsvnTime'], input[name='rsvnContent']").val('');
+							 $("#statusModify-btn").prop("disabled", true); 
+							
+							})
+						}else {
+							seat.removeClass("searchListSeat no-hover");
+							
+							seat.off("click").on("click", function(){
+								
+								var tr = "<tr align='conter'>"
+								       + "<td colspan='5'>" + "조회된 예약이 없습니다." + "</td>"
+								       + "</tr>";
+								$("#reservationList-table tbody").html(tr);
+								
+								$("input[name='rsvnName'], input[name='deptName'], input[name='assetName'], input[name='rsvnTime'], input[name='rsvnContent']").val('');
+								// 변경버튼 활성화
+								$("#statusModify-btn").prop("disabled", false);
 							})
 						}
 					})
@@ -383,36 +402,56 @@
 				}
 			})
 		})
-	})
-	
-	
-	
-	
-	// 상태변경 날짜 당일 이후부터 선택 가능 
-		var inputDate = document.querySelector('#seatStatusModify-modal input[type="date"]');
-		inputDate.min = new Date().toISOString().split('T')[0];
-	
-	/* 조회 후 다시 작성하기
-	// 자리 상태 설정 변경
-	$("#selectCarList-delBtn").on("click", function(){
-			var assetName = $("#seat-no-label").val();
-			var registDate = $("#seatStatusModify-registDate").val();
+		
+		$("#updateSeat-Btn").on("click", function(){
 			
-			if(!registDate){
-				alert("날짜를 선택해주세요.")
+			var modifyDateForm = $("#modifyDate").val();
+			var seatNoForm = $("#seat-no").val();
+			var seatStatusForm = $(".reservation-select").val();
+			
+			if(!modifyDateForm){
+				alsert("날짜를 지정해주세요.");
+				return;
 			}
+
+			$.ajax({
+				url:"${contextPath}/asset/modifyseat.bo",
+				type:"post",
+				data: {
+					assetName : seatNoForm,
+					modifyDate : modifyDateForm,
+					status : seatStatusForm
+				},
+				success:function(result){
+					
+					if(result > 0){
+						$("#selectCarList-delMobal").modal('hide');
+						alert("성공적으로 변경 되었습니다.");
+						location.reload();
+						
+					}else{
+						alert("변경에 실패하였습니다. 입력내용을 확인하시고 다시 시도해주세요.");
+					}
+					
+				},
+				error:function(){
+					console.log("상태변경 ajax실패");
+				}
+			})
 			
-			location.href = `${contextPath}/asset/modifystatusseat.do?`;
+		})
+		
+		
+		
+		
 		
 	})
-	*/
 	
-	
-	
+
 		
 	</script>
 
-
+	<!-- ------------------------------ script -------------------------------------------- -->	
 
 
 
