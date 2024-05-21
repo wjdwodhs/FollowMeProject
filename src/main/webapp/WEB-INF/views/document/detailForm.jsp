@@ -278,12 +278,14 @@ input:focus, td>textarea:focus {
 											test="${loginUser.memNo eq document.memNo
 						                      or loginUser.memNo eq document.midApprover
 						                      or loginUser.memNo eq document.finalApprover
+						                      or loginUser.memNo eq document.refMemNo
 						                      or (loginUser.deptNo eq document.deptNo && loginUser.memGrade eq '팀장')
 						                      }">
 
 											<div id="documentContent" style="width: auto;">
-												<input type="hidden" id="memNo"> <input
-													type="hidden" name="no" value="${ document.docuNo }">
+												<input type="hidden" id="memNo"> 
+												<input type="hidden" id="refMemNo"> 
+												<input type="hidden" name="no" value="${ document.docuNo }">
 											</div>
 
 
@@ -298,6 +300,7 @@ input:focus, td>textarea:focus {
 							        function load() {
 
 													document.getElementById('memNo').value = '${document.memNo}';
+													
 							        	
 							            fetch("${contextPath}/resources/document/detailSample" + ${document.docuCategory} + ".html")
 							                .then(response => response.text())
@@ -308,11 +311,12 @@ input:focus, td>textarea:focus {
 							                    console.error('HTML 파일을 로드하는 중 오류가 발생했습니다:', error);
 							                })
 							                .finally(() => {
-                           
+                           		console.log('${document.refMemName}');
+                           		console.log('${document.refMemNo}');
+                           		
 							               	document.getElementById('no').value = '${document.docuNo}';
 							                document.getElementById('memDeptName').innerText = '${document.memDeptName}';
-															//document.getElementById('showReason').innerHTML = '${document.processReason}';
-							                
+															document.getElementById('processReason').innerHTML = `${document.processReason}`;
 							        				document.getElementById('registDate').innerText = '${document.registDate}';
 							        				document.getElementById('memNo').value =  '${document.memNo}';
 							                document.getElementById('memSig').src = '${contextPath}${document.memSig}';
@@ -354,9 +358,77 @@ input:focus, td>textarea:focus {
 							        				}else if(${document.docuCategory} == '4'){
 							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
 								        				document.getElementById('memName').innerText =  '${document.memName}';
+								        				document.getElementById('docuCost').innerText = '${document.docuCost}';
+								        				
+										          	// 4번 양식 detail array list 불러오기 ajax
+																$.ajax({
+																     url: "${contextPath}/document/spendList.do",
+																     type: 'post',
+																     data: {no: ${document.docuNo}},
+																     success:function(doc){
+																    	  var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];							
+																							console.log(doc);
+																    	        var dateArray = doc.docuStartDate ? doc.docuStartDate.split(",") : [];
+																    	        var itemsArray = doc.docuItem ? doc.docuItem.split(",") : [];
+																    	        var priceArray = doc.docuEtcCost ? doc.docuEtcCost.split(",") : [];
+																    	        var remarkArray = remarkArray = doc.docuRemark ? doc.docuRemark.split(",") : [];
+
+																    	        var maxLength = Math.max(dateArray.length, itemsArray.length, priceArray.length, remarkArray.length);
+																    	        console.log(dateArray);
+											        		            for (var i = 0; i < maxLength; i++) {
+											        		                var newRow = table.insertRow(-1);
+											        		            		var str = '';
+											        		                str += '<td style="width:60px; text-align:center;"></td>';
+											        		                str += '<td style="width:95px; text-align:center;" id="docuStartDate">' + dateArray[i] + '</td>';
+											        		                str += '<td style="width:270px;" id="docuItem">' + itemsArray[i] + '</td>';
+											        		                str += '<td style="width:90px; text-align:center;" id="docuCost">' + priceArray[i] + '</td>';
+											        		                str += '<td style="width:100px; text-align:center;" id="docuRemark">' + remarkArray[i] + '</td>';
+
+											        		                newRow.innerHTML = str;
+											        		            }
+
+												        		     }
+																     
+																});				
+										          	
+								        				
 							        				}else if(${document.docuCategory} == '5'){
 							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
 								        				document.getElementById('memName').innerText =  '${document.memName}';
+																document.getElementById('approverInf').innerText = '${document.approverInf}';
+
+												      // 5번 양식 detail array list 불러오기 ajax
+															$.ajax({
+															     url: "${contextPath}/document/spendList.do",
+															     type: 'post',
+															     data: {no: ${document.docuNo}},
+															     success:function(doc){
+															    	  var	 table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];							
+																						console.log(doc);
+															    	        var itemsArray = doc.docuItem ? doc.docuItem.split(",") : [];
+															    	        var countArray = doc.docuCount ? doc.docuCount.split(",") : [];
+															    	        var etcCostArray = doc.docuEtcCost ? doc.docuEtcCost.split(",") : [];
+															    	        var costArray = doc.docuCost ? doc.docuCost.split(",") : [];
+															    	        var remarkArray = doc.docuRemark ? doc.docuRemark.split(",") : [];
+	
+															    	        var maxLength = Math.max(itemsArray.length, countArray.length, etcCostArray.length, costArray.length, remarkArray.length);
+										        		            
+															    	        for (var i = 0; i < maxLength; i++) {
+										        		                var newRow = table.insertRow(-1);
+										        		            		var str = '';
+										        		                str += '<td style="width:60px; text-align:center;"></td>';
+										        		                str += '<td style="width:130px; text-align:center;" id="docuItem">' + itemsArray[i] + '</td>';
+										        		                str += '<td style="width:45px;" id="docuCount">' + countArray[i] + '</td>';
+										        		                str += '<td style="width:90px;" id="docuEtcCost">' + etcCostArray[i] + '</td>';
+										        		                str += '<td style="width:100px; text-align:center;" id="docuCost">' + costArray[i] + '</td>';
+										        		                str += '<td style="width:120px; text-align:center;" id="docuRemark">' + remarkArray[i] + '</td>';
+	
+										        		                newRow.innerHTML = str;
+										        		            }
+	
+											        		     }
+															     
+															});			
 							        				}else if(${document.docuCategory} == '6'){
 							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
 								        				document.getElementById('memName').innerText =  '${document.memName}';
@@ -424,8 +496,8 @@ input:focus, td>textarea:focus {
 							                    var pendButton = document.getElementById('pend');
 							                    
 							                    if (rejectButton && pendButton) {
-							                        var isMidApprover = (loginUserMemNo === midApprover && midApproveStatus === 'N');
-							                        var isFinalApprover = (loginUserMemNo === finalApprover && finalApproveStatus === 'N');
+							                        var isMidApprover = (loginUserMemNo === midApprover && midApproveStatus === 'N' && documentStatus === '0');
+							                        var isFinalApprover = (loginUserMemNo === finalApprover && finalApproveStatus === 'N' && documentStatus === '0');
 							                        
 							                        rejectButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
 							                        pendButton.style.display = (isMidApprover || isFinalApprover) ? 'block' : 'none';
@@ -481,32 +553,36 @@ input:focus, td>textarea:focus {
 							    </script>
 
 									<script>
-									    function updateStatus(){
+								        
+								        function updateStatus(){
 									    	$("#frm").attr("action", "${contextPath}/document/recall.do");
-									    	
+								    		$("#frm").submit();	    	
 									    }
 									    
 									    function rejectStatus(){						    	
 									    	if("${document.midApprover}" != "" && "${loginUser.memNo}" === "${document.midApprover}"){
 									    		$("#frm2").attr("action", "${contextPath}/document/midReject.do");
+									    		$("#frm2").submit();
 									    	}else if("${loginUser.memNo}" === "${document.finalApprover}"){
 									    		$("#frm2").attr("action", "${contextPath}/document/finalReject.do");
-									        $('#frm4').attr('action', '${contextPath}/document/registReason.do');
-
+									    		$("#frm2").submit();
 									    	}
 									    }								    
 									    
 									    function approvalStatus(){
 									    	if("${document.midApprover}" != "" && "${loginUser.memNo}" === "${document.midApprover}"){
 									    		$("#frm3").attr("action", "${contextPath}/document/midApprove.do");
+									    		$("#frm3").submit();
 									    	}else if("${loginUser.memNo}" === "${document.finalApprover}"){
 									    		$("#frm3").attr("action", "${contextPath}/document/finalApprove.do");
-										      $('#frm4').attr('action', '${contextPath}/document/registReason.do');
+									    		$("#frm3").submit();
+
 									    	}
 									    }
 									    
 
 									</script>
+									
 									<script>
 									$(document).ready(function() {
 									    $('#confirmButton').on('click', function() {
@@ -514,9 +590,13 @@ input:focus, td>textarea:focus {
 									        var reasonText = $('#reason').val();
 									        
 									        // 가져온 내용을 <td id="processReason"> 요소에 텍스트로 표시
-									        $('#processReason').text(reasonText);
+									        $('#processReason').html(reasonText);
 									    		// 모달 창 닫기	
 									        $('#regist-modal').modal('hide');
+									    		
+									    		$('input[name="processReason"]').val(reasonText);
+	
+									    		console.log($('input[name="processReason"]').val());
 									    });
 									});
 									</script>
@@ -561,6 +641,7 @@ input:focus, td>textarea:focus {
 
 									<!-- 반려 버튼-->
 									<form id="frm2" action="" method="post">
+										<input type="hidden" name="processReason">
 										<input type="hidden" name="docuNo" value="${ document.docuNo }">
 										<div class="modal fade" id="reject-modal" tabindex="-1"
 											role="dialog" aria-hidden="true">
@@ -597,6 +678,7 @@ input:focus, td>textarea:focus {
 
 									<!-- 승인 버튼-->
 									<form id="frm3" action="" method="post">
+										<input type="hidden" name="processReason">
 										<input type="hidden" name="docuNo" value="${ document.docuNo }">
 										<div class="modal fade" id="pend-modal" tabindex="-1"
 											role="dialog" aria-hidden="true">

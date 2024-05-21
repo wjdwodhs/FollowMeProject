@@ -167,279 +167,146 @@
 				<!-- Start Page content -->
 				<!-- 전자결재 상세조회 페이지 category == 4 지출 결의서 -->
 				<!-- ============================================================== -->
-	
-	      <!-- docu_category가 4일때-->
-	      <!--
-	      <c:choose>
-	          <c:when test="${ (document.docuCategory eq 4) 
-	                    and ((loginUser.memNo eq document.memNo) 
-	                          or (loginUser.memNo eq document.midApprover) 
-	                          or (loginUser.memNo eq document.finalApprover)
-	                          or (loginUser.memDeptNo eq document.memDeptNo and loginUser.grade == '1') <-- 이부분은 수정이필요함
-	                         )}>
-	
-	      -->
-	      
-				            <div class="content">
 				
-				                <!-- Start Content-->
-				                <div class="container-fluid" style="display:flex; justify-content: center;">
-				                    
-				                    <div class="card">
-				                        <div class="card-body">
-				                            <div class="top-document">
-				                                <div class="document-title">
-				                                    <h1>지출 결의서</h1>
-				                                </div>
-				                                <div class="sign-table">
-				                                    <table class="table-sign">
-				                                        <tr>
-				                                            <th rowspan="5" style="width:20px;">결 재 선</th>
-				                                        </tr>
-				                                        <tr>
-				                                            <th>기 안 자</th>
-				                                            <th>결 재 자</th>
-				                                        </tr>
-				                                        <tr class="sign">
-				                                            <td>
-				                                            		<img id="memSig" style="width:60px; height:60px;">
-				                                            </td>
-				                                            <td>
-                                            						<img id="finalApproverSig" style="width:60px; height:60px; display: none;">
-				                                            </td>
-				                                        </tr>
-				                                    </table>
-				                                </div>
-				                            </div>  
-				    
-				                            <div class="document-info">
-				    
-				                                <div class="info-1">
-				                                    <table class="table-info-1">
-				                                        <tr>
-				                                            <th width="120px;"> 부서 </th>
-				                                            <td width="266px;"> ${document.deptName} </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th> 직급 </th>
-				                                            <td> ${document.memGrade} </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th> 기안자 </th>
-				                                            <td> ${document.memName} </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th> 기안일 </th>
-				                                            <td> ${document.registDate} </td>
-				                                        </tr>
-				                                    </table>
-				                                    
-				                                </div>
-				                                <div class="info-2">
-				                                    <table class="table-info-2">
-				                                        <tr>
-				                                            <th> 총 지출금액 </th>
-				                                            <td>
-				                                                ${document.docuCost}
-				                                            </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th width="120px;"> 참조인 </th>
-				                                            <td width="266px;"> ${document.refMemName} </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th> 보존연한 </th>
-				                                            <td> 기안일로부터 5년 </td>
-				                                        </tr>
-				                                        <tr>
-				                                            <th> 결재일 </th>
-				                                            <td> ${document.finalApproveDate} </td>
-				                                        </tr>
-				                                    </table>
-				                                </div>
-				                                
-				                            </div>
-				    
-		                                <div class="table-2">
-		                                    <table class="table-2-1">
-		                                        <tr>
-		                                            <th width="120px;"> 제목 </th>
-		                                            <td width="655px;"> ${document.docuTitle} </td>
-		                                        </tr>
-		                                    </table>
-		                                </div>
-				                                
-				                                
-				                            <!-- 내용 작성하기 -->
-				                            <div class="table-responsive">
-				                                <table class="table table-bordered border-primary mb-0" id="expenseTable">
-				                                    <tbody>
-				                                        <tr>
-				                                            <th>추 가</th>
-				                                            <th style="text-align:center; width:60px;"> 날 짜 </th>
-				                                            <th style="text-align:center; width:250px;"> 적 요 </th>
-				                                            <th style="text-align:center; width:100px;"> 금 액 (원) </th>
-				                                            <th style="text-align:center; width:100px;"> 비 고 </th>
-				                                        </tr>
-				                                        
-				                                        <tr>
-				                                            <td style="width:60px; text-align:center;">  </td>
-				                                            <td style="width:95px; text-align:center;"> ${document.docuStartDate} </td>
-				                                            <td style="width:270px;"> ${document.docuItem} </td>
-				                                            <td style="width:90px; text-align:center;"> ${document.docuCost} </td>
-				                                            <td style="width:100px; text-align:center;"> ${document.docuRemark} </td>
-				                                        </tr>
-				                                    </tbody>
-				                                </table>
+        <div class="content">
+				<input type="hidden" name="docuCategory" value="4">
+				<input type="hidden" id="no" name="no" value="">
+				<input type="hidden" id="memNo" name="memNo" value="">
 				
-				                            <table class="table table-bordered border-primary mb-0" style="margin-top:20px;">      
-		                                    <tr>
-		                                        <th style="text-align:center;"> 첨 부 </th>
-		                                        <td>
-		                                            <c:forEach var="at" items="${ document.attachList }">
-		                                                <a href="${ contextPath }${ at.filePath }/${ at.fileSystemName }" download="${ at.originalName }">[${ at.originalName }]</a><br>
-		                                            </c:forEach>
-		                                        </td>
-		                                    </tr>
-				                            </table>
-				
-				                            <!--결재 처리사유-->
-				                            <div class="opinion-box" style="margin-top:20px;">
-				                                
-				                                <!-- 미처리시, 최종결재권자만 쓸 수 있도록 -->
-				                                <!--
-				                                    <c:when test="${document.status == 0 and }"
-				
-				                                -->
-				                                <c:choose>
-				                                    <c:when test="${document.status == 0 and loginUser == document.finalApprover}">
-				                                        <div style="text-align: right;">
-				                                            <button class="btn btn-primary waves-effect waves-light">등록</button>
-				                                        </div>
-				                                        <table class="table table-bordered border-primary mb-0" style="margin-top:5px;">      
-				                                            <tr>
-				                                                <th style="text-align:center; width:90px;">
-				                                                    처 리 <br> 사 유
-				                                                </th>
-				                                                <td width="655px;">
-				                                                    <textarea rows="5" style="border:0; width:655px; resize:none;" placeholder="처리 사유를 기입해주세요."></textarea>
-				                                                </td>
-				                                            </tr>
-				                                        </table>
-				                                    </c:when>
-				                                    <c:otherwise>
-				                                        <table class="table table-bordered border-primary mb-0" style="margin-top:5px;">      
-				                                            <tr>
-				                                                <th style="text-align:center; width:90px;">
-				                                                    처 리 <br> 사 유
-				                                                </th>
-				                                                <td>
-				                                                    ${document.processReason}
-				                                                </td>
-				                                            </tr>
-				                                        </table>
-				                                    </c:otherwise>
-				                                </c:choose>
-				                                        
-				
-				                                <c:choose>
-				                                    <c:when test="${loginUser.memNo eq document.memNo}">
-				                                        <div class="btn-group-2">
-				                                            <a type="button" class="btn btn-primary waves-effect waves-light cancel" href="${contextPath}/document/list.page"> 목록으로 </a>
-				                                            <c:if test="${document.status eq 0 and document.midApproveStatus eq 'N'}">
-				                                                <button type="button" class="btn btn-danger waves-effect waves-light complete" data-bs-toggle="modal" data-bs-target="#recall-modal"> 회수하기 </button>
-				                                            </c:if>
-				                                        </div>
-				                                    
-						                                    <!-- 회수하기 버튼-->
-						                                    <div class="modal fade" id="recall-modal" tabindex="-1" role="dialog" aria-hidden="true">
-						                                        <div class="modal-dialog modal-dialog-centered">
-						                                            <div class="modal-content">
-						                                                <div class="modal-header">
-						                                                    <h4 class="modal-title" id="topModalLabel">문서를 회수하시겠습니까?</h4>
-						                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						                                                </div>
-						                                                <div class="modal-body">
-						                                                    <h5 style="text-align:left;">문서 회수 시 결재 상태가 더이상 진행되지 않습니다.</h5>
-						                                                    
-						                                                </div>
-						                                                <div class="modal-footer">
-						                                                    <div class="btn-group-3">
-						                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-						                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
-						                                                    </div>
-						                                                </div>
-						                                            </div><!-- /.modal-content -->
-						                                        </div><!-- /.modal-dialog -->
-						                                    </div><!-- /.modal -->
-				
-				                                		</c:when>
-				                                <c:otherwise>
-				                                    <div class="btn-group-2">
-				                                            <a type="button" class="btn btn-primary waves-effect waves-light cancel" href="${contextPath}/document/list.page"> 목록으로 </a>
-				                                            <c:when test="${(loginUser.memNo eq document.midApprover and document.midApproveStatus eq 'N') or (loginUser.memNo eq document.finalApprover and document.finalApproveStatus eq 'N')}">
-				                                                <button type="button" id="reject" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#reject-modal"> 반려하기 </button>
-				                                                <button type="button" id="pend" class="btn btn-blue waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#pend-modal"> 승인하기 </button>
-				                                            </c:when>
-				                                   	</div>
-				
-				                                    <!-- 반려 버튼-->
-				                                    <div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-hidden="true">
-				                                        <div class="modal-dialog modal-dialog-centered">
-				                                            <div class="modal-content">
-				                                                <div class="modal-header">
-				                                                    <h4 class="modal-title" id="topModalLabel">반려하시겠습니까?</h4>
-				                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				                                                </div>
-				                                                <div class="modal-body">
-				                                                    <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 반려됩니다.</h5>
-				                                                    
-				                                                </div>
-				                                                <div class="modal-footer">
-				                                                    <div class="btn-group-3">
-				                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-				                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
-				                                                    </div>
-				                                                </div>
-				                                            </div><!-- /.modal-content -->
-				                                        </div><!-- /.modal-dialog -->
-				                                    </div><!-- /.modal -->
-				
-				                                    <!-- 승인 버튼-->
-				                                    <div class="modal fade" id="pend-modal" tabindex="-1" role="dialog" aria-hidden="true">
-				                                        <div class="modal-dialog modal-dialog-centered">
-				                                            <div class="modal-content">
-				                                                <div class="modal-header">
-				                                                    <h4 class="modal-title" id="topModalLabel">승인하시겠습니까?</h4>
-				                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				                                                </div>
-				                                                <div class="modal-body">
-				                                                    <h5 style="text-align:left;">확인을 누르시면 해당 문서의 결재가 승인됩니다.</h5>
-				                                                </div>
-				                                                <div class="modal-footer">
-				                                                    <div class="btn-group-3">
-				                                                        <button type="button" class="btn btn-primary waves-effect waves-light cancel" data-bs-dismiss="modal">취소</button>
-				                                                        <button type="button" class="btn btn-primary waves-effect waves-light write">확인</button>
-				                                                    </div>
-				                                                </div>
-				                                            </div><!-- /.modal-content -->
-				                                        </div><!-- /.modal-dialog -->
-				                                    </div><!-- /.modal -->
-				                                </c:otherwise>
-				                             </c:choose>
-				                          </div> <!-- 결재 처리사유 끝-->
-				                       </div>
-				                   </div>
-				               </div>
-		               </div> <!-- container -->
-		        	 </div> <!-- content -->
-		       <!--  
-		       </c:when>
-		       <c:otherwise>
-		        	접근할 수 없는 페이지입니다.
-		       </c:otherwise>
-       </c:choose>
-       -->
+        		<!-- Start Content-->
+            <div class="container-fluid" style="display:flex; justify-content: center;">
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="top-document">
+                            <div class="document-title">
+                                <h1>지출 결의서</h1>
+                            </div>
+                            <div class="sign-table">
+                                <table class="table-sign">
+                                    <tr>
+                                        <th rowspan="5" style="width:20px;">결 재 선</th>
+                                    </tr>
+                                    <tr>
+                                        <th>기 안 자</th>
+                                        <th>결 재 자</th>
+                                    </tr>
+                                    <tr class="sign">
+                                        <td>
+                                            <img id="memSig" name="" style="width:60px; height:60px;">
+                                        </td>
+                                        <td>
+                                            <img id="finalApproverSig" style="width:60px; height:60px; display: none;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>  
+
+                        <div class="document-info">
+
+                            <div class="info-1">
+                                <table class="table-info-1">
+                                    <tr>
+                                        <th width="120px;"> 부서 </th>
+                                        <td width="266px;" id="memDeptName"></td>    
+                                    </tr>
+                                    <tr>
+                                        <th> 직급 </th>
+                                        <td id="memGrade"></td>
+                                    </tr>
+                                    <tr>
+                                        <th> 기안자 </th>
+                                        <td id="memName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th> 기안일 </th>
+                                        <td id="registDate"></td>
+                                    </tr>
+                                </table>
+                                
+                            </div>
+                            <div class="info-2">
+                                <table class="table-info-2">
+                                    <tr>
+                                        <th> 총 지출금액 </th>
+                                        <td id="docuCost"></td>
+                                    </tr>
+                                    <tr>
+                                        <th width="120px;"> 참조인 </th>
+                                        <td width="266px;" id="refMemName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th> 보존연한 </th>
+                                        <td> 기안일로부터 5년 </td>
+                                    </tr>
+                                    <tr>
+                                        <th> 결재일 </th>
+                                        <td id="finalApproveDate"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                        <div class="table-2">
+                            <table class="table-2-1">
+                                <tr>
+                                    <th width="120px;"> 제목 </th>
+                                    <td width="655px;" id="docuTitle"></td>
+                                </tr>
+                            </table>
+                        </div>
+                            
+                        <!-- 내용 작성하기 -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary mb-0" id="expenseTable">
+                                <tbody>
+                                    <tr>
+                                        <th>추 가</th>
+                                        <th style="text-align:center; width:60px;"> 날 짜 </th>
+                                        <th style="text-align:center; width:250px;"> 적 요 </th>
+                                        <th style="text-align:center; width:100px;"> 금 액 (원) </th>
+                                        <th style="text-align:center; width:100px;"> 비 고 </th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+			                      <table class="table table-bordered border-primary mb-0" style="margin-top:20px;">      
+		                            <tr>
+		                                <th style="text-align:center; width:120px;"> 첨 부 </th>
+		                                <td id="attachTd" style="text-align:left;"></td>
+		                            </tr>
+			                      </table>
+                        </div> <!-- 내용 작성하기 끝-->
+                        
+												<!--결재 처리사유-->
+                        <div class="opinion-box" style="margin-top:20px;">
+												
+                             
+														<div style="text-align: right;">
+														    <button id="regist" type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#regist-modal"> 등록 </button>
+														</div>
+												
+														<table class="table table-bordered border-primary mb-0" style="margin-top:5px;">      
+												    		<tr>
+												        		<th style="text-align:center; width:120px;">처 리<br>사 유</th>
+												        		<td id="processReason" style="text-align:left;"></td>
+												    		</tr>
+														</table>
+														
+                            <div class="btn-group-2">
+														    <a type="button" id="goList" class="btn btn-primary waves-effect waves-light cancel"> 목록으로 </a>
+														    <button id="recall" type="button" class="btn btn-danger waves-effect waves-light complete" data-bs-toggle="modal" data-bs-target="#recall-modal" style="display: none;"> 회수하기 </button>
+														    <button id="reject" type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#reject-modal" style="display: none;"> 반려하기 </button>
+														    <button id="pend" type="button" class="btn btn-blue waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#pend-modal" style="display: none;"> 승인하기 </button>
+														</div> 		
+		                		</div> <!-- 결재 처리사유 끝-->
+		            		</div>
+		        		</div> <!-- container -->
+		    		</div> <!-- content -->
+		    </div>    
 		</div> <!-- wrapper -->
 
     <!-- ============================================================== -->

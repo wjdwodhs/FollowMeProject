@@ -412,7 +412,7 @@ tr>th, tr>td {
                 <span class="menu-icon" onclick="removeRow(this);"><b>━</b></span> 
             </td>
             <td style="width:95px; text-align:center;">
-                <input type="date" id="starDate" name="docuSpendDate" size="20" style="border:0; width:100px;">
+                <input type="date" id="startDate" name="docuSpendDate" size="20" style="border:0; width:100px;">
             </td>
             <td style="width:270px;">
                 <input type="text" name="docuSpendItems" size="20" style=" border:0;" value="">
@@ -443,19 +443,19 @@ tr>th, tr>td {
 	            <span class="menu-icon" onclick="removeExpenseRow(this);"><b>━</b></span> 
 	        </td>
 	        <td>
-	            <input type="text" name="docuItem" size="20" style=" border:0; text-align:center;" width="130px;" value="">
+	            <input type="text" name="docuBuyItems" size="20" style=" border:0; text-align:center;" width="130px;" value="">
 	        </td>
 	        <td>
-	            <input type="text" name="docuCount" size="20" style="border:0; text-align:center; width:45px;" value="">ea
+	            <input type="text" name="docuBuyCount" size="20" style="border:0; text-align:center; width:45px;" value="">ea
 	        </td>
 	        <td>
-	            <input type="text" name="docuEtcCost" size="20" style="border:0; text-align:center; width:90px;" value="">원
+	            <input type="text" name="docuBuyPrice" size="20" style="border:0; text-align:center; width:90px;" value="">원
 	        </td>
 	        <td>
-	            <input type="text" name="docuCost" size="20" style=" border:0; text-align:center; width:100px;" value="">원
+	            <input type="text" name="docuBuySumPrice" size="20" style=" border:0; text-align:center; width:100px;" value="">원
 	        </td>
 	        <td>
-	            <input type="text" name="docuRemark" size="20" style=" border:0; text-align:center; width:120px;">
+	            <input type="text" name="docuBuyRemark" size="20" style=" border:0; text-align:center; width:120px;">
 	        </td>  
 	        `;
 	    }

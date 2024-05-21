@@ -490,6 +490,20 @@ public class DocumentController {
 		// 로그인유저가 최종결재자일때
 		if(finalApprover != null && finalApprover.equals(loginUser.getMemNo())){
 			int result = documentService.updateRegistReason(document);
+			
+			if(result > 0) {
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "처리사유가 등록되었습니다.");	
+				log.debug(document.getProcessReason());
+				
+			}else {
+				// 실패시
+				redirectAttributes.addFlashAttribute("alertMsg", "처리 사유 등록에 실패했습니다.");
+				redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+				log.debug(document.getProcessReason());
+
+			}
+			
 		}else { // 최종결재자가 아닐때
 			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
 		}
@@ -510,5 +524,10 @@ public class DocumentController {
 		return documentService.selectMemberList();
 	}
 	
-	
+	@ResponseBody
+	@PostMapping(value="/spendList.do", produces="application/json; charset=utf-8")
+	public DocumentDto spendList(int no){ 
+			
+		return documentService.selectDocument(no);
+	}
 }
