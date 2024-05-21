@@ -3,6 +3,7 @@ package com.fz.followme.service;
 import java.util.List;
 import java.util.Map;
 
+import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
@@ -60,17 +61,27 @@ public interface DocumentService {
 	// 전자문서 최종 결재 [승인] 기능 (update finalApproveStatus)
 	int updateFinalApprove(DocumentDto document);
 		
-	// 전자문서 최종 결재 [반려] 기능 (update midApproveStatus)
+	// 전자문서 중간 결재 [반려] 기능 (update midApproveStatus)
 	int updateMidReject(DocumentDto document);
 
 	// 전자문서 최종 결재 [반려] 기능 (update finalApproveStatus)
 	int updateFinalReject(DocumentDto document);
 	
+	// 전자문서 처리사유 등록 기능 (update processReason)
+	int updateRegistReason(DocumentDto document);
+
 	// 중간결재자 불러오기
 	String selectMidApprover(DocumentDto document);
 
 	// 최종결재자 불러오기
 	String selectFinalApprover(DocumentDto document);
+	
+	// 문서 조회 시 ajax로 첨부파일 조회하기
+	List<AttachmentDto> selectAttachmentList(int docuNo);
+	
+	// 문서 작성 시 ajax로 직원 조회하기 (참조인 선택)
+	List<MemberDto> selectMemberList();
+	
 	
 	
 	

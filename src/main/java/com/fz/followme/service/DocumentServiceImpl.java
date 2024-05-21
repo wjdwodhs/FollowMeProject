@@ -162,6 +162,7 @@ public class DocumentServiceImpl implements DocumentService {
 		
 	}
 
+	// 전자문서 중간 결재 [승인] 기능 (update midApproveStatus)
 	@Override
 	public int updateMidApprove(DocumentDto document) {
 		int result = 0;
@@ -175,6 +176,7 @@ public class DocumentServiceImpl implements DocumentService {
 		return result;
 	}
 
+	// 전자문서 최종 결재 [승인] 기능 (update finalApproveStatus)
 	@Override
 	public int updateFinalApprove(DocumentDto document) {
 		int result = 0;
@@ -188,7 +190,8 @@ public class DocumentServiceImpl implements DocumentService {
 		return result;
 		
 	}
-
+	
+	// 전자문서 최종 결재 [반려] 기능 (update midApproveStatus)
 	@Override
 	public int updateMidReject(DocumentDto document) {
 		int result = 0;
@@ -202,6 +205,7 @@ public class DocumentServiceImpl implements DocumentService {
 		return result;
 	}
 
+	// 전자문서 최종 결재 [반려] 기능 (update finalApproveStatus)
 	@Override
 	public int updateFinalReject(DocumentDto document) {
 		int result = 0;
@@ -216,6 +220,19 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
+	public int updateRegistReason(DocumentDto document) {
+		int result = 0;
+		
+		try {
+			result = documentDao.updateRegistReason(document);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
 	public String selectMidApprover(DocumentDto document) {
 		return documentDao.selectMidApprover(document);
 	}
@@ -225,7 +242,18 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentDao.selectFinalApprover(document);
 	}
 
+	@Override
+	public List<AttachmentDto> selectAttachmentList(int docuNo) {
+		return documentDao.selectAttachmentList(docuNo);
+	}
 
+	@Override
+	public List<MemberDto> selectMemberList() {
+		return documentDao.selectMemberList();
+	}
+
+
+	
 
 
 

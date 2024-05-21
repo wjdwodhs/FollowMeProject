@@ -110,12 +110,14 @@
                 
                 <div style="margin-top:50px;">
                     <ul class="menu">
-                        <li class="menu-item">
-                            <a href="${ contextPath }/document/insertForm" class="menu-link">
-                                <span class="menu-icon"><i data-feather="edit-3"></i></span>
-                                <span class="menu-text"> 문서 작성하기 </span>
-                            </a>
-                        </li>
+                    		<c:if test="${loginUser.memGrade != '대표'}">
+		                        <li class="menu-item">
+		                            <a href="${ contextPath }/document/insertForm" class="menu-link">
+		                                <span class="menu-icon"><i data-feather="edit-3"></i></span>
+		                                <span class="menu-text"> 문서 작성하기 </span>
+		                            </a>
+		                        </li>
+                        </c:if>
                         <li class="menu-item" style="margin-top:50px;">
                             <a href="${ contextPath }/document/list" class="menu-link">
                                 <span class="menu-icon"><i data-feather="archive"></i></span>
@@ -191,14 +193,14 @@
 		                                                        <c:choose>
 		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
 						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category">문서유형</option>
-						                                                            <option value="docu_title">문서제목</option>
+						                                                            <option value="docuCategory">문서유형</option>
+						                                                            <option value="docuTitle">문서제목</option>
 						                                                        </select>
 		                                                        		</c:when>
 		                                                        		<c:otherwise>
 		                                                        				<!-- 팀장, 대표일 경우 -->
 						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_category_name">문서유형</option>
 						                                                            <option value="docu_title">문서제목</option>
 						                                                            <option value="mem_name">기안자</option>
 						                                                            <option value="dept_name">기안부서</option>
@@ -206,7 +208,7 @@
 				                                                        </c:otherwise>
 		                                                        </c:choose>
 		                                                        <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on" style="width:150px;">
-		                                                        <button type="button" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
+		                                                        <button type="submit" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
 		                                                        
 		                                                    </div>
 		                                                </div>
@@ -227,9 +229,11 @@
 																				            </script>
 																			          </c:if>
                                             </div>
-                                            <div class="btn-group">
-                                            		<a href="${ contextPath }/document/insertForm" class="btn btn-primary btn-middle"> 작성하기 </a>
-                                            </div>
+                                            <c:if test="${loginUser.memGrade != '대표'}">
+		                                            <div class="btn-group">
+		                                            		<a href="${ contextPath }/document/insertForm" class="btn btn-primary btn-middle"> 작성하기 </a>
+		                                            </div>
+                                            </c:if>
                                         </div>
                                         
                                         

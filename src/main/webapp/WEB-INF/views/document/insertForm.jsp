@@ -101,12 +101,14 @@ tr>th, tr>td {
 
 				<div style="margin-top: 50px;">
 					<ul class="menu">
-						<li class="menu-item">
-							<a href="${ contextPath }/document/insertForm" class="menu-link"> 
-								<span class="menu-icon"><i data-feather="edit-3"></i></span> 
-								<span class="menu-text"> <b>문서 작성하기</b> </span>
-							</a>
-						</li>
+						<c:if test="${loginUser.memGrade != '대표'}">
+							<li class="menu-item">
+								<a href="${ contextPath }/document/insertForm" class="menu-link"> 
+									<span class="menu-icon"><i data-feather="edit-3"></i></span> 
+									<span class="menu-text"> <b>문서 작성하기</b> </span>
+								</a>
+							</li>
+						</c:if>
 						<li class="menu-item" style="margin-top: 50px;">
 							<a href="${ contextPath }/document/list" class="menu-link">
 								<span class="menu-icon"><i data-feather="archive"></i></span> 
@@ -250,6 +252,34 @@ tr>th, tr>td {
                 		document.getElementById('mem').value = '${loginUser.memName}'+' '+'${loginUser.memGrade}';
                 		
                 	}
+            			
+							    // 참조인 선택
+									$.ajax({
+									     url: "${contextPath}/document/selectRefMem.do",
+									     type: 'get',
+									     success:function(member){
+			                  let container = document.getElementById('refMemNo');
+			
+			                  if (container) {
+			                      container.innerHTML = '';
+			
+			                      // 기본값 "없음"
+			                      var defaultOption = document.createElement("option");
+			                      defaultOption.value = "";
+			                      defaultOption.textContent = "없음";
+			                      container.appendChild(defaultOption);
+			                      
+			                      member.forEach(function(m) {
+			                    	    var option = document.createElement("option");
+			                    	    option.value = m.memNo; // 옵션의 값으로 사번을 설정합니다.
+			                    	    option.textContent = m.memNo + " " + m.deptName + " " + m.memName + " " + m.memGrade;
+			                    	    container.appendChild(option); //
+			                      });
+			                  } else {
+			                      console.error("Element with ID 'refMemNo' not found");
+			                  }
+									 	 	}
+							 		});            			
             			
             			document.getElementById("insertForm").onsubmit = function() {
             			    return updateDocuContent();

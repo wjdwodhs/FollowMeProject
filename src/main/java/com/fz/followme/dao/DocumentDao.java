@@ -173,6 +173,10 @@ public class DocumentDao {
 		return sqlSessionTemplate.update("documentMapper.updateFinalReject", document);
 	}
 
+	public int updateRegistReason(DocumentDto document) {
+		return sqlSessionTemplate.update("documentMapper.updateProcessReason", document);
+	}
+
 	public String selectMidApprover(DocumentDto document) {
 		return sqlSessionTemplate.selectOne("documentMapper.selectMidApprover", document);
 	}
@@ -180,6 +184,15 @@ public class DocumentDao {
 	public String selectFinalApprover(DocumentDto document) {
 		return sqlSessionTemplate.selectOne("documentMapper.selectFinalApprover", document);
 	}
+
+	public List<AttachmentDto> selectAttachmentList(int docuNo) {
+		return sqlSessionTemplate.selectList("documentMapper.selectAttachmentList", docuNo);
+	}
+
+	public List<MemberDto> selectMemberList() {
+		return sqlSessionTemplate.selectList("documentMapper.selectMemberList");
+	}
+
 
 	
 }

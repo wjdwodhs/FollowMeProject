@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -368,8 +369,8 @@ public class DocumentController {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String midApprover = documentService.selectMidApprover(document);
 		// 로그인유저가 중간결재자일때
-		//log.debug("midApprover: {}", midApprover);
-		//log.debug("login: {}", loginUser.getMemNo());
+		log.debug("midApprover: {}", midApprover);
+		log.debug("login: {}", loginUser.getMemNo());
 		if(midApprover != null && midApprover.equals(loginUser.getMemNo())){
 			
 			int result = documentService.updateMidApprove(document);
@@ -476,5 +477,38 @@ public class DocumentController {
 		
 		return "redirect:/document/detail?no=" + document.getDocuNo();
 	}
+	
+	// 전자문서 최종결재자 처리사유 등록
+	@PostMapping("/registReason.do")
+	public String registReason(DocumentDto document 
+			 				 , RedirectAttributes redirectAttributes
+			 				 , HttpSession session) {
+
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String finalApprover = documentService.selectFinalApprover(document);
+		
+		// 로그인유저가 최종결재자일때
+		if(finalApprover != null && finalApprover.equals(loginUser.getMemNo())){
+			int result = documentService.updateRegistReason(document);
+		}else { // 최종결재자가 아닐때
+			redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 처리 권한이 없습니다.");
+		}
+		
+		return "redirect:/document/detail?no=" + document.getDocuNo();	
+	}
+	
+	
+	@ResponseBody
+	@PostMapping(value="/selectAt.do", produces="application/json; charset=utf-8")
+	public List<AttachmentDto> selectAttachmentList(@RequestParam("no") int no){
+		return documentService.selectAttachmentList(no); 
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/selectRefMem.do", produces="application/json; charset=utf-8")
+	public List<MemberDto> selectMemberList(){
+		return documentService.selectMemberList();
+	}
+	
 	
 }

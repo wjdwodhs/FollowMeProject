@@ -66,6 +66,22 @@
 		
 	</resultMap>
 	
+	<resultMap id="memberResult" type="MemberDto">
+		<id column="mem_no" property="memNo"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_grade" property="memGrade"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
+	<!-- 모든 직원 조회 (참조인 선택 리스트) -->
+	<select id="selectMemberList" resultMap="memberResult">
+		select mem_no, dept_name, mem_name, mem_grade
+		  from tb_mem m
+          join tb_department dp on m.dept_no = dp.dept_no
+		 where status = 'Y'
+     order by mem_no asc
+	</select>
 	
 	
 	<!-- 전체 리스트 조회 -->
@@ -82,6 +98,12 @@
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
 						)
+				or (
+						d.status != '3'
+						and d.mid_approve_status = 'Y'
+						and '대표' = #{memGrade}
+						and final_approver = #{memNo}
+						)			 
 	</select>
 	
 	<select id="selectDocumentList" resultMap="documentResultMap">
@@ -108,7 +130,7 @@
 						)
 				or (
 						d.status != '3'
-						and '대표' = #{memGrade}
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
 		 order
@@ -118,24 +140,31 @@
 	<select id="selectSearchListCount" resultType="_int">
 		select 
 					 count(*)
-		  from tb_document d
-		  join tb_mem m on (d.mem_no = m.mem_no)
-		 where ${condition} like '%' ||#{keyword}||'%'
+      from tb_document d
+      left join tb_document_category dc on d.docu_category = dc.docu_category
+		  left join tb_mem m on (d.mem_no = m.mem_no)
+		  left join tb_department dp on (d.dept_no = dp.dept_no)
+		 where ${condition} like '%' || #{keyword} || '%'
 		   and (
 		   			d.mem_no = #{memNo}
 					 )
 				or (
-			    	d.dept_no = #{deptNo}
+			    	m.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
+						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
 						)
 	</select>
 	
 	<select id="selectSearchList" resultMap="documentResultMap">
 	    select docu_no 
-         , dc.docu_category_name
+         , docu_category_name
          , docu_title
-         , mem_name
+         , m.mem_name
          , dept_name
          , to_char(regist_date, 'YYYY-MM-DD') as regist_date
          , d.status
@@ -143,8 +172,8 @@
      from tb_document d
      left join tb_document_category dc on d.docu_category = dc.docu_category
 		 left join tb_mem m on (d.mem_no = m.mem_no)
-		 left join tb_department dp on (m.dept_no = dp.dept_no)
-		where ${condition} like '%' ||#{keyword}||'%'
+		 left join tb_department dp on (d.dept_no = dp.dept_no)
+		where ${condition} like '%' || #{keyword} || '%'
 		 	and	 	
 		 		 	 (
 			      d.mem_no = #{memNo}
@@ -154,16 +183,23 @@
 			    	and '팀장' = #{memGrade}
 			    	and d.status != '3'
 						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
+						)
 		 order
-		    by docu_no desc
+		    by d.docu_no desc
 	</select>
 	
 		<select id="statusSearchListCount" resultType="_int">
 		select 
 					 count(*)
-		  from tb_document d
-		  join tb_mem m on (d.mem_no = m.mem_no)
-		 where ${condition} like '%' ||#{keyword}||'%'
+      from tb_document d
+      left join tb_document_category dc on d.docu_category = dc.docu_category
+		  left join tb_mem m on (d.mem_no = m.mem_no)
+		  left join tb_department dp on (d.dept_no = dp.dept_no)
+	 	where ${condition} like '%' || #{keyword} || '%'
 		   and (
 		   			d.mem_no = #{memNo}
 		   			and d.status = #{status}
@@ -173,6 +209,11 @@
 			    	and '팀장' = #{memGrade}
 			    	and d.status = #{status}
 			    	and d.status != '3'
+						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
 						)
 	</select>
 	
@@ -200,6 +241,11 @@
 			    	and '팀장' = #{memGrade}
 			    	and d.status = #{status}
 						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
+						)
 		 order
 		    by docu_no desc
 	</select>
@@ -219,7 +265,13 @@
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
+						)
 	</select>
+	
 	
 	
 	
@@ -245,6 +297,11 @@
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
+						)
 		 order
 		    by docu_no desc
 	</select>
@@ -263,6 +320,11 @@
 			    	d.status = '1'
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
+						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
 						)
 	</select>
 	
@@ -288,6 +350,11 @@
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
 						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
+						)
 		 order
 		    by docu_no desc
 	</select>
@@ -306,6 +373,11 @@
 			    	d.status = '2'
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
+						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
 						)
 	</select>
 	
@@ -330,6 +402,11 @@
 			    	d.status = '2'
 			    	and d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
+						)
+				or (
+						d.status != '3'
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
+						and final_approver = #{memNo}
 						)
 		 order
 		    by docu_no desc
@@ -603,8 +680,8 @@
 		  (
 		  	seq_fileno.nextval
 		  , #{filePath}
-		  , #{systemName}
 		  , #{originName}
+		  , #{systemName}
 		  , #{type}
 		  <choose>
 		  	<when test="refNo == 0">
@@ -617,7 +694,7 @@
 		  )
 	</insert>
 	
-	
+	<!-- 전자문서 조회기능 (detail) -->
 	<select id="selectDocument" resultMap="documentResultMap">
 	
 		select docu_no, docu_category, d.mem_no, m.mem_name, m.mem_grade, d.dept_no, dept_name, to_char(regist_date, 'YYYY-MM-DD') as regist_date
@@ -705,6 +782,13 @@
 		 where docu_no = #{docuNo}
 	</update>	
 	
+	<update id="updateProcessReason">
+		update
+					 tb_document
+			 set process_reason = #{processReason}
+		 where docu_no = #{docuNo}
+	</update>
+	
 	<!-- 중간결재자 불러오기 -->
 	<select id="selectMidApprover" resultType="java.lang.String">
 		select mid_approver
@@ -719,8 +803,18 @@
 		 where docu_no = #{docuNo}
 	</select>
 
-
-
+	<!-- Ajax 첨부파일 리스트 불러오기(상세조회페이지에서) -->
+	<select id="selectAttachmentList" resultMap="attachmentResultMap">
+		select file_no
+				 , file_path
+				 , origin_name
+	 		   , system_name
+		 	   , type
+			   , ref_no
+		  from tb_attachment
+		 where ref_no = #{docuNo}
+		   and type = 'D'
+	</select>
 
 
 

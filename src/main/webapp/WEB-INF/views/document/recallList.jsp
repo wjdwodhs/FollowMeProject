@@ -110,12 +110,14 @@
                 
                 <div style="margin-top:50px;">
                     <ul class="menu">
-                        <li class="menu-item">
-                            <a href="${ contextPath }/document/insertForm" class="menu-link">
-                                <span class="menu-icon"><i data-feather="edit-3"></i></span>
-                                <span class="menu-text"> 문서 작성하기 </span>
-                            </a>
-                        </li>
+		                    <c:if test="${loginUser.memGrade != '대표'}">
+		                        <li class="menu-item">
+		                            <a href="${ contextPath }/document/insertForm" class="menu-link">
+		                                <span class="menu-icon"><i data-feather="edit-3"></i></span>
+		                                <span class="menu-text"> 문서 작성하기 </span>
+		                            </a>
+		                        </li>
+                        </c:if>
                         <li class="menu-item" style="margin-top:50px;">
                             <a href="${ contextPath }/document/list" class="menu-link">
                                 <span class="menu-icon"><i data-feather="archive"></i></span>
@@ -226,9 +228,11 @@
 																				            </script>
 																			          </c:if>
                                             </div>
-                                            <div class="btn-group">
-                                            		<a href="${ contextPath }/document/insertForm" class="btn btn-primary btn-middle"> 작성하기 </a>
-                                            </div>
+                                            <c:if test="${loginUser.memGrade != '대표'}">
+		                                            <div class="btn-group">
+		                                            		<a href="${ contextPath }/document/insertForm" class="btn btn-primary btn-middle"> 작성하기 </a>
+		                                            </div>
+                                            </c:if>
                                         </div>
                                         
                                         
