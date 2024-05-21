@@ -119,9 +119,9 @@ public class CalendarController {
 		        String content = eventData.getContent();
 		        String category = eventData.getCategory();
 		        String type = null;
-		        if(category.equals("#B04C4C")) {
+		        if(category.equals("#8C3737")) {
 		        	type="E";
-		        }else if(category.equals("#C55D5D")) {
+		        }else if(category.equals("#BA6B6B")) {
 		        	type="D";
 		        }else {
 		        	type="C";
@@ -176,9 +176,9 @@ public class CalendarController {
 		        String category = eventData.getCategory();
 		        String type = null;
 		        
-		        if(category.equals("#B04C4C")) {
+		        if(category.equals("#8C3737")) {
 		        	type="E";
-		        }else if(category.equals("#C55D5D")) {
+		        }else if(category.equals("#BA6B6B")) {
 		        	type="D";
 		        }else {
 		        	type="C";

@@ -40,54 +40,57 @@
  	cursor:pointer;
  }
  
+/* 버튼 E: 어두운 색상, 밝은 텍스트 */
 .btn-customE {
-    background-color: #B04C4C; /* 기존보다 조금 더 밝게 */
+    background-color: #8C3737; /* 어두운 색상 */
     width: 265px;
     height: 37px;
-    color: white; /* 텍스트 색상 */
+    color: #ffffff; /* 흰색 텍스트 */
     border: none; /* 버튼 테두리 제거 */
 }
 
 .btn-customE:hover {
-    background-color: #993F3F; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+    background-color: #6F2E2E; /* 호버 시 배경색: 더 어둡게 */
 }
 
+/* 버튼 D: 중간 색상, 밝은 텍스트 */
 .btn-customD {
-    background-color: #C55D5D; /* 기존보다 조금 더 밝게 */
+    background-color: #BA6B6B; /* 중간 색상 */
     width: 265px;
     height: 37px;
-    color: white; /* 텍스트 색상 */
+    color: #ffffff; /* 흰색 텍스트 */
     border: none; /* 버튼 테두리 제거 */
 }
 
 .btn-customD:hover {
-    background-color: #A64E4E; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+    background-color: #9F5151; /* 호버 시 배경색: 더 어둡게 */
 }
 
+/* 버튼 C: 밝은 색상, 어두운 텍스트 */
 .btn-customC {
-    background-color: #DE8286; /* 기준 색상 */
+    background-color: #FF7F7F; /* 밝은 색상 */
     width: 265px;
     height: 37px;
-    color: white; /* 텍스트 색상 */
+    color: #ffffff; /* 흰색 텍스트 */
     border: none; /* 버튼 테두리 제거 */
 }
 
 .btn-customC:hover {
-    background-color: #C06B6E; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+    background-color: #E66666; /* 호버 시 배경색: 더 어둡게 */
 }
 
+/* 버튼 A: 가장 밝은 색상, 어두운 텍스트 */
 .btn-customA {
     background-color: #FFB2A5; /* 가장 밝은 색상 */
     width: 265px;
     height: 37px;
-    color: white; /* 텍스트 색상 */
+    color: #ffffff; /* 흰색 텍스트 */
     border: none; /* 버튼 테두리 제거 */
 }
 
 .btn-customA:hover {
-    background-color: #E09F93; /* 호버 시 배경색: 기본색보다 약간 어둡게 */
+    background-color: #E09F93; /* 호버 시 배경색: 더 어둡게 */
 }
-
 
 
 
@@ -191,14 +194,14 @@
 														<div class="mb-3">
 															<label class="form-label">시작 일자</label> <input
 																class="form-control" type="datetime-local" name="start"
-																id="event-start" />
+																id="event-start" min=""/>
 														</div>
 													</div>
 													<div class="col-12">
 														<div class="mb-3">
 															<label class="form-label">종료 일자</label> <input
 																class="form-control" type="datetime-local" name="end"
-																id="event-end" />
+																id="event-end" min=""/>
 														</div>
 													</div>
 													<div class="col-12">
@@ -207,16 +210,16 @@
 													    <select class="form-select" name="category" id="event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#B04C4C" selected>직원</option>
-													                <option value="#C55D5D">부서</option>
+													                <option value="#8C3737" selected>개인</option>
+													                <option value="#BA6B6B">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#B04C4C" selected>직원</option>
-													                <option value="#C55D5D">부서</option>
-													                <option value="#DE8286">회사</option>
+													                <option value="#8C3737" selected>개인</option>
+													                <option value="#BA6B6B">부서</option>
+													                <option value="#FF7F7F">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#8C3737" selected>개인</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -290,16 +293,16 @@
 													    <select class="form-select" name="category" id="modify-event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#B04C4C" selected>직원</option>
-													                <option value="#C55D5D">부서</option>
+													                <option value="#8C3737" selected>개인</option>
+													                <option value="#BA6B6B">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#B04C4C" selected>직원</option>
-													                <option value="#C55D5D">부서</option>
-													                <option value="#DE8286">회사</option>
+													                <option value="#8C3737" selected>개인</option>
+													                <option value="#BA6B6B">부서</option>
+													                <option value="#FF7F7F">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#B04C4C" selected>직원</option>
+													                <option value="#8C3737" selected>개인</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -358,14 +361,14 @@
 														<div class="mb-3">
 															<label class="form-label">시작 일자</label> <input
 																class="form-control" type="datetime-local" name="start"
-																id="chk-event-start" />
+																id="chk-event-start" min=""/>
 														</div>
 													</div>
 													<div class="col-12">
 														<div class="mb-3">
 															<label class="form-label">종료 일자</label> <input
 																class="form-control" type="datetime-local" name="end"
-																id="chk-event-end" />
+																id="chk-event-end" min=""/>
 														</div>
 													</div>
 													<div class="col-12">
@@ -374,9 +377,9 @@
 															<select
 																class="form-select" name="category" id="chk-event-category"
 																required>
-																<option value="#B04C4C" selected>직원</option>
-																<option value="#C55D5D">부서</option>
-																<option value="#DE8286">회사</option>
+																<option value="#8C3737" selected>개인</option>
+																<option value="#BA6B6B">부서</option>
+																<option value="#FF7F7F">회사</option>
 															</select>
 														</div>
 													</div>
@@ -416,6 +419,15 @@
 
 	</div>
 	<!-- END wrapper -->
+<script>
+
+//- 예약조회/신청할 때 전날 선택 안되도록
+document.querySelectorAll('input[type="datetime-local"]').forEach(function(minday){
+	minday.min = new Date().toISOString().split('T')[0];
+})
+
+</script>
+
 
 
 	<!-- Theme Settings -->
@@ -973,81 +985,82 @@
 	<script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
 	
 	<script>
-	
+		
 			$(function () { // 페이지 로드 시 실행될 함수
 				
 				var currentUserID = "${loginUser.memNo}";
 				
-		  $.ajax({
-		    url: "/follow/calendar/list.do", // 일정 리스트 조회 URL
-		    method: "GET", 
-		    dataType: "json", 
-		    success: function (data) { 
-		        const targetDiv = document.getElementById('calendar');
-		        const holidaySource = {
-		            googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
-		            backgroundColor: 'red'  // 공휴일 배경색 지정
-		        };
-		        
-		    	// 캘린더 설정
-		        const calendar = new FullCalendar.Calendar(targetDiv, {
-		            slotDuration: "00:15:00",
-		            slotMinTime: "08:00:00",
-		            slotMaxTime: "19:00:00",
-		            eventTimeFormat: { // like '14:30:00'
-							    hour: '2-digit',
-							    minute: '2-digit',
-							    hour12: false
-							  },
-		            themeSystem: "bootstrap",
-		            customButtons: {
-		                PlusButton: {
-		                    text: "일정 추가하기",
-		                    click: function () {
-		                        // 부트스트랩 모달 열기
-		                        $("#event-addmodal").modal("show");
-		                    }
-		                },
-		            },
-		            bootstrapFontAwesome: false,
-		            buttonText: {
-		                today: "오늘",
-		                month: "월별",
-		                week: "주간",
-		                day: "일별",
-		                list: "오늘의 일정",
-		                prev: "이전",
-		                next: "다음"
-		            },
-		            initialView: "dayGridMonth",
-		            titleFormat: function (date) {
-		                year = date.date.year;
-		                month = date.date.month + 1;
-		                return year + "년 " + month + "월";
-		            },
-		            handleWindowResize: true,
-		            headerToolbar: {
-		                left: "prev,next today,PlusButton",
-		                center: "title",
-		                right: "dayGridMonth,timeGridWeek,timeGridDay"
-		            },
-		            eventSources: [holidaySource], // 공휴일 추가
-		            editable: false,
-		            droppable: false,
-		            selectable: true,
-		            events: data, // 데이터를 가져와서 캘린더에 표시
-		            dateClick: function (eventInfo) {
-		                console.log(eventInfo);
-		                dateClickEvent(eventInfo);
-		            },
-		            eventClick: function (eventInfo) {
-		                eventInfo.jsEvent.preventDefault();
-		                eventClickEvent(eventInfo);
-		            },
-		            googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo',
-		            
-		        });
-		        
+			  $.ajax({
+			    url: "${contextPath}/calendar/list.do", // 일정 리스트 조회 URL
+			    method: "GET", 
+			    dataType: "json", 
+			    success: function (data) { 
+			        const targetDiv = document.getElementById('calendar');
+			        const holidaySource = {
+			            googleCalendarId: 'ko.south_korea#holiday@group.v.calendar.google.com',
+			            backgroundColor: 'red'  // 공휴일 배경색 지정
+			        };
+			        
+			    	// 캘린더 설정
+			        calendar = new FullCalendar.Calendar(targetDiv, {
+			            slotDuration: "00:15:00",
+			            slotMinTime: "08:00:00",
+			            slotMaxTime: "19:00:00",
+			            eventTimeFormat: { // like '14:30:00'
+								    hour: '2-digit',
+								    minute: '2-digit',
+								    hour12: false
+								  },
+			            themeSystem: "bootstrap",
+			            customButtons: {
+			                PlusButton: {
+			                    text: "일정 추가하기",
+			                    click: function () {
+			                        // 부트스트랩 모달(일정 추가)
+			                        $("#event-addmodal").modal("show");
+			                    }
+			                },
+			            },
+			            bootstrapFontAwesome: false,
+			            buttonText: {
+			                today: "오늘",
+			                month: "월별",
+			                week: "주간",
+			                day: "일별",
+			                list: "오늘의 일정",
+			                prev: "이전",
+			                next: "다음"
+			            },
+			            initialView: "dayGridMonth",
+			            titleFormat: function (date) {
+			                year = date.date.year;
+			                month = date.date.month + 1;
+			                return year + "년 " + month + "월";
+			            },
+			            handleWindowResize: true,
+			            headerToolbar: {
+			                left: "prev,next today,PlusButton",
+			                center: "title",
+			                right: "dayGridMonth,timeGridWeek,timeGridDay"
+			            },
+			            eventSources: [holidaySource], // 공휴일 추가
+			            editable: false,
+			            droppable: false,
+			            selectable: true,
+			            events: data, // 데이터를 가져와서 캘린더에 표시
+			            dateClick: function (eventInfo) {
+			                console.log(eventInfo);
+			                dateClickEvent(eventInfo);
+			            },
+			            eventClick: function (eventInfo) {
+			            	  console.log(eventInfo); 
+			                eventInfo.jsEvent.preventDefault();
+			                eventClickEvent(eventInfo);
+			            },
+			            googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo',
+			            
+			        });
+			        
 		       
 		
 		       // const calendar = updateCalendar(targetDiv,holidaySource,data);
@@ -1057,10 +1070,10 @@
 	
 				         // 서버에 해당 타입의 일정 조회 요청 보내기
 				         $.ajax({
-				             url: "/follow/calendar/listType.do", // 타입별 일정 조회 URL로 변경
+				             url: "${contextPath}/calendar/listType.do", // 타입별 일정 조회 URL로 변경
 				             method: "GET",
 				             dataType: "json",
-				             data: { type: type }, // 클릭한 버튼의 타입 전송
+				             data: { type: type }, 
 				             success: function(data) {
 				                 // 서버에서 받은 데이터로 FullCalendar 업데이트
 				                 calendar.removeAllEvents(); // 기존 일정 모두 제거
@@ -1098,7 +1111,7 @@
 		            } else { // 일정 추가
 		            	console.log(eventData);
 		                $.ajax({
-		                    url: "/follow/calendar/insert.do",
+		                    url: "${contextPath}/calendar/insert.do",
 		                    type: "POST",
 		                    contentType: "application/json; charset=utf-8",
 		                    data: JSON.stringify(eventData),
@@ -1169,7 +1182,7 @@
 		                
 		            };
 		            $.ajax({
-		                url: "/follow/calendar/update.do",
+		                url: "${contextPath}/calendar/update.do",
 		                type: "POST",
 		                contentType: "application/json; charset=utf-8",
 		                data: JSON.stringify(eventData),
@@ -1190,7 +1203,7 @@
 		            var confirmation = confirm("일정을 삭제하시겠습니까?");
 		            if (confirmation) {
 		                $.ajax({
-		                    url: "/follow/calendar/delete.do",
+		                    url: "${contextPath}/calendar/delete.do",
 		                    type: "POST",
 		                    contentType: "application/json; charset=utf-8",
 		                    data: JSON.stringify({ no: eventCalNo }),
@@ -1205,36 +1218,12 @@
 		            }
 		        });
 				
-		        
-				
-				/*
-		  	// 카테고리별 조회 '전체' 버튼 클릭 시
-		     $(".btn-customA").click(function() {
-		         // 서버에 전체 일정 조회 요청 보내기
-		         $.ajax({
-		             url: "/follow/calendar/list.do", // 전체 일정 조회 URL
-		             method: "GET",
-		             dataType: "json",
-		             success: function(data) {
-		                 // 서버에서 받은 데이터로 FullCalendar 업데이트
-		                 calendar.removeAllEvents(); // 기존 일정 모두 제거
-		                var calendar =  updateCalendar(targetDiv,holidaySource,data);
-		                 calendar.addEventSource(data); // 새로운 일정 데이터 추가
-		             },
-		             error: function(xhr, status, error) {
-		                 console.error("전체 일정 조회 실패:", error);
-		             }
-		         });
-		     });
-		        
-			*/
-		     
 		        calendar.render();
 		    }
 			});
 		  
 		});
-			
+	
 		// 날짜 형식 지정 함수
 		function formatDate(date) {
 			const d1 = new Date(date);
@@ -1308,9 +1297,7 @@
         	
         	return calendar;
         }
-		
-		
-		
+
 </script>
 	
 </body>
