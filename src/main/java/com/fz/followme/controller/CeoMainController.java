@@ -67,7 +67,7 @@ public class CeoMainController {
 		
 	}
 	
-	/*
+	
 	@ResponseBody
 	@GetMapping("/getTodo")
 	public Map<String, Object> getTodo(HttpServletRequest request) {
@@ -82,7 +82,7 @@ public class CeoMainController {
 	    response.put("todoList", todoList);
 	    return response;
 	}
-	*/
+	
 	
 
 	/**
