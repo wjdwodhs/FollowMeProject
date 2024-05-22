@@ -1,5 +1,7 @@
 package com.fz.followme.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,14 @@ public class AttendanceDao {
 
 	public AttendanceDto selectStatus(String memNo) {
 		return sqlSessionTemplate.selectOne("attendanceMapper.selectStatus", memNo);
+	}
+
+	public List<AttendanceDto> selectAttendance(String memNo) {
+		return sqlSessionTemplate.selectList("attendanceMapper.selectAttendance",memNo);
+	}
+
+	public int updateErWorktime(String memNo) {
+		return sqlSessionTemplate.update("attendanceMapper.updateErWorktime", memNo);
 	}
 	
 	

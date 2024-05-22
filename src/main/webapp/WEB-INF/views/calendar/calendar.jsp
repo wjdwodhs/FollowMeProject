@@ -419,14 +419,7 @@
 
 	</div>
 	<!-- END wrapper -->
-<script>
 
-//- 예약조회/신청할 때 전날 선택 안되도록
-document.querySelectorAll('input[type="datetime-local"]').forEach(function(minday){
-	minday.min = new Date().toISOString().split('T')[0];
-})
-
-</script>
 
 
 
@@ -1061,9 +1054,7 @@ document.querySelectorAll('input[type="datetime-local"]').forEach(function(minda
 			            
 			        });
 			        
-		       
-		
-		       // const calendar = updateCalendar(targetDiv,holidaySource,data);
+		      // const calendar = updateCalendar(targetDiv,holidaySource,data);
 			    // 카테고리별 일정 조회
 				     $(".btn-customA, .btn-customE, .btn-customD, .btn-customC").click(function() {
 				         var type = $(this).data("type"); // 클릭한 버튼의 타입 가져오기
@@ -1084,53 +1075,6 @@ document.querySelectorAll('input[type="datetime-local"]').forEach(function(minda
 				             }
 				         });
 				     });
-			    
-		        // 일정 저장하기 버튼 클릭 시 실행되는 함수
-		        $("#btn-save-event").on("click", function () {
-		            var eventData = {
-		                title: $("#event-title").val(),
-		                content: $("#event-content").val(),
-		                start: $("#event-start").val(),
-		                end: $("#event-end").val(),
-		                category: $("#event-category").val(),
-		                backgroundColor : $("#event-category").val(),
-		                memNo : $("#event-memNo").val(),
-		                calNo : $("#event-calNo").val(),
-		            };
-		    
-		            console.log(eventData);
-		            // 빈값 입력 시 오류 처리
-		            if (
-		                eventData.title == "" ||
-		                eventData.start == "" ||
-		                eventData.end == ""
-		            ) {
-		                alert("입력하지 않은 값이 있습니다.");
-		            } else if ($("#start").val() > $("#end").val()) {
-		                alert("시간을 잘못입력 하셨습니다.");
-		            } else { // 일정 추가
-		            	console.log(eventData);
-		                $.ajax({
-		                    url: "${contextPath}/calendar/insert.do",
-		                    type: "POST",
-		                    contentType: "application/json; charset=utf-8",
-		                    data: JSON.stringify(eventData),
-		                    dataType: "json",
-		                    success: function () {
-		                        alert('일정이 성공적으로 추가되었습니다.');
-		                        calendar.addEvent(eventData); // 새로운 이벤트 추가
-		                        location.reload();
-		                        $("#event-addmodal").modal("hide");
-		                        $("#event-title").val("");
-		                        $("#event-content").val("");
-		                        $("#event-start").val("");
-		                        $("#event-end").val("");
-		                        $("#event-category").val("");
-		                        $("#event-memNo").val("");
-		                    }
-		                });
-		            }
-		        });
 		    
 		        // 이벤트 선택 시 수정 모달 표시 
 		        const eventClickEvent = (info) => {
@@ -1223,6 +1167,10 @@ document.querySelectorAll('input[type="datetime-local"]').forEach(function(minda
 			});
 		  
 		});
+			
+			
+			
+			
 	
 		// 날짜 형식 지정 함수
 		function formatDate(date) {
@@ -1233,70 +1181,53 @@ document.querySelectorAll('input[type="datetime-local"]').forEach(function(minda
 			return today.toISOString().slice(0, 16);
 		}
 		
+		// 일정 저장하기 버튼 클릭 시 실행되는 함수
 		
-		function updateCalendar(targetDiv,holidaySource,data){
-        	// 캘린더 설정
-	        var calendar = new FullCalendar.Calendar(targetDiv, {
-	            slotDuration: "00:15:00",
-	            slotMinTime: "08:00:00",
-	            slotMaxTime: "19:00:00",
-	            eventTimeFormat: { // like '14:30:00'
-						    hour: '2-digit',
-						    minute: '2-digit',
-						    hour12: false
-						  },
-	            themeSystem: "bootstrap",
-	            customButtons: {
-	                PlusButton: {
-	                    text: "일정 추가하기",
-	                    click: function () {
-	                        // 부트스트랩 모달 열기
-	                        $("#event-addmodal").modal("show");
-	                    }
-	                },
-	            },
-	            bootstrapFontAwesome: false,
-	            buttonText: {
-	                today: "오늘",
-	                month: "월별",
-	                week: "주간",
-	                day: "일별",
-	                list: "오늘의 일정",
-	                prev: "이전",
-	                next: "다음"
-	            },
-	            initialView: "dayGridMonth",
-	            titleFormat: function (date) {
-	                year = date.date.year;
-	                month = date.date.month + 1;
-	                return year + "년 " + month + "월";
-	            },
-	            handleWindowResize: true,
-	            headerToolbar: {
-	                left: "prev,next today,PlusButton",
-	                center: "title",
-	                right: "dayGridMonth,timeGridWeek,timeGridDay"
-	            },
-	            eventSources: [holidaySource], // 공휴일 추가
-	            editable: false,
-	            droppable: false,
-	            selectable: true,
-	            events: data, // 데이터를 가져와서 캘린더에 표시
-	            dateClick: function (eventInfo) {
-	                console.log(eventInfo);
-	                dateClickEvent(eventInfo);
-	               
-	            },
-	            eventClick: function (eventInfo) {
-	                eventInfo.jsEvent.preventDefault();
-	                eventClickEvent(eventInfo);
-	            },
-	            googleCalendarApiKey: 'AIzaSyC0QldKNU6DxP9twtldrmsnfJPimNvzRXo',
-	            
-	        });
-        	
-        	return calendar;
+    function saveEvent(){
+        var eventData = {
+            title: $("#event-title").val(),
+            content: $("#event-content").val(),
+            start: $("#event-start").val(),
+            end: $("#event-end").val(),
+            category: $("#event-category").val(),
+            backgroundColor : $("#event-category").val(),
+            memNo : $("#event-memNo").val(),
+            calNo : $("#event-calNo").val(),
+        };
+
+        console.log(eventData);
+        // 빈값 입력 시 오류 처리
+        if (
+            eventData.title == "" ||
+            eventData.start == "" ||
+            eventData.end == ""
+        ) {
+            alert("입력하지 않은 값이 있습니다.");
+        } else if ($("#start").val() > $("#end").val()) {
+            alert("시간을 잘못입력 하셨습니다.");
+        } else { // 일정 추가
+        	console.log(eventData);
+            $.ajax({
+                url: "${contextPath}/calendar/insert.do",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(eventData),
+                dataType: "json",
+                success: function () {
+                    alert('일정이 성공적으로 추가되었습니다.');
+                    calendar.addEvent(eventData); // 새로운 이벤트 추가
+                    location.reload();
+                    $("#event-addmodal").modal("hide");
+                    $("#event-title").val("");
+                    $("#event-content").val("");
+                    $("#event-start").val("");
+                    $("#event-end").val("");
+                    $("#event-category").val("");
+                    $("#event-memNo").val("");
+                }
+            });
         }
+	};
 
 </script>
 	

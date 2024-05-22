@@ -128,16 +128,100 @@
 																				</div>
 			                                </div>
 			                                <div style="margin-top: 20px;">
-			                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;">출근하기</button>&nbsp &nbsp &nbsp
-			                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px;">퇴근하기</button>
+			                                    <button type="button" class="btn btn-soft-success btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#in-check" style="height: 80px;" id="startBt">출근하기</button>&nbsp &nbsp &nbsp
+			                                    <button type="button" class="btn btn-soft-blue btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#out-check" style="height: 80px; pointer-events: none;" id="endBt">퇴근하기</button>
 			                                </div>
 			                                <div style="margin-top: 10px;"> 
-			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="업무">업무</button>&nbsp &nbsp 
-			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 15px;" value="회의">회의</button>
-			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외출">외출</button>&nbsp &nbsp 
-			                                    <button type="button" class="btn btn-outline-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#check-modal" style="width: 130px; height: 40px; margin-top: 20px;" value="외근">외근</button>
+			                                    <button type="button" class="btn btn-soft-primary btn-lg waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#early-check" style="height: 80px; pointer-events: none;" id="earlyBt">조퇴하기</button>&nbsp &nbsp &nbsp
 			                                </div>
 			                           		</div>
+			                           		
+			                           		 <!-- 조퇴하기 버튼 모달 -->
+					                        <div id="early-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+					                            <div class="modal-dialog modal-top">
+					                                <div class="modal-content">
+					                                    <div class="modal-header">
+					                                        <h4 class="modal-title" id="topModalLabel">임직원 근무 변경</h4>
+					                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					                                    </div>
+					                                    <div class="modal-body">
+					                                        <h5>조퇴하시겠습니까?</h5>
+					                                        <p>확인을 누르시면 근무형태가 '조퇴'으로 변경됩니다.</p>
+					                                    </div>
+					                                    <div class="modal-footer">
+					                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+					                                        <button type="button" class="btn btn-primary" onclick="endEarly();" data-bs-dismiss="modal">확인</button>
+					                                    </div>
+					                                </div><!-- /.modal-content -->
+					                            </div><!-- /.modal-dialog -->
+					                        </div><!-- /.modal -->
+			                            
+			                            <script>
+			                            	function endEarly(){
+			                            		
+			                            		$.ajax({
+															             url: "${contextPath}/attendance/updateEr.do", // 조퇴하기 버튼 클릭시 출근
+															             method: "GET",
+															             contentType: "application/json; charset=utf-8",
+															             success: function(data) {
+															            	 $.ajax({
+								                                url: '${contextPath}/attendance/list.do', 
+								                                method: 'GET',
+								                                success: function(response) {
+							                                    response.forEach(function(item) { 
+							                                        if (item !== null) {
+							                                        	 // 날짜 yy-mm-dd로 설정
+							                                            var d1 = new Date(item.attDate);
+							                                            var offset = new Date().getTimezoneOffset() * 60000;
+							                                            var today = new Date(d1 - offset);
+							                                            var attDate = today.toISOString().slice(0, 10); 
+							                                            var currentDate = new Date().toISOString().split('T')[0];
+							                                        	
+							                                            // 출근 시간 HH:MM:SS로 설정
+							                                            var dSt = new Date(item.startTime);
+							                                            var offsetSt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+							                                            var localTimeSt = new Date(dSt.getTime() + offsetSt); // 로컬 타임존에 맞춘 시간
+
+							                                            // 시, 분, 초 추출
+							                                            var hoursSt = localTimeSt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var minutesSt = localTimeSt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var secondsSt = localTimeSt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var timeStringSt = hoursSt + ':' + minutesSt + ':' + secondsSt; // 시간을 HH:MM:SS 형식으로 조합
+							                                            
+							                                            if (item.endTime !== null) { // endTime이 null이 아닌 경우에만 시간 설정
+									                                            // 퇴근 시간 HH:MM:SS로 설정
+									                                            var dEt = new Date(item.endTime);
+									                                            var offsetEt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+									                                            var localTimeEt = new Date(dEt.getTime() + offsetEt); // 로컬 타임존에 맞춘 시간
+				
+									                                            // 시, 분, 초 추출
+									                                            var hoursEt = localTimeEt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var minutesEt = localTimeEt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var secondsEt = localTimeEt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var timeStringEt = hoursEt + ':' + minutesEt + ':' + secondsEt; // 시간을 HH:MM:SS 형식으로 조합
+							                                            }
+							                                       
+							                                            // 오늘날짜와 일치하면 출근 다시 못찍도록
+							                                            if (attDate === currentDate) {
+							                                            	 $('#startBt').text(timeStringSt);
+							                                            	 $('#endBt').text(timeStringEt); 
+									                                                
+									                                           }
+									                                        }
+									                                    });
+										                                }
+										                            });
+															            	 
+															             $('#attendanceIndicator').text('출근 전'); 
+					                       	 				 $('#early-check').modal('hide');
+					                       	 				 $('#earlyBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                       	 				 $('#endBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+															             }
+															         });
+			                            	}
+			                            
+			                            </script>
+			                            
 			                            
 			                            
 			                            <!-- 출근하기 버튼 모달 -->
@@ -161,23 +245,147 @@
 					                        </div><!-- /.modal -->
 					                        
 					                        <script>
+					                        $(document).ready(function() {
+					                            $.ajax({
+					                                url: '${contextPath}/attendance/list.do', 
+					                                method: 'GET',
+					                                success: function(response) {
+					                                    response.forEach(function(item) { 
+					                                        if (item !== null) {
+					                                        	 // 날짜 yy-mm-dd로 설정
+					                                            var d1 = new Date(item.attDate);
+					                                            var offset = new Date().getTimezoneOffset() * 60000;
+					                                            var today = new Date(d1 - offset);
+					                                            var attDate = today.toISOString().slice(0, 10); 
+					                                            var currentDate = new Date().toISOString().split('T')[0];
+					                                           
+					                                            // 출근 시간 HH:MM:SS로 설정
+					                                            var dSt = new Date(item.startTime);
+					                                            var offsetSt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+					                                            var localTimeSt = new Date(dSt.getTime() + offsetSt); // 로컬 타임존에 맞춘 시간
+
+					                                            // 시, 분, 초 추출
+					                                            var hoursSt = localTimeSt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+					                                            var minutesSt = localTimeSt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+					                                            var secondsSt = localTimeSt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+					                                            var timeStringSt = hoursSt + ':' + minutesSt + ':' + secondsSt; // 시간을 HH:MM:SS 형식으로 조합
+					                                            
+					                                            if (item.endTime !== null) { // endTime이 null이 아닌 경우에만 시간 설정
+							                                            // 퇴근 시간 HH:MM:SS로 설정
+							                                            var dEt = new Date(item.endTime);
+							                                            var offsetEt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+							                                            var localTimeEt = new Date(dEt.getTime() + offsetEt); // 로컬 타임존에 맞춘 시간
+		
+							                                            // 시, 분, 초 추출
+							                                            var hoursEt = localTimeEt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var minutesEt = localTimeEt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var secondsEt = localTimeEt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var timeStringEt = hoursEt + ':' + minutesEt + ':' + secondsEt; // 시간을 HH:MM:SS 형식으로 조합
+					                                            }
+							                                            console.log(timeStringSt); // 출근 시간 출력
+							                                            console.log(timeStringEt); // 퇴근 시간 출력
+							                                            console.log(attDate);
+							                                            console.log(currentDate);
+							                                           
+					                                         
+					                                            // 오늘날짜와 일치하면 출근 다시 못찍도록
+					                                            if (attDate === currentDate) {
+					                                            		 $('#startBt').css('pointer-events', 'auto');
+					                                            		 $('#endBt').css('pointer-events', 'auto');
+					                                                
+					                                                if(item.type === 'A'){
+						                                            	  $('#startBt').text(timeStringSt); 
+						                                            	  $('#startBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                                                }
+					                                                if(item.type === 'B'){
+					                                                	$('#startBt').text(timeStringSt); 
+					                                                	$('#startBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                                                	$('#endBt').text(timeStringEt); 
+					                                                	$('#endBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                                                	$('#earlyBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+						                                              }
+					                                                
+					                                                if(item.type === 'C'){
+					                                                	$('#startBt').text(timeStringSt); 
+					                                                	$('#startBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                                                	$('#endBt').text(timeStringEt); 
+					                                                	$('#endBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+					                                                	$('#earlyBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+						                                              }
+					                                                
+					                                            }
+					                                        }
+					                                    });
+					                                }
+					                            });
+					                        });
+					                        </script>
 					                        
+					                        <script>
 					                        
 					                        function startWorktime(){
-					                        
+					                         
 					                        	$.ajax({
 														             url: "${contextPath}/attendance/insert.do", // 출근하기 버튼 클릭시 출근
 														             method: "POST",
 														             contentType: "application/json; charset=utf-8",
 														             success: function() {
-														            	   console.log('ㅎㅇㅎㅇ');
-														            	   $('#attendanceIndicator').text('출근'); 
-					                        	 				 $('#in-check').modal('hide');
-														   
+														            	 $.ajax({
+										                                url: '${contextPath}/attendance/list.do', 
+										                                method: 'GET',
+										                                success: function(response) {
+									                                    response.forEach(function(item) { 
+									                                        if (item !== null) {
+									                                        	 // 날짜 yy-mm-dd로 설정
+									                                            var d1 = new Date(item.attDate);
+									                                            var offset = new Date().getTimezoneOffset() * 60000;
+									                                            var today = new Date(d1 - offset);
+									                                            var attDate = today.toISOString().slice(0, 10); 
+									                                            var currentDate = new Date().toISOString().split('T')[0];
+									                                        	
+									                                            // 출근 시간 HH:MM:SS로 설정
+									                                            var dSt = new Date(item.startTime);
+									                                            var offsetSt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+									                                            var localTimeSt = new Date(dSt.getTime() + offsetSt); // 로컬 타임존에 맞춘 시간
+	
+									                                            // 시, 분, 초 추출
+									                                            var hoursSt = localTimeSt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var minutesSt = localTimeSt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var secondsSt = localTimeSt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var timeStringSt = hoursSt + ':' + minutesSt + ':' + secondsSt; // 시간을 HH:MM:SS 형식으로 조합
+									                                            
+									                                            if (item.endTime !== null) { // endTime이 null이 아닌 경우에만 시간 설정
+											                                            // 퇴근 시간 HH:MM:SS로 설정
+											                                            var dEt = new Date(item.endTime);
+											                                            var offsetEt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+											                                            var localTimeEt = new Date(dEt.getTime() + offsetEt); // 로컬 타임존에 맞춘 시간
+						
+											                                            // 시, 분, 초 추출
+											                                            var hoursEt = localTimeEt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+											                                            var minutesEt = localTimeEt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+											                                            var secondsEt = localTimeEt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+											                                            var timeStringEt = hoursEt + ':' + minutesEt + ':' + secondsEt; // 시간을 HH:MM:SS 형식으로 조합
+									                                            }
+									                                       
+									                                            // 오늘날짜와 일치하면 출근 다시 못찍도록
+									                                            if (attDate === currentDate) {
+									                                            	 $('#startBt').text(timeStringSt);
+									                                            	 $('#endBt').text(timeStringEt); 
+											                                                
+											                                           }
+											                                        }
+											                                    });
+												                                }
+												                            });
+														            	 
+																            	   console.log('ㅎㅇㅎㅇ');
+																            	   $('#attendanceIndicator').text('출근'); 
+							                        	 				 $('#in-check').modal('hide');
+							                        	 				 $('#startBt').css({'pointer-events': 'none', 'opacity': '0.5'});
+							                        	 				 $('#endBt').css('pointer-events', 'auto'); // 퇴근하기 버튼 활성화
+							                        	 				 $('#earlyBt').css('pointer-events', 'auto'); // 조퇴하기 버튼 활성화
 														             }
 														         });
-					                        	
-					                        	
 					                        }
 					                        </script>
 					
@@ -201,26 +409,77 @@
 					                            </div><!-- /.modal-dialog -->
 					                        </div><!-- /.modal -->
 					                        
+					                        
+					                        
 					                        <script>
-					                        function endWorktime(){
-					                        	
-					                        	$.ajax({
-														             url: "${contextPath}/attendance/update.do", // 퇴근하기 버튼 클릭시 출근
-														             method: "GET",
-														             contentType: "application/json; charset=utf-8",
-														             success: function(data) {
-														            	 console.log('ㅂㅇㅂㅇ');
-														            	 $('#attendanceIndicator').text('출근 전'); 
-				                        	 				 $('#out-check').modal('hide'); 
-														             }
-														         });
-					                        	
-					                        }
+						                        function endWorktime(){
+			                   						  
+						                        	$.ajax({
+															             url: "${contextPath}/attendance/update.do", // 퇴근하기 버튼 클릭시 출근
+															             method: "GET",
+															             contentType: "application/json; charset=utf-8",
+															             success: function(data) {
+															            	 $.ajax({
+								                                url: '${contextPath}/attendance/list.do', 
+								                                method: 'GET',
+								                                success: function(response) {
+							                                    response.forEach(function(item) { 
+							                                        if (item !== null) {
+							                                        	 // 날짜 yy-mm-dd로 설정
+							                                            var d1 = new Date(item.attDate);
+							                                            var offset = new Date().getTimezoneOffset() * 60000;
+							                                            var today = new Date(d1 - offset);
+							                                            var attDate = today.toISOString().slice(0, 10); 
+							                                            var currentDate = new Date().toISOString().split('T')[0];
+							                                        	
+							                                            // 출근 시간 HH:MM:SS로 설정
+							                                            var dSt = new Date(item.startTime);
+							                                            var offsetSt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+							                                            var localTimeSt = new Date(dSt.getTime() + offsetSt); // 로컬 타임존에 맞춘 시간
+
+							                                            // 시, 분, 초 추출
+							                                            var hoursSt = localTimeSt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var minutesSt = localTimeSt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var secondsSt = localTimeSt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+							                                            var timeStringSt = hoursSt + ':' + minutesSt + ':' + secondsSt; // 시간을 HH:MM:SS 형식으로 조합
+							                                            
+							                                            if (item.endTime !== null) { // endTime이 null이 아닌 경우에만 시간 설정
+									                                            // 퇴근 시간 HH:MM:SS로 설정
+									                                            var dEt = new Date(item.endTime);
+									                                            var offsetEt = (new Date().getTimezoneOffset() * 60000) + (9 * 60 * 60 * 1000);
+									                                            var localTimeEt = new Date(dEt.getTime() + offsetEt); // 로컬 타임존에 맞춘 시간
+				
+									                                            // 시, 분, 초 추출
+									                                            var hoursEt = localTimeEt.getHours().toString().padStart(2, '0'); // 시를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var minutesEt = localTimeEt.getMinutes().toString().padStart(2, '0'); // 분을 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var secondsEt = localTimeEt.getSeconds().toString().padStart(2, '0'); // 초를 가져와서 두 자리로 표시하고, 한 자리 수인 경우 앞에 0을 추가
+									                                            var timeStringEt = hoursEt + ':' + minutesEt + ':' + secondsEt; // 시간을 HH:MM:SS 형식으로 조합
+							                                            }
+							                                       
+							                                            // 오늘날짜와 일치하면 출근 다시 못찍도록
+							                                            if (attDate === currentDate) {
+							                                            	 $('#startBt').text(timeStringSt);
+							                                            	 $('#endBt').text(timeStringEt); 
+							                                            	 
+									                                                
+									                                           }
+									                                        }
+									                                    });
+										                                }
+										                            });
+															            	 console.log('ㅂㅇㅂㅇ');
+															            	 $('#attendanceIndicator').text('출근 전'); 
+					                        	 				 $('#out-check').modal('hide');
+					                        	 				 $('#endBt').css({'pointer-events': 'none', 'opacity': '0.5'}); 
+					                        	 				 $('#earlyBt').css({'pointer-events': 'none', 'opacity': '0.5'}); 
+															             }
+															         });
+						                        }
 					                        </script>
 					                        
 					
 					                        <!-- 근무변경 modal content -->
-					                        <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+					                        <!-- <div id="check-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 					                            <div class="modal-dialog">
 					                                <div class="modal-content">
 					                                    <div class="modal-body">
@@ -237,9 +496,9 @@
 					
 					                                        </form>
 					                                    </div>
-					                                </div><!-- /.modal-content -->
-					                            </div><!-- /.modal-dialog -->
-					                        </div><!-- /.modal -->                        
+					                                </div>/.modal-content
+					                            </div>/.modal-dialog
+					                        </div>/.modal   -->                      
 							                            
 			                            
 			                        </div>
@@ -306,10 +565,12 @@
 			                        	<div class="ribbon ribbon-danger float-start"><i class="mdi mdi-access-point me-1"></i> 오늘의 결재</div>&nbsp &nbsp
 			                        		<div class="ribbon-content">
 			                        			<div style="margin-top:30px; margin-left:5px;"> 
+
 	                                    <a href="${contextPath}/document/notDoneList" class="btn btn-outline-secondary waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">미처리 ${notDoneCount}건</a>&nbsp &nbsp 
 	                                    <a href="${contextPath}/document/pendList" class="btn btn-outline-success waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">진행중 ${pendCount}건</a>
 	                                    <a href="${contextPath}/document/approvalList" class="btn btn-outline-info waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">승인 ${approvalCount}건</a>&nbsp &nbsp 
 	                                    <a href="${contextPath}/document/rejectList" class="btn btn-outline-danger waves-effect"  style="width: 130px; height: 40px; margin-top: 15px;">반려 ${rejectCount}건</a>
+
 	                               	 </div>
 			                        		</div>
 			                            

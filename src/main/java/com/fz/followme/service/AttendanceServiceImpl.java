@@ -1,5 +1,7 @@
 package com.fz.followme.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.fz.followme.dao.AttendanceDao;
@@ -28,6 +30,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public AttendanceDto selectStatus(String memNo) {
 		return attendanceDao.selectStatus(memNo);
+	}
+
+	@Override
+	public List<AttendanceDto> selectAttendance(String memNo) {
+		return attendanceDao.selectAttendance(memNo);
+	}
+
+	@Override
+	public int updateErWorktime(String memNo) {
+		return attendanceDao.updateErWorktime(memNo);
 	}
 	
 }

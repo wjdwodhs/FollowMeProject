@@ -40,6 +40,16 @@
  	where mem_no = #{memNo}
  	and trunc(att_date) = trunc(sysdate)
 </update>
+<!-- 조퇴 시간 등록 -->
+<update id="updateErWorktime">
+    update 
+    		tb_attendance
+    set 
+    		end_time = CURRENT_TIMESTAMP,
+        type = 'C'
+ 	where mem_no = #{memNo}
+ 	and trunc(att_date) = trunc(sysdate)
+</update>
 	
 <!-- 근태 유형 조회 서비스 -->
 	<select id="selectStatus" resultMap="attendanceMap">
@@ -54,6 +64,20 @@
     	tb_attendance
     WHERE mem_no = #{memNo}
     AND trunc(att_date) = trunc(sysdate)
+</select>
+<!-- 근태 조회 서비스 -->
+	<select id="selectAttendance" resultMap="attendanceMap">
+    SELECT 
+   		 start_time
+   		,end_time
+   		,work_time
+   		,type
+   		,att_date
+   		,att_content
+    FROM 
+    	tb_attendance
+    WHERE mem_no = #{memNo}
+    
 </select>
 	
 	
