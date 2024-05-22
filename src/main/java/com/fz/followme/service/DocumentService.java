@@ -66,9 +66,6 @@ public interface DocumentService {
 
 	// 전자문서 최종 결재 [반려] 기능 (update finalApproveStatus)
 	int updateFinalReject(DocumentDto document);
-	
-	// 전자문서 처리사유 등록 기능 (update processReason)
-	int updateRegistReason(DocumentDto document);
 
 	// 중간결재자 불러오기
 	String selectMidApprover(DocumentDto document);
@@ -81,6 +78,22 @@ public interface DocumentService {
 	
 	// 문서 작성 시 ajax로 직원 조회하기 (참조인 선택)
 	List<MemberDto> selectMemberList();
+	
+	/**
+	 * 메인화면 전자결재 상태에 따른 문서의 갯수 (본인이 조회할수 있는 권한의 문서글일 경우에만 count)
+	 * @param m 현재 로그인한 사원의 Member 객체에 담긴 사원번호
+	 * @author 이주리
+	 */
+	// 결재권자일 경우 미처리 결재건
+	int notDoneCount(MemberDto m);
+	// 진행중인 문서
+	int pendCount(MemberDto m);
+	// 오늘 날짜로 승인된 문서
+	int approvalCount(MemberDto m);
+	// 오늘 날짜로 반려된 문서
+	int rejectCount(MemberDto m);
+	
+	
 	
 	
 	

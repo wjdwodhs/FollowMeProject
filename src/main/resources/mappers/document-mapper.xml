@@ -60,7 +60,8 @@
 		<result column="mem_sig_path" property="memSig" />
 		<result column="mem_grade" property="memGrade" />
 		<result column="mem_phone" property="memPhone" />
-		
+		<result column="mid_reject_date" property="midRejectDate" />
+		<result column="final_reject_date" property="finalRejectDate" />
 		
 		<collection resultMap="attachmentResultMap" property="attachList" />
 		
@@ -519,7 +520,8 @@
 		 				and mid_approve_status = 'N' 
 		 				and mid_approver = #{memNo})
 			  or (
-			  		mid_approve_status = 'Y' 
+			  		d.status = '0'
+			  		and mid_approve_status = 'Y' 
 			  		and final_approve_status = 'N' 
 			  		and final_approver = #{memNo}
 			  		)
@@ -547,7 +549,8 @@
 		 				and mid_approve_status = 'N' 
 		 				and mid_approver = #{memNo})
 			  or (
-			  		mid_approve_status = 'Y' 
+			  		d.status = '0'
+			  		and mid_approve_status = 'Y' 
 			  		and final_approve_status = 'N' 
 			  		and final_approver = #{memNo}
 			  		)
@@ -808,6 +811,7 @@
 					 tb_document
 			 set mid_approve_status = 'N'
 			   , status = '2'
+			   , mid_reject_date = sysdate
 		 where docu_no = #{docuNo}
 	</update>	
   
@@ -817,16 +821,10 @@
 					 tb_document
 			 set final_approve_status = 'N'
 			 	 , status = '2'
+			 	 , final_reject_date = sysdate
 			   , process_reason = #{processReason}		 
 		 where docu_no = #{docuNo}
 	</update>	
-	
-	<update id="updateProcessReason">
-		update
-					 tb_document
-			 set process_reason = #{processReason}
-		 where docu_no = #{docuNo}
-	</update>
 	
 	<!-- 중간결재자 불러오기 -->
 	<select id="selectMidApprover" resultType="java.lang.String">
@@ -855,8 +853,63 @@
 		   and type = 'D'
 	</select>
 
-
-
-
+	<!-- 메인화면 오늘의 결재 '승인' 개수 -->
+	<select id="approvalCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m on (d.mem_no = m.mem_no)
+		 where trunc(final_approve_date) = trunc(current_date)
+		 	 and
+			 		( 
+				 			(
+					      d.status = '1'
+					      and d.mem_no = #{memNo}
+							 )
+						or (
+					    	d.status = '1'
+					    	and d.dept_no = #{deptNo}
+					    	and '팀장' = #{memGrade}
+								)
+						or (
+								d.status = '1'
+								and (d.mid_approve_status = 'Y' or mid_approver is null) 
+								and final_approver = #{memNo}
+								)
+						or (
+								d.ref_mem_no = #{memNo}
+								and d.status = '1'
+							) 
+					 )	
+	</select>
+	
+	<!-- 메인화면 오늘의 결재 '반려' 개수 -->
+	<select id="rejectCount" resultType="_int">
+		select 
+					 count(*)
+		  from tb_document d
+		  join tb_mem m on (d.mem_no = m.mem_no)
+		 where ( trunc(mid_reject_date) = trunc(current_date) or trunc(final_reject_date) = trunc(current_date))
+		 	 and (
+				 			 (
+					      d.status = '2'
+					      and d.mem_no = #{memNo}
+							 )
+						or (
+					    	d.status = '2'
+					    	and d.dept_no = #{deptNo}
+					    	and '팀장' = #{memGrade}
+								)
+						or (
+								d.status = '2'
+								and (d.mid_approve_status = 'Y' or mid_approver is null) 
+								and final_approver = #{memNo}
+								)
+						or (
+								d.ref_mem_no = #{memNo}
+								and d.status = '2'
+								)	
+					 )	
+	</select>
 
 </mapper>
