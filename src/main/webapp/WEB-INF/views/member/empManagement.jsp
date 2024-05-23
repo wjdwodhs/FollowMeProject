@@ -31,7 +31,7 @@
 
 
 <style>
-	.a.nav-link.active{backgroun-color:#FEBE98;}
+	.a.nav-link.active{background-color:#FEBE98;}
 	.active>.page-link, .page-link.active {
     --ct-pagination-active-bg: #febe98;}
 
