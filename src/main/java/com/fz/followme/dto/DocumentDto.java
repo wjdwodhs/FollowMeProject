@@ -70,4 +70,7 @@ public class DocumentDto {
 	private String memGrade;
 	private String memPhone;
 	
+	private String notiType;
+	private String createDate;
+	private String notiMsg;
 }

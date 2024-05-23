@@ -330,6 +330,9 @@ public class AssetController {
 	        int result = reservationService.addReservation(ard);
 	        System.out.println("Reservation add result: " + result);
 	        response.put("message", "예약에 성공하였습니다.");
+	        
+	        
+	        
 	        return new ResponseEntity<>(response, HttpStatus.OK);
 	        
 	    } catch (DataAccessException e) {

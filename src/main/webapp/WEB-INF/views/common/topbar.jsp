@@ -138,7 +138,7 @@
 					                                    	쪽지수신
 					                                    </c:when>
 					                                    <c:otherwise>
-					                                    	기타
+					                                    	알림이 없습니다.
 					                                    </c:otherwise>
 				                                    </c:choose>
 				                                    <small class="fw-normal text-muted ms-1">${list.createDate}</small></h5>

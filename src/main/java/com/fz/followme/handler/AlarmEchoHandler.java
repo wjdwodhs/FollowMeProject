@@ -32,6 +32,11 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 		
 	}
 	
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+
+    }
+	
 	/**
 	 * 3) afterConnectionClosed : 클라이언트와 연결이 끊겼을 때 처리할 내용을 정의
 	 */
