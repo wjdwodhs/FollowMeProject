@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="notificationMapper">
+
+	<resultMap id="notifiResultMap" type="NotificationDto">
+		<id column="noti_no" property="notiNo"/>
+		<result column="noti_type" property="notiType"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="noti_msg" property="notiMsg"/>
+		<result column="create_date" property="createDate"/>
+		<result column="is_read" property="isRead"/>
+	</resultMap>
+	
+
+	<select id="selectList" resultMap="notifiResultMap">
+		select *
+		  from tb_notification
+	   where mem_no = #{memNo}
+	     and is_read = '0'
+	     and trunc(create_date) = trunc(current_date)
+	   order by desc
+	</select>
+	
+	<!-- 종아이콘 클릭시 is_read가 '0'에서 '1'로 update -->
+
+
+
+</mapper>

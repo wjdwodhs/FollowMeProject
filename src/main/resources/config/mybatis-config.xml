@@ -23,6 +23,7 @@
 		
 		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
 		<typeAlias type="com.fz.followme.dto.AssetReservationDto" alias="AssetReservationDto"/>
+		<typeAlias type="com.fz.followme.dto.NotificationDto" alias="NotificationDto"/>
 		
 		
 	</typeAliases>
@@ -39,6 +40,7 @@
 		<mapper resource="mappers/todo-mapper.xml"/>
 		<mapper resource="mappers/attendance-mapper.xml"/>
 		<mapper resource="mappers/message-mapper.xml"/>
+		<mapper resource="mappers/notification-mapper.xml"/>
 	</mappers>
 
 </configuration>

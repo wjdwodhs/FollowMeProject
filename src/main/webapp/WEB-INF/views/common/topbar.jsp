@@ -78,7 +78,85 @@
       
         </div>
 
+        <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+        <script>
+        		const sock = new SockJS("${contextPath}/echo");
+        		
+        		sock.onclose = function() {
+        		    console.log('close');
+        		};
+        		
+        </script>
+
         <ul class="topbar-menu d-flex align-items-center">
+        
+		        <!-- Notofication dropdown -->
+		        <li class="dropdown notification-list">
+		            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+		                <i class="fe-bell font-22"></i>
+		                <c:if test="${not empty list}">
+		                	<span class="badge bg-danger rounded-circle noti-icon-badge"></span>
+		                </c:if>
+		            </a>
+		            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
+		                <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
+		                    <div class="row align-items-center">
+		                        <div class="col">
+		                            <h6 class="m-0 font-16 fw-semibold"> 알림</h6>
+		                        </div>
+		                        <div class="col-auto">
+		                            <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+		                                <small>Clear All</small>
+		                            </a>
+		                        </div>
+		                    </div>
+		                </div>
+		
+		                <div class="px-1" style="max-height: 300px;" data-simplebar>
+		
+		                    <h5 class="text-muted font-13 fw-normal mt-2">오늘</h5>
+		                    <!-- item-->
+												<c:if test="${ not empty list }">
+			                    <c:forEach var="list" items="${ list }" >
+				                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+				                        <div class="card-body">
+				                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+				                            <div class="d-flex align-items-center">
+				                                <div class="flex-grow-1 text-truncate ms-2" id="alarmArea">
+				                                    <h5 class="noti-item-title fw-semibold font-14">
+				                                    <c:choose>
+					                                    <c:when test="${ list.notiType == 'Y' or list.notiType == 'N'}">
+					                                    	전자문서
+					                                    </c:when>
+					                                    <c:when test="${ list.notiType == '1' or list.notiType == '2'}">
+					                                    	근태알림
+					                                    </c:when>
+					                                    <c:when test="${ list.notiType == 'M'}">
+					                                    	메일수신
+					                                    </c:when>
+					                                    <c:when test="${ list.notiType == 'G'}">
+					                                    	쪽지수신
+					                                    </c:when>
+					                                    <c:otherwise>
+					                                    	기타
+					                                    </c:otherwise>
+				                                    </c:choose>
+				                                    <small class="fw-normal text-muted ms-1">${list.createDate}</small></h5>
+				                                    <small class="noti-item-subtitle text-muted" id="message">${list.notiMsg}</small>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </a>
+			                    </c:forEach>
+		                    </c:if>
+		
+		                    <div class="text-center">
+		                        <i class="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>       
+		        
             <!-- Topbar Search Form -->
             <li class="app-search dropdown me-3 d-none d-lg-block">
                 <form>

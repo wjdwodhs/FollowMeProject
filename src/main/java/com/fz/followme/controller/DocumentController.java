@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.socket.WebSocketSession;
 
+import com.fz.followme.dao.NotificationDao;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.NotificationDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.DocumentService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
@@ -39,6 +43,9 @@ public class DocumentController {
 	private final PagingUtil pagingUtil;
 	private final FileUtil fileUtil;
 	private String status;
+	
+	private final AlarmEchoHandler handler;
+	private final NotificationDao notiDao;
 	
 	// 전체 리스트조회 -----------------------------------------------
 	@GetMapping("/list")
@@ -395,7 +402,8 @@ public class DocumentController {
 	@PostMapping("/finalApprove.do")
 	public String updateFinalApprove(DocumentDto document 
 								 , RedirectAttributes redirectAttributes
-								 , HttpSession session) {
+								 , HttpSession session
+								 ) {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String finalApprover = documentService.selectFinalApprover(document);
@@ -407,7 +415,16 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
 			if(result > 0) {
 				// 성공시
-				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");			
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");
+			
+				for(WebSocketSession s : handler.getSessionList()) {
+					String memNo = (String)s.getAttributes().get("memNo");
+					if(memNo.equals(loginUser.getMemNo())) {
+						List<NotificationDto> list = notiDao.selectList(s);
+						session.setAttribute("list", list);
+					}
+				}
+				
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 승인 처리에 실패했습니다.");
@@ -436,7 +453,15 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
 				// 성공시
-				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");			
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");	
+				
+				for(WebSocketSession s : handler.getSessionList()) {
+					String memNo = (String)s.getAttributes().get("memNo");
+					if(memNo.equals(loginUser.getMemNo())) {
+						List<NotificationDto> list = notiDao.selectList(s);
+						session.setAttribute("list", list);
+					}
+				}
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 반려 처리에 실패했습니다.");
@@ -465,7 +490,15 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
 				// 성공시
-				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");			
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");
+				
+				for(WebSocketSession s : handler.getSessionList()) {
+					String memNo = (String)s.getAttributes().get("memNo");
+					if(memNo.equals(loginUser.getMemNo())) {
+						List<NotificationDto> list = notiDao.selectList(s);
+						session.setAttribute("list", list);
+					}
+				}
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서 반려 처리에 실패했습니다.");
@@ -499,4 +532,5 @@ public class DocumentController {
 			
 		return documentService.selectDocument(no);
 	}
+	
 }
