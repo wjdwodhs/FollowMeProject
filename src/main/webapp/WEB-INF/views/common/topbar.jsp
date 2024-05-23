@@ -228,7 +228,7 @@
 
                 </div>
             </li>
-
+            
             <!-- Notofication dropdown -->
             <%-- <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -376,6 +376,11 @@
                     <a href="${ contextPath }/member/mypage.do" class="dropdown-item notify-item">
                         <i class="fe-user"></i>
                         <span>마이페이지</span>
+                    </a>
+                    <!-- item-->
+                    <a href="${ contextPath }/message/messagePage" class="dropdown-item notify-item">
+                        <i class="fe-message-square"></i>
+                        <span>쪽지함</span>
                     </a>
 
 

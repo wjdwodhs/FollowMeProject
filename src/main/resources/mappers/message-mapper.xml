@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="messageMapper">
+
+	<resultMap id="messageResult" type="MessageDto">
+		<id column="msg_no" property="msgNo"/>
+		<result column="msg_rono" property="msgRoNo"/>
+		<result column="msg_from" property="msgFrom"/>
+		<result column="msg_to" property="msgTo"/>
+		<result column="msg_content" property="msgContent"/>
+		<result column="send_date" property="sendDate"/>
+		<result column="read_date" property="readDate"/>
+		<result column="read_check" property="readCheck"/>
+		<result column="other_mem" property="otherMem"/>
+		<result column="this_mem" property="thisMem"/>
+		<result column="unread" property="unread"/>
+		<result column="profile_img_path" property="profileImgPath"/>
+		<result column="msg_from_name" property="msgFromName"/>
+		<result column="msg_to_name" property="msgToName"/>
+		<result column="latest_msg_rono" property="latestMsgRono"/>
+	</resultMap>
+  
+  <!-- 메세지 리스트 불러오기 -->
+  <select id="selectMsgList" resultMap="messageResult">
+  	SELECT 
+			    CASE 
+			        WHEN tb_message.msg_from = #{thisMem} THEN (SELECT mem_name FROM tb_mem WHERE mem_no = tb_message.msg_to)
+			        ELSE (SELECT mem_name FROM tb_mem WHERE mem_no = tb_message.msg_from)
+			    END AS other_mem,
+			    msg_no, msg_rono, msg_from, msg_to, 
+			    send_date, read_date, msg_content, read_check
+			FROM 
+			    tb_message
+			WHERE 
+			    send_date in (select max(send_date) from tb_message group by msg_rono) 
+			    AND 
+			    (msg_from = #{thisMem} OR msg_to = #{thisMem})
+			ORDER BY 
+			    send_date desc
+  </select>
+ 
+ <!-- 메세지 하는 상대방의 프로필 불러오기 -->
+	<select id="selectOtherProfileImg" resultType="String">
+    select 
+    			profile_img_path 
+     from tb_mem
+    <choose>
+        <when test="msgFrom == thisMem">
+            where mem_No = #{msgTo}
+        </when>
+        <otherwise>
+            where mem_No = #{msgFrom}
+        </otherwise>
+    </choose>
+	</select>
+
+ 	<!-- 안읽은 메세지 갯수 가져오기 -->
+	<select id="countUnread" resultType="_int">
+	    select count(msg_no) as count
+				from tb_message 
+			  where msg_to = #{thisMem} and read_check = 'N' and msg_rono = #{msgRoNo} and msg_from != #{thisMem}
+	</select>
+	
+	<!-- 방별로 메세지 내용 가져오기 -->
+	<select id="selectMessages" resultMap="messageResult">
+    select m.msg_no, m.msg_rono, m.msg_from, m.msg_to,
+			       (SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_from) as msg_from_name,
+			       (SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_to) as msg_to_name,
+			       m.send_date, m.read_date, m.msg_content, m.read_check, mm.profile_img_path
+			from tb_message m
+			left outer join tb_mem mm ON m.msg_from = mm.mem_no
+			where m.msg_rono = #{msgRoNo}
+			order by m.send_date asc
+	</select>
+	
+	<!-- 메세지 읽음 처리 -->
+	<update id="updateMessageReadCheck">
+    update tb_message 
+		    set read_check = 'Y'
+		    where read_check = 'N' and msg_to = #{thisMem}
+		    and
+		    (
+		        <choose>
+		            <when test="msgRoNo != 0">
+		                msg_rono = #{msgRoNo}
+		            </when>
+		            <otherwise>
+		                msg_from = #{msgTo}
+		            </otherwise>
+		        </choose>
+		    )
+	</update>
+
+	<!-- 기존 채팅방에서 신규 메세지 보내기 -->
+	<insert id="insertMessage">
+		insert
+					into tb_message
+					(
+					msg_no
+				, msg_rono
+				, msg_from
+				, msg_to
+				, msg_content
+				, send_date
+					)
+					values
+					(
+					seq_msg.nextval
+				, #{msgRoNo}
+				, #{msgFrom}
+				, #{msgTo}
+				, #{msgContent}
+				, current_timestamp
+					)
+	</insert>
+	
+	<!-- 가장 최근에 보낸 메세지 조회 -->
+	<select id="selectLatestMessage" resultMap="messageResult">
+		select msg_rono, msg_from, msg_to, msg_content, send_date, profile_img_path
+			from (
+						select
+						        msg_rono, 
+						        (SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_from) as msg_from,
+			       				(SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_to) as msg_to,
+			       				msg_content, send_date, 
+			       				profile_img_path
+						from tb_message m
+						left outer join tb_mem mm ON m.msg_from = mm.mem_no
+						where msg_rono = #{msgRoNo}
+						order by send_date desc
+						)
+			where rownum = 1
+	</select>
+	
+	<insert id="createNewMessage" keyColumn="msgRoNo" useGeneratedKeys="true" keyProperty="msgRoNo">
+    <selectKey keyProperty="msgRoNo" resultType="int" order="AFTER">
+        SELECT seq_msgrono.currval FROM dual
+    </selectKey>
+    insert into tb_message
+    (
+        msg_no,
+        msg_rono,
+        msg_from,
+        msg_to,
+        msg_content,
+        send_date
+    )
+    values
+    (
+        seq_msg.nextval,
+        seq_msgrono.nextval,
+        #{msgFrom},
+        #{msgTo},
+        #{msgContent},
+        current_timestamp
+    )
+	</insert>
+
+
+
+
+
+	<!-- 가장 최근에 보낸 메세지 조회 (msgNo으로)-->
+	<select id="selectLatestMessageByMsgNo" resultMap="messageResult">
+		select msg_rono, msg_from, msg_to, msg_content, send_date, profile_img_path
+			from (
+						select
+						        msg_rono, 
+						        (SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_from) as msg_from,
+			       				(SELECT mem_name FROM tb_mem WHERE mem_no = m.msg_to) as msg_to,
+			       				msg_content, send_date, 
+			       				profile_img_path
+						from tb_message m
+						left outer join tb_mem mm ON m.msg_from = mm.mem_no
+						where msg_no = #{msgNo}
+						order by send_date desc
+						)
+			where rownum = 1
+	</select>
+
+  <!--  가장 최근 생성된 방 번호 조회 
+  <select id="selectLatestMsgRoNo" resultType="_int">
+  	select seq_msgrono.CURRVAL as latest_msg_rono
+  	  from dual
+  </select>
+  -->
+  
+</mapper>

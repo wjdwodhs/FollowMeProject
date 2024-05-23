@@ -80,4 +80,7 @@ public interface MemberService {
 	
 	// 인사관리 - 직원정보 삭제 서비스
 	int deleteEmpInfo(String memNo);
+	
+	// 인사관리 - 직원정보 조회 서비스 (쪽지함 기능에서 사용)
+	List<MemberDto> selectMemberList();
 }

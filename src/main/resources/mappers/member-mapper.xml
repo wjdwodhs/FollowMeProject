@@ -422,4 +422,23 @@
 		where mem_no = #{memNo}
 	</update>
 	
+	<!-- 인사관리 - 직원정보 조회용(쪽지함 기능에서 사용) -->
+	<select id="getMemberList" resultMap="memberResult">
+		select
+			 	 mem_no, mem_pwd, dept_name,tb_mem.dept_no,
+			 	 profile_img_path, mem_gender, 
+			 	 mem_name, mem_securityno,
+			 	 mem_address, sig_img_path,
+			 	 mem_email, mem_grade, mem_role,
+			 	 extension_number, phone, 
+			 	 enroll_date, quit_date, mem_salary,
+			 	 account_no,
+			 	 mem_incentive, mem_certificate, mem_welfare,
+			 	 authorization_level, status
+			from tb_mem
+			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		  where status in ('Y', 'R')
+		 order by mem_no asc
+	</select>
+	
 </mapper>

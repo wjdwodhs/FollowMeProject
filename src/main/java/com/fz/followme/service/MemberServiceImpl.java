@@ -144,6 +144,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.deleteEmpInfo(memNo);
 	}
 
+	@Override
+	public List<MemberDto> selectMemberList() {
+		return memberDao.selectMemberList();
+	}
+
 	
 
 	
