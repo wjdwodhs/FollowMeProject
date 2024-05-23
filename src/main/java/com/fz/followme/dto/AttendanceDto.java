@@ -19,8 +19,8 @@ import lombok.ToString;
 public class AttendanceDto {
 
 	 private String memNo;
-	 private Timestamp startTime;
-	 private Timestamp endTime;
+	 private String startTime;
+	 private String endTime;
 	 private int workTime;
 	 private String type;
 	 private Date attDate;
