@@ -36,10 +36,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.AttachmentDto;
+import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.service.AttendanceService;
 import com.fz.followme.service.CheckAccountService;
 import com.fz.followme.service.EmailSender;
 import com.fz.followme.service.MemberService;
@@ -57,6 +59,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MemberController {
 	
+	private final AttendanceService attendanceService;
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final FileUtil fileUtil;
@@ -75,7 +78,8 @@ public class MemberController {
 		
 		log.debug("m: {}", m);
 		MemberDto loginUser = memberService.selectMember(m);
-		
+		AttendanceDto userAtt = attendanceService.selectAttendance(loginUser.getMemNo());
+		log.debug("att: {}",userAtt);
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -84,6 +88,7 @@ public class MemberController {
 		
 		if(loginUser != null && bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
 			request.getSession().setAttribute("loginUser", loginUser);
+			request.getSession().setAttribute("userAtt", userAtt);
 			
 			// 로그인 시 사번 저장 (쿠키 저장)
 			if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {

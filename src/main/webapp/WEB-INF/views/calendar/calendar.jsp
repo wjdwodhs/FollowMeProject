@@ -1113,6 +1113,53 @@
 			        	}
 	        	 
 		        };
+		        
+		     // 일정 저장하기 버튼 클릭 시 실행되는 함수
+		        $("#btn-save-event").on("click", function () {
+		            var eventData = {
+		                title: $("#event-title").val(),
+		                content: $("#event-content").val(),
+		                start: $("#event-start").val(),
+		                end: $("#event-end").val(),
+		                category: $("#event-category").val(),
+		                backgroundColor : $("#event-category").val(),
+		                memNo : $("#event-memNo").val(),
+		                calNo : $("#event-calNo").val(),
+		            };
+
+		            console.log(eventData);
+		            // 빈값 입력 시 오류 처리
+		            if (
+		                eventData.title == "" ||
+		                eventData.start == "" ||
+		                eventData.end == ""
+		            ) {
+		                alert("입력하지 않은 값이 있습니다.");
+		            } else if ($("#start").val() > $("#end").val()) {
+		                alert("시간을 잘못입력 하셨습니다.");
+		            } else { // 일정 추가
+		            	console.log(eventData);
+		                $.ajax({
+		                    url: "${contextPath}/calendar/insert.do",
+		                    type: "POST",
+		                    contentType: "application/json; charset=utf-8",
+		                    data: JSON.stringify(eventData),
+		                    dataType: "json",
+		                    success: function () {
+		                        alert('일정이 성공적으로 추가되었습니다.');
+		                        calendar.addEvent(eventData); // 새로운 이벤트 추가
+		                        location.reload();
+		                        $("#event-addmodal").modal("hide");
+		                        $("#event-title").val("");
+		                        $("#event-content").val("");
+		                        $("#event-start").val("");
+		                        $("#event-end").val("");
+		                        $("#event-category").val("");
+		                        $("#event-memNo").val("");
+		                    }
+		                });
+		            }
+		        });
 							
 		     // 일정 수정 버튼 클릭 시 실행되는 함수
 		        $("#btn-modify-event").on("click", function () {
@@ -1140,7 +1187,7 @@
 		                }
 		            });
 		        });
-		     
+		    	
 		     // 일정 삭제 버튼 클릭 시 실행되는 함수
 		        $("#btn-delete-event").on("click", function () {
 		            var eventCalNo = $("#modify-event-calNo").val();
@@ -1161,16 +1208,11 @@
 		                });
 		            }
 		        });
-				
 		        calendar.render();
 		    }
 			});
 		  
 		});
-			
-			
-			
-			
 	
 		// 날짜 형식 지정 함수
 		function formatDate(date) {
@@ -1180,54 +1222,6 @@
 		
 			return today.toISOString().slice(0, 16);
 		}
-		
-		// 일정 저장하기 버튼 클릭 시 실행되는 함수
-		
-    function saveEvent(){
-        var eventData = {
-            title: $("#event-title").val(),
-            content: $("#event-content").val(),
-            start: $("#event-start").val(),
-            end: $("#event-end").val(),
-            category: $("#event-category").val(),
-            backgroundColor : $("#event-category").val(),
-            memNo : $("#event-memNo").val(),
-            calNo : $("#event-calNo").val(),
-        };
-
-        console.log(eventData);
-        // 빈값 입력 시 오류 처리
-        if (
-            eventData.title == "" ||
-            eventData.start == "" ||
-            eventData.end == ""
-        ) {
-            alert("입력하지 않은 값이 있습니다.");
-        } else if ($("#start").val() > $("#end").val()) {
-            alert("시간을 잘못입력 하셨습니다.");
-        } else { // 일정 추가
-        	console.log(eventData);
-            $.ajax({
-                url: "${contextPath}/calendar/insert.do",
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(eventData),
-                dataType: "json",
-                success: function () {
-                    alert('일정이 성공적으로 추가되었습니다.');
-                    calendar.addEvent(eventData); // 새로운 이벤트 추가
-                    location.reload();
-                    $("#event-addmodal").modal("hide");
-                    $("#event-title").val("");
-                    $("#event-content").val("");
-                    $("#event-start").val("");
-                    $("#event-end").val("");
-                    $("#event-category").val("");
-                    $("#event-memNo").val("");
-                }
-            });
-        }
-	};
 
 </script>
 	

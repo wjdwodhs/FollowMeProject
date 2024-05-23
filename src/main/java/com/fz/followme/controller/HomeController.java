@@ -18,7 +18,9 @@ import com.fz.followme.service.NoticeService;
 import com.fz.followme.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class HomeController {
@@ -44,10 +46,10 @@ public class HomeController {
 	public String ceoMainPage(Model model, HttpSession session) {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
-		String memNo = loginUser.getMemNo();
-		AttendanceDto Dto = attendanceService.selectStatus(memNo); // 로그인한 유저의 근태 유형 가져오기
-		List<AttendanceDto> attDtoList = attendanceService.selectAttendance(memNo);
+		AttendanceDto userAtt = (AttendanceDto)session.getAttribute("userAtt");
 		
+		
+
 		MemberDto m = new MemberDto();
 		m.setMemNo(loginUser.getMemNo());
 		m.setDeptNo(loginUser.getDeptNo());
@@ -69,9 +71,8 @@ public class HomeController {
 		
 		OrderDto revenueList = orderService.selectRevenue();
 		OrderDto todayInfo = orderService.selectTodayInfo();
-		
-		model.addAttribute("attDtoList",attDtoList);
-		model.addAttribute("Dto",Dto);
+
+		model.addAttribute("userAtt",userAtt);
 		model.addAttribute("revenueList", revenueList);	
 		model.addAttribute("todayInfo", todayInfo);
 		

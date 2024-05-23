@@ -16,7 +16,7 @@ public interface AttendanceService {
 	AttendanceDto selectStatus(String memNo);
 
 	// 근태 조회 서비스
-	List<AttendanceDto> selectAttendance(String memNo);
+	AttendanceDto selectAttendance(String memNo);
 
 	// 조퇴 시간 등록 서비스
 	int updateErWorktime(String memNo);

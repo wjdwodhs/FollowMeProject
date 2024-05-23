@@ -30,26 +30,25 @@
 					, 'A'
 					)
 	</insert>
+
 <!-- 퇴근 시간 등록 -->
 <update id="updateWorktime">
-    update 
-    		tb_attendance
-    set 
-    		end_time = CURRENT_TIMESTAMP,
-        type = 'B'
- 	where mem_no = #{memNo}
- 	and trunc(att_date) = trunc(sysdate)
+<![CDATA[
+ update 
+    tb_attendance
+ set 
+    end_time = CURRENT_TIMESTAMP,
+    type = CASE
+               WHEN (CURRENT_TIMESTAMP - start_time) < INTERVAL '4' HOUR THEN 'D' 
+               WHEN (CURRENT_TIMESTAMP - start_time) < INTERVAL '8' HOUR THEN 'C'
+               ELSE 'B'
+           END
+ where 
+    mem_no = #{memNo}
+    and trunc(att_date) = trunc(sysdate)
+ ]]>
 </update>
-<!-- 조퇴 시간 등록 -->
-<update id="updateErWorktime">
-    update 
-    		tb_attendance
-    set 
-    		end_time = CURRENT_TIMESTAMP,
-        type = 'C'
- 	where mem_no = #{memNo}
- 	and trunc(att_date) = trunc(sysdate)
-</update>
+
 	
 <!-- 근태 유형 조회 서비스 -->
 	<select id="selectStatus" resultMap="attendanceMap">
@@ -68,8 +67,9 @@
 <!-- 근태 조회 서비스 -->
 	<select id="selectAttendance" resultMap="attendanceMap">
     SELECT 
-   		 start_time
-   		,end_time
+   		 mem_no
+      ,TO_CHAR(start_time,'HH24:MI:SS') start_time
+   		,TO_CHAR(end_time,'HH24:MI:SS') end_time
    		,work_time
    		,type
    		,att_date
@@ -77,6 +77,7 @@
     FROM 
     	tb_attendance
     WHERE mem_no = #{memNo}
+    AND trunc(att_date) = trunc(sysdate)
     
 </select>
 	

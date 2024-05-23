@@ -70,15 +70,15 @@
                                <div class="card-body d-flex" style="justify-content:center">
                                    <div style="margin-right: 50px;">
                                        <h4>지각</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>10</span>회</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>10</span>회</h4>
                                    </div>
                                    <div style="margin-right: 50px;">
                                        <h4>결근</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>13</span>회</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>13</span>회</h4>
                                    </div>
                                    <div style="margin-right: 50px;">
                                        <h4>퇴근미체크</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>5</span>회</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>5</span>회</h4>
                                    </div>
                                </div> <!-- end card-body -->
                            </div> <!-- end card-->
@@ -100,7 +100,7 @@
                                        <h4>잔여 휴가</h4>
                                    </div>
                                    <div style="margin-right: 10px; align-content: center;">
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>3</span>일</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>3</span>일</h4>
                                    </div>
                                    <div class="btn-group" style="margin-top: 10px;">
                                        <button type="button" class="btn btn-primary" style="width: 130px; height: 50px;">휴가 신청</button>
@@ -122,15 +122,15 @@
                                <div class="card-body d-flex" style="justify-content:center">
                                    <div style="margin-right: 30px;">
                                        <h4>근무일수</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>107</span>일</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>107</span>일</h4>
                                    </div>
                                    <div style="margin-right: 30px;">
                                        <h4>총근무시간</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>1074</span>시간</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>1074</span>시간</h4>
                                    </div>
                                    <div style="margin-right: 30px;">
                                        <h4>평균근무시간</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>10</span>시간<span>9</span>분</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>10</span>시간<span>9</span>분</h4>
                                        
                                    </div>
                                </div> <!-- end card-body -->
@@ -150,7 +150,7 @@
                                <div class="card-body d-flex" style="justify-content:center">
                                    <div class="d-flex" style="margin-right: 30px; justify-content:center">
                                        <h4>주간 근무시간</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                       <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>38</span>시간</h4>
+                                       <h4 style="font-size: 20px; font-weight: bold;"><span>38</span>시간</h4>
                                    </div>
                                </div> <!-- end card-body -->
                            </div> <!-- end card-->
@@ -166,7 +166,7 @@
                                <div class="card-body d-flex" style="justify-content: center;">
                                 <div class="d-flex" style="margin-right: 30px; justify-content:center">
                                     <h4>월간 근무시간</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h4 style="font-size: 20px; font-weight: bold; color: #DCBD9E;"><span>150</span>시간</h4>
+                                    <h4 style="font-size: 20px; font-weight: bold;"><span>150</span>시간</h4>
                                 </div>
                                </div> <!-- end card-body -->
                            </div> <!-- end card-->

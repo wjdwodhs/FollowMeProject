@@ -33,7 +33,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public List<AttendanceDto> selectAttendance(String memNo) {
+	public AttendanceDto selectAttendance(String memNo) {
 		return attendanceDao.selectAttendance(memNo);
 	}
 

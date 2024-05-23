@@ -27,8 +27,8 @@ public class AttendanceDao {
 		return sqlSessionTemplate.selectOne("attendanceMapper.selectStatus", memNo);
 	}
 
-	public List<AttendanceDto> selectAttendance(String memNo) {
-		return sqlSessionTemplate.selectList("attendanceMapper.selectAttendance",memNo);
+	public AttendanceDto selectAttendance(String memNo) {
+		return sqlSessionTemplate.selectOne("attendanceMapper.selectAttendance",memNo);
 	}
 
 	public int updateErWorktime(String memNo) {
