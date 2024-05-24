@@ -192,6 +192,11 @@
 	
 	//채팅방 리스트의 각 항목을 클릭했을 때
 	$(document).on('click', '.d-flex.align-items-start.p-2', function() {
+		
+
+      // 채팅방 리스트 리로드 (안 읽은 알림 있으면 읽음 확인 처리)
+      reloadChatRoomList();
+        
 	    // 해당 채팅방의 방 번호를 가져옴
 	    var roomId = $(this).attr('room-id');
 	    var currentUserId = document.getElementById('loginMemNo').value;
@@ -241,8 +246,6 @@
 	        }
 	    });
 	    
-        // 채팅방 리스트 리로드
-        reloadChatRoomList();
 
 	});
 	
