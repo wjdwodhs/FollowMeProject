@@ -23,9 +23,13 @@
 		
 		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
 		<typeAlias type="com.fz.followme.dto.AssetReservationDto" alias="AssetReservationDto"/>
+
 		<typeAlias type="com.fz.followme.dto.NotificationDto" alias="NotificationDto"/>
 		<typeAlias type="com.fz.followme.dto.EmailDto" alias="EmailDto"/>
 		
+
+		<typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/>
+
 		
 		
 	</typeAliases>
