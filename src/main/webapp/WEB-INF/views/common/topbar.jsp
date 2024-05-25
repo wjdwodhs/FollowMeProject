@@ -81,11 +81,94 @@
         <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
         <script>
         		const sock = new SockJS("${contextPath}/echo");
+        			
+        		sock.onmessage = onMessage;
+        		
+        		sock.onopen = function(){
+        				console.log('open');
+        				sock.send();
+        		}
         		
         		sock.onclose = function() {
         		    console.log('close');
         		};
         		
+        		//onMessage function처리해놓고
+        		function onMessage(evt){ // evt.data : 웹소켓으로부터 나에게 온 메세지
+        			// 해당 메세지로 아래의 알람리스트 영역에 해당 메세지 한개만 요소만들어서 append
+        		  console.log("evt.data : ", evt.data);
+        		  console.log("evt : ", evt);
+		        	
+        			var alarmIcon = document.querySelector("#alarmIcon");
+		        			alarmIcon.style.display = 'inline';									
+		        	
+		        	let msgArr = evt.data.split("/");
+        		  
+			        const $alarmContainer = $("#alarmContainer .simplebar-content");
+			        let $alarmArea = $('<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>');
+			        let $cardBody = $('<div class="card-body"></div>');
+			        let $closeBtn = $('<span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>');
+			        let $dFlex = $('<div class="d-flex align-items-center"></div>');
+			        let $flexGrow = $('<div class="flex-grow-1 text-truncate ms-2"></div>');
+			        let $title = $('<h5 class="noti-item-title fw-semibold font-14"></h5>');
+			        let $time = $('<small class="fw-normal text-muted ms-1"></small>');
+			        let $msg = $('<small class="noti-item-subtitle text-muted" id="message"></small>');
+			        
+	        		var title = msgArr[0];
+	        		var time = msgArr[1];
+	        		var msg = msgArr[2];
+			        
+              $title.text(title);
+              $time.text(time);
+              $msg.text(msg);
+			        
+			        // 요소 조립
+			        $title.append($time);
+			        $flexGrow.append($title);
+			        $flexGrow.append($msg);
+			        $dFlex.append($flexGrow);
+			        $cardBody.append($closeBtn);
+			        $cardBody.append($dFlex);
+			        $alarmArea.append($cardBody);
+			        
+			        $alarmContainer.append($alarmArea);
+    				
+        		}
+        		
+
+        		
+        		// 리스트 조회시점 발송될떄 x		
+        		// login시, 알람리스트 조회는 ajax로 처리 
+		        
+		        function updateAlarm(){
+			        $.ajax({
+					    url: "${contextPath}/updateAlarm",
+					    type: 'post',
+					    success:function(result){  
+					    	$("#red").hide();
+					    	showAlarm();
+					    	
+					    }
+					    
+			        });
+		        }
+		        
+		        function deleteAlarm(){
+			        $.ajax({
+					    url: "${contextPath}/deleteAlarm",
+					    type: 'post',
+					    success: function(result){  
+	                $("#red").hide()
+					    		$("#alarmContainer .simplebar-content").empty();
+	                let $noAlarm = $('<h5 class="text-muted font-13 fw-normal mt-2">알림이 없습니다.</h5>');
+	                $("#alarmContainer .simplebar-content").append($noAlarm);
+	                showAlarm();
+	                
+					    
+					    }
+			        });
+		        }
+		        
         </script>
 
         <ul class="topbar-menu d-flex align-items-center">
@@ -93,10 +176,9 @@
 		        <!-- Notofication dropdown -->
 		        <li class="dropdown notification-list">
 		            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-		                <i class="fe-bell font-22"></i>
-		                <c:if test="${not empty list}">
-		                	<span class="badge bg-danger rounded-circle noti-icon-badge"></span>
-		                </c:if>
+		                <i class="fe-bell font-22" id="alarmIcon"></i>
+		                <input type="hidden" id="memNo" value="${loginUser.memNo}">
+	                	<span class="badge bg-danger rounded-circle noti-icon-badge" id="red" style="display:none;">!</span>
 		            </a>
 		            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
 		                <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
@@ -105,57 +187,34 @@
 		                            <h6 class="m-0 font-16 fw-semibold"> 알림</h6>
 		                        </div>
 		                        <div class="col-auto">
-		                            <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+		                            <a href="javascript: void(0);" class="text-dark text-decoration-underline" id="deleteAlarm">
 		                                <small>Clear All</small>
-		                            </a>
+		                            </a> 
 		                        </div>
 		                    </div>
 		                </div>
 		
-		                <div class="px-1" style="max-height: 300px;" data-simplebar>
-		
-		                    <h5 class="text-muted font-13 fw-normal mt-2">오늘</h5>
-		                    <!-- item-->
-												<c:if test="${ not empty list }">
-			                    <c:forEach var="list" items="${ list }" >
-				                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
-				                        <div class="card-body">
-				                            <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-				                            <div class="d-flex align-items-center">
-				                                <div class="flex-grow-1 text-truncate ms-2" id="alarmArea">
-				                                    <h5 class="noti-item-title fw-semibold font-14">
-				                                    <c:choose>
-					                                    <c:when test="${ list.notiType == 'Y' or list.notiType == 'N'}">
-					                                    	전자문서
-					                                    </c:when>
-					                                    <c:when test="${ list.notiType == '1' or list.notiType == '2'}">
-					                                    	근태알림
-					                                    </c:when>
-					                                    <c:when test="${ list.notiType == 'M'}">
-					                                    	메일수신
-					                                    </c:when>
-					                                    <c:when test="${ list.notiType == 'G'}">
-					                                    	쪽지수신
-					                                    </c:when>
-					                                    <c:otherwise>
-					                                    	알림이 없습니다.
-					                                    </c:otherwise>
-				                                    </c:choose>
-				                                    <small class="fw-normal text-muted ms-1">${list.createDate}</small></h5>
-				                                    <small class="noti-item-subtitle text-muted" id="message">${list.notiMsg}</small>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    </a>
-			                    </c:forEach>
-		                    </c:if>
-		
-		                    <div class="text-center">
-		                        <i class="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
-		                    </div>
-		                </div>
+										<!-- 하단의 알람리스트는 AlaramController에 알람리스틑 조회하는 ajax용 controller 작성후 페이지 렌더링시 ajax실행시켜서 뿌리도록 -->
+										<div class="px-1" style="max-height: 300px;" id="alarmContainer" data-simplebar>
+										
+										</div>
 		            </div>
 		        </li>       
+		        
+		        <script>
+		        document.addEventListener('DOMContentLoaded', function() {
+		        	
+				        document.getElementById("alarmIcon").addEventListener("click", function() {
+				        	updateAlarm();
+				        });
+				        
+				        document.getElementById("deleteAlarm").addEventListener("click", function() {
+				        	deleteAlarm();
+				        });
+				        
+		        });
+		        </script>
+		        
 		        
             <!-- Topbar Search Form -->
             <li class="app-search dropdown me-3 d-none d-lg-block">

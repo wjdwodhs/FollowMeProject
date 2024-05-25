@@ -31,6 +31,7 @@ public class CalendarDto {
     private Timestamp end;
     private String category;
     private String type;
+    
 }
 
 

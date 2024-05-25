@@ -13,16 +13,48 @@
 	
 
 	<select id="selectList" resultMap="notifiResultMap">
-		select *
-		  from tb_notification
-	   where mem_no = #{memNo}
-	     and is_read = '0'
-	     and trunc(create_date) = trunc(current_date)
-	   order by desc
+		SELECT 
+		    noti_no, 
+		    noti_type, 
+		    mem_no, 
+		    noti_msg, 
+		    TO_CHAR(EXTRACT(HOUR FROM SYSDATE - create_date), 'FM00') || '시간 ' ||
+		    TO_CHAR(EXTRACT(MINUTE FROM SYSDATE - create_date), 'FM00') || '분 전' AS create_date
+		    ,is_read
+		FROM 
+		    tb_notification
+		WHERE 
+		    mem_no = #{memNo}
+		    AND TRUNC(create_date) = TRUNC(SYSDATE)
+		ORDER BY 
+		    create_date asc
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT count(*)
+				
+		FROM 
+		    tb_notification
+		WHERE 
+		      mem_no = #{memNo}
+		  AND TRUNC(create_date) = TRUNC(SYSDATE)
+		    	is_read = '0'
 	</select>
 	
 	<!-- 종아이콘 클릭시 is_read가 '0'에서 '1'로 update -->
-
-
-
+	<update id="updateAlarm">
+		update 
+					 tb_notification
+			 set is_read = '1'
+		 where mem_no = #{memNo}
+	</update>
+	
+	<!-- clearAll 클릭 시 리스트 비우기(삭제) -->
+	<delete id="deleteAlarm">
+		delete
+		  from tb_notification
+		 where mem_no = #{memNo}
+	</delete>
+	
+	
 </mapper>

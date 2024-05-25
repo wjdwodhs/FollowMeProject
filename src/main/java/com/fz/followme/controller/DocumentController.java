@@ -1,11 +1,13 @@
 package com.fz.followme.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.fz.followme.dao.NotificationDao;
@@ -26,6 +29,7 @@ import com.fz.followme.dto.NotificationDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.DocumentService;
+import com.fz.followme.service.NotificationService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
 
@@ -46,6 +50,8 @@ public class DocumentController {
 	
 	private final AlarmEchoHandler handler;
 	private final NotificationDao notiDao;
+	@Autowired
+	private NotificationService notificationService; 
 	
 	// 전체 리스트조회 -----------------------------------------------
 	@GetMapping("/list")
@@ -403,7 +409,7 @@ public class DocumentController {
 	public String updateFinalApprove(DocumentDto document 
 								 , RedirectAttributes redirectAttributes
 								 , HttpSession session
-								 ) {
+								 ) throws Exception{
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String finalApprover = documentService.selectFinalApprover(document);
@@ -415,15 +421,14 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
 			if(result > 0) {
 				// 성공시
+				
+	            TextMessage message = new TextMessage("성공");
+	        	handler.handleTextMessage((WebSocketSession) session, message);
+				
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");
-			
-				for(WebSocketSession s : handler.getSessionList()) {
-					String memNo = (String)s.getAttributes().get("memNo");
-					if(memNo.equals(loginUser.getMemNo())) {
-						List<NotificationDto> list = notiDao.selectList(s);
-						session.setAttribute("list", list);
-					}
-				}
+		       		        
+				// 전자결재 update 성공 시, String msg 생성해서 핸들러 메소드로 메시지를 보낸 후, 
+				// 핸들러에서 클라이언트단으로 msg를 보내게 
 				
 			}else {
 				// 실패시
@@ -441,7 +446,7 @@ public class DocumentController {
 	@PostMapping("/midReject.do")
 	public String updateMidReject(DocumentDto document 
 								 , RedirectAttributes redirectAttributes
-								 , HttpSession session) {
+								 , HttpSession session) throws Exception {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String midApprover = documentService.selectMidApprover(document);
@@ -452,16 +457,12 @@ public class DocumentController {
 			
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
-				// 성공시
-				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");	
+	            TextMessage message = new TextMessage("반려");
+	        	handler.handleTextMessage((WebSocketSession) session, message);
 				
-				for(WebSocketSession s : handler.getSessionList()) {
-					String memNo = (String)s.getAttributes().get("memNo");
-					if(memNo.equals(loginUser.getMemNo())) {
-						List<NotificationDto> list = notiDao.selectList(s);
-						session.setAttribute("list", list);
-					}
-				}
+				// 성공시
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");
+									
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 반려 처리에 실패했습니다.");
@@ -478,7 +479,7 @@ public class DocumentController {
 	@PostMapping("/finalReject.do")
 	public String updateFinalReject(DocumentDto document 
 								 , RedirectAttributes redirectAttributes
-								 , HttpSession session) {
+								 , HttpSession session) throws Exception {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String finalApprover = documentService.selectFinalApprover(document);
@@ -489,16 +490,12 @@ public class DocumentController {
 			
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
+				
+	            TextMessage message = new TextMessage("반려");
+	        	handler.handleTextMessage((WebSocketSession) session, message);
 				// 성공시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");
-				
-				for(WebSocketSession s : handler.getSessionList()) {
-					String memNo = (String)s.getAttributes().get("memNo");
-					if(memNo.equals(loginUser.getMemNo())) {
-						List<NotificationDto> list = notiDao.selectList(s);
-						session.setAttribute("list", list);
-					}
-				}
+	
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서 반려 처리에 실패했습니다.");

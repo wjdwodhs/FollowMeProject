@@ -28,7 +28,7 @@
 		<typeAlias type="com.fz.followme.dto.EmailDto" alias="EmailDto"/>
 		
 
-		<typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/>
+		<!--  <typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/> -->
 
 		
 		
