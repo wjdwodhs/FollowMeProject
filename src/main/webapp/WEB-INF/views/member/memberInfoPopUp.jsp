@@ -13,19 +13,19 @@
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
-<script src="assets/js/head.js"></script>
+<script src="${contextPath}/assets/js/head.js"></script>
 
 <!-- Bootstrap css -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
 <!-- App css -->
-<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
 <!-- Icons css -->
-<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 <style>
 	.a.nav-link.active{background-color:#FEBE98;}
@@ -97,10 +97,10 @@
 </div>
         
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="${contextPath}/assets/js/app.min.js"></script>
 
     </body>
 
