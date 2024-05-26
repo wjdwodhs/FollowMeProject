@@ -87,12 +87,6 @@ public class HomeController {
 		return "ceoMain";
 	}
 	
-	
-	@RequestMapping("/attendance.page")
-	public String attendancePage() {
-		return "attendance/attendance";
-	}
-	
 	// 상단바 검색창에서 직원 검색 시 직원 정보 조회
 	@GetMapping("/memberSearchPopUp")
     public String getEmployeeInfo(@RequestParam("memName") String memName, Model model) {

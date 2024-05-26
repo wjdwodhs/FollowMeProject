@@ -12,16 +12,91 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
 
-
-     <!-- fullcalendar CDN -->
-     <link href="${contextPath }/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
-	 <script src="${contextPath}/assets/libs/fullcalendar/fullcalendar.global.min.js"></script>
-	 <script src="${contextPath}/assets/libs/fullcalendar/google-calendar.global.js"></script>
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-.btn-group>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
-.fc-toolbar-chunk>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
+.vacation-btn {
+    background-color: #FFBE98 !important; /* 배경색 설정 */
+    border-color: #FFBE98 !important; /* 버튼 테두리 색상 설정 */
+    color: #ffffff !important; /* 버튼 텍스트 색상 설정 */
+}
 
+.vacation-btn:hover {
+    background-color: #F2E8DA !important; /* hover 시 배경색 변경 */
+    border-color: #F2E8DA !important; /* hover 시 테두리 색상 변경 */
+}
+.fc-toolbar-chunk>button{--ct-btn-color:#fff;--ct-btn-bg:#FFBE98;--ct-btn-border-color:#FFBE98;--ct-btn-hover-color:#fff;--ct-btn-hover-bg:#F2E8DA;--ct-btn-hover-border-color:#F2E8DA;--ct-btn-active-color:#fff;--ct-btn-active-bg:#F2E8DA;--ct-btn-active-border-color:#F2E8DA;--ct-btn-disabled-bg:#FFBE98;--ct-btn-disabled-border-color:#FFBE98;}
+.table th, .table td {
+            vertical-align: middle;
+            font-size: 16px;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #343a40;
+            padding: 8px;
+        }
+        
+        .btn-group button {
+            width: 120px;
+            height: 36px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        th, td {
+            width: 33.33%;
+            padding: 8px;
+        }
+        .at-item {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+        .at-item .at-icon {
+            margin-right: 8px;
+            font-size: 18px;
+            color: #6c757d;
+        }
+        .at-item .at-text {
+            font-size: 16px;
+            font-weight: bold;
+        }
+         .filter-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .filter-row button {
+            width: 45px;
+            height: 45px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: transparent; /* 버튼 배경 숨김 */
+            border: none; /* 테두리 제거 */
+            color: black; /* 텍스트 색상 변경 */
+        }
+        .filter-row span {
+            margin: 0 10px;
+            font-size: 24px; /* 년도와 월 폰트 크기 조정 */
+            font-weight: bold;
+            color: black; /* 텍스트 색상 변경 */
+        }
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+      
+        
 </style>
 </head>
 <body>
@@ -59,133 +134,186 @@
                            </div>
                        </div>
                    </div>
-                   <div class="row" style="justify-content:center;">
-                       <!--근태 현황 start-->
-                       <div class="col-xl-10 col-md-12">
-                           <div class="menu-item mb-1">
-                                   <span class="menu-icon"><i data-feather="list"></i></span>
-                                   <span class="menu-text">올해 근태현황 </span>
-                           </div>
-                           <div class="card">
-                               <div class="card-body d-flex" style="justify-content:center">
-                                   <div style="margin-right: 50px;">
-                                       <h4>지각</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>10</span>회</h4>
-                                   </div>
-                                   <div style="margin-right: 50px;">
-                                       <h4>결근</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>13</span>회</h4>
-                                   </div>
-                                   <div style="margin-right: 50px;">
-                                       <h4>퇴근미체크</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>5</span>회</h4>
-                                   </div>
-                               </div> <!-- end card-body -->
-                           </div> <!-- end card-->
-                       </div> <!-- end col-->
-                       <!--근태 현황 end-->
-                   </div>
-                   <!-- end row -->
-                   <!-- end page title -->
-                   <div class="row" style="justify-content:center;">
-                       <!-- 휴가 현황 start -->
-                       <div class="col-xl-5 col-md-12">
-                           <div class="menu-item mb-1">
-                               <span class="menu-icon"><i data-feather="layers"></i></span>
-                               <span class="menu-text">올해 휴가현황 </span>
-                           </div>
-                           <div class="card">
-                               <div class="card-body d-flex" style="height: 120px; justify-content: center;">
-                                   <div style="margin-right: 10px; align-content: center;">
-                                       <h4>잔여 휴가</h4>
-                                   </div>
-                                   <div style="margin-right: 10px; align-content: center;">
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>3</span>일</h4>
-                                   </div>
-                                   <div class="btn-group" style="margin-top: 10px;">
-                                       <button type="button" class="btn btn-primary" style="width: 130px; height: 50px;">휴가 신청</button>
-                                   </div>
-                                   <div class="btn-group" style="margin-left: 10px; margin-top: 10px; width: 130px;">
-                                       <button type="button" class="btn btn-primary" style="height: 50px;">휴가 신청 내역</button>
-                                   </div>
-                               </div> <!-- end card-body -->
-                           </div> <!-- end card-->
-                       </div> <!-- end col-->
-                       <!-- 휴가 현황 end -->
-                       <!-- 근무 현황 start -->
-                       <div class="col-xl-5 col-md-12">
-                           <div class="menu-item mb-1">
-                               <span class="menu-icon"><i data-feather="list"></i></span>
-                               <span class="menu-text">올해 근무현황 </span>
-                           </div>
-                           <div class="card">
-                               <div class="card-body d-flex" style="justify-content:center">
-                                   <div style="margin-right: 30px;">
-                                       <h4>근무일수</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>107</span>일</h4>
-                                   </div>
-                                   <div style="margin-right: 30px;">
-                                       <h4>총근무시간</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>1074</span>시간</h4>
-                                   </div>
-                                   <div style="margin-right: 30px;">
-                                       <h4>평균근무시간</h4>
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>10</span>시간<span>9</span>분</h4>
-                                       
-                                   </div>
-                               </div> <!-- end card-body -->
-                           </div> <!-- end card-->
-                       </div> <!-- end col-->
-                       <!-- 근무 현황 end -->
-                   </div>
-                   <!-- end row -->
-                   <div class="row" style="justify-content:center;">
-                       <!-- 주간 근무시간 start-->
-                       <div class="col-xl-5 col-md-12">
-                           <div class="menu-item mb-1">
-                                   <span class="menu-icon"><i data-feather="clock"></i></span>
-                                   <span class="menu-text">주간 근무시간 </span>
-                           </div>
-                           <div class="card">
-                               <div class="card-body d-flex" style="justify-content:center">
-                                   <div class="d-flex" style="margin-right: 30px; justify-content:center">
-                                       <h4>주간 근무시간</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                       <h4 style="font-size: 20px; font-weight: bold;"><span>38</span>시간</h4>
-                                   </div>
-                               </div> <!-- end card-body -->
-                           </div> <!-- end card-->
-                       </div> <!-- end col-->
-                       <!-- 주간 근무시간 end-->
-                       <!-- 월간 근무시간 start -->
-                       <div class="col-xl-5 col-md-12">
-                           <div class="menu-item mb-1">
-                               <span class="menu-icon"><i data-feather="clock"></i></span>
-                               <span class="menu-text">월간 근무시간 </span>
-                           </div>
-                           <div class="card">
-                               <div class="card-body d-flex" style="justify-content: center;">
-                                <div class="d-flex" style="margin-right: 30px; justify-content:center">
-                                    <h4>월간 근무시간</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h4 style="font-size: 20px; font-weight: bold;"><span>150</span>시간</h4>
-                                </div>
-                               </div> <!-- end card-body -->
-                           </div> <!-- end card-->
-                       </div> <!-- end col-->
-                       <!-- 월간 근무시간 end -->
-                   </div>
-                   <!-- end row -->
-                   <div class="row">
-                       <div class="col-12">
-                           <div class="card">
-                               <div class="card-body">
-                                   <div class="row" style="display:flex; justify-content:center;">
-                                       <div class="col-lg-9">
-                                           <div id="calendar"></div>
-                                       </div> <!-- end col -->
-
-                                   </div>  <!-- end row -->
-                               </div> <!-- end card body-->
-                           </div> <!-- end card -->
+	                 <!-- 근태관리 페이지 시작 -->
+	                       <div class="container">
+	                        <!-- 년도와 월 선택 -->
+											    <div class="filter-row">
+											        <div class="col text-center">
+											            <button id="prevMonth" class="btn btn-secondary" onclick="prev();">&lt;</button>
+											            <span id="yearMonthDisplay">2024년 5월</span>
+											            <button id="nextMonth" class="btn btn-secondary" onclick="next();">&gt;</button>
+											        </div>
+											    </div>
+	                        <!-- 근태현황 -->
+	                        <div class="row mb-4">
+	                            <div class="col-md-12">
+	                                <div class="menu-item at-item">
+	                                    <span class="menu-icon at-icon"><i data-feather="list"></i></span>
+	                                    <span class="menu-text at-text">근태현황</span>
+	                                </div>
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <table class="table table-bordered text-center">
+	                                            <thead>
+	                                                <tr>
+	                                                		<th>출근</th>
+	                                                    <th>지각</th>
+	                                                    <th>조퇴</th>
+	                                                    <th>결근</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                <tr>
+	                                                		<td>${countMap.B}회</td>
+	                                                    <td>${countMap.E}회</td>
+	                                                    <td>${countMap.C}회</td>
+	                                                    <td>${countMap.D}회</td>
+	                                                </tr>
+	                                            </tbody>
+	                                        </table>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    
+	                        <!-- 근무현황 -->
+	                        <div class="row mb-4">
+	                            <div class="col-md-12">
+	                                <div class="menu-item at-item">
+	                                    <span class="menu-icon at-icon"><i data-feather="list"></i></span>
+	                                    <span class="menu-text at-text">근무현황</span>
+	                                </div>
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <table class="table table-bordered text-center">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th>근무일수</th>
+	                                                    <th>근무시간</th>
+	                                                    <th>평균근무시간</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                <tr>
+	                                                    <td>${attDto.workingDays}일</td>
+	                                                    <td>${attDto.monthWorkTime}시간</td>
+	                                                    <td>${attDto.avgWorkTime}시간</td>
+	                                                </tr>
+	                                            </tbody>
+	                                        </table>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    
+	                        <!-- 주간 및 월간 근무시간 -->
+	                        <div class="row mb-4">
+	                            <div class="col-md-12">
+	                                <div class="menu-item at-item">
+	                                    <span class="menu-icon at-icon"><i data-feather="clock"></i></span>
+	                                    <span class="menu-text at-text">총 근무시간</span>
+	                                </div>
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <table class="table table-bordered text-center">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th>총 근무시간</th>
+	                                                    <th>총 근무일수</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                <tr>
+	                                                    <td>${totalDto.totalWorkTime}시간</td>
+	                                                    <td>${totalDto.totalworkingDays}일</td>
+	                                                </tr>
+	                                            </tbody>
+	                                        </table>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        
+	                        <!-- 올해 휴가현황 -->
+	                        <div class="row mb-4">
+	                            <div class="col-md-12">
+	                                <div class="menu-item at-item">
+	                                    <span class="menu-icon at-icon"><i data-feather="layers"></i></span>
+	                                    <span class="menu-text at-text">올해 휴가현황</span>
+	                                </div>
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <table class="table table-bordered text-center">
+	                                            <thead>
+	                                                <tr>
+	                                                    <th>잔여 휴가</th>
+	                                                    <th>휴가 신청</th>
+	                                                    <th>휴가 신청 내역</th>
+	                                                </tr>
+	                                            </thead>
+	                                            <tbody>
+	                                                <tr>
+	                                                    <td>3일</td>
+	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/insertForm'">휴가 신청</button></td>
+	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/list'">휴가 신청 내역</button></td>
+	                                                </tr>
+	                                            </tbody>
+	                                        </table>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+														<!-- 근태관리 페이지 끝 -->
+														<script>
+												  
+												    var currentYear;
+												    var currentMonth;
+												
+												    // 전역으로 선언할 함수
+												    function updateYearMonthDisplay() {
+												        $('#yearMonthDisplay').text(currentYear + '년 ' + currentMonth + '월');
+												    }
+												
+												    // 이전 월 함수
+												    function prev() {
+												        if (currentMonth === 1) {
+												            currentYear--;
+												            currentMonth = 12;
+												        } else {
+												            currentMonth--;
+												        }
+												        updateYearMonthDisplay();
+												    }
+												
+												    // 다음 월 함수
+												    function next() {
+												        if (currentMonth === 12) {
+												            currentYear++;
+												            currentMonth = 1;
+												        } else {
+												            currentMonth++;
+												        }
+												        updateYearMonthDisplay();
+												    }
+												
+												    // 초기화 함수
+												    function init() {
+												        var currentDate = new Date();
+												        currentYear = currentDate.getFullYear();
+												        currentMonth = currentDate.getMonth() + 1;
+												
+												        // 초기 년/월 표시
+												        updateYearMonthDisplay();
+												    }
+												
+												    // 문서가 준비되면 초기화 함수 호출
+												    $(document).ready(function(){
+												        init();
+												    });
+												</script>
+														
+               
 
                            <!-- Add New Event MODAL -->
                            <div class="modal fade" id="event-modal" tabindex="-1">
@@ -236,6 +364,7 @@
                                </div> <!-- end modal dialog-->
                            </div>
                            <!-- end modal-->
+                           
                        </div>
                        <!-- end col-12 -->
                    </div> <!-- end row -->
@@ -245,14 +374,12 @@
            </div> <!-- content -->
 
 
-       </div>
+   
 
        <!-- ============================================================== -->
        <!-- End Page content -->
        <!-- ============================================================== -->
 
-
-   </div>
    <!-- END wrapper -->
 
    <!-- Theme Settings -->

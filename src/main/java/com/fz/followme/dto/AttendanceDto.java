@@ -25,5 +25,12 @@ public class AttendanceDto {
 	 private String type;
 	 private Date attDate;
 	 private String attContent;
+	 private int count;
+	 private String targetMonth;
+     private int workingDays;
+     private int monthWorkTime;
+     private double avgWorkTime;
+     private int totalWorkTime;
+     private int totalworkingDays;
 	
 }

@@ -10,25 +10,19 @@
 		<result column="type" property="type"/>
 		<result column="att_date" property="attDate"/>
 		<result column="att_content" property="attContent"/>
+		<result column="targetMonth" property="targetMonth"/>
+		<result column="workingDays" property="workingDays"/>
+		<result column="monthWorkTime" property="monthWorkTime"/>
+		<result column="avgWorkTime" property="avgWorkTime"/>
+		<result column="totalWorkTime" property="totalWorkTime"/>
+		<result column="totalworkingDays" property="totalworkingDays"/>
 		
 	</resultMap>
 
 	<!-- 출근 시간 등록 -->
 	<insert id="insertWorktime">
-			insert
-					into tb_attendance
-					(
-						mem_no
-					, att_date
-					, type
-					)
-					values
-					(
-					
-					  #{memNo}
-					, sysdate
-					, 'A'
-					)
+		 insert into tb_attendance (mem_no, att_date, type)
+   		 values (#{memNo}, sysdate, #{type})
 	</insert>
 
 <!-- 퇴근 시간 등록 -->
@@ -64,7 +58,7 @@
     WHERE mem_no = #{memNo}
     AND trunc(att_date) = trunc(sysdate)
 </select>
-<!-- 근태 조회 서비스 -->
+<!-- 근태 조회 서비스 (오늘 날짜) -->
 	<select id="selectAttendance" resultMap="attendanceMap">
     SELECT 
    		 mem_no
@@ -80,10 +74,97 @@
     AND trunc(att_date) = trunc(sysdate)
     
 </select>
+<!-- 타입별 출석 데이터 카운트 조회 -->
+ <select id="countAttendanceByType" resultMap="attendanceMap">
+     SELECT 
+         type, 
+         COUNT(*) AS count 
+     FROM 
+         tb_attendance 
+     WHERE 
+         mem_no = #{memNo} 
+     AND 
+         trunc(att_date, 'MM') = trunc(sysdate, 'MM')
+     AND 
+         type IN ('B', 'C', 'D', 'E') 
+     GROUP BY 
+         type
+ </select>
 	
-	
-	
-	
+	<!-- 월별 근무 시간 및 평균 근무 시간 조회 -->
+<select id="monthAttendanceTime" resultMap="attendanceMap">
+<![CDATA[
+ SELECT 
+        TO_CHAR(att_date, 'YYYY-MM') AS month,
+        COUNT(DISTINCT TO_CHAR(att_date, 'YYYY-MM-DD')) AS workingDays,
+        TRUNC(SUM(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600) AS monthWorkTime,
+        ROUND(AVG(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600, 1) AS avgWorkTime
+    FROM 
+        tb_attendance
+    WHERE 
+        mem_no = #{memNo} 
+        AND TO_CHAR(att_date, 'YYYY-MM') = TO_CHAR(sysdate, 'YYYY-MM')
+    GROUP BY 
+        TO_CHAR(att_date, 'YYYY-MM')
+    ORDER BY 
+        month DESC
+     ]]>
+</select>
+
+	<!-- 총 근무시간 및 총 근무일수 조회 -->
+<select id="totalAttendanceTime" resultMap="attendanceMap">
+<![CDATA[
+SELECT 
+    COUNT(DISTINCT TO_CHAR(att_date, 'YYYY-MM-DD')) AS totalWorkingDays,
+    TRUNC(SUM(
+        CASE 
+            WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                EXTRACT(SECOND FROM (end_time - start_time)) -
+                3600 
+            ELSE
+                EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                EXTRACT(SECOND FROM (end_time - start_time))
+        END
+    ) / 3600) AS totalWorkTime
+FROM 
+    tb_attendance
+WHERE 
+    mem_no = #{memNo} 
+     ]]>
+</select>
 	
 	
 	
