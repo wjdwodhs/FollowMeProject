@@ -83,11 +83,15 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
                 
                 log.debug("{}", notiDto);
                 
+                int count = notiDao.selectListCount(memNo);
+                
                 for(NotificationDto alarm : notiDto) {
                 	String notiType = alarm.getNotiType();
                 	String createDate = alarm.getCreateDate();
                     String notiMsg = alarm.getNotiMsg();
+                    int read = alarm.getIsRead();
                     
+                    if(read == 0) {
                     
                     switch (notiType) {
 	                    case "Y":
@@ -111,7 +115,8 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 	                        break;
                     }
                     
-                    str += message.getPayload() + "/" + notiType + "/" + createDate + "/" + notiMsg + "/";
+                    	str += message.getPayload() + "/" + notiType + "/" + createDate + "/" + notiMsg + "/" + count + "/";
+                    }
                 }
               
                 TextMessage msg = new TextMessage(str);
@@ -120,7 +125,7 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
             
         }
     }
-
+    
     private String getUserIdFromSession(WebSocketSession session) {
         MemberDto loginUser = (MemberDto) session.getAttributes().get("loginUser");
         return loginUser.getMemNo();

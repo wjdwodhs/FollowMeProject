@@ -38,7 +38,7 @@
 		WHERE 
 		      mem_no = #{memNo}
 		  AND TRUNC(create_date) = TRUNC(SYSDATE)
-		    	is_read = '0'
+		  AND is_read = 0
 	</select>
 	
 	<!-- 종아이콘 클릭시 is_read가 '0'에서 '1'로 update -->

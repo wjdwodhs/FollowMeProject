@@ -113,14 +113,16 @@
         		  console.log("evt.data : ", evt.data);
         		  console.log("evt : ", evt);
         		  
-        			var alarm = document.getElementById("red");
-		        			alarm.style.display = 'block';									
 		        	
 		        	let msgArr = evt.data.split("/");
 	        		var title = msgArr[1];	
 	        		var time = msgArr[2];
 	        		var msg = msgArr[3];
-        		  
+	        		var count = msgArr[4];
+	        		
+        			var alarm = document.getElementById("red");
+		        			alarm.style.display = 'block';									
+        		  		alarm.innerText = count;
 	        		const $alarmContainer = $("#alarmContainer .simplebar-content");
 	        		let $alarmArea;
 			        
@@ -156,7 +158,7 @@
 			        $cardBody.append($dFlex);
 			        $alarmArea.append($cardBody);
 			        
-			        $alarmContainer.append($alarmArea);
+			        $alarmContainer.prepend($alarmArea);
     				
         		}
         		
@@ -225,7 +227,6 @@
 		        
 		        function updateAlarm(){
 					    $("#red").css("display", "none");
-		        	console.log("dsfafafsf");
 			        
 					    $.ajax({
 						    url: "${contextPath}/updateAlarm",
@@ -244,7 +245,7 @@
 			        $.ajax({
 					    url: "${contextPath}/deleteAlarm",
 					    type: 'post',
-					    success: function(result){  
+					    success: function(SUCCESS){  
 					    		$("#alarmContainer .simplebar-content").empty();
 	                let $noAlarm = $('<h5 class="text-muted font-13 fw-normal mt-2">알림이 없습니다.</h5>');
 	                $("#alarmContainer .simplebar-content").append($noAlarm);	                
@@ -273,7 +274,7 @@
 		            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 		                <i class="fe-bell font-22" id="alarmIcon"></i>
 		                <input type="hidden" id="memNo" value="${loginUser.memNo}">
-	                	<span class="badge bg-danger rounded-circle noti-icon-badge" id="red" style="display:none;">!</span>
+	                	<span class="badge bg-danger rounded-circle noti-icon-badge" id="red" style="display:none;"></span>
 		            </a>
 		            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0">
 		                <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
