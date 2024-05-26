@@ -449,17 +449,12 @@
 	    $('.chat-room').empty();
 	    
 	    
-	    // card, card-body 흰 부분 삭제
-      $('.card-body').addClass('hidden');
-  		$('.card').addClass('hidden');
-  		
-	    
 	    // 채팅방 상대방 정보 제거
 	    $('.message-area.card-body .d-flex.align-items-start').remove();
 	
 	    // 팝업 창 열기
-	    var currentMemNo = document.getElementById('loginMemNo').value;
-	    const encodedCurrentMemNo = encodeURIComponent(currentMemNo);
+	    var currentMemNo = '${loginUser.memNo}'; // 세션 값 가져오기
+			const encodedCurrentMemNo = encodeURIComponent(currentMemNo);
 	    
 	    // 현재 대화방 직원 목록 가져오기
 	    var currentChatMembers = getAllChatMembers();
@@ -487,7 +482,7 @@
 	// 전달 받은 직원번호로 새로운 대화방 생성하기
 	function receiveEmpInfo(memNo, memName, deptName, deptNo, status, profileImgPath) {
 		
-			var currentUserId = document.getElementById('loginMemNo').value;
+			var currentUserId = '${loginUser.memNo}'; // 세션 값 가져오기
 			
 			// 대화방을 생성하기 전 카드와 메시지 영역을 표시
       $('.card-body').removeClass('hidden');
@@ -577,7 +572,7 @@
 				        var $ctextWrap = $('<div class="ctext-wrap">');
 			        	var $actions = $('<div class="conversation-actions dropdown">');
 		            
-		            var currentUserID = document.getElementById('loginMemName').value;
+		            var currentUserID = '${loginUser.memName}'; // 세션 값 가져오기
 		            
 		            // 응답이 null이 아닌 경우에만 처리
 		            if (response) {
