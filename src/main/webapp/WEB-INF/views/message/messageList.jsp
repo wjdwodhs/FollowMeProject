@@ -327,14 +327,13 @@
 	    if ($existingForm.length === 0) {
 	        // 채팅 입력 폼이 존재하지 않는 경우, 새로 생성
 	        var $formContainer = $('<div class="chat-input-form mt-2 bg-light p-3 rounded">');
-	        var $form = $('<form action="' + contextPath + '/message/sendMessage" method="post" class="needs-validation" novalidate name="chat-form" id="chat-form"></form>');
+	        var $form = $('<form action="' + contextPath + '/message/sendMessage" method="post" class="needs-validation" novalidate name="chat-form" id="chat-form"  onsubmit="return false;"></form>');
 	        var $row = $('<div class="row"></div>');
 	        var $inputColumn = $('<div class="col mb-2 mb-sm-0"></div>');
-	        var $textInput = $('<input type="text" name="msgContent" class="form-control border-0" placeholder="메세지를 입력하세요" required />');
+	        var $textInput = $('<input type="text" name="msgContent" class="form-control border-0" placeholder="메세지를 입력하고 전송버튼을 클릭하세요" required />');
 	        var $receiverInput = $('<input type="hidden" name="msgTo" value="' + otherUserId + '">');
 	        var $senderInput = $('<input type="hidden" name="msgFrom" value="' + currentUserId + '">');
 	        var $chatRoomIdInput = $('<input type="hidden" name="msgRoNo" value="' + roomId + '">');
-	        var $invalidFeedback = $('<div class="invalid-feedback">메세지를 입력한 후 전송 버튼을 눌러주세요!</div>');
 	        var $buttonColumn = $('<div class="col-sm-auto"></div>');
 	        var $buttonGroup = $('<div class="btn-group"></div>');
 	        var $sendButton = $('<button type="button" class="btn btn-success chat-send w-100" onclick="sendMessage();"><i class="fe-send"></i></button>');
@@ -343,7 +342,6 @@
 	        $inputColumn.append($receiverInput);
 	        $inputColumn.append($senderInput);
 	        $inputColumn.append($chatRoomIdInput);
-	        $inputColumn.append($invalidFeedback);
 	        $buttonGroup.append($sendButton);
 	        $buttonColumn.append($buttonGroup);
 	        $row.append($inputColumn);
@@ -367,6 +365,26 @@
 	
 	// 기존 대화방에서 신규 메세지 입력해서 전송하기
 	function sendMessage() {
+		
+		
+		  // 메시지 내용 가져오기
+	    var messageContent = $('#chat-form input[name="msgContent"]').val().trim();
+
+	    // 메시지가 비어 있는지 확인
+	    if (messageContent === '') {
+	        // 메시지가 비어 있다면, 사용자에게 알림을 표시하고 함수를 종료
+	        var $existingFeedback = $('.invalid-feedback');
+	        if ($existingFeedback.length === 0) {
+	            var $invalidFeedback = $('<div class="invalid-feedback">메세지를 입력한 후 전송 버튼을 눌러주세요!</div>');
+	            $('#chat-form input[name="msgContent"]').addClass('is-invalid').after($invalidFeedback);
+	        }
+	        return;
+	    } else {
+	        // 메시지가 비어 있지 않다면, 먼저 알림을 숨김
+	        $('#chat-form input[name="msgContent"]').removeClass('is-invalid');
+	        $('.invalid-feedback').remove();
+	    }
+
 			
 	    // 폼 데이터 가져오기
 	    var formData = $('#chat-form').serialize();
@@ -435,9 +453,6 @@
 	        }
 	    });
 	}
-
-	
-	
 	
 	
 	
@@ -508,13 +523,12 @@
 	    
 	    var $chatRoom = $('<div class="chat-room"></div>');
 	    var $formContainer = $('<div class="chat-input-form mt-2 bg-light p-3 rounded">');
-	    var $form = $('<form action="' + contextPath + '/message/createNewMessage" method="post" class="needs-validation" novalidate name="new-chat-form" id="new-chat-form"></form>');
+	    var $form = $('<form action="' + contextPath + '/message/createNewMessage" method="post" class="needs-validation" novalidate name="new-chat-form" id="new-chat-form" onsubmit="return false;"></form>');
 	    var $row = $('<div class="row"></div>');
 	    var $inputColumn = $('<div class="col mb-2 mb-sm-0"></div>');
-	    var $textInput = $('<input type="text" name="msgContent" class="form-control border-0" placeholder="메세지를 입력하세요" required />');
+	    var $textInput = $('<input type="text" name="msgContent" class="form-control border-0" placeholder="메세지를 입력하고 전송버튼을 클릭하세요" required />');
 	    var $receiverInput = $('<input type="hidden" name="msgTo" value="' + memNo + '">');
 	    var $senderInput = $('<input type="hidden" name="msgFrom" value="' + currentUserId + '">');
-	    var $invalidFeedback = $('<div class="invalid-feedback">메세지를 입력한 후 전송 버튼을 눌러주세요!</div>');
 	    var $buttonColumn = $('<div class="col-sm-auto"></div>');
 	    var $buttonGroup = $('<div class="btn-group"></div>');
 	    var $sendButton = $('<button type="button" class="btn btn-success chat-send w-100" onclick="createNewMessage();"><i class="fe-send"></i></button>');
@@ -522,7 +536,6 @@
 	    $inputColumn.append($textInput);
 	    $inputColumn.append($receiverInput);
 	    $inputColumn.append($senderInput);
-	    $inputColumn.append($invalidFeedback);
 	    $buttonGroup.append($sendButton);
 	    $buttonColumn.append($buttonGroup);
 	    $row.append($inputColumn);
@@ -543,6 +556,25 @@
 	
 	// 새 채팅방에서 새 채팅 메세지 작성
 	function createNewMessage() {
+		
+		// 메시지 내용 가져오기
+	    var messageContent = $('#new-chat-form input[name="msgContent"]').val().trim();
+
+	    // 메시지가 비어 있는지 확인
+	    if (messageContent === '') {
+	        // 메시지가 비어 있다면, 사용자에게 알림을 표시하고 함수를 종료
+	        var $existingFeedback = $('.invalid-feedback');
+	        if ($existingFeedback.length === 0) {
+	            var $invalidFeedback = $('<div class="invalid-feedback">메세지를 입력한 후 전송 버튼을 눌러주세요!</div>');
+	            $('#new-chat-form input[name="msgContent"]').addClass('is-invalid').after($invalidFeedback);
+	        }
+	        return;
+	    } else {
+	        // 메시지가 비어 있지 않다면, 먼저 알림을 숨김
+	        $('#new-chat-form input[name="msgContent"]').removeClass('is-invalid');
+	        $('.invalid-feedback').remove();
+	    }
+			
 		
 		// 폼 데이터 가져오기
     var formDataArray = $('#new-chat-form').serializeArray();
