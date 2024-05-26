@@ -29,7 +29,7 @@
 		
 		<typeAlias type="com.fz.followme.dto.SocialFeedDto" alias="SocialFeedDto"/>
 
-		<!--  <typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/> -->
+		<typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/>
 
 		
 		

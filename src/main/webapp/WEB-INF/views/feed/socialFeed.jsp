@@ -108,15 +108,19 @@
 		
 									<c:choose>
 		              		<c:when test="${empty socialFeed}">
-		               				<tr>
-		               						<td colspan="8">존재하는 문서가 없습니다.</td>
-		               				</tr>
+		               				
+               						<div class="card" style="width: 1040px;">
+				                      <div class="card-body">
+               										<h5>피드가 존재하지 않습니다.</h5>
+               								</div>
+               						</div>
+		               				
 		               		</c:when>
 		               		<c:otherwise>
 		               				<c:forEach var="socialFeed" items="${ socialFeed }">
 						                  <!-- Story Box-->
 						                  <div class="card" style="width: 1040px;">
-						                  		<input type="hidden" value="${socialFeed.sfNo}">
+						                  		<input type="hidden" name="no" value="${socialFeed.sfNo}">
 						                      <div class="card-body">
 						                          <div class="d-flex align-items-start">
 						                              <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }${ socialFeed.profileImgPath }"
@@ -149,9 +153,9 @@
 																			    </div>
 																			</c:if>
 						
-						                          <div class="mt-2">
+						                          <div class="mt-2" id="countArea">
 						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a>
-						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 0 댓글</a>
+						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i>댓글<span id="rcount"></span>개</a>
 						                          </div>
 						
 						                          <div class="post-user-comment-box mt-2">
@@ -169,17 +173,135 @@
 						
 						                              <div class="d-flex align-items-start mt-2">
 						                                  <a class="pe-2" href="#">
-						                                      <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle"
+						                                      <img src="${ contextPath }${ loginUser.profileImgPath }" class="rounded-circle"
 						                                          alt="Generic placeholder image" height="31">
 						                                  </a>
 						                                  <div class="w-100">
-						                                      <input type="text" id="simpleinput" class="form-control border-0 form-control-sm" placeholder="댓글 등록하기">
+						                                      <input type="text" id="replyContent" class="form-control border-0 form-control-sm" placeholder="댓글 등록하기">
+						                                  		<button onclick="ajaxInsertReply();" class="btn btn-sm" style="background-color:#febe98; color:white;"></button>
 						                                  </div>
 						                              </div>
 						                          </div>
 						                      </div>
 						                  </div>
 				              		</c:forEach>
+				   
+				   
+				  <script>           		
+				  // 댓글 ajax로 작성 요청하는 function
+        	function ajaxInsertReply(){
+        		// trim 공백제외
+        		if($("#replyContent").val().trim().length != 0){
+        			
+        			$.ajax({
+        				url:"${contextPath}/feed/registReply.do",sfN
+        				type:"post",
+        				data:{
+        					replyContent:$("#replyContent").val(),
+        					refBno:${socialFeed.sfNo}
+        				},
+        				success:function(result){
+        					if(result == "SUCCESS"){
+        						$("#replyContent").val("");
+        						ajaxReplyList();
+        					}else if(result == "FAIL"){
+        	        	alertify.alert("댓글 작성 서비스", "다시 입력해주세요.");
+        					}
+        					
+        				}, error:function(){
+        					 console.log("댓글 작성용 ajax통신 실패");
+        				}
+        				
+        			})
+        			
+        		}else{
+        			alertify.alert("댓글 작성 서비스", "내용을 입력해주세요.");
+        		}
+        	}
+        	
+        	// 현재 게시글의 댓글리스트를 ajax로 조회해서 뿌리는 function
+        	function ajaxReplyList(){
+        		// 비동기식 "/board/replyList.do" url요청
+        		// 요청처리 결과로 조회된 댓글리스트를 응답데이터로 받기
+        		// 해당 응답데이터 가지고 댓글 한개당 하나의 tr요소로 만들어서
+        		// tbody 영역에 뿌리기
+        		// + 댓글 갯수도 수정
+        		$.ajax({
+        			
+        			url: "${contextPath}/feed/replyList.do",
+        			type: "get",
+        			data: "no=${socialFeed.sfNo}",
+        			success: function(resData){
+                $("#countArea #rcount").text(resData.length);
+
+                let reply = "";
+                
+            		var replyArea = document.getElementById("replyArea");
+
+            		// 데이터를 반복하여 HTML 요소를 생성합니다.
+            		for (var i = 0; i < resData.length; i++) {
+            		    // 새로운 div 요소를 생성합니다.
+            		    var newDiv = document.createElement("div");
+            		    newDiv.classList.add("d-flex", "align-items-start");
+
+            		    // 이미지 요소를 생성하고 설정합니다.
+            		    var imgElement = document.createElement("img");
+            		    imgElement.classList.add("me-2", "avatar-sm", "rounded-circle");
+            		    imgElement.src = contextPath + resData[i].profileImgPath;
+            		    imgElement.alt = "Generic placeholder image";
+
+            		    // div 요소에 이미지 요소를 추가합니다.
+            		    newDiv.appendChild(imgElement);
+
+            		    // 내용을 담을 div 요소를 생성합니다.
+            		    var contentDiv = document.createElement("div");
+            		    contentDiv.classList.add("w-100");
+
+            		    // 헤더 요소를 생성하고 설정합니다.
+            		    var header = document.createElement("h5");
+            		    header.classList.add("mt-0");
+            		    var anchor = document.createElement("a");
+            		    anchor.href = "contacts-profile.html";
+            		    anchor.classList.add("text-reset");
+            		    anchor.textContent = resData[i].memNo;
+            		    var small = document.createElement("small");
+            		    small.classList.add("text-muted");
+            		    small.textContent = resData[i].enrollDate;
+
+            		    // 헤더 요소를 추가합니다.
+            		    header.appendChild(anchor);
+            		    header.appendChild(small);
+            		    contentDiv.appendChild(header);
+
+            		    // 내용을 추가합니다.
+            		    var textNode = document.createTextNode(resData[i].replyContent);
+            		    contentDiv.appendChild(textNode);
+            		    
+            		    // 빈 줄 추가
+            		    contentDiv.appendChild(document.createElement("br"));
+
+            		    // 내용을 담을 div 요소를 부모 div에 추가합니다.
+            		    newDiv.appendChild(contentDiv);
+									
+            		    // 부모 요소에 새로 생성한 div를 추가합니다.
+            		    replyArea.appendChild(newDiv);
+            			}
+                  // 현재 로그인한 회원이 해당 댓글의 작성자일 경우
+                  if(resData[i].memNo == '${loginUser.memNo}'){
+                    reply += "<button class='btn btn-sm btn-danger removeReply' data-replyno='" + resData[i].replyNo + "'>삭제</button>";
+                  }
+                      
+        				
+        			},
+        			error: function(){
+        				console.log("댓글 목록 조회용 ajax통신 실패");
+        			}
+        			
+        		})
+        			
+        	}
+        
+        </script>
 				          		</c:otherwise>
 				      		</c:choose>
 				

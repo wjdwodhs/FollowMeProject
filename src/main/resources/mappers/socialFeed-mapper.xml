@@ -25,6 +25,18 @@
 		<result column="ref_no" property="refNo"/>
 		<result column="upload_date" property="uploadDate"/>
 	</resultMap>
+	
+	<resultMap id="replyResultMap" type="ReplyDto">
+		<id column="reply_no" property="replyNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="ref_type" property="refType"/>
+		<result column="ref_bno" property="refBno"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="status" property="status"/>
+		<result column="profile_img_path" property="profileImgPath"/>
+		<result column="mem_name" property="memName"/>
+	</resultMap>
 
 	<insert id="insertFeed">
 		insert
@@ -103,6 +115,48 @@
 		 order by sf_no desc
 	 ]]>
 	</select>
+	
+	<select id="selectReplyList" resultMap="replyResultMap">
+		select  reply_no
+				  , r.mem_no
+				  , mem_name
+				  , reply_content
+				  , profile_img_path
+				  , to_char(r.enroll_date, 'YYYY-MM-DD HH24:MI:SS') "enroll_date"
+			 from tb_reply r
+		   join tb_mem m on (r.mem_no = m.mem_no)
+		  where r.status='Y' 
+			  and ref_bno = #{sfNo}
+		  order by reply_no asc
+	</select>	
+	
+	<insert id="insertReply">
+    insert 
+     into reply
+     (
+       REPLY_NO
+     , MEM_NO
+     , REF_TYPE
+     , REF_BNO
+     , REPLY_CONTENT
+     )
+     values
+     (
+     	 seq_replyno.nextval
+     , #{memNo}
+		 , 'S'
+     , #{refBno}
+     , #{replyContent}
+     )
+
+	</insert>
+	
+	<update id="deleteReply">
+		update reply
+		set status = 'N'
+		where reply_no = #{replyNo}
+	</update>
+	
 
 
 </mapper>

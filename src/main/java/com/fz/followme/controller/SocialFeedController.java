@@ -11,14 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fz.followme.util.PagingUtil;
 import com.fz.followme.dto.AttachmentDto;
-import com.fz.followme.dto.SocialFeedDto;
-
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.ReplyDto;
+import com.fz.followme.dto.SocialFeedDto;
 import com.fz.followme.service.SocialFeedService;
 import com.fz.followme.util.FileUtil;
 
@@ -85,6 +85,29 @@ public class SocialFeedController {
 		return "redirect:/feed";
 	}
 	
+	@ResponseBody
+	@GetMapping(value="/replyList.do", produces="application/json; charset=utf-8")
+	public List<ReplyDto> replyList(int no){
+		return socialFeedService.selectReplyList(no); 
+	}
+
+	@ResponseBody
+	@PostMapping("/registReply.do")
+	public String ajaxInsertReply(ReplyDto reply, HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		reply.setMemNo(String.valueOf(loginUser.getMemNo()));
+		
+		return socialFeedService.insertReply(reply) > 0 ? "SUCCESS"
+												   : "FAIL";
+	}
+	
+	@ResponseBody
+	@GetMapping("/removeReply.do")
+	public String ajaxDeleteReply(int no) {
+		return socialFeedService.deleteReply(no) > 0 ? "SUCCESS" 
+												: "FAIL";
+	}
 	
 	
 }
