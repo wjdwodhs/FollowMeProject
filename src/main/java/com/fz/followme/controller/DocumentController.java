@@ -29,7 +29,6 @@ import com.fz.followme.dto.NotificationDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.DocumentService;
-import com.fz.followme.service.NotificationService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
 
@@ -49,9 +48,7 @@ public class DocumentController {
 	private String status;
 	
 	private final AlarmEchoHandler handler;
-	private final NotificationDao notiDao;
-	@Autowired
-	private NotificationService notificationService; 
+
 	
 	// 전체 리스트조회 -----------------------------------------------
 	@GetMapping("/list")
@@ -421,9 +418,10 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
 			if(result > 0) {
 				// 성공시
-				
+				log.debug("memNo: {} ", document.getMemNo());
+					
 	            TextMessage message = new TextMessage("성공");
-	        	handler.handleTextMessage((WebSocketSession) session, message);
+	        	handler.broadcastMessageToUser(document.getMemNo(), message);
 				
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");
 		       		        
@@ -457,8 +455,8 @@ public class DocumentController {
 			
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
-	            TextMessage message = new TextMessage("반려");
-	        	handler.handleTextMessage((WebSocketSession) session, message);
+	            TextMessage message = new TextMessage("성공");
+	        	handler.broadcastMessageToUser(document.getMemNo(), message);
 				
 				// 성공시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");
@@ -491,8 +489,8 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 반려");
 			if(result > 0) {
 				
-	            TextMessage message = new TextMessage("반려");
-	        	handler.handleTextMessage((WebSocketSession) session, message);
+	            TextMessage message = new TextMessage("성공");
+	        	handler.broadcastMessageToUser(document.getMemNo(), message);
 				// 성공시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 반려 처리 되었습니다.");
 	

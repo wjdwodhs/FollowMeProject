@@ -26,11 +26,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.fz.followme.dto.AssetDto;
 import com.fz.followme.dto.AssetReservationDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.AssetService;
 import com.fz.followme.service.ReservationService;
 import com.fz.followme.util.PagingUtil;
@@ -47,6 +50,8 @@ public class AssetController {
 	private final AssetService assetService;
 	private final ReservationService reservationService;
 	private final PagingUtil pagingUtil;
+	
+	private final AlarmEchoHandler handler;
 
 	// * 관리자 차량관리 -------------------------------------------------------
 	@RequestMapping("/carsReservationManager.page")
@@ -313,7 +318,7 @@ public class AssetController {
 	// * 좌석예약
 	@PostMapping(value="/insertrsvnseat.do", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public ResponseEntity<Map<String,String>> addReservation(@RequestBody AssetReservationDto ard) {
+	public ResponseEntity<Map<String,String>> addReservation(@RequestBody AssetReservationDto ard, HttpSession session) {
 		Map<String, String> response = new HashMap<>();
 	    try {
 	        // 사용자의 예약 여부 확인
@@ -331,6 +336,11 @@ public class AssetController {
 	        System.out.println("Reservation add result: " + result);
 	        response.put("message", "예약에 성공하였습니다.");
 	        
+			MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+	        String memNo = loginUser.getMemNo();
+			
+	        TextMessage message = new TextMessage("성공");
+        	handler.broadcastMessageToUser(memNo, message);
 	        
 	        
 	        return new ResponseEntity<>(response, HttpStatus.OK);

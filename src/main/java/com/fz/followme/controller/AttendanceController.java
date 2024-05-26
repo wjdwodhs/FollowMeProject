@@ -47,8 +47,8 @@ public class AttendanceController {
         
         if (result > 0) {
             
-            TextMessage message = new TextMessage("출근");
-        	handler.broadcastMessageToUser(session, message);
+            TextMessage message = new TextMessage("성공");
+        	handler.broadcastMessageToUser(memNo, message);
         	
         	// 성공적으로 출퇴근 시간을 추가한 경우
             return "{\"result\": \"success\"}";
@@ -75,8 +75,8 @@ public class AttendanceController {
         
         if (result > 0) {
         	
-            TextMessage message = new TextMessage("퇴근");
-        	handler.broadcastMessageToUser(session, message);
+            TextMessage message = new TextMessage("성공");
+        	handler.broadcastMessageToUser(memNo, message);
         	
             // 성공적으로 출퇴근 시간을 추가한 경우
             return "{\"result\": \"success\"}";

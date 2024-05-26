@@ -28,7 +28,7 @@ public class NotificationController {
 	private final NotificationDao notiDao;
 	
 	@ResponseBody
-	@PostMapping(value="/echo", produces="application/json; charset=utf-8")
+	@PostMapping(value="/alarmList", produces="application/json; charset=utf-8")
 	public List<NotificationDto> selectList(HttpSession session){
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		String memNo = loginUser.getMemNo();

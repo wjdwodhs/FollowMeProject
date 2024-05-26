@@ -112,25 +112,36 @@
         			// 해당 메세지로 아래의 알람리스트 영역에 해당 메세지 한개만 요소만들어서 append
         		  console.log("evt.data : ", evt.data);
         		  console.log("evt : ", evt);
-		        	
+        		  
         			var alarmIcon = document.querySelector("#alarmIcon");
 		        			alarmIcon.style.display = 'inline';									
 		        	
 		        	let msgArr = evt.data.split("/");
+	        		var title = msgArr[1];
+	        		var time = msgArr[2];
+	        		var msg = msgArr[3];
         		  
-			        const $alarmContainer = $("#alarmContainer .simplebar-content");
-			        let $alarmArea = $('<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>');
-			        let $cardBody = $('<div class="card-body"></div>');
-			        let $closeBtn = $('<span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>');
+	        		const $alarmContainer = $("#alarmContainer .simplebar-content");
+	        		let $alarmArea;
+			        
+			        if (msgArr[0] != "성공") {
+			            $alarmArea = $(
+			                '<a href="' + contextPath + '/document/detail?no=' + msgArr[4] + '" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>'
+			            );
+			        } else {
+			            $alarmArea = $(
+			                '<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>'
+			            );
+			        }
+			        
+			        let $cardBody = $('<div class="card-body" style="background-color:#FFB2A5;"></div>');
+			        let $closeBtn = $('<span class="float-end noti-close-btn text-muted"></span>');
 			        let $dFlex = $('<div class="d-flex align-items-center"></div>');
 			        let $flexGrow = $('<div class="flex-grow-1 text-truncate ms-2"></div>');
 			        let $title = $('<h5 class="noti-item-title fw-semibold font-14"></h5>');
 			        let $time = $('<small class="fw-normal text-muted ms-1"></small>');
 			        let $msg = $('<small class="noti-item-subtitle text-muted" id="message"></small>');
 			        
-	        		var title = msgArr[0];
-	        		var time = msgArr[1];
-	        		var msg = msgArr[2];
 			        
               $title.text(title);
               $time.text(time);
@@ -149,6 +160,64 @@
     				
         		}
         		
+        		function alarmList(){
+			        $.ajax({
+					    url: "${contextPath}/alarmList",
+					    type: 'post',
+					    success:function(alarmList){  
+					    						    	
+					        const $alarmContainer = $("#alarmContainer .simplebar-content");					        
+					        
+					        for(let i = 0; i<alarmList.length; i++){
+					        		var title = alarmList[i].notiType;
+					        		var time = alarmList[i].createDate;
+					        		var msg = alarmList[i].notiMsg;
+
+					        		if(title == 'Y' || title == 'N'){
+					        			title = "전자문서";
+					        		}else if(title == '1' || title == '2' || title == '3' || title == '4'){
+					        			title = "근태알림";
+					        		}else if(title == 'A'){
+					        			title = "좌석예약";
+					        		}else if(title == 'M'){
+					        			title = "메일수신";
+					        		}else if(title == 'G'){
+					        			title = "쪽지수신";	
+					        		}
+					        			
+					        			
+					        		let $alarmArea = $('<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>');
+							        let $cardBody = $('<div class="card-body"></div>');
+							        let $closeBtn = $('<span class="float-end noti-close-btn text-muted"></span>');
+							        let $dFlex = $('<div class="d-flex align-items-center"></div>');
+							        let $flexGrow = $('<div class="flex-grow-1 text-truncate ms-2"></div>');
+							        let $title = $('<h5 class="noti-item-title fw-semibold font-14"></h5>');
+							        let $time = $('<small class="fw-normal text-muted ms-1"></small>');
+							        let $msg = $('<small class="noti-item-subtitle text-muted" id="message"></small>');
+							        
+							        
+				              $title.text(title);
+				              $time.text(time);
+				              $msg.text(msg);
+							        
+							        // 요소 조립
+							        $title.append($time);
+							        $flexGrow.append($title);
+							        $flexGrow.append($msg);
+							        $dFlex.append($flexGrow);
+							        $cardBody.append($closeBtn);
+							        $cardBody.append($dFlex);
+							        $alarmArea.append($cardBody);
+							        
+							        $alarmContainer.append($alarmArea);
+					        }
+					    	}
+					    
+			        });
+        		
+        		  
+
+        		}
 
         		
         		// 리스트 조회시점 발송될떄 x		
@@ -160,7 +229,6 @@
 					    type: 'post',
 					    success:function(result){  
 					    	$("#red").hide();
-					    	showAlarm();
 					    	
 					    }
 					    
@@ -175,13 +243,15 @@
 	                $("#red").hide()
 					    		$("#alarmContainer .simplebar-content").empty();
 	                let $noAlarm = $('<h5 class="text-muted font-13 fw-normal mt-2">알림이 없습니다.</h5>');
-	                $("#alarmContainer .simplebar-content").append($noAlarm);
-	                showAlarm();
-	                
+	                $("#alarmContainer .simplebar-content").append($noAlarm);	                
 					    
 					    }
 			        });
 		        }
+		        
+		        $(document).ready(function() {
+		            alarmList(); //알람리스트 호출
+		        });
 		        
         </script>
 

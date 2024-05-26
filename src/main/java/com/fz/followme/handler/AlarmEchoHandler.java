@@ -47,7 +47,7 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 	
 	@Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-                    
+		
     }
 	
 	/**
@@ -72,10 +72,9 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
         }
     }
     
-    public void broadcastMessageToUser(HttpSession httpSession, TextMessage message) throws Exception {
-        MemberDto loginUser = (MemberDto) httpSession.getAttribute("loginUser");
-        String memNo = loginUser.getMemNo();
-
+    public void broadcastMessageToUser(String memNo, TextMessage message) throws Exception {
+        String str = "";
+                
         for (WebSocketSession session : sessionList) {
             String sessionMemNo = getUserIdFromSession(session);
             if (memNo.equals(sessionMemNo)) {
@@ -85,26 +84,38 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
                 log.debug("{}", notiDto);
                 
                 for(NotificationDto alarm : notiDto) {
-                    
                 	String notiType = alarm.getNotiType();
                 	String createDate = alarm.getCreateDate();
                     String notiMsg = alarm.getNotiMsg();
                     
                     
-                        if(notiType.equals("Y") || notiType.equals("N")) {
-                        	notiType = "전자문서";                        	
-                        }else if(notiType.equals("1") || notiType.equals("2")) {
-                        	notiType = "근태알림";
-                        }else if(notiType.equals("M")) {
-                        	notiType = "메일수신";
-                        }else if(notiType.equals("G")) {
-                        	notiType = "쪽지수신";
-                        }
+                    switch (notiType) {
+	                    case "Y":
+	                    case "N":
+	                        notiType = "전자문서";
+	                        break;
+	                    case "1":
+	                    case "2":
+	                    case "3":
+	                    case "4":
+	                        notiType = "근태알림";
+	                        break;
+	                    case "A":
+	                    	notiType = "좌석예약";
+	                    	break;
+	                    case "M":
+	                        notiType = "메일수신";
+	                        break;
+	                    case "G":
+	                        notiType = "쪽지수신";
+	                        break;
+                    }
                     
-                    
-                    message = new TextMessage(notiType + "/" + createDate + "/" + notiMsg + "/");            	
-	                session.sendMessage(message);
+                    str += message.getPayload() + "/" + notiType + "/" + createDate + "/" + notiMsg + "/";
                 }
+              
+                TextMessage msg = new TextMessage(str);
+                session.sendMessage(msg);
             }
             
         }
