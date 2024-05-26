@@ -643,7 +643,7 @@ input:focus, td>textarea:focus {
 									<form id="frm2" action="" method="post">
 										<input type="hidden" name="processReason">
 										<input type="hidden" name="docuNo" value="${ document.docuNo }">
-										<input type="hidden" name="docuMemNo" value="${ document.memNo }">																				
+										<input type="hidden" name="memNo" value="${ document.memNo }">																				
 										<div class="modal fade" id="reject-modal" tabindex="-1"
 											role="dialog" aria-hidden="true">
 											<div class="modal-dialog modal-dialog-centered">

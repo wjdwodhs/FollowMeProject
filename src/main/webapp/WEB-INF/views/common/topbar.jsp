@@ -113,11 +113,11 @@
         		  console.log("evt.data : ", evt.data);
         		  console.log("evt : ", evt);
         		  
-        			var alarmIcon = document.querySelector("#alarmIcon");
-		        			alarmIcon.style.display = 'inline';									
+        			var alarm = document.getElementById("red");
+		        			alarm.style.display = 'block';									
 		        	
 		        	let msgArr = evt.data.split("/");
-	        		var title = msgArr[1];
+	        		var title = msgArr[1];	
 	        		var time = msgArr[2];
 	        		var msg = msgArr[3];
         		  
@@ -130,7 +130,7 @@
 			            );
 			        } else {
 			            $alarmArea = $(
-			                '<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1"></a>'
+			                '<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1 style="background-color:#FFB2A5;"></a>'
 			            );
 			        }
 			        
@@ -224,23 +224,27 @@
         		// login시, 알람리스트 조회는 ajax로 처리 
 		        
 		        function updateAlarm(){
-			        $.ajax({
-					    url: "${contextPath}/updateAlarm",
-					    type: 'post',
-					    success:function(result){  
-					    	$("#red").hide();
-					    	
-					    }
+					    $("#red").css("display", "none");
+		        	console.log("dsfafafsf");
+			        
+					    $.ajax({
+						    url: "${contextPath}/updateAlarm",
+						    type: 'post',
+						    success:function(result){  
+						    	
+						    }
 					    
 			        });
 		        }
 		        
 		        function deleteAlarm(){
+		        	$("#red").css("display", "none");
+		        	
+		        	
 			        $.ajax({
 					    url: "${contextPath}/deleteAlarm",
 					    type: 'post',
 					    success: function(result){  
-	                $("#red").hide()
 					    		$("#alarmContainer .simplebar-content").empty();
 	                let $noAlarm = $('<h5 class="text-muted font-13 fw-normal mt-2">알림이 없습니다.</h5>');
 	                $("#alarmContainer .simplebar-content").append($noAlarm);	                
@@ -251,6 +255,13 @@
 		        
 		        $(document).ready(function() {
 		            alarmList(); //알람리스트 호출
+		            $("#alarmIcon").on('click', function() {
+		                updateAlarm();
+		            });
+		            $("#deleteAlarm").on('click', function() {
+		            		deleteAlarm();
+		            });
+		            
 		        });
 		        
         </script>
@@ -284,22 +295,7 @@
 										</div>
 		            </div>
 		        </li>       
-		        
-		        <script>
-		        document.addEventListener('DOMContentLoaded', function() {
-		        	
-				        document.getElementById("alarmIcon").addEventListener("click", function() {
-				        	updateAlarm();
-				        });
-				        
-				        document.getElementById("deleteAlarm").addEventListener("click", function() {
-				        	deleteAlarm();
-				        });
-				        
-		        });
-		        </script>
-		        
-		        
+		         
             <!-- Topbar Search Form -->
             <li class="app-search dropdown me-3 d-none d-lg-block">
                 <form onsubmit="return searchEmployee();">

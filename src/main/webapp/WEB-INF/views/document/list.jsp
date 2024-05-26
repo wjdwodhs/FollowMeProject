@@ -193,8 +193,8 @@
 		                                                        <c:choose>
 		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
 						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docuCategory">문서유형</option>
-						                                                            <option value="docuTitle">문서제목</option>
+						                                                            <option value="docu_category_name">문서유형</option>
+						                                                            <option value="docu_title">문서제목</option>
 						                                                        </select>
 		                                                        		</c:when>
 		                                                        		<c:otherwise>

@@ -91,7 +91,10 @@
 					 count(*)
 		  from tb_document d
 		  join tb_mem m on (d.mem_no = m.mem_no)
-		 where  d.mem_no = #{memNo}
+		 where  
+		 		 	 (
+			      d.mem_no = #{memNo}
+					 )
 				or (
 			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
@@ -99,14 +102,15 @@
 						)
 				or (
 						d.status != '3'
-						and d.mid_approve_status = 'Y'
-						and '대표' = #{memGrade}
+						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
 				or (
 						d.ref_mem_no = #{memNo}
 						and d.status != '3'
 						)
+		 order
+		    by docu_no desc
 	</select>
 	
 	<select id="selectDocumentList" resultMap="documentResultMap">
@@ -151,24 +155,27 @@
       left join tb_document_category dc on d.docu_category = dc.docu_category
 		  left join tb_mem m on (d.mem_no = m.mem_no)
 		  left join tb_department dp on (d.dept_no = dp.dept_no)
-		 where ${condition} like '%' || #{keyword} || '%'
-		   and (
-		   			d.mem_no = #{memNo}
-					 )
-				or (
-			    	m.dept_no = #{deptNo}
-			    	and '팀장' = #{memGrade}
-			    	and d.status != '3'
-						)
-				or (
-						d.status != '3'
-						and (d.mid_approve_status = 'Y' or mid_approver is null) 
-						and final_approver = #{memNo}
-						)
-				or (
-						d.ref_mem_no = #{memNo}
-						and d.status != '3'
-						)
+		where  
+        (
+            d.mem_no = #{memNo}
+            OR (
+                d.dept_no = #{deptNo}
+                AND '팀장' = #{memGrade}
+                AND d.status != '3'
+            )
+            OR (
+                d.status != '3'
+                AND (d.mid_approve_status = 'Y' OR mid_approver IS NULL)
+                AND final_approver = #{memNo}
+            )
+            OR (
+                d.ref_mem_no = #{memNo}
+                AND d.status != '3'
+            )
+        )
+				and ${condition} like '%' || #{keyword} || '%'
+		 order
+		    by d.docu_no desc
 	</select>
 	
 	<select id="selectSearchList" resultMap="documentResultMap">
@@ -184,25 +191,25 @@
      left join tb_document_category dc on d.docu_category = dc.docu_category
 		 left join tb_mem m on (d.mem_no = m.mem_no)
 		 left join tb_department dp on (d.dept_no = dp.dept_no)
-		where ${condition} like '%' || #{keyword} || '%'
-		 	and	 	
-		 		 	 (
-			      d.mem_no = #{memNo}
-					 )
-				or (
-			    	d.dept_no = #{deptNo}
-			    	and '팀장' = #{memGrade}
-			    	and d.status != '3'
-						)
-				or (
-						d.status != '3'
-						and (d.mid_approve_status = 'Y' or mid_approver is null) 
-						and final_approver = #{memNo}
-						)
-				or (
-						d.ref_mem_no = #{memNo}
-						and d.status != '3'
-						)
+		where  
+        (
+            d.mem_no = #{memNo}
+            OR (
+                d.dept_no = #{deptNo}
+                AND '팀장' = #{memGrade}
+                AND d.status != '3'
+            )
+            OR (
+                d.status != '3'
+                AND (d.mid_approve_status = 'Y' OR mid_approver IS NULL)
+                AND final_approver = #{memNo}
+            )
+            OR (
+                d.ref_mem_no = #{memNo}
+                AND d.status != '3'
+            )
+        )
+				and ${condition} like '%' || #{keyword} || '%'
 		 order
 		    by d.docu_no desc
 	</select>
@@ -214,8 +221,9 @@
       left join tb_document_category dc on d.docu_category = dc.docu_category
 		  left join tb_mem m on (d.mem_no = m.mem_no)
 		  left join tb_department dp on (d.dept_no = dp.dept_no)
-	 	where ${condition} like '%' || #{keyword} || '%'
-		 	and	 	d.status = #{status}
+	 	where 
+		 		(
+		 		 	d.status = #{status}
 		 	or (
 			      d.mem_no = #{memNo}
 					)
@@ -232,6 +240,8 @@
 						d.ref_mem_no = #{memNo}
 				 		and d.status = #{status}
 				 	)
+				 	)
+			and ${condition} like '%' || #{keyword} || '%'
 	</select>
 	
 	<select id="statusSearchList" resultMap="documentResultMap">
@@ -247,26 +257,26 @@
      left join tb_document_category dc on d.docu_category = dc.docu_category
 		 left join tb_mem m on (d.mem_no = m.mem_no)
 		 left join tb_department dp on (m.dept_no = dp.dept_no)
-		where ${condition} like '%' ||#{keyword}||'%'
-		 	and	 	d.status = #{status}
-		 	or (
-			      d.mem_no = #{memNo}
-					)
-			or (
-			    	d.dept_no = #{deptNo}
-			    	and '팀장' = #{memGrade}
-					)
-			or (
-						d.status = #{status}
-						and (d.mid_approve_status = 'Y' or mid_approver is null) 
-						and final_approver = #{memNo}
-					)
-			or (
-						d.ref_mem_no = #{memNo}
-				 		and d.status = #{status}
-				 	)
-		 order
-		    by docu_no desc
+    where 
+        (
+            d.status = #{status}
+            OR d.mem_no = #{memNo}
+            OR (
+                d.dept_no = #{deptNo}
+                AND '팀장' = #{memGrade}
+            )
+            OR (
+                d.status = #{status}
+                AND (d.mid_approve_status = 'Y' OR mid_approver IS NULL)
+                AND final_approver = #{memNo}
+            )
+            OR (
+                d.ref_mem_no = #{memNo}
+                AND d.status = #{status}
+            )
+        )
+        AND ${condition} LIKE '%' || #{keyword} || '%'
+    order by docu_no desc
 	</select>
 
 	<!-- 진행중인 리스트 조회 -->

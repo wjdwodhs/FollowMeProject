@@ -186,21 +186,21 @@
                                         <div class="mb-2" style="display: flex; justify-content: space-between;">
                                             <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
                                                 
-                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get" style="margin-top: 10px;">
+                                                <form id="searchForm" action="${ contextPath }/document/status" method="get" style="margin-top: 10px;">
                                                 		<div style="display:flex;">
                                                     		<input type="hidden" name="page">
 		                                                    <div class="col-12 text-sm-center items">
 		                                                        <c:choose>
 		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
 						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_category_name">문서유형</option>
 						                                                            <option value="docu_title">문서제목</option>
 						                                                        </select>
 		                                                        		</c:when>
 		                                                        		<c:otherwise>
 		                                                        				<!-- 팀장, 대표일 경우 -->
 						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category">문서유형</option>
+						                                                            <option value="docu_category_name">문서유형</option>
 						                                                            <option value="docu_title">문서제목</option>
 						                                                            <option value="mem_name">기안자</option>
 						                                                            <option value="dept_name">기안부서</option>
@@ -208,7 +208,7 @@
 				                                                        </c:otherwise>
 		                                                        </c:choose>
 		                                                        <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on" style="width:150px;">
-		                                                        <button type="button" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
+		                                                        <button type="submit" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
 		                                                        
 		                                                    </div>
 		                                                </div>
