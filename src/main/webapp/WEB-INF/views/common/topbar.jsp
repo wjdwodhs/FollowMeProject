@@ -5,36 +5,35 @@
 <!DOCTYPE html>
 <html lang="en" data-topbar-color="dark">
 
-    <head>
-        <meta charset="utf-8" />
-        <title>menubar</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
+<head>
+    <meta charset="utf-8" />
+    <title>menubar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
 
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets/images/favicon.ico">
 
-        <!-- Plugins css -->
-        <link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-        <link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
-        
-        <!-- Theme Config Js -->
-        <script src="${ contextPath }/assets/js/head.js"></script>
+<!-- Plugins css -->
+<link href="${ contextPath }/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="${ contextPath }/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
 
-        <!-- Bootstrap css -->
-        <link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+<!-- Theme Config Js -->
+<script src="${ contextPath }/assets/js/head.js"></script>
 
-        <!-- App css -->
-        <link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<!-- Bootstrap css -->
+<link href="${ contextPath }/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
-        <!-- Icons css -->
-        <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-        
-        
-    </head>
+<!-- App css -->
+<link href="${ contextPath }/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Icons css -->
+<link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+</head>
 <body>
 
 <script>
@@ -72,6 +71,21 @@
             <button class="button-toggle-menu">
                 <i class="mdi mdi-menu"></i>
             </button>
+            
+            <!-- Google 번역 -->
+							<div id="google_translate_element" class="hd_lang"></div>
+							<script>
+								function googleTranslateElementInit() {
+									new google.translate.TranslateElement({
+										pageLanguage: 'ko',
+										includedLanguages: 'ko,zh-CN,zh-TW,ja,en,fr',
+										layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+										autoDisplay: false
+									}, 'google_translate_element');
+								}
+							</script>
+							<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+					 <!-- //Google 번역 -->
 
            
 
@@ -296,60 +310,8 @@
                 </div>
             </li>
 
-            <!-- App Dropdown -->
-            <!-- <li class="dropdown d-none d-md-inline-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-grid font-22"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
-
-                    <div class="p-2">
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/slack.png" alt="slack">
-                                    <span>Slack</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/github.png" alt="Github">
-                                    <span>GitHub</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/dribbble.png" alt="dribbble">
-                                    <span>Dribbble</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
-                                    <span>Bitbucket</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/dropbox.png" alt="dropbox">
-                                    <span>Dropbox</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/g-suite.png" alt="G Suite">
-                                    <span>G Suite</span>
-                                </a>
-                            </div>
-                        </div> end row
-                    </div>
-                </div>
-            </li> -->
-
-            <!-- Language flag dropdown  -->
+						<%-- 
+            <!-- Language flag dropdown -->
             <li class="dropdown d-none d-md-inline-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="${ contextPath }/assets/images/flags/korea.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
@@ -360,11 +322,11 @@
                     <a href="javascript:void(0);" class="dropdown-item">
                         <img src="${ contextPath }/assets/images/flags/us.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">US</span>
                     </a>
-
                     
-
                 </div>
             </li>
+            --%>
+            
             
             <!-- Notofication dropdown -->
             <%-- <li class="dropdown notification-list">
