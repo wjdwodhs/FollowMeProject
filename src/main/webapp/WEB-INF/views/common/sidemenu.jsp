@@ -162,7 +162,7 @@
             </li>
 
             <li class="menu-item">
-                <a href="${ contextPath }/board/socialFeed.page" class="menu-link">
+                <a href="${ contextPath }/feed" class="menu-link">
                     <span class="menu-icon"><i data-feather="rss"></i></span>
                     <span class="menu-text"> 소셜피드 </span>
                 </a>

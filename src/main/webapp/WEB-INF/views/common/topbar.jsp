@@ -132,11 +132,11 @@
 			            );
 			        } else {
 			            $alarmArea = $(
-			                '<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1 style="background-color:#FFB2A5;"></a>'
+			                '<a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1 style="background-color:#FFD5BC;"></a>'
 			            );
 			        }
 			        
-			        let $cardBody = $('<div class="card-body" style="background-color:#FFB2A5;"></div>');
+			        let $cardBody = $('<div class="card-body" style="background-color:#FFD5BC;"></div>');
 			        let $closeBtn = $('<span class="float-end noti-close-btn text-muted"></span>');
 			        let $dFlex = $('<div class="d-flex align-items-center"></div>');
 			        let $flexGrow = $('<div class="flex-grow-1 text-truncate ms-2"></div>');

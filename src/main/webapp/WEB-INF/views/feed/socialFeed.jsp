@@ -49,230 +49,155 @@
       <!-- Start Page Content here -->
       <!-- ============================================================== -->
 
-			<div class="content" style="align-items: center; justify-content: center;">
+			<div class="content" style="background-color: #F2E8DA; display: flex;">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                        
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    
-                                    <h4 class="page-title">Follow Me 와글와글</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
+		      <!-- Start Content-->
+		      <div class="container-fluid" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+		          
+		          <!-- start page title -->
+		          <div class="row">
+		              <div class="col-12">
+		                  <div class="page-title-box">
+		                      
+		                      <h4 class="page-title">Follow Me 와글와글</h4>
+		                  </div>
+		              </div>
+		          </div>
+		          <!-- end page title -->
+		
+		          <div class="row">
+		              
+		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1">
+		                  <!-- new post -->
+		                  <div class="card" style="width: 1040px;">
+		                      <div class="card-body p-0">
+		                          <ul class="nav nav-tabs nav-bordered">
+		                              <li class="nav-item">
+		                                  <a href="#newpost" data-bs-toggle="tab" aria-expanded="false" class="nav-link active px-3 py-2">
+		                                      <i class="mdi mdi-pencil-box-multiple font-18 d-md-none d-block"></i>
+		                                      <span class="d-none d-md-block">피드 작성하기</span>
+		                                  </a>
+		                              </li>
+		                              
+		                             
+		                          </ul> <!-- end nav-->
+		                          <div class="tab-content pt-0">
+		                              <div class="tab-pane show active p-3" id="newpost">
+		                                  <!-- comment box -->
+		                                  <div class="border rounded">
+		                                      <form action="${contextPath}/feed/insert" method="post" class="comment-area-box" enctype="multipart/form-data">
+		                                      <input type="hidden" name="memNo" value="${loginUser.memNo}">
+		                                          <textarea rows="6" class="form-control border-0" style="resize:none;" placeholder="내용을 입력하세요" required name="sfContent"></textarea>
+		                                          <div class="p-2 bg-light d-flex justify-content-between align-items-center">
+		                                              <div>
+		                                              		<input type="file" id="upfile" name="uploadFiles" style="display:none;" multiple>
+		                                                  <a href="#" class="btn btn-sm px-2 font-16 btn-light" onclick="$('#upfile').click();"><i class="mdi mdi-image-outline"></i></a>
+		                                                  <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-attachment"></i></a>
+		                                              </div>
+		                                              <button type="submit" class="btn btn-sm" style="background-color:#febe98; color:white;"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
+		                                          </div>
+		                                      </form>
+		                                  </div> <!-- end .border-->
+		                                  <!-- end comment box -->
+		                              </div> <!-- end preview-->
+		                          </div> <!-- end tab-content-->
+		                      </div>
+		                  </div>
+		                  <!-- end new post -->
+		
+		
+									<c:choose>
+		              		<c:when test="${empty socialFeed}">
+		               				<tr>
+		               						<td colspan="8">존재하는 문서가 없습니다.</td>
+		               				</tr>
+		               		</c:when>
+		               		<c:otherwise>
+		               				<c:forEach var="socialFeed" items="${ socialFeed }">
+						                  <!-- Story Box-->
+						                  <div class="card" style="width: 1040px;">
+						                  		<input type="hidden" value="${socialFeed.sfNo}">
+						                      <div class="card-body">
+						                          <div class="d-flex align-items-start">
+						                              <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }${ socialFeed.profileImgPath }"
+						                                  alt="user-image">
+						                              <div class="w-100">
+						                                  <div class="dropdown float-end text-muted">
+						                                      <a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">
+						                                          <i class="mdi mdi-dots-horizontal"></i>
+						                                      </a>
+						                                      <div class="dropdown-menu dropdown-menu-end">
+						                                          <!-- item-->
+						                                          <a href="javascript:void(0);" class="dropdown-item">수정하기</a>
+						                                          <!-- item-->
+						                                          <a href="javascript:void(0);" class="dropdown-item">삭제하기</a>
+						                                      </div>
+						                                  </div>
+						                                  <h5 class="m-0">${socialFeed.memName}</h5>
+						                                  <p class="text-muted"><small>${socialFeed.enrollDate}</small></p>
+						                              </div>
+						                          </div>
+						                          <p> ${socialFeed.sfContent} </p>
+						
+																			<c:if test="${socialFeed.attachList != null}">
+																			    <div class="row">
+																			        <c:forEach var="at" items="${socialFeed.attachList}" varStatus="status">
+																			            <div class="col-sm">
+																			                <img src="${contextPath}${at.filePath}/${at.systemName}" alt="post-img" class="rounded me-1 img-fluid mb-3">
+																			            </div>
+																			        </c:forEach>
+																			    </div>
+																			</c:if>
+						
+						                          <div class="mt-2">
+						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a>
+						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 0 댓글</a>
+						                          </div>
+						
+						                          <div class="post-user-comment-box mt-2">
+						                              <div class="d-flex align-items-start">
+						                                  <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-3.jpg"
+						                                      alt="Generic placeholder image">
+						                                  <div class="w-100">
+						                                      <h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">어피치</a> <small class="text-muted">1시간 전</small></h5>
+						                                      좋은 글이네요. 공유 감사해요~!
+						
+						                                      <br/>
 
-                        <div class="row">
-                            
-                            <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1">
-                                <!-- new post -->
-                                <div class="card" style="width: 1040px;">
-                                    <div class="card-body p-0">
-                                        <ul class="nav nav-tabs nav-bordered">
-                                            <li class="nav-item">
-                                                <a href="#newpost" data-bs-toggle="tab" aria-expanded="false" class="nav-link active px-3 py-2">
-                                                    <i class="mdi mdi-pencil-box-multiple font-18 d-md-none d-block"></i>
-                                                    <span class="d-none d-md-block">포스트 작성하기</span>
-                                                </a>
-                                            </li>
-                                            
-                                           
-                                        </ul> <!-- end nav-->
-                                        <div class="tab-content pt-0">
-                                            <div class="tab-pane show active p-3" id="newpost">
-                                                <!-- comment box -->
-                                                <div class="border rounded">
-                                                    <form action="#" class="comment-area-box">
-                                                        <textarea rows="4" class="form-control border-0 resize-none" placeholder="내용을 입력하세요...." required></textarea>
-                                                        <div class="p-2 bg-light d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-image-outline"></i></a>
-                                                                <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-attachment"></i></a>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-sm" style="background-color:#febe98; color:white;"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
-                                                        </div>
-                                                    </form>
-                                                </div> <!-- end .border-->
-                                                <!-- end comment box -->
-                                            </div> <!-- end preview-->
-                                        </div> <!-- end tab-content-->
-                                    </div>
-                                </div>
-                                <!-- end new post -->
-
-                                <!-- Story Box-->
-                                <div class="card" style="width: 1040px;">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start">
-                                            <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-3.jpg"
-                                                alt="Generic placeholder image">
-                                            <div class="w-100">
-                                                <div class="dropdown float-end text-muted">
-                                                    <a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-horizontal"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Edit</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-                                                    </div>
-                                                </div>
-                                                <h5 class="m-0"><a href="contacts-profile.html" class="text-reset">어피치</a></h5>
-                                                <p class="text-muted"><small>약 2분 전</small></p>
-                                            </div>
-                                        </div>
-                                        <p>지난주에 다녀온 여행 사진 올려요!</p>
-    
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <img src="${ contextPath }/assets/images/small/img-4.jpg" alt="post-img" class="rounded me-1 mb-3 mb-sm-0 img-fluid">
-                                            </div>
-                                            <div class="col">
-                                                <img src="${ contextPath }/assets/images/small/img-1.jpg" alt="post-img" class="rounded me-1 img-fluid mb-3">
-                                                <img src="${ contextPath }/assets/images/small/img-3.jpg" alt="post-img" class="rounded me-1 img-fluid">
-                                            </div>
-                                        </div>
-    
-                                        <div class="mt-2">
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a>
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 0 댓글</a>
-                                        </div>
-    
-                                        <div class="d-flex align-items-start mt-3">
-                                            <img src="${ contextPath }/assets/images/users/user-1.jpg" height="32" class="align-self-start rounded me-2" alt="Arya Stark">
-                                            <div class="w-100">
-                                                <input type="text" class="form-control form-control-light border-0 form-control-sm" placeholder="댓글 등록하기">
-                                            </div> <!-- end medi-body -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Story Box-->
-                                <div class="card" style="width: 1040px;">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start">
-                                            <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-4.jpg"
-                                                alt="Generic placeholder image">
-                                            <div class="w-100">
-                                                <div class="dropdown float-end text-muted">
-                                                    <a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-horizontal"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Edit</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-                                                    </div>
-                                                </div>
-                                                <h5 class="m-0"><a href="contacts-profile.html" class="text-reset">프로도</a></h5>
-                                                <p class="text-muted"><small>약 1시간 전</small></p>
-                                            </div>
-                                        </div>
-                                        <div class="font-16 text-center fst-italic text-dark"> 명언 공유합니다~!<br><br>
-                                            뛰어난 팀은 서로 감추지 않는다. 치부를 드러내길 꺼리지 않는다. 
-                                            비난을 두려워하지 않고 자신의 실수, 약점, 걱정을 인정한다.
-                                            <br>
-                                            - 미국 작가 Patrick Lencioni
-                                        </div>
-    
-                                        <div class="mt-3">
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 21 좋아요</a>
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 2 댓글</a>
-                                        </div>
-    
-                                        <div class="post-user-comment-box mt-2">
-                                            <div class="d-flex align-items-start">
-                                                <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-3.jpg"
-                                                    alt="Generic placeholder image">
-                                                <div class="w-100">
-                                                    <h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">어피치</a> <small class="text-muted">1시간 전</small></h5>
-                                                    좋은 글이네요. 공유 감사해요~!
-    
-                                                    <br/>
-                                                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block mt-2"><i class="mdi mdi-reply"></i> 답글 등록하기</a>
-    
-                                                    <div class="d-flex align-items-start mt-3">
-                                                        <a class="pe-2" href="#">
-                                                            <img src="${ contextPath }/assets/images/users/user-4.jpg" class="avatar-sm rounded-circle" alt="Generic placeholder image">
-                                                        </a>
-                                                        <div class="w-100">
-                                                            <h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">프로도</a> <small class="text-muted">50분 전</small></h5>
-                                                            공감해줘서 고마워요!
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-    
-                                            <div class="d-flex align-items-start mt-2">
-                                                <a class="pe-2" href="#">
-                                                    <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle"
-                                                        alt="Generic placeholder image" height="31">
-                                                </a>
-                                                <div class="w-100">
-                                                    <input type="text" id="simpleinput" class="form-control border-0 form-control-sm" placeholder="댓글 등록하기">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Story Box-->
-                                <div class="card" style="width: 1040px;">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start">
-                                            <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-6.jpg"
-                                                alt="Generic placeholder image">
-                                            <div class="w-100">
-                                                <div class="dropdown float-end text-muted">
-                                                    <a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-horizontal"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Edit</a>
-                                                        <!-- item-->
-                                                        <a href="javascript:void(0);" class="dropdown-item">Delete</a>
-                                                    </div>
-                                                </div>
-                                                <h5 class="m-0"><a href="contacts-profile.html" class="text-reset">네오</a></h5>
-                                                <p class="text-muted"><small>15시간 전</small></p>
-                                            </div>
-                                        </div>
-                                        <p>재밌는 동영상 공유합니다.</p>
-    
-                                        <iframe src='https://player.vimeo.com/video/87993762' height='300' class="img-fluid border-0"></iframe>
-    
-                                        <div class="mt-2">
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 15 좋아요</a>
-                                            <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 0 댓글</a>
-                                        </div>
-    
-                                        <div class="d-flex align-items-start mt-2">
-                                            <img src="${ contextPath }/assets/images/users/user-1.jpg" height="32" class="align-self-start rounded me-2" alt="Arya Stark">
-                                            <div class="w-100">
-                                                <input type="text" class="form-control form-control-light border-0 form-control-sm" placeholder="Write a comment">
-                                            </div> <!-- end medi-body -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
-
-                            
-                        </div> <!--end row -->
-                        
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-
-               
-            </div>
+						                                  </div>
+						                              </div>
+						
+						                              <div class="d-flex align-items-start mt-2">
+						                                  <a class="pe-2" href="#">
+						                                      <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle"
+						                                          alt="Generic placeholder image" height="31">
+						                                  </a>
+						                                  <div class="w-100">
+						                                      <input type="text" id="simpleinput" class="form-control border-0 form-control-sm" placeholder="댓글 등록하기">
+						                                  </div>
+						                              </div>
+						                          </div>
+						                      </div>
+						                  </div>
+				              		</c:forEach>
+				          		</c:otherwise>
+				      		</c:choose>
+				
+				
+				
+		
+		                  
+		          </div>
+		
+		              
+		      </div> <!--end row -->
+		          
+		  </div> <!-- container -->
+		
+		</div> <!-- content -->
+		
+		   
+	</div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->

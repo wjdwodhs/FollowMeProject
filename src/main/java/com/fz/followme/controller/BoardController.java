@@ -36,11 +36,6 @@ public class BoardController {
 	private final PagingUtil pagingUtil;
 	private final FileUtil fileUtil;
 	
-	@RequestMapping("/socialFeed.page")
-	public void socialFeedPage() {}
-	
-	
-	
 	@RequestMapping("/list.do")
 	public ModelAndView boardList(@RequestParam(value="page", defaultValue="1")int page, ModelAndView mv) {
 		
