@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.BoardDto;
@@ -14,6 +16,7 @@ import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.OrderDto;
 import com.fz.followme.service.AttendanceService;
 import com.fz.followme.service.DocumentService;
+import com.fz.followme.service.MemberService;
 import com.fz.followme.service.NoticeService;
 import com.fz.followme.service.OrderService;
 
@@ -30,6 +33,7 @@ public class HomeController {
 	private final NoticeService noticeService;
 	private final DocumentService documentService;
 	private final AttendanceService attendanceService;
+	private final MemberService memberService;
 	
 	@RequestMapping("/")
 	public String mainPage() {
@@ -88,6 +92,21 @@ public class HomeController {
 	public String attendancePage() {
 		return "attendance/attendance";
 	}
+	
+	// 상단바 검색창에서 직원 검색 시 직원 정보 조회
+	@GetMapping("/memberSearchPopUp")
+    public String getEmployeeInfo(@RequestParam("memName") String memName, Model model) {
+		log.debug("memName : {}", memName);
+        MemberDto member = memberService.searchMemberInfoByName(memName);
+        log.debug("member : {}", member);
+        
+        if (member != null) {
+            model.addAttribute("member", member);
+        } else {
+            model.addAttribute("errorMessage", "직원 정보를 찾을 수 없습니다.");
+        }
 
-   
+        return "member/memberInfoPopUp";
+    }
+
 }

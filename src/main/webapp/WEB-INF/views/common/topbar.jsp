@@ -232,64 +232,48 @@
 		        
             <!-- Topbar Search Form -->
             <li class="app-search dropdown me-3 d-none d-lg-block">
-                <form>
-                    <input type="search" class="form-control rounded-pill" id="top-search" style="background-color: #F2E8DA;">
-                    <span class="fe-search search-icon font-16"></span>
-                </form>
-                <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
-                    <!-- item-->
-                    <div class="dropdown-header noti-title">
-                        <h5 class="text-overflow mb-2">Found 22 results</h5>
-                    </div>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-home me-1"></i>
-                        <span>Analytics Report</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-aperture me-1"></i>
-                        <span>How can I help you?</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings me-1"></i>
-                        <span>User profile settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow mb-2 text-uppercase">Users</h6>
-                    </div>
-
-                    <div class="notification-list">
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="d-flex align-items-start">
-                                <img class="d-flex me-2 rounded-circle" src="${ contextPath }/assets/images/users/user-2.jpg" alt="Generic placeholder image" height="32">
-                                <div class="w-100">
-                                    <h5 class="m-0 font-14">Erwin E. Brown</h5>
-                                    <span class="font-12 mb-0">UI Designer</span>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <div class="d-flex align-items-start">
-                                <img class="d-flex me-2 rounded-circle" src="${ contextPath }/assets/images/users/user-5.jpg" alt="Generic placeholder image" height="32">
-                                <div class="w-100">
-                                    <h5 class="m-0 font-14">Jacob Deo</h5>
-                                    <span class="font-12 mb-0">Developer</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <form onsubmit="return searchEmployee();">
+								    <div style="position: relative; display: inline-block;">
+								        <input type="search" class="form-control rounded-pill" id="top-search" style="background-color: #F2E8DA; padding-right: 40px;" placeholder="직원 이름을 입력하세요">
+								        <button type="submit" class="fe-search search-icon font-16" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background-color: transparent; border: none;">
+								        </button>
+								    </div>
+								</form>
             </li>
+            
+            <script>
+				        function searchEmployee() {
+				            const searchQuery = $('#top-search').val();
+				
+				            console.log(searchQuery);
+				            
+				            if (searchQuery) {
+				            	
+				            	// 새 창 열기
+                      const popupWindow = window.open('', 'memberInfoPopUp', 'width=600,height=400,left=' + (window.innerWidth / 2 - 300) + ',top=' + (window.innerHeight / 2 - 200));
+				            	
+				            	
+				                $.ajax({
+				                    url: '${contextPath}/memberSearchPopUp',
+				                    method: 'GET',
+				                    data: { memName: searchQuery },
+				                    success: function(response) {
+				                    		// 응답받은 HTML 내용을 팝업 창에 쓰기
+				                        popupWindow.document.open();
+				                        popupWindow.document.write(response);
+				                        popupWindow.document.close();
+				                    },
+				                    error: function() {
+				                        alert('직원 정보를 찾을 수 없습니다.');
+				                    }
+				                });
+				            } else {
+				                alert('직원 이름을 입력하세요.');
+				            }
+				
+				            return false; 
+				        }
+				    </script>
 
             <!-- Fullscreen Button -->
             <!-- <li class="d-none d-md-inline-block">
@@ -298,6 +282,7 @@
                 </a>
             </li> -->
 
+						<%-- 
             <!-- Search Dropdown (for Mobile/Tablet) -->
             <li class="dropdown d-lg-none">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -309,6 +294,7 @@
                     </form>
                 </div>
             </li>
+            --%>
 
 						<%-- 
             <!-- Language flag dropdown -->

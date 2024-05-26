@@ -161,4 +161,9 @@ public class MemberDao {
 	public List<MemberDto> selectMemberList() {
 		return sqlSessionTemplate.selectList("memberMapper.getMemberList");
 	}
+	
+	// 상단바 직원 검색 시 인사정보 조회하는 서비스
+	public MemberDto searchMemberInfoByName(String memName) {
+		return sqlSessionTemplate.selectOne("memberMapper.searchMemberInfoByName", memName);
+	}
 }

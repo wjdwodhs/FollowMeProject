@@ -441,4 +441,22 @@
 		 order by mem_no asc
 	</select>
 	
+	<!-- 상단바 직원 검색 시 인사정보 조회용 -->
+	<select id="searchMemberInfoByName" resultMap="memberResult">
+		select
+    			mem_no, dept_name, tb_mem.dept_no,
+    			profile_img_path, mem_gender,
+    			mem_name, mem_email, mem_grade, mem_role,
+    			extension_number, phone,
+    case 
+        	when status = 'Y' then '재직'
+        	when status = 'R' then '휴직'
+    end as status
+		from tb_mem
+		left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
+		where status in ('Y', 'R')
+      and mem_name = #{memName}
+		</select>
+		
+		
 </mapper>

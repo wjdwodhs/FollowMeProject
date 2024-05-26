@@ -149,6 +149,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectMemberList();
 	}
 
+	@Override
+	public MemberDto searchMemberInfoByName(String memName) {
+		return memberDao.searchMemberInfoByName(memName);
+	}
+
 	
 
 	
