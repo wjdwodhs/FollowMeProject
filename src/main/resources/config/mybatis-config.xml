@@ -30,6 +30,8 @@
 		<typeAlias type="com.fz.followme.dto.SocialFeedDto" alias="SocialFeedDto"/>
 
 		<typeAlias type="com.fz.followme.dto.ReplyDto" alias="ReplyDto"/>
+		
+		<typeAlias type="com.fz.followme.dto.OrganizationDto" alias="OrganizationDto"/>
 
 		
 		
@@ -50,6 +52,7 @@
 		<mapper resource="mappers/notification-mapper.xml"/>
 		<mapper resource="mappers/email-mapper.xml"/>
 		<mapper resource="mappers/socialFeed-mapper.xml"/>
+		<mapper resource="mappers/organization-mapper.xml"/>
 	</mappers>
 
 </configuration>
