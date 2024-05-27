@@ -14,7 +14,7 @@
 <meta content="Coderthemes" name="author" />
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="assets/images/favicon.ico">
+<link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
 <script src="${ contextPath }/assets/js/head.js"></script>
@@ -101,71 +101,73 @@
 		    location.href = "${contextPath}/member/changePwd.do?newMemPwd=" + newMemPwd + "&memNo=" + memNo;
 		}
 		
-		
-		// 계좌실명 인증 완료 여부 변수
-		var accountVerified = false;
-		
-		// 계좌실명 인증
-		function checkAccount() {
-			
-			event.preventDefault();
-			
-	    var bankselect = document.getElementById('bankselect').value;
-	    var accountNumber = document.getElementById('accountNumber').value;
-	    
-	    var data = {
-	        bank_code: bankselect,
-	        bank_num: accountNumber
-	    };
-	    
-	    var contextPath = "${contextPath}";
-	    
-	    // Ajax 요청
-	    fetch(contextPath + "/member/checkAccount", {
-	        method: "POST",
-	        headers: {
-	            "Content-Type": "application/json"
-	        },
-	        body: JSON.stringify(data)
-	    })
-	    .then(function(response) {
-	        if (!response.ok) {
-	            throw new Error('네트워크 응답이 오지 않습니다.');
-	        }
-	        return response.json();
-	    })
-	    .then(function(data) {
-	        // 예금주명을 예금주 칸에 기입
-	        document.getElementById('accountHolder').value = data.bankHolderInfo;
-	        // 알람창으로 예금주명 띄우기
-	        alert('예금주명: ' + data.bankHolderInfo + '\n\n확인되었습니다.');
-	        
-	     		// 인증 완료 시 변수 업데이트
-	        accountVerified = true;
-	    })
-	    .catch(function(error) {
-	        console.error('오류가 발생했습니다', error);
-	        alert('계좌 인증에 실패하였습니다.');
-	        
-	        // 인증 실패 시 변수 업데이트
-	        accountVerified = false;
-	    });
-	   
-	}
-		
-		
-		// 폼 제출 버튼 클릭 이벤트 핸들러
+		// 계좌실명인증 관련 (계좌번호나 은행명 변경하고 실명 인증 안 하고 저장하려고 하면 알림창 띄우기 추가)
 		document.addEventListener('DOMContentLoaded', function() {
-		    var updateForm = document.getElementById('updateMypageForm'); 
-		    
+		    var updateForm = document.getElementById('updateMypageForm');
+		    var accountNumberField = document.getElementById('accountNumber'); 
+		    var bankNameField = document.getElementById('bankselect'); 
+		    var accountVerified = false; // 계좌 실명 인증 상태
+
+		    var initialAccountNumber = accountNumberField.value;
+		    var initialBankName = bankNameField.value;
+
+		    // 계좌 실명 인증 버튼 클릭 핸들러
+		    document.getElementById('accountAuthentication').addEventListener('click', function(event) {
+		        event.preventDefault();
+		        
+		        var bankselect = bankNameField.value;
+		        var accountNumber = accountNumberField.value;
+		        
+		        var data = {
+		            bank_code: bankselect,
+		            bank_num: accountNumber
+		        };
+		        
+		        var contextPath = "${contextPath}";
+		        
+		        // Ajax 요청
+		        fetch(contextPath + "/member/checkAccount", {
+		            method: "POST",
+		            headers: {
+		                "Content-Type": "application/json"
+		            },
+		            body: JSON.stringify(data)
+		        })
+		        .then(function(response) {
+		            if (!response.ok) {
+		                throw new Error('네트워크 응답이 오지 않습니다.');
+		            }
+		            return response.json();
+		        })
+		        .then(function(data) {
+		            // 예금주명을 예금주 칸에 기입
+		            document.getElementById('accountHolder').value = data.bankHolderInfo;
+		            // 알람창으로 예금주명 띄우기
+		            alert('예금주명: ' + data.bankHolderInfo + '\n\n확인되었습니다.');
+		            
+		            // 인증 완료 시 변수 업데이트
+		            accountVerified = true;
+		        })
+		        .catch(function(error) {
+		            console.error('오류가 발생했습니다', error);
+		            alert('계좌 인증에 실패하였습니다.');
+		            
+		            // 인증 실패 시 변수 업데이트
+		            accountVerified = false;
+		        });
+		    });
+
+		    // 폼 제출 버튼 클릭 이벤트 핸들러
 		    updateForm.addEventListener('submit', function(event) {
-		        // 계좌 실명 인증 상태 확인
-		        if (!accountVerified) {
+		        // 계좌번호나 은행명이 변경되었을 경우 실명 인증 상태 확인
+		        if ((accountNumberField.value !== initialAccountNumber || bankNameField.value !== initialBankName) && !accountVerified) {
 		            event.preventDefault(); // 폼 제출 막기
 		            alert('계좌 실명 인증을 먼저 완료해주세요.');
 		        }
 		    });
 		});
+
+
 			
 		
 	    // 은행명 선택시 value가 '은행명'으로 넘어가게 하는 함수(숫자 말고)
