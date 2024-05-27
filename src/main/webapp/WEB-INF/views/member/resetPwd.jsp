@@ -12,7 +12,7 @@
     <meta content="Coderthemes" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
 		<!-- Theme Config Js -->
 		<script src="${ contextPath }/assets/js/head.js"></script>

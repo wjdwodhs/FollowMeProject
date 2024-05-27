@@ -13,19 +13,19 @@
     <meta content="Coderthemes" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="${contextPath}/assets/images/favicon.ico">
 
 		<!-- Theme Config Js -->
-		<script src="assets/js/head.js"></script>
+		<script src="${contextPath}/assets/js/head.js"></script>
 		
 		<!-- Bootstrap css -->
-		<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+		<link href="${contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 		
 		<!-- App css -->
-		<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+		<link href="${contextPath}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 		
 		<!-- Icons css -->
-		<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="${contextPath}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <style>
