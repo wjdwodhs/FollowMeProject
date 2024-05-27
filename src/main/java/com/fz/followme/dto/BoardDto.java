@@ -32,6 +32,12 @@ public class BoardDto {
 	private int fileNo;
 	private int attachCount;
 	
+	private int mustRead;
+	
+	private String deptName;
+	private String memGrade;
+	private String memEmail;
+	
 	private List<AttachmentDto> attachList;
 	
 }

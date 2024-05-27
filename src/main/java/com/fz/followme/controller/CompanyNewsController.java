@@ -40,5 +40,9 @@ public class CompanyNewsController {
 		return mv;
 		
 	}
+	@RequestMapping("/detail.page")
+	public String companyNewsDetail() {
+		return "companyNews/companyNewsDetail";
+	}
 	
 }

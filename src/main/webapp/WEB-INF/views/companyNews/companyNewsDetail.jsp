@@ -13,54 +13,54 @@
 <meta content="Coderthemes" name="author" />
 
 <style>
-            .photo>a>img{
-                height: 25px;
-                width: 25px;
-            }
+.photo>a>img{
+    height: 25px;
+    width: 25px;
+}
 
-            .department{
-                display: inline-block; 
-                padding-bottom: 10px;
-            }
+.department{
+    display: inline-block; 
+    padding-bottom: 10px;
+}
 
-            .info{display: inline-block;}
+.info{display: inline-block;}
 
-            .article_view{
-                padding: 25px;
-                min-height: 300px;
-               padding-bottom: 100px;
-            }
+.article_view{
+    padding: 25px;
+    min-height: 300px;
+   padding-bottom: 100px;
+}
 
-            .editor_view{
-                line-height: 1.5;
-            }
+.editor_view{
+    line-height: 1.5;
+}
 
-            .content_view{
+.content_view{
 
-            }
+}
 
-            .part{
-                margin: 5px;
-            }
+.part{
+    margin: 5px;
+}
 
-            .reply_warp>ul{
-                list-style-type: none;
-                padding-left: 0;
-            }
+.reply_warp>ul{
+    list-style-type: none;
+    padding-left: 0;
+}
 
-            .reply_warp>ul>li{
-                text-align: left;
-            }
+.reply_warp>ul>li{
+    text-align: left;
+}
 
-            .horizontal-line {
-            border-top: 1px solid lightgray; /* 가로 줄의 스타일 지정 */
-            margin: 10px 0; /* 원하는 여백 추가 */
-            }
-            
-            .aaaa{
-                margin-right: 15%;
-            }
-     </style>
+.horizontal-line {
+border-top: 1px solid lightgray; /* 가로 줄의 스타일 지정 */
+margin: 10px 0; /* 원하는 여백 추가 */
+}
+
+.aaaa{
+    margin-right: 15%;
+}
+</style>
 </head>
 <body>
 
@@ -74,7 +74,7 @@
   	
   	<div class="content-page">
 
-                <div class="content">
+                <div class="content" style="background-color: #F2E8DA">
 					<!-- topbar include -->
     				<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
     				
@@ -99,8 +99,8 @@
                         <!-- end page title -->
 
                         <div class="row aaaa">
-                        
-                            <div class="col-12">
+                        	<div class="col-1"></div>
+                            <div class="col-10">
                             
                                 <div class="card">
                                     <div class="card-body">
@@ -236,6 +236,7 @@
                                 </div>
                                 <!-- end modal-->
                             </div>
+                            <div class="col-1"></div>
                             <!-- end col-12 -->
                         </div> <!-- end row -->
                         
@@ -764,18 +765,33 @@
 			});
 </script>
         
-        <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+       
 
-        <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        
 
         <!-- plugin js -->
         <script src="assets/libs/moment/min/moment.min.js"></script>
-        <script src="assets/libs/fullcalendar/main.min.js"></script>
-
-        <!-- Calendar init -->
-        <script src="assets/js/pages/calendar.init.js"></script>
+     
+        
+        
+        <!-- Vendor js -->
+	        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+			
+			<!-- App js -->
+	        <script src="${ contextPath }/assets/js/app.min.js"></script>
+		
+			<!-- Plugins js-->
+	        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+	        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+	        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+	        
+	        <!-- Dashboar 1 init js-->
+	        
+	        <!-- Plugins js -->
+	        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+	
+	        <!-- Init js-->
+	        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
   	
 	
 </body>

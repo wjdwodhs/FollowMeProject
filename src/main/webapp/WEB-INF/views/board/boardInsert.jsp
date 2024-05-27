@@ -97,9 +97,9 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-                                            <li class="breadcrumb-item active">Calendar</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
+                                            <li class="breadcrumb-item active">게시글 작성</li>
                                         </ol>
                                     </div>                                  
                                         <h4 class="page-title">글쓰기</h4> 
@@ -125,7 +125,9 @@
                                                         <option value="CO">사내소식</option>
                                                     </select>                                                                  
                                                 </span>
-                                                필독 <input type="checkbox">
+                                                <c:if test="${ loginUser.authLevel != '0' }">
+                                                필독 <input type="checkbox" name="mustRead" value="1">
+                                                </c:if>
                                             </div>
                                             <div class="col-lg-12">
                                                 <hr>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.dto.ReplyDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -59,5 +60,39 @@ public class BoardDao {
 		return sqlSessionTemplate.insert("boardMapper.insertAttach", attach);
 	}
 	
+	public int updateIncreaseCount(int boardNo) {
+		return sqlSessionTemplate.update("boardMapper.updateIncreaseCount", boardNo);
+	}
+	
+	
+	public BoardDto selectBoardDetail(int boardNo) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectBoardDetail", boardNo);
+	}
+	
+	public List<AttachmentDto> selectDelFileList(String[] delFileNo){
+		return sqlSessionTemplate.selectList("boardMapper.selectDelFileList", delFileNo);
+	}
+	
+	public int updateBoard(BoardDto board) {
+		return sqlSessionTemplate.update("boardMapper.updateBoard", board);
+	}
+	
+	public int deleteAttach(String[] delFileNo) {
+		return sqlSessionTemplate.delete("boardMapper.deleteAttach", delFileNo);
+	}
+	
+	
+	
+	public List<ReplyDto> selectReplyList(int boardNo){
+		return sqlSessionTemplate.selectList("boardMapper.selectReplyList", boardNo);
+	}
+	
+	public int insertReply(ReplyDto reply) {
+		return sqlSessionTemplate.insert("boardMapper.insertReply", reply);
+	}
+	
+	public int deleteReply(int rNo) {
+		return sqlSessionTemplate.update("boardMapper.deleteReply", rNo);
+	}
 	
 }

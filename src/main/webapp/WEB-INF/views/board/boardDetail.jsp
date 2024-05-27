@@ -12,61 +12,88 @@
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
 
-
 <style>
-    .list-column{
-        margin: 0 2px;
-        font-weight: bold;
-    }
-    .list-item1{ width: 5%; }
-    .list-item2{ width: 40%; }
-    .list-item3{ width: 10%; }
-    .list-item4{ width: 10%; }
-    .list-item5{ width: 5%; }
-    
-.category a {
-  color: black;
-  text-decoration: none; /* 기본 밑줄 제거 */ 
+.photo>a>img{
+    height: 25px;
+    width: 25px;
 }
 
-.category a.active {
-  border-bottom: 2px solid #FFBE98; /* 활성 상태일 때 밑줄 추가 */
+.department{
+    display: inline-block; 
+    padding-bottom: 10px;
 }
 
+.info{display: inline-block;}
 
-.category {
-  list-style-type: none; /* 기본 목록 마커 제거 */
-  padding: 0; /* 목록의 내부 여백 제거 */
+.article_view{
+    padding: 25px;
+    min-height: 300px;
+   padding-bottom: 100px;
 }
 
-.category li {
-  display: inline-block; /* 요소들을 가로로 나란히 배치 */
-  margin-right: 10px; /* 요소들 사이의 간격 조절 */
+.editor_view{
+    line-height: 1.5;
 }
 
-.category a:hover {
-  border-bottom: 2px solid #FFBE98;
-}   
+.content_view{
+
+}
+
+.part{
+    margin: 5px;
+}
+
+.reply_warp>ul{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.reply_warp>ul>li{
+    text-align: left;
+}
+
+.horizontal-line {
+border-top: 1px solid lightgray; /* 가로 줄의 스타일 지정 */
+margin: 10px 0; /* 원하는 여백 추가 */
+}
+
+.aaaa{
+    margin-right: 15%;
+}
+
+.info-area{
+	position:relative;
+	overflow: auto;
+}
 
 .button>button{
-       background-color: #FFBE98;
-        border: 1px solid #FFBE98; /* 테두리 */
-        --ct-btn-active-bg:#FA9A85;    
-        --ct-btn-active-border-color:#FA9A85;
-        --ct-btn-hover-bg:#FA9A85;
-        --ct-btn-hover-border-color:#FA9A85;   
-}    
-
-.position-relative>input{
-	margin-bottom:15px;
+	float: right;
+	margin:2px;
+	background-color: #FFBE98;
+    border: 1px solid #FFBE98; /* 테두리 */
+    --ct-btn-active-bg:#FA9A85;    
+    --ct-btn-active-border-color:#FA9A85;
+    --ct-btn-hover-bg:#FA9A85;
+    --ct-btn-hover-border-color:#FA9A85;
 }
 
-.list-group:hover{
-	background-color: lightgray;
+
+
+#myLink {
+	color:black;
 }
-    
+
+#myLink:hover{
+	text-decoration: underline;
+    text-decoration-color: black;
+}
+
+.content-view>img{
+	max-width: 500px; 
+    max-height: 800px;
+}
+
 </style>
-
 </head>
 <body>
 
@@ -75,23 +102,15 @@
 
   	<!-- sidemenu include -->
   	<jsp:include page="/WEB-INF/views/common/sidemenu.jsp"/>
-            
-
-   	
-    
-    
-    		<!-- ============================================================== -->
-            <!-- Start Page Content here -->
-            <!-- ============================================================== -->
-
-			
-            <div class="content-page">
-				<!-- topbar include -->
-    			<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
-   		          
+  	
+  	
+  	
+  	<div class="content-page">
 
                 <div class="content" style="background-color: #F2E8DA">
-
+					<!-- topbar include -->
+    				<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
+    				
                     <!-- Start Content-->
                     <div class="container-fluid">
                         
@@ -103,173 +122,122 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
-                                            <li class="breadcrumb-item active">전체게시글</li>
+                                            <li class="breadcrumb-item active">상세페이지</li>
                                         </ol>
-                                    </div>                                  
-                                        <h4 class="page-title">게시판</h4> 
                                     </div>
+                                    <h4 class="page-title">전자게시판</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title -->
 
-                        <!-- start page content -->
-                        <div class="row">
-                            <div class="col-12">
-
+                        <div class="row aaaa">
+                        	<div class="col-1"></div>
+                            <div class="col-10">
+                            
                                 <div class="card">
                                     <div class="card-body">
-                                    	<div class="col-2">
-                                    	<!-- search-bar (검색) -->
-                                    		<form action="${ contextPath }/board/search.do" id="searchForm" class="search-bar">
-                                    			<input type="hidden" name="page" value="1">
-					                            <div class="position-relative">
-					                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
-					                                <span class="mdi mdi-magnify"></span>
-					                            </div>
-					                        </form>
-                                    	</div>
                                         <div class="row">
-                                        
-                                            <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
-                                                <ul class="category">
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
-                                                </ul>                                              
-                                                
-                                            </div>
-
-                                            <div class="col-lg-3"  >
-                                                <p>최근공지글</p>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="row" id="list-page">                                        
-                                            <div class="col-lg-9">
-                                                
-                                                <table class="table">
-                                                    
-                                                    <table class="table table-hover">
-                                                    	<div class="button">
-                                                    	<button type="button" class="btn btn-primary btn-sm" onclick="insertPage()">
-                                                    		<span class="menu-icon"><i data-feather="edit-3"></i></span>글쓰기
-                                                    	</button>
-                                                    	</div>
-                                                    	                                                        
-                                                        <select name="" id="" style="float:right">
-                                                            <option value="">20</option>
-                                                            <option value="">40</option>
-                                                        </select>
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="list-item1">번호</th>
-                                                                <th class="list-item2">제목</th>
-                                                                <th class="list-item3">작성자</th>
-                                                                <th class="list-item4">작성일</th>
-                                                                <th class="list-item5">조회수</th>
-                                                            </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                            <c:choose>
-                                                				<c:when test="${ empty allList }">
-		                                                			<tr>
-		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
-		                                                			</tr>
-		                                                		</c:when>
-		                                                		<c:otherwise>
-		                                                			<c:forEach var="ab" items="${ allList }">
-		                                                				<c:choose>
-		                                                					<c:when test="${ ab.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																										
-																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                				</tr>
-			                                                				</c:when>
-			                                                				<c:otherwise>
-				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																																																																																									
-																					<td class="list-item1">${ ab.subNo }</td>																																									
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                				</tr>
-			                                                				</c:otherwise>
-		                                                				</c:choose>
-		                                                			</c:forEach>
-                                                				</c:otherwise>
-                                                			</c:choose>
-                                                        </tbody>
-                                                        
-                                                    </table>
-                                            </div>
-
-                                             <!-- end col-->
                                             
-                                            <div class="col-lg-3" >
-                                                <ul class="list-group" >
-                                                    <c:forEach var="nb" items="${ newList }">
-                                                    	<c:set var="boardTypeLabel" value="${nb.boardType == 'CO' ? '[사내]' : (nb.boardType == 'NO' ? '[공지]' : '')}" />
-														<li class="list-group-item click-detail" onclick="location.href='${contextPath}/board/detail.do?no=${nb.subNo}';">${boardTypeLabel}${nb.boardTitle}</li>
-                                                	</c:forEach>
-                                                </ul>
-
+                                            <h3><b>${ board.boardTitle }</b></h3>
+                                            <div class="info-area">
+                                                <span class="department">
+                                                    <p>${ board.deptName }</p>
+                                                </span>
+                                                <div class="info">
+                                                    <a id="myLink" href="">${ board.memNo }</a>
+                                                    <span> ${ board.enrollDate }</span>   
+                                                </div>
+                                                <div class="button">
+                                                	<button class="btn btn-primary btn-sm historyBack" onclick="historyBack();" >목록가기 </button>
+                                                	<form action="" method="post" id="Upd">
+                                                	<input type="hidden" name="no" value="${ board.subNo }">
+                                                		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(1);">수정하기</button>
+                                                		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(2);">삭제하기</button>
+                                                	</form>
+                                                </div>
                                             </div>
-                                             
-                                            <!-- end col -->
+                                            <hr>
                                             
-                                            <ul id="pagingBar" class="pagination pagination-rounded justify-content-end mb-0">
-	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}" aria-label="Previous">
-	                                                    <span aria-hidden="true">«</span>
-	                                                    <span class="visually-hidden">Previous</span>
-	                                                </a>
-	                                            </li>
-	                                            
-	                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/board/list.do?page=${p}">${p}</a></li>
-	                                           </c:forEach>
-	                                           
-	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage+1}" aria-label="Next">
-	                                                    <span aria-hidden="true">»</span>
-	                                                    <span class="visually-hidden">Next</span>
-	                                                </a>
-	                                            </li>
-	                                        </ul>
-	                                        
-	                                        <!-- Vendor js -->
-									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+                                            <script>
+                                            	function UpdSubmit(num){
+                                            		$("#Upd").attr("action", num==1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardRemove.do");
+                                            	}
+                                            </script>
+                                            
+                                            
+                                            <div class="modal" id="myModal">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
 											
-											<!-- App js -->
-									        <script src="${ contextPath }/assets/js/app.min.js"></script>
-										
-											<!-- Plugins js-->
-									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-									        
-									        <!-- Dashboar 1 init js-->
-									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-									        
-									        <!-- Plugins js -->
-									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-									
-									        <!-- Init js-->
-									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+											      <!-- Modal Header -->
+											      <div class="modal-header">
+											        <h4 class="modal-title">사원 정보</h4>
+											        <button type="button" class="close" data-dismiss="modal">&times;</button>
+											      </div>
+											
+											      <!-- Modal body -->
+											      <div class="modal-body">
+											        직급: ${ board.memGrade } <br>
+											        사원명: ${ board.memNo } <br>
+											        부서: ${ board.deptName } <br>
+											        Email: ${ board.memEmail }
+											      </div>
+											
+											    </div>
+											  </div>
+											</div>
+
+                                            <article class="article_view">
+                                                <span class="editor_view">
+                                                    <div class="content-view">
+                                                    <p>
+                                                    	${ board.boardContent }
+                                                    </p>
+                                                    	<c:forEach var="at" items="${ board.attachList }">
+                                                    		<img src="${ contextPath }${ at.filePath }/${ at.systemName }">
+                                                    	</c:forEach>
+                                                    	
+                                                    	<c:forEach var="at" items="${ board.attachList }">
+                                                    		<div>
+                                                    			<a href="${ contextPath }${at.filePath}/${at.systemName}" download="${ at.originName }">${ at.originName }</a>
+                                                    		</div>
+                                                    	</c:forEach>
+                                                    </div>
+                                                </span>
+                                            </article>
+
+                                            <div class="reply_warp">
+                                                <ul class="reply_view">
+                                                    <li>
+                                                        <span class="reply ">댓글</span>
+                                                        <span class="part">|</span>
+                                                        <span>조회수 ${ board.readCount }</span>
+                                                    </li>
+                                                </ul>
+                                                <div class="horizontal-line"></div>
+                                            </div>
                                             
+
+                                            
+                                                <table id="replyArea" class="table">
+                                                	<thead>
+	                                                    <tr>
+	                                                        <td style="width: 10%;">댓글</td>
+	                                                        <td style="width: 80%;"><textarea name="" id="replyContent" cols="50" rows="2" style="width: 100%;"></textarea></td>
+	                                                        <td style="width: 10%;"><button class="btn btn-primary btn-sm " onclick="ajaxReplyInsert();">등록</button></td>
+	                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+	                                                    
+                                                    </tbody>
+                                                </table>
+                                            
+                                            
+
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
-
-                                <!-- end page content -->
 
                                 <!-- Add New Event MODAL -->
                                 <div class="modal fade" id="event-modal" tabindex="-1">
@@ -321,19 +289,40 @@
                                 </div>
                                 <!-- end modal-->
                             </div>
+                            <div class="col-1"></div>
                             <!-- end col-12 -->
                         </div> <!-- end row -->
                         
                     </div> <!-- container -->
 
                 </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
             </div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
 
-		 </div>
+
         </div>
         <!-- END wrapper -->
 
@@ -402,7 +391,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -417,7 +406,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -432,7 +421,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -451,7 +440,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -466,7 +455,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -481,7 +470,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -496,7 +485,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -511,7 +500,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -526,7 +515,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -798,89 +787,170 @@
                 </div>
             </div>
         </div>
-        
-        
-        
         <script>
+        	function historyBack(){
+        		location.href = "${ contextPath }/board/list.do"
+        	}
         
-        	// 게시글 페이지 이동 (ajax)
-       $(document).ready(function(){
-   		$('.ajax-pageMove').click(function(event){
-   			event.preventDefault(); // 링크 이벤트x
-   			
-   			// 모든 메뉴 항목에서 active 클래스 제거
-   	        $('.ajax-pageMove').removeClass('active');
-   	        
-   	        // 클릭한 메뉴 항목에 active 클래스 추가
-   	        $(this).addClass('active');
-   			
-   			var url = $(this).data('url');
-   			loadPage(url);
-   			
-   			});
-	   	});
-	   	
-	    // 게시글 페이지 이동 (ajax)
-	   	function loadPage(url){
-	   		$.ajax({
-	   			url: url,
-	   			type: 'get' ,
-	   			success: function(response){
-	   				$('#list-page').empty();
-	   				
-	   				var list = $(response).find('#list-page').html();
-	   				$('#list-page').html(list);
-	   			},
-	   			error: function(){
-	   				
-	   			}
-	   		})
-	   		
-	   	}
-	       
-	       // 게시글 카테고리 밑줄 활성화
-	       function activateMenuItem(element) {
-	       	  // 모든 메뉴 항목의 활성 클래스 제거
-	       	  var categoryItems = document.querySelectorAll('.category a');
-	       	  categoryItems.forEach(function(item) {
-	       	    item.classList.remove('active');
-	       	  });
-	       	  
-	       	  // 클릭한 메뉴 항목에 활성 클래스 추가
-	       	  element.classList.add('active');
-	       	}
-	       
-	       
-	       // 글쓰기 페이지로 이동
-	       function insertPage(){
-   			location.href ="${contextPath}/board/boardInsert.page"
-   		}
-	       
-	      
-	       $(document).ready(function(){
-	    	   $("#searchForm #keyword").val("${keyword}");
-	    	
-	       		$("#pagingBar a").on("click", function(){
-	       			$("#searchForm input[name=page]").val($(this).text());	            		
-	       			$("#searchForm").submit();
-	       			
-	       			return false; 
-	       		})  
-	       })
-	     
-	       document.addEventListener('load', function() {
-	        const items = document.querySelectorAll('.click-detail');
-	        
-	        items.forEach(item => {
-	            item.addEventListener('click', function() {
-	                const targetUrl = item.dataset.url;
-	                window.location.href = targetUrl;
-	            });
-	        });
-	    });
+	        function openModal() {
+			  var modal = document.getElementById("myModal");
+			  modal.style.display = "block";
+			}
+			
+			// 모달 창 닫기
+			function closeModal() {
+			  var modal = document.getElementById("myModal");
+			  modal.style.display = "none";
+			}
+			
+			// 링크 클릭 시 모달 창 열기
+			document.getElementById("myLink").addEventListener("click", function(event) {
+			  event.preventDefault(); // 기본 이벤트(링크 이동) 방지
+			  openModal();
+			});
+			
+			// 모달 닫기 버튼과 모달 외부를 클릭 시 모달 창 닫기
+			var closeBtn = document.getElementsByClassName("close")[0];
+			var modal = document.getElementById("myModal");
+			window.addEventListener("click", function(event) {
+			  if (event.target == modal) {
+			    closeModal();
+			  }
+			});
+			closeBtn.addEventListener("click", function() {
+			  closeModal();
+			});
+			
+			
+			
+			$(document).ready(function(){
+	      		ajaxReplyList();
+	      		
+	      		// 동적으로 만들어진 요소에 이벤트 걸때 => 이벤트 메소드방식 안됨
+	      		//$(".removeReply").click(function(){
+	      		//$(".removeReply").on("click", function(){
+	      		$(document).on("click", ".removeReply", function(){
+	      			
+	      			console.log("삭제할댓글번호", $(this).data("replyno"));
+	      			
+	      			// 해당 댓글 삭제용 ajax요청
+	      			$.ajax({
+	      				url:"${contextPath}/board/replyDelete.do",
+	      				type:"get",
+	      				data:"no=" + $(this).data("replyno"),
+	      				success:function(result){
+	      					if(result == "SUCCESS"){
+	      						ajaxReplyList();
+	      					}
+	      				}
+	      			})
+	      			
+	      			
+	      		})
+	      		
+	      	})
+	      	
+	      	function ajaxReplyInsert(){
+	      		if($("#replyContent").val().trim().length != 0){
+	      			$.ajax({
+	      				url: "${contextPath}/board/replyInsert.do",
+	      				type: "post",
+	      				data:{
+	      					replyContent:$("#replyContent").val(),
+	      					refBno:${board.subNo}	      					
+	      				},
+	      				success:function(result){
+	      					if(result == "SUCCESS"){
+	      						$("#replyContent").val("");
+	      						ajaxReplyList();
+	      					}else if(result == "FAIL"){
+	      						alertify.alert("댓글 작성 서비스", "다시 입력해주세요")
+	      					}
+	      				},error:function(){
+	      					console.log("ajax 통신 실패")
+	      				}
+	      			})
+	      			
+	      		}else{
+	      			alertify.alert("댓글 작성 서비스", "다시 입력해주세요")
+	      		}
+	      	}
+	      	
+	      	
+			
+			
+			function ajaxReplyList(){
+	      		
+	      		// 비동기식으로 "/board/replyList.do" url요청 
+	      		// 요청처리 결과로 조회된 댓글리스트를 응답데이터로 받기
+	      		// 해당 응답데이터 가지고 댓글 한개당 하나의 tr요소로 만들어서
+	      		// tbody 영역에 뿌리기 
+	      		// + 댓글 갯수도 수정
+	      		$.ajax({
+	      			url:"${contextPath}/board/replyList.do",
+	      			type:"get",
+	      			data:"no=${board.subNo}",
+	      			success:function(resData){ // [{}, {}, {}, ..]
+	      			
+	      				console.log("댓글 리스트:", resData)
+	      				
+	      			
+	      				$("#rcount").text(resData.length);
+	      			
+	      				let tr = "";
+	      				for(let i=0; i<resData.length; i++){
+	      					tr += "<tr>"
+	      								+	 "<th>" + resData[i].memGrade + resData[i].replyWriter + "</th>"
+	      								+	 "<td>" + resData[i].replyContent + "</td>"
+	      								+	 "<td>" + resData[i].enrollDate;
+	      					
+	 								// 현재로그인한 회원이 해당 댓글의 작성자일 경우
+	      					if(resData[i].replyWriter == '${loginUser.memName}')	{
+	      						tr += "<button class='btn btn-sm btn-danger removeReply' data-replyno='" + resData[i].replyNo + "'>삭제</button>"
+	      					}		
+	      								
+	      					tr += 	"</td>"
+	      							 + "</tr>";
+	      				}
+	      				
+	      				$("#replyArea tbody").html(tr);
+	      			
+	      			},error:function(){
+	      				console.log("댓글 목록 조회용 ajax통신 실패");
+	      			}
+	      		})
+	      		
+	      	}
+</script>
+        
        
-       </script>
+
         
+
+        <!-- plugin js -->
+        <script src="assets/libs/moment/min/moment.min.js"></script>
+     
+        
+        
+        <!-- Vendor js -->
+	        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
+			
+			<!-- App js -->
+	        <script src="${ contextPath }/assets/js/app.min.js"></script>
+		
+			<!-- Plugins js-->
+	        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+	        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+	        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+	        
+	        <!-- Dashboar 1 init js-->
+	        
+	        <!-- Plugins js -->
+	        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
 	
-    </body>
+	        <!-- Init js-->
+	        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+  	
+	
+</body>
 </html>

@@ -7,48 +7,53 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시글 작성페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 <meta content="Coderthemes" name="author" />
+  
+ <!-- Plugins css-->
+ <link href="${contextPath}/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css" />
+ <link href="${contextPath}/assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css" />
+
 
 
 <style>
-    .list-column{
-        margin: 0 2px;
-        font-weight: bold;
+    .form-type{
+        margin: 10px 0;
     }
-    .list-item1{ width: 5%; }
-    .list-item2{ width: 40%; }
-    .list-item3{ width: 10%; }
-    .list-item4{ width: 10%; }
-    .list-item5{ width: 5%; }
+
+    .text_box{
+        width: 100%;
+    }
+
+    .attach_box{
+        border: 2px dashed #ddd;
+        padding: 8px 0;
+        box-sizing: border-box;
+        max-height: 200px;
+        width: 100%;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .table-width {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .cell-width {
+        width: 90%; 
+        margin: 8px 0;
+    }
     
-.category a {
-  color: black;
-  text-decoration: none; /* 기본 밑줄 제거 */ 
-}
-
-.category a.active {
-  border-bottom: 2px solid #FFBE98; /* 활성 상태일 때 밑줄 추가 */
-}
-
-
-.category {
-  list-style-type: none; /* 기본 목록 마커 제거 */
-  padding: 0; /* 목록의 내부 여백 제거 */
-}
-
-.category li {
-  display: inline-block; /* 요소들을 가로로 나란히 배치 */
-  margin-right: 10px; /* 요소들 사이의 간격 조절 */
-}
-
-.category a:hover {
-  border-bottom: 2px solid #FFBE98;
-}   
-
-.button>button{
+    .editorbox{
+    	min-height: 500px;
+    }
+    
+    .button>button{
        background-color: #FFBE98;
         border: 1px solid #FFBE98; /* 테두리 */
         --ct-btn-active-bg:#FA9A85;    
@@ -56,17 +61,8 @@
         --ct-btn-hover-bg:#FA9A85;
         --ct-btn-hover-border-color:#FA9A85;   
 }    
-
-.position-relative>input{
-	margin-bottom:15px;
-}
-
-.list-group:hover{
-	background-color: lightgray;
-}
     
 </style>
-
 </head>
 <body>
 
@@ -90,7 +86,7 @@
     			<jsp:include page="/WEB-INF/views/common/topbar.jsp"/>
    		          
 
-                <div class="content" style="background-color: #F2E8DA">
+                <div class="content">
 
                     <!-- Start Content-->
                     <div class="container-fluid">
@@ -103,10 +99,10 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">FollowMe</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">게시판</a></li>
-                                            <li class="breadcrumb-item active">전체게시글</li>
+                                            <li class="breadcrumb-item active">게시글 수정</li>
                                         </ol>
                                     </div>                                  
-                                        <h4 class="page-title">게시판</h4> 
+                                        <h4 class="page-title">게시글 수정</h4> 
                                     </div>
                                 </div>
                             </div>
@@ -119,154 +115,139 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                    	<div class="col-2">
-                                    	<!-- search-bar (검색) -->
-                                    		<form action="${ contextPath }/board/search.do" id="searchForm" class="search-bar">
-                                    			<input type="hidden" name="page" value="1">
-					                            <div class="position-relative">
-					                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
-					                                <span class="mdi mdi-magnify"></span>
-					                            </div>
-					                        </form>
-                                    	</div>
                                         <div class="row">
-                                        
-                                            <div class="col-lg-9" style="border-bottom: 1px solid lightgray;">
-                                                <ul class="category">
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/board/list.do">전체글</a></li>
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/notice/list.do">공지사항</a></li>
-                                                	<li><a class="ajax-pageMove" data-url="${ contextPath }/companyNews/list.do">사내소식</a></li>
-                                                </ul>                                              
-                                                
+                                        	<form id="updateForm" method="post" action="${ contextPath }/board/modify.do" enctype="multipart/form-data" onclick="submitFunction();">
+                                        	<input type="hidden" name="subNo" value="${ board.subNo }">
+                                            <div>
+                                                <span>To.</span>
+                                                <span>
+                                                    <select name="category" id="category" style="margin-right: 20px">
+                                                        <option value="NO" <c:if test="${board.boardType == 'NO'}">selected</c:if>>공지사항</option>
+                                                        <option value="CO" <c:if test="${board.boardType == 'CO'}">selected</c:if>>사내소식</option>
+                                                    </select>                                                                  
+                                                </span>
+                                                <c:if test="${ loginUser.authLevel != '0' }">
+                                                필독 <input type="checkbox" name="mustRead" value="1" <c:if test="${board.mustRead == 1}">checked</c:if>>
+                                                </c:if>
                                             </div>
-
-                                            <div class="col-lg-3"  >
-                                                <p>최근공지글</p>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                        <div class="row" id="list-page">                                        
-                                            <div class="col-lg-9">
-                                                
-                                                <table class="table">
+                                            <div class="col-lg-12">
+                                                <hr>
+                                                    <fieldset>
+                                                        <table class="form-type table-width">
+                                                            <colgroup>
+                                                                <col width="130px">
+                                                                <col width="*">
+                                                            </colgroup>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>
+                                                                        <span>제목<span class="text-danger">*</span></span>
+                                                                    </th>
+                                                                    <td class="cell-width">
+                                                                        <table>
+                                                                            <input type="text" id="title" name="boardTitle" class="text_box" value="${board.boardTitle }" required>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="position: relative;">
+                                                                        <span style="position: absolute; top: 0; margin: 8px 0;">첨부파일</span>
+                                                                    </th>
+                                                                    <td>
+                                                                        <table class="table-width">
+                                                                            <td class="cell-width" >
+                                                                                <div class="attach_box" id="upfile"  style="border: 2px dashed #ddd;" >
+                                                                                  
+                                                                                    <div>
+                                                                                        <span>
+                                                                                            파일을 선택하세요
+                                                                                            <input type="file" title="upfile" name="uploadFiles" class="form-control-file border file " multiple>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <hr>
+                                                                    </td>
+                                                                </tr>                                                 
+                                                            </tbody>
+                                                            
+                                                        </table>
+                                                        <div class="mb-3">
+				                                            <label for="product-description" class="form-label">내용<span class="text-danger">*</span></label>
+				                                            <input type="hidden" id="boardContent" name="boardContent" >
+				                                            <div id="snow-editor" style="height: 150px;">
+				                                            	${ board.boardContent }
+				                                            </div> <!-- end Snow-editor-->
+                                        				</div>
+                                        				
+                                        				<c:forEach var="at" items="${ board.attachList }">
+                                                    		<div>
+                                                    			<a href="${ contextPath }${at.filePath}/${at.systemName}" download="${ at.originName }">${ at.originName }</a>
+                                                    			<span class="origin_del" data-fileno="${ at.fileNo }">x</span>
+                                                    		</div>
+                                                    	</c:forEach>
+                                        			
+                                                    </fieldset>
                                                     
-                                                    <table class="table table-hover">
-                                                    	<div class="button">
-                                                    	<button type="button" class="btn btn-primary btn-sm" onclick="insertPage()">
-                                                    		<span class="menu-icon"><i data-feather="edit-3"></i></span>글쓰기
-                                                    	</button>
-                                                    	</div>
-                                                    	                                                        
-                                                        <select name="" id="" style="float:right">
-                                                            <option value="">20</option>
-                                                            <option value="">40</option>
-                                                        </select>
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="list-item1">번호</th>
-                                                                <th class="list-item2">제목</th>
-                                                                <th class="list-item3">작성자</th>
-                                                                <th class="list-item4">작성일</th>
-                                                                <th class="list-item5">조회수</th>
-                                                            </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                            <c:choose>
-                                                				<c:when test="${ empty allList }">
-		                                                			<tr>
-		                                                				<td colspan="5">조회된 공지글이 없습니다</td>
-		                                                			</tr>
-		                                                		</c:when>
-		                                                		<c:otherwise>
-		                                                			<c:forEach var="ab" items="${ allList }">
-		                                                				<c:choose>
-		                                                					<c:when test="${ ab.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																										
-																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                				</tr>
-			                                                				</c:when>
-			                                                				<c:otherwise>
-				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																																																																																									
-																					<td class="list-item1">${ ab.subNo }</td>																																									
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                				</tr>
-			                                                				</c:otherwise>
-		                                                				</c:choose>
-		                                                			</c:forEach>
-                                                				</c:otherwise>
-                                                			</c:choose>
-                                                        </tbody>
-                                                        
-                                                    </table>
-                                            </div>
-
-                                             <!-- end col-->
+                                                    
+                                                    <button class="btn btn-primary btn-sm">등록하기</button>
+                                                </form>
+                                            </div> <!-- end col-->
                                             
-                                            <div class="col-lg-3" >
-                                                <ul class="list-group" >
-                                                    <c:forEach var="nb" items="${ newList }">
-                                                    	<c:set var="boardTypeLabel" value="${nb.boardType == 'CO' ? '[사내]' : (nb.boardType == 'NO' ? '[공지]' : '')}" />
-														<li class="list-group-item click-detail" onclick="location.href='${contextPath}/board/detail.do?no=${nb.subNo}';">${boardTypeLabel}${nb.boardTitle}</li>
-                                                	</c:forEach>
-                                                </ul>
+                                           <script>
+                                           
+                                           $(document).ready(function(){
+                                         		$(".origin_del").on("click", function(){
+                                         			// 삭제하고자 하는 해당 첨부파일 번호를 form submit시 넘기기 위한 작업
+                                         			// => 해당 form요소내에 input type="hidden" 만들어서 append
+                                         			let inputEl = document.createElement("input"); 
+                                         			inputEl.type = "hidden";
+                                         			inputEl.name = "delFileNo";
+                                         			inputEl.value= $(this).data("fileno");
+                                         			
+                                         			document.getElementById("updateForm").append(inputEl);
+                                         			
+                                         			// 화면으로부터 사라지도록 작업
+                                         			$(this).parent().remove();
+                                         			
+                                         		})
+                                         	})
+                                           
+                                           
+                                           
+                                           var quill = new Quill('', {
+                                               theme: 'snow'
+                                           });
 
-                                            </div>
-                                             
-                                            <!-- end col -->
-                                            
-                                            <ul id="pagingBar" class="pagination pagination-rounded justify-content-end mb-0">
-	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}" aria-label="Previous">
-	                                                    <span aria-hidden="true">«</span>
-	                                                    <span class="visually-hidden">Previous</span>
-	                                                </a>
-	                                            </li>
-	                                            
-	                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/board/list.do?page=${p}">${p}</a></li>
-	                                           </c:forEach>
-	                                           
-	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage+1}" aria-label="Next">
-	                                                    <span aria-hidden="true">»</span>
-	                                                    <span class="visually-hidden">Next</span>
-	                                                </a>
-	                                            </li>
-	                                        </ul>
-	                                        
-	                                        <!-- Vendor js -->
-									        <script src="${ contextPath }/assets/js/vendor.min.js"></script>
-											
-											<!-- App js -->
-									        <script src="${ contextPath }/assets/js/app.min.js"></script>
-										
-											<!-- Plugins js-->
-									        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
-									        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-									        
-									        <!-- Dashboar 1 init js-->
-									        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
-									        
-									        <!-- Plugins js -->
-									        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
-									
-									        <!-- Init js-->
-									        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+                                           var initialContent = '${board.boardContent}';
+                                           document.getElementById("snow-editor").innerHTML = initialContent;
+                                          
+                                           
+                                           
+                                           function submitFunction() {
+                                        	   
+                                               var content = document.querySelector('.ql-editor').innerHTML;
+                                          		document.getElementById("boardContent").value = content;
+                                          		
+                                          		return true;
+                                               
+                                           }
+                                           
+                                           
+                                           
+                                           
+                                           </script>
+
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
+									<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                                    
                                 </div> <!-- end card -->
 
                                 <!-- end page content -->
@@ -327,13 +308,33 @@
                     </div> <!-- container -->
 
                 </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
             </div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
 
-		 </div>
+
         </div>
         <!-- END wrapper -->
 
@@ -402,7 +403,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -417,7 +418,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -432,7 +433,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -451,7 +452,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -466,7 +467,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -481,7 +482,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -496,7 +497,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status online"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -511,7 +512,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status busy"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -526,7 +527,7 @@
                             <a href="javascript: void(0);" class="text-reset notification-item">
                                 <div class="d-flex align-items-start noti-user-item">
                                     <div class="position-relative me-2">
-                                        <img src="${ contextPath }/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
+                                        <img src="${contextPath}/assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                         <i class="mdi mdi-circle user-status away"></i>
                                     </div>
                                     <div class="overflow-hidden">
@@ -800,87 +801,63 @@
         </div>
         
         
+        <!-- Vendor js -->
+        <script src="${contextPath}/assets/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="${contextPath}/assets/js/app.min.js"></script>
+
+
+        <!-- Select2 js-->
+        <script src="${contextPath}/assets/libs/select2/js/select2.min.js"></script>
+        <!-- Dropzone file uploads-->
+        <script src="${contextPath}/assets/libs/dropzone/min/dropzone.min.js"></script>
+
+        <!-- Quill js -->
+        <script src="${contextPath}/assets/libs/quill/quill.min.js"></script>
+
+        <!-- Init js-->
+        <script src="${contextPath}/assets/js/pages/form-fileuploads.init.js"></script>
+
+        <!-- Init js -->
+        <script src="${contextPath}/assets/js/pages/add-product.init.js"></script>
         
-        <script>
         
-        	// 게시글 페이지 이동 (ajax)
-       $(document).ready(function(){
-   		$('.ajax-pageMove').click(function(event){
-   			event.preventDefault(); // 링크 이벤트x
-   			
-   			// 모든 메뉴 항목에서 active 클래스 제거
-   	        $('.ajax-pageMove').removeClass('active');
-   	        
-   	        // 클릭한 메뉴 항목에 active 클래스 추가
-   	        $(this).addClass('active');
-   			
-   			var url = $(this).data('url');
-   			loadPage(url);
-   			
-   			});
-	   	});
-	   	
-	    // 게시글 페이지 이동 (ajax)
-	   	function loadPage(url){
-	   		$.ajax({
-	   			url: url,
-	   			type: 'get' ,
-	   			success: function(response){
-	   				$('#list-page').empty();
-	   				
-	   				var list = $(response).find('#list-page').html();
-	   				$('#list-page').html(list);
-	   			},
-	   			error: function(){
-	   				
-	   			}
-	   		})
-	   		
-	   	}
-	       
-	       // 게시글 카테고리 밑줄 활성화
-	       function activateMenuItem(element) {
-	       	  // 모든 메뉴 항목의 활성 클래스 제거
-	       	  var categoryItems = document.querySelectorAll('.category a');
-	       	  categoryItems.forEach(function(item) {
-	       	    item.classList.remove('active');
-	       	  });
-	       	  
-	       	  // 클릭한 메뉴 항목에 활성 클래스 추가
-	       	  element.classList.add('active');
-	       	}
-	       
-	       
-	       // 글쓰기 페이지로 이동
-	       function insertPage(){
-   			location.href ="${contextPath}/board/boardInsert.page"
-   		}
-	       
-	      
-	       $(document).ready(function(){
-	    	   $("#searchForm #keyword").val("${keyword}");
-	    	
-	       		$("#pagingBar a").on("click", function(){
-	       			$("#searchForm input[name=page]").val($(this).text());	            		
-	       			$("#searchForm").submit();
-	       			
-	       			return false; 
-	       		})  
-	       })
-	     
-	       document.addEventListener('load', function() {
-	        const items = document.querySelectorAll('.click-detail');
-	        
-	        items.forEach(item => {
-	            item.addEventListener('click', function() {
-	                const targetUrl = item.dataset.url;
-	                window.location.href = targetUrl;
-	            });
-	        });
-	    });
-       
-       </script>
-        
-	
     </body>
+</html>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+	
+
+</body>
 </html>
