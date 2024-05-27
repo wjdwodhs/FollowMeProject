@@ -66,8 +66,7 @@
 		          <!-- end page title -->
 		
 		          <div class="row">
-		              
-		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1">
+		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1" id="feedArea">
 		                  <!-- new post -->
 		                  <div class="card" style="width: 1040px;">
 		                      <div class="card-body p-0">
@@ -86,13 +85,13 @@
 		                                  <!-- comment box -->
 		                                  <div class="border rounded">
 		                                      <form action="${contextPath}/feed/insert" method="post" class="comment-area-box" enctype="multipart/form-data">
-		                                      <input type="hidden" name="memNo" value="${loginUser.memNo}">
+		                                      		<input type="hidden" name="memNo" id="memNo" value="${loginUser.memNo}">
+		                                      	
 		                                          <textarea rows="6" class="form-control border-0" style="resize:none;" placeholder="내용을 입력하세요" required name="sfContent"></textarea>
 		                                          <div class="p-2 bg-light d-flex justify-content-between align-items-center">
 		                                              <div>
 		                                              		<input type="file" id="upfile" name="uploadFiles" style="display:none;" multiple>
 		                                                  <a href="#" class="btn btn-sm px-2 font-16 btn-light" onclick="$('#upfile').click();"><i class="mdi mdi-image-outline"></i></a>
-		                                                  <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i class="mdi mdi-attachment"></i></a>
 		                                              </div>
 		                                              <button type="submit" class="btn btn-sm" style="background-color:#febe98; color:white;"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
 		                                          </div>
@@ -104,108 +103,163 @@
 		                      </div>
 		                  </div>
 		                  <!-- end new post -->
-		
-		
-									<c:choose>
-		              		<c:when test="${empty socialFeed}">
-		               				
-               						<div class="card" style="width: 1040px;">
-				                      <div class="card-body">
-               										<h5>피드가 존재하지 않습니다.</h5>
-               								</div>
-               						</div>
-		               				
-		               		</c:when>
-		               		<c:otherwise>
-		               				<c:forEach var="socialFeed" items="${ socialFeed }">
-						                  <!-- Story Box-->
-						                  <div class="card" style="width: 1040px;">
-						                  		<input type="hidden" name="no" value="${socialFeed.sfNo}">
-						                      <div class="card-body">
-						                          <div class="d-flex align-items-start">
-						                              <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }${ socialFeed.profileImgPath }"
-						                                  alt="user-image">
-						                              <div class="w-100">
-						                                  <div class="dropdown float-end text-muted">
-						                                      <a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">
-						                                          <i class="mdi mdi-dots-horizontal"></i>
-						                                      </a>
-						                                      <div class="dropdown-menu dropdown-menu-end">
-						                                          <!-- item-->
-						                                          <a href="javascript:void(0);" class="dropdown-item">수정하기</a>
-						                                          <!-- item-->
-						                                          <a href="javascript:void(0);" class="dropdown-item">삭제하기</a>
-						                                      </div>
-						                                  </div>
-						                                  <h5 class="m-0">${socialFeed.memName}</h5>
-						                                  <p class="text-muted"><small>${socialFeed.enrollDate}</small></p>
-						                              </div>
-						                          </div>
-						                          <p> ${socialFeed.sfContent} </p>
-						
-																			<c:if test="${socialFeed.attachList != null}">
-																			    <div class="row">
-																			        <c:forEach var="at" items="${socialFeed.attachList}" varStatus="status">
-																			            <div class="col-sm">
-																			                <img src="${contextPath}${at.filePath}/${at.systemName}" alt="post-img" class="rounded me-1 img-fluid mb-3">
-																			            </div>
-																			        </c:forEach>
-																			    </div>
-																			</c:if>
-						
-						                          <div class="mt-2" id="countArea">
-						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a>
-						                              <a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i>댓글<span id="rcount"></span>개</a>
-						                          </div>
-						
-						                          <div class="post-user-comment-box mt-2">
-						                              <div class="d-flex align-items-start">
-						                                  <img class="me-2 avatar-sm rounded-circle" src="${ contextPath }/assets/images/users/user-3.jpg"
-						                                      alt="Generic placeholder image">
-						                                  <div class="w-100">
-						                                      <h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">어피치</a> <small class="text-muted">1시간 전</small></h5>
-						                                      좋은 글이네요. 공유 감사해요~!
-						
-						                                      <br/>
-
-						                                  </div>
-						                              </div>
-						
-						                              <div class="d-flex align-items-start mt-2">
-						                                  <a class="pe-2" href="#">
-						                                      <img src="${ contextPath }${ loginUser.profileImgPath }" class="rounded-circle"
-						                                          alt="Generic placeholder image" height="31">
-						                                  </a>
-						                                  <div class="w-100">
-						                                      <input type="text" id="replyContent" class="form-control border-0 form-control-sm" placeholder="댓글 등록하기">
-						                                  		<button onclick="ajaxInsertReply();" class="btn btn-sm" style="background-color:#febe98; color:white;"></button>
-						                                  </div>
-						                              </div>
-						                          </div>
-						                      </div>
-						                  </div>
-				              		</c:forEach>
 				   
-				   
+				   				
+												
 				  <script>           		
+				  
+				  $(".memNo").val("${loginUser.memNo}");
+				  
+				  // 피드 게시물 ajax	 		
+				  function ajaxFeedList(){
+					  var contextPath = '${contextPath}';
+				  		$.ajax({
+			            url: '${contextPath}/feed/list',
+			            type: 'post',
+			            dataType: 'json',
+			            success: function(data) {
+			            		var feedList = data.feedList;
+			            		var replyList = data.replyList;
+			            	
+			                let feedArea = $('#feedArea');
+			                // 기존 내용을 지웁니다.
+			
+			                if (feedList.length === 0) {
+								          feedArea.append(`
+								            <div class="card" style="width: 1040px;">
+								              <div class="card-body">
+								                <h5>첫 게시물을 작성해주세요!</h5>
+								              </div>
+								            </div>
+								          `);
+			                } else {
+			                    feedList.forEach(function(socialFeed) {
+			                      var attachments = '';
+			                      if (socialFeed.attachList) {
+			                        attachments = '<div class="row">';
+			                        socialFeed.attachList.forEach(function(at) {
+			                          attachments +=
+			                            '<div class="col-sm">' +
+			                              '<img src="' + contextPath + at.filePath + '/' + at.systemName + '" alt="post-img" class="rounded me-1 img-fluid mb-3">' +
+			                            '</div>';
+			                        });
+			                        attachments += '</div>';
+			                      }
+
+			                      var feedHtml = 
+			                        '<div class="card" style="width: 1040px;">' +
+			                          '<input type="hidden" id="sfNo-' + socialFeed.sfNo + '" name="sfNo" value="' + socialFeed.sfNo + '">' +
+			                          '<input type="hidden" class="memNo" name="memNo" value="${loginUser.memNo}">' +  // 사용자 회원 번호 설정
+			                          '<div class="card-body">' +
+			                            '<div class="d-flex align-items-start">' +
+			                              '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + socialFeed.profileImgPath + '" alt="user-image">' +
+			                              '<div class="w-100">' +
+			                                '<div class="dropdown float-end text-muted">' +
+			                                  '<a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">' +
+			                                    '<i class="mdi mdi-dots-horizontal"></i>' +
+			                                  '</a>' +
+			                                  '<div class="dropdown-menu dropdown-menu-end">' +
+			                                    '<a href="javascript:void(0);" class="dropdown-item">수정하기</a>' +
+			                                    '<a href="javascript:void(0);" class="dropdown-item">삭제하기</a>' +
+			                                  '</div>' +
+			                                '</div>' +
+			                                '<h5 class="m-0">' + socialFeed.memName + '</h5>' +
+			                                '<p class="text-muted"><small>' + socialFeed.enrollDate + '</small></p>' +
+			                              '</div>' +
+			                            '</div>' +
+			                            '<p>' + socialFeed.sfContent + '</p>' +
+			                            attachments +
+			  		                  		'<div class="mt-2" id="countArea">' +
+					                      		'<a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a> ' + 
+					                      		'<a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i>댓글 <span id="rcount-' + socialFeed.sfNo + '"></span>개</a>' +
+					                  			'</div>' + 
+			                            '<div class="reply-list" id="replyList-' + socialFeed.sfNo + '"></div>' +
+			                          '</div>' +
+			                        '</div>';
+
+			                      feedArea.append(feedHtml);
+
+			                      
+			                      
+			                      // 댓글 리스트 추가
+			                      var repliesForFeed = replyList.filter(function(reply) {
+			                        return reply.refBno === socialFeed.sfNo;
+			                      });
+			                      
+			                   		// 댓글 수 설정
+			                      $('#rcount-' + socialFeed.sfNo).text(repliesForFeed.length);
+			                      
+			                      if (repliesForFeed.length > 0) {
+			                          repliesForFeed.forEach(function(reply, index) {
+			                        	  var isLastReply = (index === repliesForFeed.length - 1); //마지막댓글
+			                            var commentBox = 
+			                              '<div class="post-user-comment-box mt-2" id="replyArea">' +
+			                                '<div class="d-flex align-items-start">' +
+			                                  '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + reply.profileImgPath + '" alt="Generic placeholder image">' +
+			                                  '<div class="w-100">' +
+			                                    '<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + reply.memName + '</a> <small class="text-muted">' + reply.enrollDate + '</small></h5>' +
+			                                    reply.replyContent + '<br/>' +
+			                                  '</div>' +
+			                                '</div>' +
+			                                (isLastReply ? 
+			                                        '<div class="d-flex align-items-start mt-2">' +
+			                                          '<a class="pe-2" href="#">' +
+			                                            '<img src="' + contextPath + '${loginUser.profileImgPath}" class="rounded-circle" alt="Generic placeholder image" height="31">' +
+			                                          '</a>' +
+			                                          '<div class="w-100" style="display:flex;">' +
+			                                            '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
+			                                            '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
+			                                              '<i class="mdi mdi-send-outline me-1"></i>등록' +
+			                                            '</button>' +
+			                                          '</div>' +
+			                                        '</div>'
+			                                : '') +
+			                              '</div>';
+
+			                            $('#replyList-' + reply.refBno).append(commentBox);
+			                          });
+			                        } else {
+			                            var noCommentBox = 
+			                                '<div class="d-flex align-items-start mt-2">' +
+			                                  '<img src="assets/images/users/user-1.jpg" height="32" class="align-self-start rounded me-2" alt="Arya Stark">' +
+			                                  '<div class="w-100" style="display:flex;">' +
+			                                    '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control form-control-light border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
+			                                    '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
+			                                      '<i class="mdi mdi-send-outline me-1"></i>등록' +
+			                                    '</button>' +
+			                                  '</div>' + 
+			                                '</div>';
+
+			                          $('#replyList-' + socialFeed.sfNo).append(noCommentBox);
+			                        }
+			                      });
+			                    }
+			                  },
+			                  error: function(xhr, status, error) {
+			                    console.error('AJAX feedList failed:', status, error);
+			                  }
+			                });
+			              }
+				  
 				  // 댓글 ajax로 작성 요청하는 function
-        	function ajaxInsertReply(){
-        		// trim 공백제외
-        		if($("#replyContent").val().trim().length != 0){
+        	function ajaxInsertReply(sfNo){
+        		 var replyContent = $("#replyContent-" + sfNo).val().trim();
+					  
+        		if (replyContent.length != 0) {
         			
         			$.ajax({
-        				url:"${contextPath}/feed/registReply.do",sfN
+        				url:"${contextPath}/feed/registReply.do",
         				type:"post",
         				data:{
-        					replyContent:$("#replyContent").val(),
-        					refBno:${socialFeed.sfNo}
+        					replyContent: replyContent,
+        					refBno: sfNo
         				},
         				success:function(result){
         					if(result == "SUCCESS"){
-        						$("#replyContent").val("");
-        						ajaxReplyList();
+        						$("#replyContent-" + sfNo).val("");
+        						ajaxFeedList(sfNo); // 댓글 리스트 갱신 함수 호출
         					}else if(result == "FAIL"){
-        	        	alertify.alert("댓글 작성 서비스", "다시 입력해주세요.");
+        	        	alert("댓글 작성 서비스", "다시 입력해주세요.");
         					}
         					
         				}, error:function(){
@@ -215,104 +269,26 @@
         			})
         			
         		}else{
-        			alertify.alert("댓글 작성 서비스", "내용을 입력해주세요.");
+        			alert("댓글 작성 서비스", "내용을 입력해주세요.");
         		}
         	}
         	
-        	// 현재 게시글의 댓글리스트를 ajax로 조회해서 뿌리는 function
-        	function ajaxReplyList(){
-        		// 비동기식 "/board/replyList.do" url요청
-        		// 요청처리 결과로 조회된 댓글리스트를 응답데이터로 받기
-        		// 해당 응답데이터 가지고 댓글 한개당 하나의 tr요소로 만들어서
-        		// tbody 영역에 뿌리기
-        		// + 댓글 갯수도 수정
-        		$.ajax({
-        			
-        			url: "${contextPath}/feed/replyList.do",
-        			type: "get",
-        			data: "no=${socialFeed.sfNo}",
-        			success: function(resData){
-                $("#countArea #rcount").text(resData.length);
-
-                let reply = "";
-                
-            		var replyArea = document.getElementById("replyArea");
-
-            		// 데이터를 반복하여 HTML 요소를 생성합니다.
-            		for (var i = 0; i < resData.length; i++) {
-            		    // 새로운 div 요소를 생성합니다.
-            		    var newDiv = document.createElement("div");
-            		    newDiv.classList.add("d-flex", "align-items-start");
-
-            		    // 이미지 요소를 생성하고 설정합니다.
-            		    var imgElement = document.createElement("img");
-            		    imgElement.classList.add("me-2", "avatar-sm", "rounded-circle");
-            		    imgElement.src = contextPath + resData[i].profileImgPath;
-            		    imgElement.alt = "Generic placeholder image";
-
-            		    // div 요소에 이미지 요소를 추가합니다.
-            		    newDiv.appendChild(imgElement);
-
-            		    // 내용을 담을 div 요소를 생성합니다.
-            		    var contentDiv = document.createElement("div");
-            		    contentDiv.classList.add("w-100");
-
-            		    // 헤더 요소를 생성하고 설정합니다.
-            		    var header = document.createElement("h5");
-            		    header.classList.add("mt-0");
-            		    var anchor = document.createElement("a");
-            		    anchor.href = "contacts-profile.html";
-            		    anchor.classList.add("text-reset");
-            		    anchor.textContent = resData[i].memNo;
-            		    var small = document.createElement("small");
-            		    small.classList.add("text-muted");
-            		    small.textContent = resData[i].enrollDate;
-
-            		    // 헤더 요소를 추가합니다.
-            		    header.appendChild(anchor);
-            		    header.appendChild(small);
-            		    contentDiv.appendChild(header);
-
-            		    // 내용을 추가합니다.
-            		    var textNode = document.createTextNode(resData[i].replyContent);
-            		    contentDiv.appendChild(textNode);
-            		    
-            		    // 빈 줄 추가
-            		    contentDiv.appendChild(document.createElement("br"));
-
-            		    // 내용을 담을 div 요소를 부모 div에 추가합니다.
-            		    newDiv.appendChild(contentDiv);
-									
-            		    // 부모 요소에 새로 생성한 div를 추가합니다.
-            		    replyArea.appendChild(newDiv);
-            			}
-                  // 현재 로그인한 회원이 해당 댓글의 작성자일 경우
-                  if(resData[i].memNo == '${loginUser.memNo}'){
-                    reply += "<button class='btn btn-sm btn-danger removeReply' data-replyno='" + resData[i].replyNo + "'>삭제</button>";
-                  }
-                      
-        				
-        			},
-        			error: function(){
-        				console.log("댓글 목록 조회용 ajax통신 실패");
-        			}
-        			
-        		})
-        			
-        	}
-        
-        </script>
-				          		</c:otherwise>
-				      		</c:choose>
+     			$(document).ready(function(){
+     				ajaxFeedList();
+     				
+     			})
+					 
+     			</script>
+     			
 				
 				
 				
 		
 		                  
-		          </div>
+		      </div>
 		
 		              
-		      </div> <!--end row -->
+		    </div> <!--end row -->
 		          
 		  </div> <!-- container -->
 		

@@ -123,16 +123,18 @@
 				  , reply_content
 				  , profile_img_path
 				  , to_char(r.enroll_date, 'YYYY-MM-DD HH24:MI:SS') "enroll_date"
+					, ref_bno
 			 from tb_reply r
 		   join tb_mem m on (r.mem_no = m.mem_no)
 		  where r.status='Y' 
-			  and ref_bno = #{sfNo}
+			  and ref_type = 'S'
+				 
 		  order by reply_no asc
 	</select>	
 	
 	<insert id="insertReply">
     insert 
-     into reply
+     into tb_reply
      (
        REPLY_NO
      , MEM_NO
@@ -152,7 +154,7 @@
 	</insert>
 	
 	<update id="deleteReply">
-		update reply
+		update tb_reply
 		set status = 'N'
 		where reply_no = #{replyNo}
 	</update>

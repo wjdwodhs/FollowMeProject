@@ -1,14 +1,13 @@
 package com.fz.followme.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,12 +36,27 @@ public class SocialFeedController {
 	
 	// 소셜피드 페이지로 이동
 	@RequestMapping("")
-	public String socialFeedPage(Model model) {
-		model.addAttribute("socialFeed", socialFeedService.selectList());
+	public String socialFeedPage() {
 		
 		return "feed/socialFeed";
 	}
 
+	@ResponseBody
+	@PostMapping(value="/list", produces="application/json; charset=utf-8")
+	public Map<String, Object> selectFeedList() {
+		
+	    List<SocialFeedDto> feedList = socialFeedService.selectFeedList();
+	    List<ReplyDto> replyList = socialFeedService.selectReplyList();
+	    
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("feedList", feedList);
+	    map.put("replyList", replyList);
+	    map.put("moreDataAvailable", !feedList.isEmpty()); // 더 이상 데이터가 없으면 false 전달
+	    
+		return map;
+	}
+	
+	
 	
 	@PostMapping("/insert")
 	public String regist(SocialFeedDto socialFeed
@@ -50,6 +64,7 @@ public class SocialFeedController {
 			      	   , HttpSession session
 			      	   , RedirectAttributes redirectAttributes) {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		String memNo = loginUser.getMemNo();
 		
 		List<AttachmentDto> attachList = new ArrayList<>();
 		log.debug("socialFeed: {}", socialFeed);
@@ -84,12 +99,7 @@ public class SocialFeedController {
 		
 		return "redirect:/feed";
 	}
-	
-	@ResponseBody
-	@GetMapping(value="/replyList.do", produces="application/json; charset=utf-8")
-	public List<ReplyDto> replyList(int no){
-		return socialFeedService.selectReplyList(no); 
-	}
+
 
 	@ResponseBody
 	@PostMapping("/registReply.do")
@@ -102,12 +112,11 @@ public class SocialFeedController {
 												   : "FAIL";
 	}
 	
-	@ResponseBody
-	@GetMapping("/removeReply.do")
-	public String ajaxDeleteReply(int no) {
-		return socialFeedService.deleteReply(no) > 0 ? "SUCCESS" 
-												: "FAIL";
-	}
-	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/removeReply.do") public String ajaxDeleteReply(int sfNo) {
+	 * return socialFeedService.deleteReply(sfNo) > 0 ? "SUCCESS" : "FAIL"; }
+	 */
 	
 }

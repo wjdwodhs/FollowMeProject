@@ -311,8 +311,6 @@ input:focus, td>textarea:focus {
 							                    console.error('HTML 파일을 로드하는 중 오류가 발생했습니다:', error);
 							                })
 							                .finally(() => {
-                           		console.log('${document.refMemName}');
-                           		console.log('${document.refMemNo}');
                            		
 							               	document.getElementById('no').value = '${document.docuNo}';
 							                document.getElementById('memDeptName').innerText = '${document.memDeptName}';

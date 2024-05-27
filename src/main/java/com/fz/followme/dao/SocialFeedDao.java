@@ -25,22 +25,23 @@ public class SocialFeedDao {
 		return sqlSessionTemplate.insert("socialFeedMapper.insertAttach", at);
 	}
 
-	public List<SocialFeedDto> selectList() {
+	// 피드게시판 리스트 조회 ajax 기능
+	public List<SocialFeedDto> selectFeedList() {
 		return sqlSessionTemplate.selectList("socialFeedMapper.selectList");
 	}
 	
 	// 댓글
 	
-	public List<ReplyDto> selectReplyList(int rfNo) {
-		return sqlSessionTemplate.selectList("socialFeedMapper.selectReplyList", rfNo);	
+	public List<ReplyDto> selectReplyList() {
+		return sqlSessionTemplate.selectList("socialFeedMapper.selectReplyList");	
 	}
 
 	public int insertReply(ReplyDto reply) {
 		return sqlSessionTemplate.insert("socialFeedMapper.insertReply", reply);
 	}
 
-	public int deleteReply(int replyNo) {
-		return sqlSessionTemplate.update("socialFeedMapper.deleteReply", replyNo);
-	}
-
+	/*
+	 * public int deleteReply(int replyNo) { return
+	 * sqlSessionTemplate.update("socialFeedMapper.deleteReply", replyNo); }
+	 */
 }

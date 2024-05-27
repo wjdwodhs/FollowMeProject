@@ -11,16 +11,20 @@ public interface SocialFeedService {
 	int insertFeed(SocialFeedDto socialFeed);
 	
 	// 피드게시판 조회 기능
-	List<SocialFeedDto> selectList();
+	//List<SocialFeedDto> selectList();
 	
-	// 댓글리스트 조회 서비스
-	List<ReplyDto> selectReplyList(int rfNo);
+	// 댓글리스트 ajax 조회 기능
+	List<ReplyDto> selectReplyList();
 	
-	// 댓글작성 서비스
+	// 댓글작성 ajax 기능
 	int insertReply(ReplyDto reply);
+
+	// 피드게시판 ajax 조회 기능
+	List<SocialFeedDto> selectFeedList();
 	
-	// 댓글삭제 서비스
-	int deleteReply(int replyNo);
+	/*
+	 * // 댓글삭제 서비스 int deleteReply(int replyNo);
+	 */
 	
 
 }

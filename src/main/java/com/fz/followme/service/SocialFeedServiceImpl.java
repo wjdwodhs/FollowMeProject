@@ -36,24 +36,26 @@ public class SocialFeedServiceImpl implements SocialFeedService {
 	
 	// 피드게시판 리스트 + content 내용 조회 기능
 	@Override
-	public List<SocialFeedDto> selectList() {
-		return socialFeedDao.selectList();
+	public List<SocialFeedDto> selectFeedList() {
+		return socialFeedDao.selectFeedList();
 	}
 	
 	// 댓글
 	@Override
-	public List<ReplyDto> selectReplyList(int rfNo) {
-		return socialFeedDao.selectReplyList(rfNo);
+	public List<ReplyDto> selectReplyList() {
+		return socialFeedDao.selectReplyList();
 	}
 
 	@Override
 	public int insertReply(ReplyDto reply) {
 		return socialFeedDao.insertReply(reply);
 	}
+
+
 	
-	@Override
-	public int deleteReply(int replyNo) {
-		return socialFeedDao.deleteReply(replyNo);
-	}
+	/*
+	 * @Override public int deleteReply(int replyNo) { return
+	 * socialFeedDao.deleteReply(replyNo); }
+	 */
 
 }
