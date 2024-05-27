@@ -86,33 +86,38 @@ public class MemberController {
 		
 		out.println("<script>");
 		
-		if(loginUser != null && bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
-			request.getSession().setAttribute("loginUser", loginUser);
-			request.getSession().setAttribute("userAtt", userAtt);
-			
-			// 로그인 시 사번 저장 (쿠키 저장)
-			if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {
-				Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
-				cookie.setMaxAge(30*24*60*60); // 30일 저장 유효기간
-				cookie.setPath("/");
-				response.addCookie(cookie);
-			} else {
-				Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
-				cookie.setMaxAge(0);
-				cookie.setPath("/");
-				response.addCookie(cookie);
-			}
-			
-			out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
-			out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
-			
-			
-		} else {
-			out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
-			out.println("history.back();");
-		}
-		out.println("</script>");
-		
+		if (loginUser != null) {
+	        if ("N".equals(loginUser.getStatus())) {
+	            out.println("alert('퇴사한 직원은 로그인할 수 없습니다.');");
+	            out.println("history.back();");
+	        } else if ("R".equals(loginUser.getStatus())) {
+	            out.println("alert('휴직 중인 직원은 로그인할 수 없습니다.');");
+	            out.println("history.back();");
+	        } else if (bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
+	            request.getSession().setAttribute("loginUser", loginUser);
+	            request.getSession().setAttribute("userAtt", userAtt);
+
+	            // 로그인 시 사번 저장 (쿠키 저장)
+	            if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {
+	                Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
+	                cookie.setMaxAge(30 * 24 * 60 * 60); // 30일 저장 유효기간
+	                cookie.setPath("/");
+	                response.addCookie(cookie);
+	            } else {
+	                Cookie cookie = new Cookie("savedMemNo", loginUser.getMemNo());
+	                cookie.setMaxAge(0);
+	                cookie.setPath("/");
+	                response.addCookie(cookie);
+	            }
+
+	            out.println("alert('" + loginUser.getMemName() + "님 환영합니다.');");
+	            out.println("location.href = '" + request.getContextPath() + "/ceoMain.page';");
+	        } else {
+	            out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
+	            out.println("history.back();");
+	        }
+	    } 
+	    out.println("</script>");
 	}
 	
 	// 마이페이지로 이동

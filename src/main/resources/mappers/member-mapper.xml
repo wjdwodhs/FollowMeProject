@@ -72,8 +72,7 @@
 			 	 authorization_level, status
 			from tb_mem
 			left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
-		 where status = 'Y'
-		   and mem_no = #{memNo}
+		  where mem_no = #{memNo}
 	</select>
 	
 	<select id="memEmailCheck" resultMap="memberResult">
