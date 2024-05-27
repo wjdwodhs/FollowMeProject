@@ -1,6 +1,9 @@
 package com.fz.followme.dto;
 
+
 import java.util.List;
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,4 +30,6 @@ public class ReplyDto {
 	
 	private String memName;
 	private String profileImgPath;
+	
+	private String memGrade;
 }
