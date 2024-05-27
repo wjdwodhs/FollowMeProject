@@ -16,7 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- App favicon -->
-<link rel="shortcut icon" href="${ contextPath }assets/images/favicon.ico">
+<link rel="shortcut icon" href="${ contextPath }/assets/images/favicon.ico">
 
 <!-- Theme Config Js -->
 <script src="${ contextPath }/assets/js/head.js"></script>
@@ -463,6 +463,8 @@
 	    $('.conversation-list').empty();
 	    $('.chat-room').empty();
 	    
+	    $('.col-xl-9.col-lg-8').find('.card, .card-body').addClass('hidden');
+
 	    
 	    // 채팅방 상대방 정보 제거
 	    $('.message-area.card-body .d-flex.align-items-start').remove();
@@ -476,7 +478,8 @@
 	
 	    const encodedCurrentChatMembers = encodeURIComponent(JSON.stringify(currentChatMembers));
 	    const popup = window.open('${contextPath}/message/empListPopUp?currentMemNo=' + encodedCurrentMemNo + '&currentChatMembers=' + encodedCurrentChatMembers, '직원 목록', 'width=600,height=750');
-		
+	 
+	    
 		}
 
 		// 현재(기존) 대화방 직원 목록 가져오기
