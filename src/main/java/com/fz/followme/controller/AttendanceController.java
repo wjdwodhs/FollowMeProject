@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
@@ -40,14 +41,26 @@ public class AttendanceController {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 	    String memNo = loginUser.getMemNo();
-	    
+
 	    // 월별 근무시간 및 평균 근무시간
 	    AttendanceDto attDto = attendanceService.monthAttendanceTime(memNo);
 	    
 	    // 총 근무시간 및 근무일수
 	    AttendanceDto totalDto = attendanceService.totalAttendanceTime(memNo);
+	    if (attDto == null) {
+	        attDto = new AttendanceDto();
+	        attDto.setWorkingDays(0); 
+	        attDto.setMonthWorkTime(0); 
+	        attDto.setAvgWorkTime(0); 
+	    }
+
+	    if (totalDto == null) {
+	        totalDto = new AttendanceDto();
+	        totalDto.setTotalWorkingDays(0); 
+	        totalDto.setTotalWorkTime(0); 
+	    }
 	    
-	    // 타입별 출석 데이터 행의 갯수를 가져옴
+	    // 타입별 출석 데이터
 	    List<AttendanceDto> countList = attendanceService.countAttendanceByType(memNo);
 	    Map<String, Integer> countMap = new HashMap<>();
 
@@ -152,6 +165,54 @@ public class AttendanceController {
 
 	    return ResponseEntity.ok(attDto); // JSON 형태로 AttendanceDto 리스트 반환
 		
+	}
+    
+    // Ajax 월별 근태 조회
+	@GetMapping(value="/attlist.do", produces="application/json; charset=utf-8")
+    @ResponseBody
+	public ResponseEntity<Map<String, Object>> attList(@RequestParam String year, 
+						@RequestParam String month, HttpSession session) {
+		
+		 MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+	     String memNo = loginUser.getMemNo();
+	     
+	     AttendanceDto att = AttendanceDto.builder()
+	                .memNo(memNo)
+	                .currentYear(year)
+	                .currentMonth(month)
+	                .build();
+	     
+	    // 월별 근무시간 및 평균 근무시간
+	    AttendanceDto attDto = attendanceService.AjaxMonthAttendanceTime(att);
+	    
+	    // 결과가 없는 경우 기본값으로 0으로 설정
+	    if (attDto == null) {
+	        attDto = new AttendanceDto();
+	        attDto.setWorkingDays(0); 
+	        attDto.setMonthWorkTime(0); 
+	        attDto.setAvgWorkTime(0); 
+	    }
+	    
+	    // 타입별 출석 데이터
+	    List<AttendanceDto> countList = attendanceService.AjaxCountAttendanceByType(att);
+	    Map<String, Integer> countMap = new HashMap<>();
+
+        for (AttendanceDto attendance : countList) {
+            countMap.put(attendance.getType(), attendance.getCount());
+        }
+
+        // 모든 타입(B, C, D, E)에 대해 기본 값 0을 설정
+        for (String type : new String[]{"B", "C", "D", "E"}) {
+            countMap.putIfAbsent(type, 0);
+        }
+	    
+	    Map<String, Object> data = new HashMap<>();
+        data.put("attDto", attDto);
+        data.put("countMap", countMap);
+
+	    
+	    return ResponseEntity.ok(data);
+	     
 	}
     
     

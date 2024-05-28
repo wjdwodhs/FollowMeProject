@@ -153,7 +153,7 @@
 	                                </div>
 	                                <div class="card">
 	                                    <div class="card-body">
-	                                        <table class="table table-bordered text-center">
+	                                        <table class="table table-bordered text-center" id="countAttendanceByType">
 	                                            <thead>
 	                                                <tr>
 	                                                		<th>출근</th>
@@ -185,7 +185,7 @@
 	                                </div>
 	                                <div class="card">
 	                                    <div class="card-body">
-	                                        <table class="table table-bordered text-center">
+	                                        <table class="table table-bordered text-center" id="monthAttendanceTime">
 	                                            <thead>
 	                                                <tr>
 	                                                    <th>근무일수</th>
@@ -215,7 +215,7 @@
 	                                </div>
 	                                <div class="card">
 	                                    <div class="card-body">
-	                                        <table class="table table-bordered text-center">
+	                                        <table class="table table-bordered text-center" id="totalAttendanceTime">
 	                                            <thead>
 	                                                <tr>
 	                                                    <th>총 근무시간</th>
@@ -225,7 +225,7 @@
 	                                            <tbody>
 	                                                <tr>
 	                                                    <td>${totalDto.totalWorkTime}시간</td>
-	                                                    <td>${totalDto.totalworkingDays}일</td>
+	                                                    <td>${totalDto.totalWorkingDays}일</td>
 	                                                </tr>
 	                                            </tbody>
 	                                        </table>
@@ -269,11 +269,40 @@
 												  
 												    var currentYear;
 												    var currentMonth;
-												
-												    // 전역으로 선언할 함수
-												    function updateYearMonthDisplay() {
-												        $('#yearMonthDisplay').text(currentYear + '년 ' + currentMonth + '월');
-												    }
+												    
+												    function loadMonthData(year, month) {
+										            $.ajax({
+										                url: "${contextPath}/attendance/attlist.do",
+										                method: 'GET',
+										                data: {
+										                    year: year,
+										                    month: month
+										                },
+										                success: function(data) {
+										                		console.log(data);
+										                		console.log('성공');
+										                		
+										                		var countAttendanceTableTd = '<tr>';
+										                		countAttendanceTableTd += '<td>' + data.countMap.B + '회</td>';
+										                		countAttendanceTableTd += '<td>' + data.countMap.E + '회</td>';
+										                		countAttendanceTableTd += '<td>' + data.countMap.C + '회</td>';
+										                		countAttendanceTableTd += '<td>' + data.countMap.D + '회</td>';
+										                		countAttendanceTableTd += '</tr>';
+										                		$('#countAttendanceByType tbody').html(countAttendanceTableTd);
+	
+										                		var monthAttendanceTableTd = '<tr>';
+										                		monthAttendanceTableTd += '<td>' + data.attDto.workingDays + '일</td>';
+										                		monthAttendanceTableTd += '<td>' + data.attDto.monthWorkTime + '시간</td>';
+										                		monthAttendanceTableTd += '<td>' + data.attDto.avgWorkTime + '시간</td>';
+										                		monthAttendanceTableTd += '</tr>';
+										                		$('#monthAttendanceTime tbody').html(monthAttendanceTableTd);
+
+										                },
+										                error: function(error) {
+										                    console.error('데이터를 가져오는 데 실패했습니다:', error);
+										                }
+										            });
+											        }
 												
 												    // 이전 월 함수
 												    function prev() {
@@ -284,6 +313,7 @@
 												            currentMonth--;
 												        }
 												        updateYearMonthDisplay();
+												        loadMonthData(currentYear, currentMonth);
 												    }
 												
 												    // 다음 월 함수
@@ -295,6 +325,7 @@
 												            currentMonth++;
 												        }
 												        updateYearMonthDisplay();
+												        loadMonthData(currentYear, currentMonth);
 												    }
 												
 												    // 초기화 함수
@@ -305,6 +336,11 @@
 												
 												        // 초기 년/월 표시
 												        updateYearMonthDisplay();
+												    }
+												    
+														// 전역으로 선언할 함수
+												    function updateYearMonthDisplay() {
+												        $('#yearMonthDisplay').text(currentYear + '년 ' + currentMonth + '월');
 												    }
 												
 												    // 문서가 준비되면 초기화 함수 호출

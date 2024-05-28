@@ -15,9 +15,21 @@
 		<result column="monthWorkTime" property="monthWorkTime"/>
 		<result column="avgWorkTime" property="avgWorkTime"/>
 		<result column="totalWorkTime" property="totalWorkTime"/>
-		<result column="totalworkingDays" property="totalworkingDays"/>
+		<result column="totalWorkingDays" property="totalWorkingDays"/>
 		
 	</resultMap>
+	
+	<resultMap type="leavepDto" id="leavepMap">
+		<id column="leavep_no" property="leavepNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="leavep_date" property="leavepDate"/>
+		<result column="able_date" property="ableDate"/>
+		<result column="pay" property="pay"/>
+		<result column="used" property="used"/>
+		<result column="left" property="left"/>
+	
+	</resultMap>
+
 
 	<!-- 출근 시간 등록 -->
 	<insert id="insertWorktime">
@@ -165,8 +177,80 @@ WHERE
     mem_no = #{memNo} 
      ]]>
 </select>
-	
-	
+
+ <!-- Ajax 월별 근무 시간 및 평균 근무 시간 조회 -->
+<select id="AjaxMonthAttendanceTime" resultMap="attendanceMap">
+<![CDATA[
+  SELECT 
+        TO_CHAR(att_date, 'YYYY-MM') AS month,
+        COUNT(DISTINCT TO_CHAR(att_date, 'YYYY-MM-DD')) AS workingDays,
+        TRUNC(SUM(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600) AS monthWorkTime,
+        ROUND(AVG(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600, 1) AS avgWorkTime
+    FROM 
+        tb_attendance
+    WHERE 
+        mem_no = #{memNo} 
+        AND EXTRACT(YEAR FROM att_date) = #{currentYear}
+        AND EXTRACT(MONTH FROM att_date) = #{currentMonth}
+    GROUP BY 
+        TO_CHAR(att_date, 'YYYY-MM')
+    ORDER BY 
+        month DESC
+     ]]>
+</select>
+
+	<!-- Ajax 타입별 출석 데이터 카운트 조회 -->
+ <select id="AjaxCountAttendanceByType" resultMap="attendanceMap">
+     SELECT 
+        type, 
+        COUNT(*) AS count 
+    FROM 
+        tb_attendance 
+    WHERE 
+        mem_no = #{memNo} 
+    AND 
+        EXTRACT(YEAR FROM att_date) = #{currentYear}
+    AND 
+        EXTRACT(MONTH FROM att_date) = #{currentMonth}
+    AND 
+        type IN ('B', 'C', 'D', 'E') 
+    GROUP BY 
+        type
+ </select>
+		<!-- 연차 등록 -->
+<insert id="insertDefaultLeave" parameterType="LeavepDto">
+    INSERT INTO tb_leavepay (leavep_no,mem_no, able_date)
+    VALUES (SEQ_LEAVEPNO.NEXTVAL,#{memNo}, #{ableDate})
+</insert>
+
 	
 	
 	

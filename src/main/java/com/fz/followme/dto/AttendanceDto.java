@@ -31,6 +31,8 @@ public class AttendanceDto {
      private int monthWorkTime;
      private double avgWorkTime;
      private int totalWorkTime;
-     private int totalworkingDays;
+     private int totalWorkingDays;
+     private String currentYear;
+     private String currentMonth;
 	
 }
