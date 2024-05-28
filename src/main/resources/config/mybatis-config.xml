@@ -20,6 +20,7 @@
 		<typeAlias type="com.fz.followme.dto.TodoDto" alias="TodoDto"/>
 		<typeAlias type="com.fz.followme.dto.AttendanceDto" alias="AttendanceDto"/>
 		<typeAlias type="com.fz.followme.dto.MessageDto" alias="MessageDto"/>
+		<typeAlias type="com.fz.followme.dto.LeavepDto" alias="LeavepDto"/>
 		
 		<typeAlias type="com.fz.followme.dto.BoardDto" alias="BoardDto"/>
 		<typeAlias type="com.fz.followme.dto.AssetReservationDto" alias="AssetReservationDto"/>

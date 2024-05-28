@@ -3,6 +3,7 @@ package com.fz.followme.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import com.fz.followme.dto.AccountDto;
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.EmailDto;
+import com.fz.followme.dto.LeavepDto;
 import com.fz.followme.dto.LicenseDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
@@ -526,6 +528,15 @@ public class MemberController {
 			
 			if(result > 0) {
 				redirectAttributes.addFlashAttribute("alertMsg", "신규 직원 등록에 성공했습니다.");
+				// 사원 등록 시 기본 연차 넣어주기
+				LeavepDto leave = LeavepDto.builder()
+		                .memNo(m.getMemNo())
+		                .ableDate(Year.now().getValue()) // 연차 이용가능년도
+		                .build();
+		            
+		            int leaveResult = attendanceService.insertDefaultLeave(leave);
+				
+				
 			}else {
 				redirectAttributes.addFlashAttribute("alertMsg", "신규 직원 등록에 실패했습니다.");
 			}
