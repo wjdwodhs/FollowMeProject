@@ -251,6 +251,41 @@ WHERE
     VALUES (SEQ_LEAVEPNO.NEXTVAL,#{memNo}, #{ableDate})
 </insert>
 
+<!-- 연차 정보 등록 -->
+<insert id="insertLeave" parameterType="DocumentDto">
+ insert into tb_leave(leave_no, mem_no, leave_reason, app_date, start_date, end_date)
+ VALUES (SEQ_LEAVENO.NEXTVAL,#{memNo}, #{docuContent}, #{registDate}, #{docuStartDate}, #{docuEndDate})
+</insert>
+
+<!-- 연차지급 정보 수정 -->
+<update id="updateLeavep" parameterType="LeavepDto">
+   UPDATE tb_leavepay
+    SET 
+        used = (
+            SELECT (TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1) - TO_DATE(#{startDate}, 'YYYY-MM-DD')
+            FROM DUAL
+        ),
+        left = pay - (
+            SELECT (TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1) - TO_DATE(#{startDate}, 'YYYY-MM-DD')
+            FROM DUAL
+        )
+    WHERE 
+        mem_no = #{memNo}
+        AND able_date = #{ableDate}
+ 
+</update>
+<!-- 잔여 연차 조회 -->
+<select id="selectLeave" parameterType="LeavepDto" resultType="int" >
+   select 
+		 NVL(left, 0)
+	from 
+		 tb_leavepay
+	where 
+		 mem_no = #{memNo}
+	   AND able_date = #{ableDate}
+   
+ </select>
+
 	
 	
 	

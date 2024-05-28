@@ -1,9 +1,13 @@
 package com.fz.followme.controller;
 
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,9 +25,11 @@ import org.springframework.web.socket.TextMessage;
 
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.DocumentDto;
+import com.fz.followme.dto.LeavepDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.handler.AlarmEchoHandler;
+import com.fz.followme.service.AttendanceService;
 import com.fz.followme.service.DocumentService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
@@ -44,6 +50,7 @@ public class DocumentController {
 	private String status;
 	
 	private final AlarmEchoHandler handler;
+	private final AttendanceService attendanceService;
 
 	
 	// 전체 리스트조회 -----------------------------------------------
@@ -386,7 +393,8 @@ public class DocumentController {
 			redirectAttributes.addFlashAttribute("alertTitle", "전자문서 결재 승인");
 			if(result > 0) {
 				// 성공시
-				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");			
+				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");
+				
 			}else {
 				// 실패시
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서의 승인 처리에 실패했습니다.");
@@ -417,9 +425,34 @@ public class DocumentController {
 			if(result > 0) {
 				// 성공시
 				log.debug("memNo: {} ", document.getMemNo());
+				log.debug("document:{}",document);
 					
 	            TextMessage message = new TextMessage("성공");
 	        	handler.broadcastMessageToUser(document.getMemNo(), message);
+	        	
+	        	DocumentDto docu = documentService.selectDocument(document.getDocuNo());
+	        	
+			if(docu.getDocuCategory() == 3) { // 카테고리가 3이면 휴가 신청 전자결재
+						
+						// 연차테이블의 연차 정보 입력
+						attendanceService.insertLeave(docu); 
+						
+						int ableDate = Year.now().getValue(); // 연차테이블의 사용가능연도 (현재날짜 년도)
+						String startDate = docu.getDocuStartDate();  // ex) 2024-05-28
+						String endDate = docu.getDocuEndDate();  // ex) 2024-05-30
+						String memNo = docu.getMemNo();
+						
+						LeavepDto docum = LeavepDto.builder()
+			            		.memNo(memNo)
+				                .startDate(startDate)
+				                .endDate(endDate)
+				                .ableDate(ableDate)
+				                .build();
+						
+						// 회원번호 , 연차사용가능날짜, 연차사용일수 (end - start)
+						attendanceService.updateLeavep(docum); 
+					
+				}
 				
 				redirectAttributes.addFlashAttribute("alertMsg", "전자문서가 승인 처리 되었습니다.");
 		       		        

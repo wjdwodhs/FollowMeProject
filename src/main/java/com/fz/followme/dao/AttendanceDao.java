@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.fz.followme.dto.AttendanceDto;
+import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
 
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,18 @@ public class AttendanceDao {
 
 	public int insertDefaultLeave(LeavepDto leave) {
 		return sqlSessionTemplate.insert("attendanceMapper.insertDefaultLeave", leave);
+	}
+
+	public int insertLeave(DocumentDto document) {
+		return sqlSessionTemplate.insert("attendanceMapper.insertLeave",document);
+	}
+
+	public int updateLeavep(LeavepDto docu) {
+		return sqlSessionTemplate.update("attendanceMapper.updateLeavep",docu);
+	}
+
+	public int selectLeave(LeavepDto le) {
+		return sqlSessionTemplate.selectOne("attendanceMapper.selectLeave",le);
 	}
 	
 	

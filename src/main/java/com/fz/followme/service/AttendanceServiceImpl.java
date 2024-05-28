@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fz.followme.dao.AttendanceDao;
 import com.fz.followme.dao.CalendarDao;
 import com.fz.followme.dto.AttendanceDto;
+import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
 
 import lombok.RequiredArgsConstructor;
@@ -72,6 +73,21 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public int insertDefaultLeave(LeavepDto leave) {
 		return attendanceDao.insertDefaultLeave(leave);
+	}
+
+	@Override
+	public int insertLeave(DocumentDto document) {
+		return attendanceDao.insertLeave(document);
+	}
+
+	@Override
+	public int updateLeavep(LeavepDto docu) {
+		return attendanceDao.updateLeavep(docu);
+	}
+
+	@Override
+	public int selectLeave(LeavepDto le) {
+		return attendanceDao.selectLeave(le);
 	}
 	
 }

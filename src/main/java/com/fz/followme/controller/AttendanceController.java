@@ -1,6 +1,7 @@
 package com.fz.followme.controller;
 
 import java.time.LocalTime;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 
 import com.fz.followme.dto.AttendanceDto;
+import com.fz.followme.dto.LeavepDto;
 import com.fz.followme.dto.MemberDto;
 import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.AttendanceService;
@@ -41,12 +43,29 @@ public class AttendanceController {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 	    String memNo = loginUser.getMemNo();
+	    int ableDate = Year.now().getValue();
 
 	    // 월별 근무시간 및 평균 근무시간
 	    AttendanceDto attDto = attendanceService.monthAttendanceTime(memNo);
 	    
 	    // 총 근무시간 및 근무일수
 	    AttendanceDto totalDto = attendanceService.totalAttendanceTime(memNo);
+	    
+	    LeavepDto le = LeavepDto.builder()
+	    		.memNo(memNo)
+	    		.ableDate(ableDate)
+	    		.build();
+	    
+	    
+	    // 잔여 연차 정보 조회
+	    
+	    int defaultLeave = 12; 
+	    int leftLeave = attendanceService.selectLeave(le);
+	    
+	    if (leftLeave == 0) {
+	        leftLeave = defaultLeave;
+	    } 
+	   
 	    if (attDto == null) {
 	        attDto = new AttendanceDto();
 	        attDto.setWorkingDays(0); 
@@ -64,12 +83,10 @@ public class AttendanceController {
 	    List<AttendanceDto> countList = attendanceService.countAttendanceByType(memNo);
 	    Map<String, Integer> countMap = new HashMap<>();
 
-        
         for (AttendanceDto attendance : countList) {
             countMap.put(attendance.getType(), attendance.getCount());
         }
 
-        // 모든 타입(B, C, D, E)에 대해 기본 값 0을 설정
         for (String type : new String[]{"B", "C", "D", "E"}) {
             countMap.putIfAbsent(type, 0);
         }
@@ -77,6 +94,7 @@ public class AttendanceController {
 		mv.addObject("countMap",countMap)
 		  .addObject("attDto",attDto)
 		  .addObject("totalDto",totalDto)
+		  .addObject("leftLeave",leftLeave)
 		  .setViewName("attendance/attendance");
 		
 		return mv;

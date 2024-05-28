@@ -24,6 +24,8 @@ public class LeavepDto {
 	 private int pay;
 	 private int used;
 	 private int left;
+	 private String startDate;
+	 private String endDate;
 		
 	
 }

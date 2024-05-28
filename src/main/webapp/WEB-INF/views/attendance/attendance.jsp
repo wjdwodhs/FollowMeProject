@@ -253,7 +253,7 @@
 	                                            </thead>
 	                                            <tbody>
 	                                                <tr>
-	                                                    <td>3일</td>
+	                                                    <td>${leftLeave}일</td>
 	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/insertForm'">휴가 신청</button></td>
 	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/list'">휴가 신청 내역</button></td>
 	                                                </tr>
