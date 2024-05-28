@@ -18,7 +18,7 @@ import lombok.ToString;
 public class LicenseDto {
 	
 	private int licNo;
-	private int memNo;
+	private String memNo;
 	private String licName;
 	private String licConfirmNo;
 	private Date issuedDate;

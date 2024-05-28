@@ -606,7 +606,7 @@
 																								                    </div>
 																								                    <div class="modal-body p-4">
 																								                        <form action="${ contextPath }/member/addLicense" method="post">
-																								                            <input type="hidden" name="memNo" value="${mypageUser.memNo }">
+																								                            <input type="hidden" name="memNo" value="${loginUser.memNo}">
 																								                            <div class="row">
 																								                            		<div class="col-md-6">
 																								                            			  <div class="mb-3">
@@ -615,7 +615,7 @@
 																																						        </div>
 																																						        <div class="mb-3">
 																																						            <label for="issuedDate" class="form-label">발급일자</label>
-																																						            <input type="text" class="form-control" name="issuedDate" required>
+																																						            <input type="date" class="form-control" name="issuedDate" required>
 																																						        </div>
 																																						    </div>
 																																						    <div class="col-md-6">
