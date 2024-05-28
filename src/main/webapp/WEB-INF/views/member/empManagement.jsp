@@ -502,8 +502,27 @@
 													            <label for="memGrade" class="form-label">직급</label>
 													            <input type="text" class="form-control" id="memGrade" name="memGrade" required>
 													        </div>
+													        <div class="mb-3">
+													            <label for="phone" class="form-label">핸드폰번호</label>
+													            <input type="text" class="form-control" id="phone" name="phone" required>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memSalary" class="form-label">계약연봉</label>
+													            <input type="text" class="form-control" id="memSalary" name="memSalary" required>
+													        </div>
 													    </div>
 													    <div class="col-md-6">
+													        <div class="mb-3">
+													            <label for="deptSelect" class="form-label">성별</label>
+									                    	<select class="form-select" id="genderSelect" name="gender" aria-label="Default select example">
+									                        <option value="F">F</option>
+									                        <option value="M">M</option>
+																				</select>
+													        </div>
+													        <div class="mb-3">
+													            <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
+													            <input type="text" class="form-control" id="memPwd" name="memPwd" required>
+													        </div>
 													        <div class="mb-3">
 													            <div class="authLevelSelect">
                                        		<label for="authLevelSelect" class="form-label">권한레벨</label>
@@ -516,12 +535,12 @@
 										                	</div>
 													        </div>
 													        <div class="mb-3">
-													            <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-													            <input type="text" class="form-control" id="memPwd" name="memPwd" required>
+													            <label for="address" class="form-label">주소</label>
+													            <input type="text" class="form-control" id="address" name="address" required>
 													        </div>
 													        <div class="mb-3">
-													            <label for="memSalary" class="form-label">계약연봉</label>
-													            <input type="text" class="form-control" id="memSalary" name="memSalary" required>
+													            <label for="memEmail" class="form-label">이메일</label>
+													            <input type="text" class="form-control" id="memEmail" name="memEmail" required>
 													        </div>
 													        <div class="mb-3">
 													            <label for="enrollDate" class="form-label">입사일</label>

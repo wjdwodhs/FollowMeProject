@@ -368,23 +368,31 @@
 					(
 						mem_no
 					, mem_pwd
+					, mem_gender
 					, mem_name
 					, authorization_level
 					, dept_no
 					, mem_grade
 					, mem_salary
 					, enroll_date
+					, mem_address
+					, phone
+					, mem_email
 					)
 					values
 					(
 						#{memNo}
 					, #{memPwd}
+					, #{gender}
 					, #{memName}
 					, #{authLevel}
 					, #{deptNo}
 					, #{memGrade}
 					, #{memSalary}
 					, #{enrollDate}
+					, #{address}
+					, #{phone}
+					, #{memEmail}
 					)
 	</insert>
 	
