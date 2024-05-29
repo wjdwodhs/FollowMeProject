@@ -409,27 +409,39 @@ public class MemberController {
 		
 		log.debug("accountDto ac : {}", ac);
 		
-		// 계좌정보가 null이 아니고, accountNo가 0보다 큰 경우에는 이미 존재하는 계좌 정보로 가정하고 업데이트
-		if (ac != null && ac.getAccountNo() != 0 && ac.getAccountNo() > 0) {
-		    result2 = memberService.updateAccountInfo(ac);
-		} else {
-		    // 그 외의 경우에는 새로운 계좌 정보로 간주하여 삽입
-		    int newAccountNo = memberService.insertAccountInfo(ac);
-		    log.debug("newAccountNo : {}", newAccountNo);
-		    
-		    // 세션에서 loginUser 객체 가져오기
-		    MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
-		    loginUser.setAccountNo(newAccountNo);
-		    session.setAttribute("loginUser", loginUser);
+		// 세션에서 loginUser 객체 가져오기
+	    MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+	    
+	    // 계좌정보가 null이 아니고, accountNo가 0보다 큰 경우에만 업데이트
+	    if (ac != null && ac.getAccountNo() > 0) {
+	        // accountHolder가 loginUser의 이름과 일치하는 경우에만 업데이트
+	        if (ac.getAccountHolder().equals(loginUser.getMemName())) {
+	            result2 = memberService.updateAccountInfo(ac);
+	        } else {
+	            redirectAttributes.addFlashAttribute("alertMsg", "예금주 이름이 일치하지 않아 계좌 정보 업데이트에 실패했습니다.");
+	            return "redirect:/member/mypage.do";
+	        }
+	    } else if (ac != null && ac.getAccountNo() == 0) {
+	        // 새로운 계좌 정보로 간주하여 삽입
+	        if (ac.getAccountHolder().equals(loginUser.getMemName())) {
+	            int newAccountNo = memberService.insertAccountInfo(ac);
+	            log.debug("newAccountNo : {}", newAccountNo);
+	            
+	            loginUser.setAccountNo(newAccountNo);
+	            session.setAttribute("loginUser", loginUser);
 
-		    // MemberDto 객체에도 반영
-		    m.setAccountNo(newAccountNo);
-		    
-		    // 변경 사항을 데이터베이스에 반영
-	        result1 = memberService.updatePersonalInfo(m);
-		    
-		}
+	            // MemberDto 객체에도 반영
+	            m.setAccountNo(newAccountNo);
+	            
+	            // 변경 사항을 데이터베이스에 반영
+	            result1 = memberService.updatePersonalInfo(m);
+	        } else {
+	            redirectAttributes.addFlashAttribute("alertMsg", "예금주 이름이 일치하지 않아 계좌 정보 신규 등록에 실패했습니다.");
+	            return "redirect:/member/mypage.do";
+	        }
+	    }
 	   
+	    
 	    int result3 = 1; // 초기값 설정
 
 	    

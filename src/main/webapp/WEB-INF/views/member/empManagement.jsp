@@ -501,7 +501,7 @@
 			                        <div class="col-md-6">
 			                            <div class="mb-3">
 			                                <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-			                                <input type="text" class="form-control" id="memPwd" name="memPwd" required>
+			                                <input type="password" class="form-control" id="memPwd" name="memPwd" required>
 			                            </div>
 			                        </div>
 			                        <div class="col-md-6">
