@@ -87,7 +87,13 @@ public class MemberDao {
 	
 	// 사용자의 계좌정보를 업데이트 하는 서비스
 	public int updateAccountInfo(AccountDto ac) {
-		return sqlSessionTemplate.update("memberMapper.updateAccountInfo", ac);
+	    return sqlSessionTemplate.update("memberMapper.updateAccountInfo", ac);
+	   
+	}
+	// 사용자의 계좌정보 신규 생성하는 서비스
+	public int insertAccountInfo(AccountDto ac) {
+		sqlSessionTemplate.insert("memberMapper.insertAccountInfo", ac);
+		return ac.getAccountNo();
 	}
 	
 	// 자격증 첨부파일 추가하는 서비스

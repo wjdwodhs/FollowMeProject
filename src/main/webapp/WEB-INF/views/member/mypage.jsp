@@ -258,6 +258,8 @@
    		})
    	})
    	
+   	
+	   	
 
 </script>
 
@@ -484,7 +486,7 @@
 		                                                            <div class="mb-3">
 		                                                               <div class="bankselect">
 		                                                               		<label for="bankselect" class="form-label">은행명</label>
-																								                    	<select class="form-select" id="bankselect" v-model="bankname" aria-label="Default select example">
+																								                    	<select class="form-select" id="bankselect" aria-label="Default select example">
 																								                        <option value="">은행선택</option>
 																								                        <option value="004" ${bankAccount.bankName eq '국민은행' ? 'selected' : ''}>국민은행</option>
 																								                        <option value="020" ${bankAccount.bankName eq '우리은행' ? 'selected' : ''}>우리은행</option>
@@ -507,7 +509,7 @@
 																								                	</div> 
 		                                                            </div>
 		                                                        </div>
-																														<input type="hidden" name="accountNo" value="${bankAccount.accountNo }">
+																														<input type="hidden" name="accountNo" value="${bankAccount.accountNo > 0 ? bankAccount.accountNo : 0 }">
 																														<input type="hidden" id="bankName" name="bankName">
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
@@ -522,11 +524,10 @@
 		                                                                <input type="text" class="form-control" id="accountHolder" name="accountHolder" value="${bankAccount.accountHolder }">
 		                                                            </div>
 		                                                        </div>
-		                                                        
 		                                                        <div class="col-md-4">
 		                                                            <div class="mb-3">
 		                                                                <label for="accountAuthentication" class="form-label">계좌인증</label>
-		                                                                <button class="form-control" id="accountAuthentication" onclick="checkAccount();" style="background-color:#f97272; color:white;">계좌 실명 인증</button>
+		                                                                <button class="form-control" id="accountAuthentication" style="background-color:#f97272; color:white;">계좌 실명 인증</button>
 		                                                            </div>
 		                                                        </div> <!-- end col -->
 		                                                    </div> <!-- end row -->
@@ -547,43 +548,43 @@
 								                                                    </tr>
 								                                                </thead>
 								                                                <tbody>
-								                                                	<c:forEach var="lc" items="${ licenseList }" varStatus="loop">
-								                                                			<input type="hidden" name="licenseList[${loop.index}].licNo" value="${lc.licNo}">
-																																			<input type="hidden" name="licenseList[${loop.index}].licName" value="${lc.licName}">
-																																			<input type="hidden" name="licenseList[${loop.index}].licConfirmNo" value="${lc.licConfirmNo}">
-																																			<input type="hidden" name="licenseList[${loop.index}].issuedDate" value="${lc.issuedDate}">
-																																			<input type="hidden" name="licenseList[${loop.index}].licAgency" value="${lc.licAgency}">
-																																			<input type="hidden" name="licenseList[${loop.index}].attachment.filePath" value="${lc.attachment.filePath}">
-																																			<input type="hidden" name="licenseList[${loop.index}].attachment.originName" value="${lc.attachment.originName}">
-																																			<input type="hidden" name="licenseList[${loop.index}].attachment.systemName" value="${lc.attachment.systemName}">
+																															    <c:choose>
+																															        <c:when test="${empty licenseList}">
+																															            <tr>
+																															                <td colspan="7" class="text-center">-</td>
+																															            </tr>
+																															        </c:when>
+																															        <c:otherwise>
+																															            <c:forEach var="lc" items="${licenseList}" varStatus="loop">
+																															                <input type="hidden" name="licenseList[${loop.index}].licNo" value="${lc.licNo}">
+																															                <input type="hidden" name="licenseList[${loop.index}].licName" value="${lc.licName}">
+																															                <input type="hidden" name="licenseList[${loop.index}].licConfirmNo" value="${lc.licConfirmNo}">
+																															                <input type="hidden" name="licenseList[${loop.index}].issuedDate" value="${lc.issuedDate}">
+																															                <input type="hidden" name="licenseList[${loop.index}].licAgency" value="${lc.licAgency}">
+																															                <input type="hidden" name="licenseList[${loop.index}].attachment.filePath" value="${lc.attachment.filePath}">
+																															                <input type="hidden" name="licenseList[${loop.index}].attachment.originName" value="${lc.attachment.originName}">
+																															                <input type="hidden" name="licenseList[${loop.index}].attachment.systemName" value="${lc.attachment.systemName}">
+																															                <tr>
+																															                    <td>${lc.licName}</td>
+																															                    <td>${lc.licConfirmNo}</td>
+																															                    <td>${lc.issuedDate}</td>
+																															                    <td>${lc.licAgency}</td>
+																															                    <td>
+																															                        <input type="file" class="form-control" name="uploadFiles">
+																															                    </td>
+																															                    <td>
+																															                        <a href="${contextPath}${lc.attachment.filePath}/${lc.attachment.systemName}" download="${lc.attachment.originName}">${lc.attachment.originName}</a>
+																															                    </td>
+																															                    <td>
+																															                        <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-modify-modal-${lc.licNo}"> <i class="mdi mdi-square-edit-outline"></i></a>
+																															                        <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-delete-modal-${lc.licNo}"> <i class="mdi mdi-delete"></i></a>
+																															                    </td>
+																															                </tr>
+																															            </c:forEach>
+																															        </c:otherwise>
+																															    </c:choose>
+																															</tbody>
 
-																																			
-								                                                    <tr>
-								                                                        <td>
-								                                                            ${ lc.licName }
-								                                                        </td>
-								                                                        <td>
-								                                                            ${ lc.licConfirmNo }
-								                                                        </td>
-								                                                        <td>
-								                                                            ${ lc.issuedDate }
-								                                                        </td>
-								                                                        <td>
-								                                                            ${ lc.licAgency }
-								                                                        </td>
-								                                                        <td>
-								                                                        	<input type="file" class="form-control" name="uploadFiles">
-								                                                        </td>
-								                                                        <td>
-								                                                        	<a href="${ contextPath }${lc.attachment.filePath}/${lc.attachment.systemName}" download="${ lc.attachment.originName }">${ lc.attachment.originName }</a>
-								                                                        </td>
-								                                                        <td>
-								                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-modify-modal-${ lc.licNo }"> <i class="mdi mdi-square-edit-outline"></i></a>
-								                                                            <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#license-delete-modal-${ lc.licNo }"> <i class="mdi mdi-delete"></i></a>
-								                                                        </td>
-								                                                    </tr>
-								                                                   </c:forEach>
-								                                                </tbody>
 								                                            </table>
 								                                        </div>
                                                 

@@ -43,6 +43,9 @@ public interface MemberService {
 	// 마이페이지 - 개인정보 업데이트 서비스
 	int updatePersonalInfo(MemberDto m);
 	
+	// 마이페이지 - 계좌정보 신규 입력 서비스
+	int insertAccountInfo(AccountDto ac);
+	
 	// 마이페이지 - 계좌정보 업데이트 서비스
 	int updateAccountInfo(AccountDto ac);
 	

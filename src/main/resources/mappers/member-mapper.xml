@@ -209,7 +209,8 @@
  					mem_name = #{memName},
  					mem_gender = #{gender},
  					phone = #{phone},
- 					mem_address = #{address}
+ 					mem_address = #{address},
+ 					account_no = #{accountNo}
  		where mem_no = #{memNo}
  	</update>
  	
@@ -223,6 +224,18 @@
  			    account_holder = #{accountHolder}
  		where account_no = #{accountNo}
  	</update>
+ 	
+ 	
+ 	<!-- 사용자의 계좌정보 신규 생성용 -->
+	<insert id="insertAccountInfo" parameterType="AccountDto" useGeneratedKeys="true" keyProperty="accountNo">
+	    INSERT INTO tb_account (account_no, bank, bank_account_no, account_holder)
+	    VALUES (seq_accountno.nextval, #{bankName}, #{bankAccountNo}, #{accountHolder})
+	    
+	    <selectKey keyProperty="accountNo" order="AFTER" resultType="int">
+	        SELECT seq_accountno.currval FROM dual
+	    </selectKey>
+	</insert>
+
   
   <!-- 첨부파일 추가용 -->
   <insert id="insertAttach">
@@ -378,6 +391,7 @@
 					, mem_address
 					, phone
 					, mem_email
+					, extension_number
 					)
 					values
 					(
@@ -393,6 +407,7 @@
 					, #{address}
 					, #{phone}
 					, #{memEmail}
+					, #{extensionNumber}
 					)
 	</insert>
 	

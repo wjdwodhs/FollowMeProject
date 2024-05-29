@@ -405,42 +405,70 @@ public class MemberController {
 	                         , RedirectAttributes redirectAttributes) {
 
 		int result1 = memberService.updatePersonalInfo(m);
-	    int result2 = memberService.updateAccountInfo(ac);
+		int result2 = 1; // 초기값 설정
+		
+		log.debug("accountDto ac : {}", ac);
+		
+		// 계좌정보가 null이 아니고, accountNo가 0보다 큰 경우에는 이미 존재하는 계좌 정보로 가정하고 업데이트
+		if (ac != null && ac.getAccountNo() != 0 && ac.getAccountNo() > 0) {
+		    result2 = memberService.updateAccountInfo(ac);
+		} else {
+		    // 그 외의 경우에는 새로운 계좌 정보로 간주하여 삽입
+		    int newAccountNo = memberService.insertAccountInfo(ac);
+		    log.debug("newAccountNo : {}", newAccountNo);
+		    
+		    // 세션에서 loginUser 객체 가져오기
+		    MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		    loginUser.setAccountNo(newAccountNo);
+		    session.setAttribute("loginUser", loginUser);
+
+		    // MemberDto 객체에도 반영
+		    m.setAccountNo(newAccountNo);
+		    
+		    // 변경 사항을 데이터베이스에 반영
+	        result1 = memberService.updatePersonalInfo(m);
+		    
+		}
+	   
 	    int result3 = 1; // 초기값 설정
 
+	    
 	    // 자격증 파일 업데이트 (첨부파일 교체 포함)
-	    for (int i = 0; i < m.getLicenseList().size(); i++) {
-	        LicenseDto lc = m.getLicenseList().get(i);
+	    // 자격증 리스트가 null이 아니고 비어있지 않은지 확인
+	    if (m.getLicenseList() != null && !m.getLicenseList().isEmpty()) {
+	        // 자격증 파일 업데이트 (첨부파일 교체 포함)
+	        for (int i = 0; i < m.getLicenseList().size(); i++) {
+	            LicenseDto lc = m.getLicenseList().get(i);
 
-	        MultipartFile uploadFile = uploadFiles[i]; // 각 자격증에 해당하는 파일 가져오기
+	            MultipartFile uploadFile = (uploadFiles != null && uploadFiles.length > i) ? uploadFiles[i] : null; // 각 자격증에 해당하는 파일 가져오기
 
-	        if (uploadFile != null && !uploadFile.isEmpty()) {
-	            
-	        	// 이전 첨부 파일 삭제
-	            AttachmentDto oldAttachment = lc.getAttachment();
-	            
-	            if (oldAttachment != null) {
-	                memberService.deleteAttachment(lc.getLicNo());
-	                fileUtil.deleteFile(oldAttachment.getFilePath());
-	            }
-	            
-	            // 새로운 파일 업로드 및 첨부파일 설정
-	            Map<String, String> map = fileUtil.fileUpload(uploadFile, "license");
-	            
-	            AttachmentDto newAttachment = AttachmentDto.builder()
+	            if (uploadFile != null && !uploadFile.isEmpty()) {
+	                
+	                // 이전 첨부 파일 삭제
+	                AttachmentDto oldAttachment = lc.getAttachment();
+	                
+	                if (oldAttachment != null) {
+	                    memberService.deleteAttachment(lc.getLicNo());
+	                    fileUtil.deleteFile(oldAttachment.getFilePath());
+	                }
+	                
+	                // 새로운 파일 업로드 및 첨부파일 설정
+	                Map<String, String> map = fileUtil.fileUpload(uploadFile, "license");
+	                
+	                AttachmentDto newAttachment = AttachmentDto.builder()
 	                                                .originName(map.get("originalName"))
 	                                                .filePath(map.get("filePath"))
 	                                                .systemName(map.get("filesystemName"))
 	                                                .type("L")
 	                                                .refNo(lc.getLicNo())
 	                                                .build();
-	            lc.setAttachment(newAttachment);
-	            
-	            // DB에 첨부파일 추가
-	            result3 *= memberService.insertAttachment(newAttachment);
+	                lc.setAttachment(newAttachment);
+	                
+	                // DB에 첨부파일 추가
+	                result3 *= memberService.insertAttachment(newAttachment);
+	            }
 	        }
 	    }
-
 
 
 	    // 최종 결과에 따라 리다이렉트 및 알림 메시지 설정
@@ -516,9 +544,17 @@ public class MemberController {
 		// memNo 중복 체크 먼저 진행
 		String memNoCheck = m.getMemNo();
 		
+		// email 중복 체크도 진행
+		String memEmailCheck = m.getMemEmail();
+		
 		if(memberService.memNoCheck(memNoCheck) > 0) { // 중복된 사원번호 존재
 			redirectAttributes.addFlashAttribute("alertMsg", "중복된 사원번호가 존재합니다.");
-		} else {
+		} 
+		if(memberService.memEmailCheck(memEmailCheck) != null) {
+			redirectAttributes.addFlashAttribute("alertMsg", "중복된 이메일이 존재합니다.");
+		}
+		
+		else {
 			// 임시비밀번호 암호화 후 memberService로 전달
 			String hashedPassword = bcryptPwdEncoder.encode(String.valueOf(m.getMemPwd()));
 			log.debug(m.getMemPwd());

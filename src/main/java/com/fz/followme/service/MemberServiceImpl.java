@@ -84,6 +84,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updatePersonalInfo(m);
 	}
 
+	
+	@Override
+	public int insertAccountInfo(AccountDto ac) {
+		return memberDao.insertAccountInfo(ac);
+	}
+	
 	@Override
 	public int updateAccountInfo(AccountDto ac) {
 		return memberDao.updateAccountInfo(ac);
