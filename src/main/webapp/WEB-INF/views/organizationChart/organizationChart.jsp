@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
 
 </head>
 <body>
@@ -61,7 +61,9 @@
                                
                                         
                                         <div class="row">                                        
-	                                        <div id="jstree_demo"></div>
+	                                        <div id="jstree_demo">
+	                                        
+	                                        </div>
 										
 											
                                             
@@ -602,222 +604,36 @@
         <script>
         $(document).ready(function() {
             $.ajax({
-                url: '/o
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
+                url: "${contextPath}/organization/organizationList",
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    var departmentMap = {};
+                    var deptlist = [];
 
                     // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
+                    $.each(data, function(idx, item) {
+                        var node = {
+                            id: item.deptNo,
+                            parent: item.deptUpstair,
+                            text: item.deptName,
+                            children: item.children
+                        };
+                        
+                        if (item.children) {
+                            node.children = item.children; // 자식 요소가 있으면 추가
+                        } else {
+                            node.children = []; // 자식 요소가 없으면 빈 배열로 설정
                         }
 
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employ
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
+                        deptlist.push(node);
                     });
 
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
-
-                    // jsTree를 사용하여 트리 구조 생성
-                    $('#jstree_demo').jstree({
-                        'core
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
-                    });
-
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
+                    console.log(deptlist);
 
                     // jsTree를 사용하여 트리 구조 생성
                     $('#jstree_demo').jstree({
                         'core': {
-                            'data': jsTreeData
-                        },
-                        'types': {
-                            'department': {
-                                'icon': 'fol
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
-                    });
-
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
-
-                    // jsTree를 사용하여 트리 구조 생성
-                    $('#jstree_demo').jstree({
-                        'core': {
-                            'data': jsTreeData
-                        },
-                        'types': {
-                            'department': {
-                                'icon': 'folder'
-                            },
-                            'employee': {
-                                'icon': 'file'
-                            }
-                        },
-                        'plugins': ['ty
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
-                    });
-
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
-
-                    // jsTree를 사용하여 트리 구조 생성
-                    $('#jstree_demo').jstree({
-                        'core': {
-                            'data': jsTreeData
+                            'data': deptlist
                         },
                         'types': {
                             'department': {
@@ -829,121 +645,19 @@
                         },
                         'plugins': ['types']
                     });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching organization dat
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
-                    });
-
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
-
-                    // jsTree를 사용하여 트리 구조 생성
-                    $('#jstree_demo').jstree({
-                        'core': {
-                            'data': jsTreeData
-                        },
-                        'types': {
-                            'department': {
-                                'icon': 'folder'
-                            },
-                            'employee': {
-                                'icon': 'file'
-                            }
-                        },
-                        'plugins': ['types']
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching 
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '/organizationList',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var departmentMap = {};
-
-                    // 부서별로 데이터를 그룹화
-                    data.forEach(function(item) {
-                        if (!departmentMap[item.deptNo]) {
-                            departmentMap[item.deptNo] = {
-                                id: 'dept_' + item.deptNo,
-                                parent: '#',
-                                text: item.deptName,
-                                type: 'department',
-                                children: []
-                            };
-                        }
-
-                        departmentMap[item.deptNo].children.push({
-                            id: 'emp_' + item.memNo,
-                            parent: 'dept_' + item.deptNo,
-                            text: item.memName + " (" + item.memGrade + ")",
-                            type: 'employee'
-                        });
-                    });
-
-                    // 트리 데이터를 배열로 변환
-                    var jsTreeData = Object.values(departmentMap).flatMap(function(dept) {
-                        return [dept].concat(dept.children);
-                    });
-
-                    // jsTree를 사용하여 트리 구조 생성
-                    $('#jstree_demo').jstree({
-                        'core': {
-                            'data': jsTreeData
-                        },
-                        'types': {
-                            'department': {
-                                'icon': 'folder'
-                            },
-                            'employee': {
-                                'icon': 'file'
-                            }
-                        },
-                        'plugins': ['types']
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching organization data: ' + textStatus);
+                },error:function(){
+                	console.log("jstree ajax통신 실패")
                 }
             });
         });
+
+
     </script>
-       
         
         
         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
 	     
       
 	

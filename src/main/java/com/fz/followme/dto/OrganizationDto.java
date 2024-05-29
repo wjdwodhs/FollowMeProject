@@ -20,13 +20,14 @@ public class OrganizationDto {
 
 	private String memNo;
 	private String memName;
-	private int deptNo;
+	private String deptNo;
 	private String deptName;
 	private String autLevel;
 	private String memGrade;
 	private Date enrollDate;
 	private String email;
 	private String phone;
+	private String deptUpstair;
 	
 	
 }

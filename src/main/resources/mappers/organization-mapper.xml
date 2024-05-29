@@ -11,27 +11,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="authorization_level" property="autLevel"/>
 	<result column="mem_grade" property="memGrade"/>
 	<result column="enroll_date" property="enrollDate"/>
-	<result column="email" property="email"/>
+	<result column="mem_email" property="email"/>
+	<result column="dept_upstair" property="deptUpstair"/>
 	<result column="phone" property="phone"/>
 
 </resultMap>
 
 
 	<select id="selectOrganizationList" resultMap="OrganizationResult">
-		select
-		        m.mem_no
-		      , m.mem_name
-		      , m.dept_no
-		      , dept_name
-		      , m.authorization_level
-		      , m.mem_grade
-		      , m.enroll_date
-		      , m.phone
-		      , m.mem_email
-		from  tb_mem m
-		join tb_department d on (m.dept_no = d.dept_no)
-		where status = 'Y'
-	
+		SELECT DISTINCT
+		    CAST(d.DEPT_NO AS VARCHAR2(50) )AS DEPT_NO,
+		    d.dept_name AS dept_name,
+		    CAST(d.dept_upstair AS VARCHAR2(100)) AS dept_upstair -- 부서번호와 동일한 데이터 유형으로 캐스팅
+		FROM
+		    TB_DEPARTMENT d
+		    JOIN tb_mem m ON d.DEPT_NO = m.DEPT_NO
+		
+		UNION ALL
+		
+		SELECT
+		    mem_no AS DEPT_NO, -- 부서번호
+		    mem_name AS dept_name, -- 부서명
+		    CAST(dept_no AS VARCHAR2(100)) AS dept_upstair -- 회원상위 (부서번호와 동일한 데이터 유형으로 캐스팅)
+		FROM
+		    tb_mem
+		WHERE
+		    STATUS = 'Y'
 	</select>
 
 

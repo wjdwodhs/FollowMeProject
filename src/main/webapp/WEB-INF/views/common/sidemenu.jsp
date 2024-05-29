@@ -96,7 +96,7 @@
         <ul class="menu">
         
        		<li class="menu-item">
-                <a href="#" data-bs-toggle="collapse" class="menu-link">
+                <a href="${ contextPath }/organization/organization.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="users"></i></span>
                     <span class="menu-text"> 조직도 </span>
                 </a>
