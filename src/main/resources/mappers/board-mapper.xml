@@ -27,6 +27,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>	
 	</resultMap>
 	
+	
+	<resultMap type="AttachmentDto" id="attachmentResult">
+		<result column="file_no" property="fileNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="system_name" property="systemName"/>
+		<result column="origin_name" property="originName"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
 	<resultMap type="ReplyDto" id="replyResult">
 		<id column="reply_no" property="replyNo"/>		
 		<result column="mem_name" property="replyWriter"/>
@@ -223,7 +232,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  where b.sub_no = #{subNo}		  				
 	</select>
 	
-	<select id="selectDelFileList" resultMap="BoardResult">
+	<select id="selectDelFileList" resultMap="attachmentResult">
 		select
 			   file_no
 			 , file_path
