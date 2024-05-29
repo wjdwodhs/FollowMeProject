@@ -1,13 +1,11 @@
 package com.fz.followme.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.Year;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -302,6 +300,10 @@ public class DocumentController {
 			      	   , RedirectAttributes redirectAttributes) {
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 		document.setMemNo(loginUser.getMemNo());
+		int ableDate = Year.now().getValue();
+		log.debug("document:{}",document);
+		// docuStartDate=2024-06-05, docuEndDate=2024-06-15
+		// endDate에서 startDate를 뺀값 +1 이 잔여휴가보다 많다면 등록이 안되게끔
 		
 		if(document.getDocuCategory() == 4) {
 			document.setDocuStartDate(String.join(",", docuSpendDate));
@@ -314,7 +316,41 @@ public class DocumentController {
 			document.setDocuEtcCost(String.join(",", docuBuyPrice));
 			document.setDocuCost(String.join(",", docuBuySumPrice));
 			document.setDocuRemark(String.join(",", docuBuyRemark));
+		}else if(document.getDocuCategory() == 3) { 
+			// 해당 memNo과 ableDate로 잔여 연차 조회해와서 
+			// endDate에서 startDate를 뺀값과 비교 후 만약 잔여 연차보다 이 값이 크다면 alert
+			String memNo = document.getMemNo();
+			String startDate = document.getDocuStartDate(); // 2024-05-20
+			String endDate = document.getDocuEndDate(); // 2024-05-25
+			
+			// 날짜 문자열을 LocalDate로 변환
+	        LocalDate start = LocalDate.parse(startDate);
+	        LocalDate end = LocalDate.parse(endDate);
+
+	        // 날짜 차이 계산 (종료 날짜 - 시작 날짜 + 1)
+	        long daysDifference = ChronoUnit.DAYS.between(start, end) + 1;
+	        int intDaysDifference = (int) daysDifference;
+	        log.debug("날짜차이 계산 결과:{}",intDaysDifference);
+	        
+			
+			LeavepDto docu = LeavepDto.builder()
+            		.memNo(memNo)
+	                .ableDate(ableDate)
+	                .build();
+			int leave = attendanceService.selectLeave(docu); // 잔여 연차 개수
+			log.debug("잔여휴가 개수:{}",leave);
+			redirectAttributes.addFlashAttribute("alertTitle", "전자결재 작성 서비스");
+			if(intDaysDifference > leave) {
+				redirectAttributes.addFlashAttribute("alertMsg", "잔여 연차보다 사용한 일수가 더 많습니다.");
+		        return "redirect:/document/insertForm";
+			}
+			
+			
+			
+			
 		}
+		
+		
 		
 		List<AttachmentDto> attachList = new ArrayList<>();
 		log.debug("document: {}", document);
@@ -340,7 +376,7 @@ public class DocumentController {
 		// 성공시 => alert메세지와 함께 목록페이지로 이동
 		// 실패시 => alert메세지와 함께 작성페이지에 그대로
 		
-		redirectAttributes.addFlashAttribute("alertTitle", "게시판 작성 서비스");
+		redirectAttributes.addFlashAttribute("alertTitle", "전자결재 작성 서비스");
 		if(attachList.isEmpty() && result == 1 || !attachList.isEmpty() && result == attachList.size()) {
 			redirectAttributes.addFlashAttribute("alertMsg", "전자문서 등록에 성공하셨습니다.");
 		} else {
@@ -434,23 +470,23 @@ public class DocumentController {
 	        	
 			if(docu.getDocuCategory() == 3) { // 카테고리가 3이면 휴가 신청 전자결재
 						
-						// 연차테이블의 연차 정보 입력
-						attendanceService.insertLeave(docu); 
-						
-						int ableDate = Year.now().getValue(); // 연차테이블의 사용가능연도 (현재날짜 년도)
-						String startDate = docu.getDocuStartDate();  // ex) 2024-05-28
-						String endDate = docu.getDocuEndDate();  // ex) 2024-05-30
-						String memNo = docu.getMemNo();
-						
-						LeavepDto docum = LeavepDto.builder()
-			            		.memNo(memNo)
-				                .startDate(startDate)
-				                .endDate(endDate)
-				                .ableDate(ableDate)
-				                .build();
-						
-						// 회원번호 , 연차사용가능날짜, 연차사용일수 (end - start)
-						attendanceService.updateLeavep(docum); 
+					// 연차테이블의 연차 정보 입력
+					attendanceService.insertLeave(docu); 
+					
+					int ableDate = Year.now().getValue(); // 연차테이블의 사용가능연도 (현재날짜 년도)
+					String startDate = docu.getDocuStartDate();  // ex) 2024-05-28
+					String endDate = docu.getDocuEndDate();  // ex) 2024-05-30
+					String memNo = docu.getMemNo();
+					
+					LeavepDto docum = LeavepDto.builder()
+		            		.memNo(memNo)
+			                .startDate(startDate)
+			                .endDate(endDate)
+			                .ableDate(ableDate)
+			                .build();
+					
+					// 회원번호 , 연차사용가능날짜, 연차사용일수 (end - start)
+					attendanceService.updateLeavep(docum); 
 					
 				}
 				
