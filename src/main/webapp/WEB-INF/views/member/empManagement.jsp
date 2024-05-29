@@ -468,96 +468,118 @@
 
         <!-- Modal -->
         <div class="modal fade" id="employee-insert-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-light">
-                        <h4 class="modal-title" id="myCenterModalLabel">신규 직원정보 등록</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <form action="${ contextPath }/member/insertNewEmp" method="post">
-                            <div class="row">
-													    <div class="col-md-6">
-													        <div class="mb-3">
-													            <label for="memName" class="form-label">이름</label>
-													            <input type="text" class="form-control" id="memName"  name="memName" required>
-													        </div>
-													        <div class="mb-3">
-													            <label for="memNo" class="form-label">사원번호(그룹웨어 아이디)</label>
-													            <input type="text" class="form-control" id="memNo" name="memNo" required>
-													        </div>
-													        <div class="mb-3">
-													            <div class="deptSelect">
-                                     		<label for="deptSelect" class="form-label">부서명</label>
-									                    	<select class="form-select" id="deptSelect" name="deptNo" aria-label="Default select example">
-									                        <option value="1">영업팀</option>
-									                        <option value="2">마케팅팀</option>
-									                        <option value="3">경영지원팀</option>
-									                        <option value="4">물류팀</option>
-									                        <option value="5">대기발령</option>
-									                   	 </select>
-											                </div>
-													        </div>
-													        <div class="mb-3">
-													            <label for="memGrade" class="form-label">직급</label>
-													            <input type="text" class="form-control" id="memGrade" name="memGrade" required>
-													        </div>
-													        <div class="mb-3">
-													            <label for="phone" class="form-label">핸드폰번호</label>
-													            <input type="text" class="form-control" id="phone" name="phone" required>
-													        </div>
-													        <div class="mb-3">
-													            <label for="memSalary" class="form-label">계약연봉</label>
-													            <input type="text" class="form-control" id="memSalary" name="memSalary" required>
-													        </div>
-													    </div>
-													    <div class="col-md-6">
-													        <div class="mb-3">
-													            <label for="deptSelect" class="form-label">성별</label>
-									                    	<select class="form-select" id="genderSelect" name="gender" aria-label="Default select example">
-									                        <option value="F">F</option>
-									                        <option value="M">M</option>
-																				</select>
-													        </div>
-													        <div class="mb-3">
-													            <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
-													            <input type="text" class="form-control" id="memPwd" name="memPwd" required>
-													        </div>
-													        <div class="mb-3">
-													            <div class="authLevelSelect">
-                                       		<label for="authLevelSelect" class="form-label">권한레벨</label>
-										                    	<select class="form-select" id="authLevelSelect" name="authLevel" aria-label="Default select example">
-										                        <option value="0" >0</option>
-										                        <option value="1" >1</option>
-										                        <option value="2" >2</option>
-										                        <option value="3" >3</option>
-										                   	 </select>
-										                	</div>
-													        </div>
-													        <div class="mb-3">
-													            <label for="address" class="form-label">주소</label>
-													            <input type="text" class="form-control" id="address" name="address" required>
-													        </div>
-													        <div class="mb-3">
-													            <label for="memEmail" class="form-label">이메일</label>
-													            <input type="text" class="form-control" id="memEmail" name="memEmail" required>
-													        </div>
-													        <div class="mb-3">
-													            <label for="enrollDate" class="form-label">입사일</label>
-													            <input type="date" class="form-control" id="enrollDate" name="enrollDate" required>
-													        </div>
-													    </div>
-													</div>
-        
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">추가</button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
-                            </div>
-                        </form>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+			    <div class="modal-dialog modal-dialog-centered">
+			        <div class="modal-content">
+			            <div class="modal-header bg-light">
+			                <h4 class="modal-title" id="myCenterModalLabel">신규 직원정보 등록</h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			            </div>
+			            <div class="modal-body p-4">
+			                <form action="${ contextPath }/member/insertNewEmp" method="post">
+			                    <div class="row">
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memName" class="form-label">이름</label>
+			                                <input type="text" class="form-control" id="memName" name="memName" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="deptSelect" class="form-label">성별</label>
+			                                <select class="form-select" id="genderSelect" name="gender" aria-label="Default select example">
+			                                    <option value="F">F</option>
+			                                    <option value="M">M</option>
+			                                </select>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memNo" class="form-label">사원번호(그룹웨어 아이디)</label>
+			                                <input type="text" class="form-control" id="memNo" name="memNo" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memPwd" class="form-label">(임시)그룹웨어 비밀번호</label>
+			                                <input type="text" class="form-control" id="memPwd" name="memPwd" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="deptSelect" class="form-label">부서명</label>
+			                                <select class="form-select" id="deptSelect" name="deptNo" aria-label="Default select example">
+			                                    <option value="1">영업팀</option>
+			                                    <option value="2">마케팅팀</option>
+			                                    <option value="3">경영지원팀</option>
+			                                    <option value="4">물류팀</option>
+			                                    <option value="5">대기발령</option>
+			                                </select>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memGrade" class="form-label">직급</label>
+			                                <input type="text" class="form-control" id="memGrade" name="memGrade" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="phone" class="form-label">핸드폰번호</label>
+			                                <input type="text" class="form-control" id="phone" name="phone" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memEmail" class="form-label">이메일</label>
+			                                <input type="text" class="form-control" id="memEmail" name="memEmail" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="address" class="form-label">주소</label>
+			                                <input type="text" class="form-control" id="address" name="address" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for=extensionNumber class="form-label">내선번호</label>
+			                                <input type="text" class="form-control" id="extensionNumber" name="extensionNumber" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="memSalary" class="form-label">계약연봉</label>
+			                                <input type="text" class="form-control" id="memSalary" name="memSalary" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="enrollDate" class="form-label">입사일</label>
+			                                <input type="date" class="form-control" id="enrollDate" name="enrollDate" required>
+			                            </div>
+			                        </div>
+			                        <div class="col-md-6">
+			                            <div class="mb-3">
+			                                <label for="authLevelSelect" class="form-label">권한레벨</label>
+			                                <select class="form-select" id="authLevelSelect" name="authLevel" aria-label="Default select example">
+			                                    <option value="0">0</option>
+			                                    <option value="1">1</option>
+			                                    <option value="2">2</option>
+			                                    <option value="3">3</option>
+			                                </select>
+			                            </div>
+			                        </div>
+			                       </div>
+			                    <div class="text-end">
+			                        <button type="submit" class="btn btn-success waves-effect waves-light" style="background-color: #febe98; border: #febe98;">추가</button>
+			                        <button type="button" class="btn btn-danger waves-effect waves-light" data-bs-dismiss="modal" style="border: none;">취소</button>
+			                    </div>
+			                </form>
+			            </div>
+			        </div><!-- /.modal-content -->
+			    </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+
 
         <!-- Modal -->
        
