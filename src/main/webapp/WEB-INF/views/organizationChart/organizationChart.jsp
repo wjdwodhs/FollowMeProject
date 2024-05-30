@@ -10,7 +10,36 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
 
+<style>
+#employeeInfoView input {
+	text-align: center;
+}
+#employeeInfoView{
+	min-height:500px;
+}
 
+.profileArea {
+    width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+
+
+.email-container {
+            display: flex;
+            align-items: center;
+            
+}
+
+#copyBtn {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+            
+</style>
 </head>
 <body>
 
@@ -54,79 +83,50 @@
                         <!-- start page content -->
                         <div class="row">
                         	<div class="col-1"></div>
-                            <div class="col-10">
-
+                        	
+                            <div class="col-2">
                                 <div class="card">
-                                    <div class="card-body" class="col-10">
-                               
-                                        
-                                        <div class="row" >                                        
-	                                        <div id="jstree_demo" >
-	                                        
-	                                        </div>
-	                                        <div id="employeeInfoView">
-	                                        
-	                                        </div>									
-											
-                                            
-                                        </div>  <!-- end row -->
+                                    <div class="card-body">
+	                      				<div id="jstree_demo" >
+	                                    
+	                                    </div>                                                 
                                     </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                                
-
-                                <!-- end page content -->
-
-                                <!-- Add New Event MODAL -->
-                                <div class="modal fade" id="event-modal" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header py-3 px-4 border-bottom-0 d-block">
-                                                <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                <h5 class="modal-title" id="modal-title">Event</h5>
-                                            </div>
-                                            <div class="modal-body px-4 pb-4 pt-0">
-                                                <form class="needs-validation" name="event-form" id="form-event" novalidate>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Event Name</label>
-                                                                <input class="form-control" placeholder="Insert Event Name"
-                                                                    type="text" name="title" id="event-title" required />
-                                                                <div class="invalid-feedback">Please provide a valid event name</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Category</label>
-                                                                <select class="form-select" name="category" id="event-category" required>
-                                                                    <option value="bg-danger" selected>Danger</option>
-                                                                    <option value="bg-success">Success</option>
-                                                                    <option value="bg-primary">Primary</option>
-                                                                    <option value="bg-info">Info</option>
-                                                                    <option value="bg-dark">Dark</option>
-                                                                    <option value="bg-warning">Warning</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">Please select a valid event category</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-2">
-                                                        <div class="col-md-6 col-4">
-                                                            <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
-                                                        </div>
-                                                        <div class="col-md-6 col-8 text-end">
-                                                            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div> <!-- end modal-content-->
-                                    </div> <!-- end modal dialog-->
-                                </div>
-                                <!-- end modal-->
+                                </div> <!-- end card -->                                                               
                             </div>
-                            <div class="col-1"></div>
+                            
+                            <div class="col-7">
+	                            <div>
+	                                <div class="card">
+	                                    <div id="employeeInfoView"class="card-body infoContainer">
+	                                    	<div class="profileArea">
+	                                    		<img id="profileImg" src="">		                                    	
+										    </div>
+										    <label for="memName">사원명</label>
+											<input type="text" id="memName" name="memName" class="form-control" readonly style="width:150px;">
+										    <br>	                                    	                                    	
+										    <label for="memGrade">직급</label>
+										    <input type="text" id="memGrade" name="memGrade" class="form-control" readonly style="width:150px;">
+										    <br>
+										    <label for="deptName">부서</label>
+										    <input type="text" id="deptName" name="deptName" class="form-control" readonly style="width:150px;">
+										    <br>
+										    <label for="extensionNumber">내선번호</label>
+										    <input type="text" id="extensionNumber" name="extensionNumber" class="form-control" readonly style="width:300px;">
+										    <br>
+										    <label for="phone">긴급연락망</label>
+										    <input type="text" id="phone" name="phone" class="form-control" readonly style="width:350px;">
+										    <br>
+										    <label for="email">Email</label>
+										    <div class="email-container">											    
+											    <input type="text" id="email" name="email" class="form-control" readonly style="width:400px;">
+											    <button id="copyBtn" class="btn btn btn-outline-danger">복사</button>
+											    <a href="${ contextPath }/email/composeForm.do" class="btn btn-outline-warning">이메일 작성</a>
+		                      				</div>                                             
+	                                    </div> <!-- end card body-->
+	                                </div> <!-- end card -->                                                               
+	                            </div>
+	                            
+                            </div>
                             <!-- end col-12 -->
                         </div> <!-- end row -->
                         
@@ -622,7 +622,7 @@
                             text: item.deptName,
                             children: item.children
                         };
-                        
+
                         if (item.children) {
                             node.children = item.children; // 자식 요소가 있으면 추가
                         } else {
@@ -652,47 +652,86 @@
 
                     // 노드 선택시 이벤트
                     $('#jstree_demo').on('select_node.jstree', function(e, data) {
-                    	
+
                         var selectedNode = data.node;
                         console.log(selectedNode);
-						
+
                         // 노드 id
                         var employeeId = selectedNode.id;
-                        
-                        if(selectedNode.parent != '#'){
-                        	$.ajax({
-                        		url:"${contextPath}/organization/employeeInfo", //사원 정보를 가져오는 url
-                        		method:'GET',
-                        		data:{employeeId: employeeId}, // 쿼리로 사원ID보냄
-                        		dataType: 'json',
-                        		success:function(employeeData){
-                        			console.log(employeeData);
-                        			$('#employeeInfoView').html(
-                        				'<p>부서:' + employeeData.deptName + '</p>' +
-                        				'<p>직급:' + employeeData.memGrade + '</p>' + 
-                        				'<p>사원명:' + employeeData.memName + '</p>' +
-                        				'<p>내선번호:' + employeeData.extensionNumber + '</p>' +
-                        				'<p>긴급연락망:' + employeeData.phone + '</p>'+
-                        				'<p>Email:' + employeeData.email + '</p>'
-                        				
-                        				);
-                        		},
-                        		
-                        		error: function() {
+
+                        if (selectedNode.parent != '#') {
+                            $.ajax({
+                                url: "${contextPath}/organization/employeeInfo", //사원 정보를 가져오는 url
+                                method: 'GET',
+                                data: { employeeId: employeeId }, // 쿼리로 사원ID보냄
+                                dataType: 'json',
+                                success: function(employeeData) {
+                                    console.log(employeeData);
+                                    $('#deptName').val(employeeData.deptName);
+                                    $('#memGrade').val(employeeData.memGrade);
+                                    $('#memName').val(employeeData.memName);
+                                    $('#extensionNumber').val(employeeData.extensionNumber);
+                                    $('#phone').val(employeeData.phone);
+                                    $('#email').val(employeeData.email);
+
+                                    // 프로필 사진
+                                    if (employeeData.profileImgPath) {
+                                        $('#profileImg').attr("src", '${contextPath}/' + employeeData.profileImgPath);
+                                    }
+
+                                    // 값이 입력되면 버튼 활성화
+                                    updateButtonState();
+                                },
+
+                                error: function() {
                                     console.log("사원 정보 가져오기 실패");
                                 }
-                        	});
-                         
+                            });
+
                         }
-                       
+
                     });
                 },
                 error: function() {
                     console.log("jstree ajax 통신 실패");
                 }
             });
+
+            // 페이지 로드 시 버튼을 비활성화 상태로 설정
+            $('#copyBtn').prop('disabled', true);
         });
 
+        // 복사 버튼 클릭 시 클립보드에 텍스트 복사
+        document.getElementById("copyBtn").onclick = function() {
+
+            const emailValue = emailInput.value.trim();
+            if (emailValue !== "") {
+                window.navigator.clipboard.writeText(emailValue).then(function() {
+                    alert("복사완료");
+                    copyBtn.innerText = "복사완료";
+                }).catch(function(err) {
+                    console.error('클립보드에 복사 실패:', err);
+                });
+            } else {
+                console.log("이메일 주소가 비어있음.");
+            }
+
+        };
+
+        // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트
+        function updateButtonState() {
+            const emailValue = $('#email').val().trim();
+            if (emailValue !== "") {
+                $('#copyBtn').prop('disabled', false); // 이메일이 입력되면 버튼 활성화
+            } else {
+                $('#copyBtn').prop('disabled', true); // 이메일이 비어 있으면 버튼 비활성화
+            }
+        }
+
+        // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트
+        $('#email').on('input', updateButtonState);
+
+        
 
     </script>
         

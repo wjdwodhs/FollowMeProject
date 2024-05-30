@@ -29,6 +29,7 @@ public class OrganizationDto {
 	private String extensionNumber;				   
 	private String phone;
 	private String deptUpstair;
+	private String profileImgPath;
 	
 	
 }

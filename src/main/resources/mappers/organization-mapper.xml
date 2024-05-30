@@ -13,7 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result column="enroll_date" property="enrollDate"/>
 	<result column="mem_email" property="email"/>
 	<result column="dept_upstair" property="deptUpstair"/>
+	<result column="extension_number" property="extensionNumber"/>
 	<result column="phone" property="phone"/>
+	<result column="profile_img_path" property="profileImgPath"/>
 
 </resultMap>
 
@@ -43,16 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectEmployeeInfo" resultMap="OrganizationResult">
 		select
-	        mem_name
-	      , mem_grade
-	      , dept_name
-	      , mem_email
-	      , phone
-	      , extension_number
+	        m.mem_name
+	      , m.mem_grade
+	      , d.dept_name
+	      , m.mem_email
+	      , m.phone
+	      , m.extension_number
+          , m.profile_img_path        
 		from tb_mem m
 		join tb_department d on m.dept_no = d.dept_no
 		where m.status = 'Y'
-		  and m.mem_no= #{employeeId} 
+		  and m.mem_no= #{employeeId}
 	</select>
 	
 	
