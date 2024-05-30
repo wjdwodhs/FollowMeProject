@@ -20,4 +20,11 @@ public class OrganizationDao {
 		return sqlSessionTemplate.selectList("organizationMapper.selectOrganizationList");
 	}
 
+	public OrganizationDto selectEmployeeInfo(String employeeId){
+		
+		 
+		return sqlSessionTemplate.selectOne("organizationMapper.selectEmployeeInfo", employeeId);
+		
+	}
+	
 }

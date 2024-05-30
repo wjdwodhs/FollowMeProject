@@ -20,4 +20,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return organizationDao.selectOrganizationList();
 	}
 
+	@Override
+	public OrganizationDto selectEmployeeInfo(String employeeId) {
+		
+		return organizationDao.selectEmployeeInfo(employeeId);
+	}
+
 }

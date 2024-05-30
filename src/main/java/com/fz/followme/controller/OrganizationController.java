@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fz.followme.dto.OrganizationDto;
 import com.fz.followme.service.OrganizationService;
@@ -35,6 +35,15 @@ public class OrganizationController {
 		log.debug("oList: {}", oList);
 		
 		return oList;
+	}
+	
+	@GetMapping("/employeeInfo")
+	@ResponseBody
+	public OrganizationDto selectEmployeeInfo(@RequestParam String employeeId){
+		
+		OrganizationDto eInfo = organizationService.selectEmployeeInfo(employeeId);
+		log.debug("eInfo:{}", eInfo);
+		return eInfo;
 	}
 	
 }

@@ -19,25 +19,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="selectOrganizationList" resultMap="OrganizationResult">
-		SELECT DISTINCT
-		    CAST(d.DEPT_NO AS VARCHAR2(50) )AS DEPT_NO,
+		SELECT 
+		    CAST(d.DEPT_NO AS VARCHAR2(50)) AS DEPT_NO,
 		    d.dept_name AS dept_name,
 		    CAST(d.dept_upstair AS VARCHAR2(100)) AS dept_upstair -- 부서번호와 동일한 데이터 유형으로 캐스팅
+          , 'Z' grade_level
 		FROM
 		    TB_DEPARTMENT d
-		    JOIN tb_mem m ON d.DEPT_NO = m.DEPT_NO
 		
 		UNION ALL
 		
 		SELECT
-		    mem_no AS DEPT_NO, -- 부서번호
-		    mem_name AS dept_name, -- 부서명
+		    mem_no AS MEM_NO, -- 사원번호
+		    '[' || m.mem_grade || ']' || m.mem_name AS mem_name, -- 사원명 (MEM_NO 컬럼을 DEPT_NO로 변경)
 		    CAST(dept_no AS VARCHAR2(100)) AS dept_upstair -- 회원상위 (부서번호와 동일한 데이터 유형으로 캐스팅)
+           ,grade_level
 		FROM
-		    tb_mem
+		    tb_mem m
 		WHERE
 		    STATUS = 'Y'
+            order by grade_level
 	</select>
+	
+	<select id="selectEmployeeInfo" resultMap="OrganizationResult">
+		select
+	        mem_name
+	      , mem_grade
+	      , dept_name
+	      , mem_email
+	      , phone
+	      , extension_number
+		from tb_mem m
+		join tb_department d on m.dept_no = d.dept_no
+		where m.status = 'Y'
+		  and m.mem_no= #{employeeId} 
+	</select>
+	
+	
 
 
 

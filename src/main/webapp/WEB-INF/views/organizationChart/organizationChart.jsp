@@ -9,8 +9,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+
 
 </head>
 <body>
@@ -54,22 +53,26 @@
 
                         <!-- start page content -->
                         <div class="row">
-                            <div class="col-12">
+                        	<div class="col-1"></div>
+                            <div class="col-10">
 
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body" class="col-10">
                                
                                         
-                                        <div class="row">                                        
-	                                        <div id="jstree_demo">
+                                        <div class="row" >                                        
+	                                        <div id="jstree_demo" >
 	                                        
 	                                        </div>
-										
+	                                        <div id="employeeInfoView">
+	                                        
+	                                        </div>									
 											
                                             
                                         </div>  <!-- end row -->
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
+                                
 
                                 <!-- end page content -->
 
@@ -123,6 +126,7 @@
                                 </div>
                                 <!-- end modal-->
                             </div>
+                            <div class="col-1"></div>
                             <!-- end col-12 -->
                         </div> <!-- end row -->
                         
@@ -637,7 +641,7 @@
                         },
                         'types': {
                             'department': {
-                                'icon': 'folder'
+                                'icon': 'file'
                             },
                             'employee': {
                                 'icon': 'file'
@@ -645,8 +649,46 @@
                         },
                         'plugins': ['types']
                     });
-                },error:function(){
-                	console.log("jstree ajax통신 실패")
+
+                    // 노드 선택시 이벤트
+                    $('#jstree_demo').on('select_node.jstree', function(e, data) {
+                    	
+                        var selectedNode = data.node;
+                        console.log(selectedNode);
+						
+                        // 노드 id
+                        var employeeId = selectedNode.id;
+                        
+                        if(selectedNode.parent != '#'){
+                        	$.ajax({
+                        		url:"${contextPath}/organization/employeeInfo", //사원 정보를 가져오는 url
+                        		method:'GET',
+                        		data:{employeeId: employeeId}, // 쿼리로 사원ID보냄
+                        		dataType: 'json',
+                        		success:function(employeeData){
+                        			console.log(employeeData);
+                        			$('#employeeInfoView').html(
+                        				'<p>부서:' + employeeData.deptName + '</p>' +
+                        				'<p>직급:' + employeeData.memGrade + '</p>' + 
+                        				'<p>사원명:' + employeeData.memName + '</p>' +
+                        				'<p>내선번호:' + employeeData.extensionNumber + '</p>' +
+                        				'<p>긴급연락망:' + employeeData.phone + '</p>'+
+                        				'<p>Email:' + employeeData.email + '</p>'
+                        				
+                        				);
+                        		},
+                        		
+                        		error: function() {
+                                    console.log("사원 정보 가져오기 실패");
+                                }
+                        	});
+                         
+                        }
+                       
+                    });
+                },
+                error: function() {
+                    console.log("jstree ajax 통신 실패");
                 }
             });
         });
@@ -659,6 +701,36 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
 	     
+	     
+	     
+	
+		
+		<!-- App js -->
+        <script src="${ contextPath }/assets/js/app.min.js"></script>
+	
+		<!-- Plugins js-->
+        <script src="${ contextPath }/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="${ contextPath }/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="${ contextPath }/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        
+        <!-- Dashboar 1 init js-->
+        <script src="${ contextPath }/assets/js/pages/dashboard-1.init.js"></script>
+        
+        <!-- Plugins js -->
+        <script src="${ contextPath }/assets/libs/quill/quill.min.js"></script>
+
+        <!-- Init js-->
+        <script src="${ contextPath }/assets/js/pages/form-quilljs.init.js"></script>
+
+	
+	
+        
+        
+        
+        
+        
+
+       
       
 	
 </body>
