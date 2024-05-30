@@ -85,6 +85,8 @@
         --ct-btn-hover-bg:#FA9A85;
         --ct-btn-hover-border-color:#FA9A85;   
     }	
+    
+    #title:hover{cursor:pointer; font-weight: bold;}
 
 </style>
 
@@ -262,10 +264,10 @@
 						                                            </c:when>
 						                                            <c:otherwise>
 						                                            		<c:forEach var="d" items="${ list }">
-								                                                <tr onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';">
+								                                                <tr>
 								                                                    <td>${d.docuNo}</td>
 								                                                    <td>${d.docuCategoryName}</td>
-								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td style="text-align: left;" onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';" id="title">${d.docuTitle}</td>
 								                                                    <td>${d.memName}</td>
 								                                                    <td>${d.memDeptName}</td>
 								                                                    <td>${d.registDate}</td>

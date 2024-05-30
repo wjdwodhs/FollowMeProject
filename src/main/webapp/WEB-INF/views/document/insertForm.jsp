@@ -279,7 +279,8 @@ tr>th, tr>td {
 			                      console.error("Element with ID 'refMemNo' not found");
 			                  }
 									 	 	}
-							 		});            			
+							 		});  
+							    
             			
             			document.getElementById("insertForm").onsubmit = function() {
             			    return updateDocuContent();
@@ -301,17 +302,26 @@ tr>th, tr>td {
 		<!-- 텍스트에디터(#editor)로 입력된 내용이 input type="hidden"요소인 docuContent 필드로 대입하는 스크립트 -->
 		<script>
 		    function updateDocuContent() {
+		    		// 텍스트편집기 내용을 hidden 요소에 담아 전송
 		        var content = document.querySelector('.ql-editor').innerHTML;
 						document.getElementById("docuContent").value = content;
 						
 						//console.log("content", content);
 						
-                        
+            // 제목 required            
             var docuTitle = document.getElementById("docuTitle");
             docuTitle.setAttribute('required', 'true');
+            
 
-
-				    
+						// 연차 체크박스 hidden 요소에 담아 전송
+            var checkbox = document.getElementById("checkbox");
+            var docuAnnualLeave = document.getElementById("docuAnnualLeave");
+            if (checkbox.checked) {
+            		docuAnnualLeave.value = 'Y';
+            } else {
+            		docuAnnualLeave.value = 'N';
+            }
+              
 				    return true;				
 		    }
 		    
@@ -388,19 +398,6 @@ tr>th, tr>td {
     startDateField.addEventListener('change', checkEndDate);
     }
 		</script>
-		<script>
-		  function handleCheckbox() {
-			    var checkbox = document.getElementById("checkbox");
-			  	var docuAnnualLeave = document.getElementById("docuAnnualLeave");
-		 		if (checkbox.checked) {
-		 			docuAnnualLeave.value = 'a';
-				}else{
-		 			docuAnnualLeave.value = 'b';
-				}	
-		  	
-		  }
-		</script>
-
 
 		<!-- 04. 지출 결의서 줄 추가/삭제 -->
 		<script>

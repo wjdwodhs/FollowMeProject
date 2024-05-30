@@ -85,6 +85,8 @@
         --ct-btn-hover-bg:#FA9A85;
         --ct-btn-hover-border-color:#FA9A85;   
     }	
+    
+    #title:hover{cursor:pointer; font-weight: bold;}
 
 </style>
 
@@ -186,48 +188,8 @@
                                         <div class="mb-2" style="display: flex; justify-content: space-between;">
                                             <div class="row row-cols-sm-auto g-2 align-items-center" id="top-list">
                                                 
-                                                <form id="searchForm" action="${ contextPath }/document/search.do" method="get" style="margin-top: 10px;">
-                                                		<div style="display:flex;">
-                                                    		<input type="hidden" name="page">
-		                                                    <div class="col-12 text-sm-center items">
-		                                                        <c:choose>
-		                                                        		<c:when test="${ loginUser.memGrade != '팀장' and loginUser.memGrade == '대표'} }">
-						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category_name">문서유형</option>
-						                                                            <option value="docu_title">문서제목</option>
-						                                                        </select>
-		                                                        		</c:when>
-		                                                        		<c:otherwise>
-		                                                        				<!-- 팀장, 대표일 경우 -->
-						                                                        <select id="demo-foo-filter-status" name="condition" class="form-select form-select-sm" style="width: 120px;">
-						                                                            <option value="docu_category_name">문서유형</option>
-						                                                            <option value="docu_title">문서제목</option>
-						                                                            <option value="mem_name">기안자</option>
-						                                                            <option value="dept_name">기안부서</option>
-						                                                        </select>
-				                                                        </c:otherwise>
-		                                                        </c:choose>
-		                                                        <input type="text" id="demo-foo-search" name="keyword" value="${ search.keyword }" placeholder="Search" class="form-control form-control-sm" autocomplete="on" style="width:150px;">
-		                                                        <button type="button" class="btn btn-soft-secondary btn-sm waves-effect" style="margin-left: 5px; width:70px;">검색</button>
-		                                                        
-		                                                    </div>
-		                                                </div>
-                                                </form>
+                                    
                                                 
-                                                <c:if test="${ not empty search }">
-																				            <script>
-																				            	$(document).ready(function(){
-																				            		$("#searchForm select").val("${search.condition}");
-																				            		
-																				            		//검색후 페이지일 경우 페이징바의 페이지 클릭시
-																				            		$("#pagingArea a").on("click", function(){
-																				            			$("#searchForm input[name=page]").val($(this).text());
-																				            			$("#searchForm").submit();
-																				            			return false; //기본이벤트 제거(즉, a태그에 작성되어있는 href="/list.do" 실행안되도록)
-																				            		})
-																				            	})
-																				            </script>
-																			          </c:if>
                                             </div>
                                             <c:if test="${loginUser.memGrade != '대표'}">
 		                                            <div class="btn-group">
@@ -262,10 +224,10 @@
 						                                            </c:when>
 						                                            <c:otherwise>
 						                                            		<c:forEach var="d" items="${ list }">
-								                                                <tr onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';">
+								                                                <tr>
 								                                                    <td>${d.docuNo}</td>
 								                                                    <td>${d.docuCategoryName}</td>
-								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td style="text-align: left;" onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';" id="title">${d.docuTitle}</td>
 								                                                    <td>${d.memName}</td>
 								                                                    <td>${d.memDeptName}</td>
 								                                                    <td>${d.registDate}</td>

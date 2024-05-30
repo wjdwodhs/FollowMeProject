@@ -352,7 +352,19 @@ input:focus, td>textarea:focus {
 																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
 																document.getElementById('docuEndPlace').innerText = '${document.docuEndPlace}';
 																document.getElementById('docuEmergencyCall').innerText = '${document.docuEmergencyCall}';
-																document.getElementById('docuAnnualLeave').value = '${document.docuAnnualLeave}';
+																
+																var docuAnnualLeaveElement = '${document.docuAnnualLeave}';
+														    var docuAnnualLeave = document.getElementById("docuAnnualLeave");
+
+												        if (docuAnnualLeaveElement === 'Y') {
+												        	docuAnnualLeave.innerText = '연차 휴가';
+												        	docuAnnualLeave.style.color = 'blue';
+												        } else {
+												        	docuAnnualLeave.innerText = '연차 휴가 미사용';
+												        	docuAnnualLeave.style.color = 'red';
+												        	
+												        }
+												        
 							        				}else if(${document.docuCategory} == '4'){
 							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
 								        				document.getElementById('memName').innerText =  '${document.memName}';
@@ -552,7 +564,7 @@ input:focus, td>textarea:focus {
 
 									<script>
 								        
-								        function updateStatus(){
+								      function updateStatus(){
 									    	$("#frm").attr("action", "${contextPath}/document/recall.do");
 								    		$("#frm").submit();	    	
 									    }
