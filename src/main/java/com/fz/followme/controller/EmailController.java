@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -17,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fz.followme.dto.AttachmentDto;
 import com.fz.followme.dto.EmailDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.pop3.Pop3EmailReceiver;
 import com.fz.followme.service.EmailService;
 import com.fz.followme.util.FileUtil;
 import com.fz.followme.util.PagingUtil;
@@ -37,12 +38,35 @@ public class EmailController {
 	private final EmailService emailService;
 	private final FileUtil fileUtil;
 	private final PagingUtil pagingUtil;
+	private final Pop3EmailReceiver pop3EmailReceiver;
 	
 	
-	// 이메일 목록
+	// ========================================================================
+	
+	// 수신이메일 목록
 	@RequestMapping("/email.page")
-	public String emailInbox(HttpServletRequest request, HttpSession session) {
-		return "email/emailInbox";
+	public ModelAndView emailInbox(@RequestParam(value="page", defaultValue="1") int currentPage
+							, ModelAndView mv) {
+		
+		try {
+			// 이메일수신
+			pop3EmailReceiver.receiveEmails();  
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		// 받은메일 목록 조회
+		int listCount = emailService.selectInBoxListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EmailDto> inList = emailService.selectInBoxList(pi);
+	
+		mv.addObject("pi", pi)
+		  .addObject("inList", inList)
+		  .setViewName("/email/emailInbox");
+		
+		
+		return mv;
 	}
 
 	
@@ -119,7 +143,7 @@ public class EmailController {
 	// 보낸메일함에서 선택된 메일 휴지통으로 이동
 	@ResponseBody
 	@PostMapping(value="/updatetrash.do", produces="application/json; charset=utf-8")
-	public int updateMailStatusTrash(@RequestParam("checkMailStr") int[] checkMail) {
+	public int ajaxUpdateMailStatusTrash(@RequestParam("checkMailStr") int[] checkMail) {
 		log.debug("checkMail:{}", checkMail);
 		
 		return emailService.updateMailStatusTrash(checkMail);
@@ -128,7 +152,7 @@ public class EmailController {
 	
 	// ==========================================================
 	
-	// 메일 상세내용 수정해야함
+	// 메일 상세내용 
 	@GetMapping("/readsendmail.do")
 	public String emailRead(int no, Model model) {
 		
@@ -138,9 +162,24 @@ public class EmailController {
 	}
 	
 	
+	// 메일 상세내용에서 휴지통으로 이동
+	@GetMapping("/detailtrash.do")
+	public String updateDetailMaileStatusTrash(int no, RedirectAttributes redirectAttributes) {
+		int result = emailService.updateDetailMailTrash(no);
+	
+		log.debug("no : {}", no);
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "해당 메일을 휴지통으로 이동합니다.");
+		}
+		
+		return "redirect:/email/outbox.bo";
+	
+	}
+	
+	
+	// ==========================================================
 
-	
-	
 	
 	
 }

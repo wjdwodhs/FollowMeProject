@@ -29,6 +29,10 @@ public class EmailDao {
 		sqlSessionTemplate.insert("emailMapper.insertEmail", ed);
 	}
 	
+	public void insertReceiveEmail(EmailDto ed) {
+		sqlSessionTemplate.insert("emailMapper.insertReceiveEmail", ed);
+	}
+	
 	public void insertAttachment(AttachmentDto at) {
 		sqlSessionTemplate.insert("emailMapper.insertAttachment", at);
 	}
@@ -53,6 +57,23 @@ public class EmailDao {
 	
 	public EmailDto selectSendMail(int no) {
 		return sqlSessionTemplate.selectOne("emailMapper.selectSendMail", no);
+	}
+	
+	public int updateDetailMailTrash(int no) {
+		return sqlSessionTemplate.update("emailMapper.updateDetailMailTrash", no);
+	}
+	
+	public int selectInBoxListCount() {
+		return sqlSessionTemplate.selectOne("emailMapper.selectInBoxListCount");
+	}
+	
+	public List<EmailDto> selectInBoxList(PageInfoDto pi){
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("emailMapper.selectInBoxList", null, rowBounds);
 	}
 
 }

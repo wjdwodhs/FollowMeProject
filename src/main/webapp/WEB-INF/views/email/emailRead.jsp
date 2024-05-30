@@ -96,7 +96,9 @@
 	                            <div class="inbox-rightbar">
 	
 	                                <div class="btn-group">
-	                                    <button type="button" id="trash-btn" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
+	                                    <a href="${ contextPath }/email/detailtrash.do?no=${email.emailNo}" id="trash-btn" class="btn btn-sm btn-light waves-effect">
+	                                    	<i class="mdi mdi-delete-variant font-18"></i>
+	                                    </a>
 	                                </div>
 	                                
 	                                <!-- 이동버튼 -->

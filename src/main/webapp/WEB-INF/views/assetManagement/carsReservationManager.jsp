@@ -436,7 +436,7 @@
 				
 				// 테이블의 체크된 체크박스 요소를 찾아서 선택한 행의 데이터를 수집
 				var checkboxes = table.querySelectorAll('input[type="checkbox"]:checked');
-				 checkboxes.forEach(function(checkbox) {
+				checkboxes.forEach(function(checkbox) {
 					 var row = checkbox.closest('tr');
 					 var rowData = [];
 						

@@ -93,7 +93,7 @@ public class EmailService {
 		return emailDao.selectOutBoxList(pi);
 	}
 	
-	// 휴지통으로 이동
+	// 체크된 메일 휴지통으로 이동
 	public int updateMailStatusTrash(int[] checkMail) {
 		return emailDao.updateMailStatusTrash(checkMail);
 	}
@@ -102,6 +102,22 @@ public class EmailService {
 	public EmailDto selectSendMail(int no) {
 		return emailDao.selectSendMail(no);
 	}
+	
+	// 상세조회에서 휴지통으로 이동
+	public int updateDetailMailTrash(int no) {
+		return emailDao.updateDetailMailTrash(no);
+	}
+	
+	// 받은메일함 페이징
+	public int selectInBoxListCount() {
+		return emailDao.selectInBoxListCount();
+	}
+	
+	// 받은메일 목록 조회
+	public List<EmailDto> selectInBoxList(PageInfoDto pi){
+		return emailDao.selectInBoxList(pi);
+	}
+	
 	
 	
 }

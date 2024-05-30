@@ -103,10 +103,8 @@
                              style="background-color: #FFBE98; border: 1px solid #FFBE98;">메일작성</a>
 
                           <div class="mail-list mt-4">
-                              <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
-                              <a href="javascript: void(0);"><i class="dripicons-star me-2"></i>중요</a>
-                              <a href="${contextPath }/email/outbox.bo" class="text-danger fw-bold"><i class="dripicons-exit me-2"></i>보낸메일</a>
-                              <a href="javascript: void(0);"><i class="dripicons-document me-2"></i>임시보관함<span class="badge badge-soft-info float-end ms-2">32</span></a>
+                              <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2"></span></a>
+                              <a href="${contextPath }/email/outbox.bo" class="text-primary fw-bold"><i class="dripicons-exit me-2"></i>보낸메일<span class="badge badge-soft-info float-end ms-2">${pi.listCount}</span></a>
                               <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
                           </div>
 
@@ -119,18 +117,6 @@
                           <div class="btn-group">
                               <button type="button" id="trash-btn" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
                           </div>
-                          
-                          <!-- 이동버튼  -->
-                          <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-light dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="mdi mdi-folder font-18"></i>
-                                  <i class="mdi mdi-chevron-down"></i>
-                              </button>
-                              <div class="dropdown-menu">
-                                  <span class="dropdown-header">이동</span>
-                                  <a class="dropdown-item" href="javascript: void(0);">임시보관함</a>
-                              </div>
-                          </div>
 
                           <div class="mt-3">
                               <ul class="message-list">
@@ -140,14 +126,14 @@
                               		</c:when>
                               		<c:otherwise>
 	                                  <c:forEach var="mail" items="${ outList }">   
-	                                   <li onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
-	                                      <div class="col-mail col-mail-1" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
+	                                   <li>
+	                                      <div class="col-mail col-mail-1" >
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
 	                                              <label for="mailCheck_${mail.emailNo}" class="toggle"></label>
 	                                              <input type="hidden" id="emailNo" value="${ mail.emailNo }">
 	                                          </div>
-	                                          <div class="title">${ mail.emailTo }</div>
+	                                          <div class="title" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">${ mail.emailTo }</div>
 	                                      </div>
 	                                      <div class="col-mail col-mail-2" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
 									                            <div class="subject"><c:out value="${mail.subject}" /></div>
