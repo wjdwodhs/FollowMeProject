@@ -24,7 +24,7 @@ public class OrganizationDto {
 	private String deptName;
 	private String autLevel;
 	private String memGrade;
-	private Date enrollDate;
+	private String enrollDate;
 	private String email;
 	private String extensionNumber;				   
 	private String phone;

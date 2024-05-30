@@ -11,18 +11,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
 
 <style>
+.card > h4{
+	padding-left: 20px;
+	padding-top:10px;
+}
+
 #employeeInfoView input {
 	text-align: center;
 }
 #employeeInfoView{
+	display: flex;
 	min-height:500px;
 }
 
+.imgContainer{
+	 flex: 1;
+}
+
+.input-container {
+      flex: 1; /* 오른쪽 div가 왼쪽 div와 같은 너비를 가지도록 설정 */
+    }
+
 .profileArea {
-    width: 150px;
-    height: 150px; 
+    width: 200px;
+    height: 200px; 
     border-radius: 70%;
     overflow: hidden;
+    position: relative; /* 부모 요소가 자식 요소의 기준이 되도록 설정 */
+}
+
+#profileImg {
+    position: absolute; /* 이미지를 부모 요소의 기준으로 위치시킵니다. */
+    top: 50%; /* 부모 요소의 중앙으로 이동 */
+    left: 50%; /* 부모 요소의 중앙으로 이동 */
+    transform: translate(-50%, -50%); /* 이미지를 정확히 가운데로 이동 */
+    min-width: 100%; /* 이미지가 div 영역에 맞춰서 보여지도록 설정 */
+    min-height: 100%; /* 이미지가 div 영역에 맞춰서 보여지도록 설정 */
+    
 }
 
 
@@ -37,6 +62,7 @@
             display: inline-block;
             vertical-align: middle;
             margin-left: 10px;
+            margin-right:10px;
         }
             
 </style>
@@ -97,11 +123,11 @@
                             <div class="col-7">
 	                            <div>
 	                                <div class="card">
+	                                	<h4>사원 정보</h4>
+	                                	<hr>
 	                                    <div id="employeeInfoView"class="card-body infoContainer">
-	                                    	<div class="profileArea">
-	                                    		<img id="profileImg" src="">		                                    	
-										    </div>
-										    <label for="memName">사원명</label>
+	                                    	<div class="imgContainer">
+	                                    	<label for="memName">사원명</label>
 											<input type="text" id="memName" name="memName" class="form-control" readonly style="width:150px;">
 										    <br>	                                    	                                    	
 										    <label for="memGrade">직급</label>
@@ -110,6 +136,9 @@
 										    <label for="deptName">부서</label>
 										    <input type="text" id="deptName" name="deptName" class="form-control" readonly style="width:150px;">
 										    <br>
+										    <label for="enrollDate">입사일</label>
+										    <input type="text" id="enrollDate" name="enrollDate" class="form-control" readonly style="width:150px;">
+										    <br>
 										    <label for="extensionNumber">내선번호</label>
 										    <input type="text" id="extensionNumber" name="extensionNumber" class="form-control" readonly style="width:300px;">
 										    <br>
@@ -117,10 +146,16 @@
 										    <input type="text" id="phone" name="phone" class="form-control" readonly style="width:350px;">
 										    <br>
 										    <label for="email">Email</label>
-										    <div class="email-container">											    
-											    <input type="text" id="email" name="email" class="form-control" readonly style="width:400px;">
-											    <button id="copyBtn" class="btn btn btn-outline-danger">복사</button>
-											    <a href="${ contextPath }/email/composeForm.do" class="btn btn-outline-warning">이메일 작성</a>
+											    <div class="email-container">											    
+												    <input type="text" id="email" name="email" class="form-control" readonly style="width:400px;">
+												    <button id="copyBtn" class="btn btn btn-outline-danger">복사</button>
+												    <a href="${ contextPath }/email/composeForm.do" class="btn btn-outline-warning">이메일 작성</a>
+			                      				</div>	
+										    </div>
+											<div class="inputContainer">
+										    	<div class="profileArea">
+		                                    		<img id="profileImg" src="">		                                    	
+											    </div>
 		                      				</div>                                             
 	                                    </div> <!-- end card body-->
 	                                </div> <!-- end card -->                                                               
@@ -670,6 +705,7 @@
                                     $('#deptName').val(employeeData.deptName);
                                     $('#memGrade').val(employeeData.memGrade);
                                     $('#memName').val(employeeData.memName);
+                                    $('#enrollDate').val(employeeData.enrollDate);
                                     $('#extensionNumber').val(employeeData.extensionNumber);
                                     $('#phone').val(employeeData.phone);
                                     $('#email').val(employeeData.email);
@@ -699,38 +735,35 @@
 
             // 페이지 로드 시 버튼을 비활성화 상태로 설정
             $('#copyBtn').prop('disabled', true);
+
+            // 복사 버튼 클릭 시 클립보드에 텍스트 복사
+            $('#copyBtn').on('click', function() {
+                const emailValue = $('#email').val().trim();
+                if (emailValue !== "") {
+                    window.navigator.clipboard.writeText(emailValue).then(function() {
+                        alert("복사완료");
+                        $('#copyBtn').text("복사완료");
+                    }).catch(function(err) {
+                        console.error('클립보드에 복사 실패:', err);
+                    });
+                } else {
+                    console.log("이메일 주소가 비어있음.");
+                }
+            });
+
+            // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트
+            $('#email').on('input', updateButtonState);
+
+            // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트하는 함수
+            function updateButtonState() {
+                const emailValue = $('#email').val().trim();
+                if (emailValue !== "") {
+                    $('#copyBtn').prop('disabled', false); // 이메일이 입력되면 버튼 활성화
+                } else {
+                    $('#copyBtn').prop('disabled', true); // 이메일이 비어 있으면 버튼 비활성화
+                }
+            }
         });
-
-        // 복사 버튼 클릭 시 클립보드에 텍스트 복사
-        document.getElementById("copyBtn").onclick = function() {
-
-            const emailValue = emailInput.value.trim();
-            if (emailValue !== "") {
-                window.navigator.clipboard.writeText(emailValue).then(function() {
-                    alert("복사완료");
-                    copyBtn.innerText = "복사완료";
-                }).catch(function(err) {
-                    console.error('클립보드에 복사 실패:', err);
-                });
-            } else {
-                console.log("이메일 주소가 비어있음.");
-            }
-
-        };
-
-        // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트
-        function updateButtonState() {
-            const emailValue = $('#email').val().trim();
-            if (emailValue !== "") {
-                $('#copyBtn').prop('disabled', false); // 이메일이 입력되면 버튼 활성화
-            } else {
-                $('#copyBtn').prop('disabled', true); // 이메일이 비어 있으면 버튼 비활성화
-            }
-        }
-
-        // 입력 필드의 값이 변경될 때마다 버튼 상태를 업데이트
-        $('#email').on('input', updateButtonState);
-
         
 
     </script>

@@ -51,7 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	      , m.mem_email
 	      , m.phone
 	      , m.extension_number
-          , m.profile_img_path        
+          , m.profile_img_path
+          , TO_CHAR(m.enroll_date, 'YYYY-MM-DD') AS enroll_date       
 		from tb_mem m
 		join tb_department d on m.dept_no = d.dept_no
 		where m.status = 'Y'
