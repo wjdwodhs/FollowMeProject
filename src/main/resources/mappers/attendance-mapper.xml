@@ -29,6 +29,73 @@
 		<result column="left" property="left"/>
 	
 	</resultMap>
+	
+	<resultMap id="attachmentResultMap" type="AttachmentDto">
+		<id column="file_no" property="fileNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="origin_name" property="originName"/>
+		<result column="system_name" property="systemName"/>
+		<result column="type" property="type"/>
+		<result column="ref_no" property="refNo"/>
+		<result column="upload_date" property="uploadDate"/>
+	</resultMap>
+	
+	
+	<resultMap id="documentResultMap" type="DocumentDto">
+	
+		<id column="docu_no" property="docuNo" />
+		<result column="docu_category" property="docuCategory" />
+		<result column="docu_title" property="docuTitle" />
+		<result column="docu_content" property="docuContent" />
+		<result column="mem_no" property="memNo" />
+		<result column="dept_no" property="deptNo" />
+		<result column="regist_date" property="registDate" />
+		<result column="ref_mem_no" property="refMemNo" />
+		<result column="ref_dept_no" property="refDeptNo" />
+		<result column="mid_approver" property="midApprover" />
+		<result column="mid_approve_date" property="midApproveDate" />
+		<result column="mid_approver_sig" property="midApproverSig" />
+		<result column="final_approver" property="finalApprover" />
+		<result column="final_approve_date" property="finalApproveDate" />
+		<result column="final_approver_sig" property="finalApproverSig" />
+		<result column="approver_inf" property="approverInf" />
+		<result column="process_reason" property="processReason" />
+		<result column="status" property="status" />
+		<result column="mid_approve_status" property="midApproveStatus" />
+		<result column="final_approve_status" property="finalApproveStatus" />
+		<result column="docu_cost" property="docuCost" />
+		<result column="docu_remark" property="docuRemark" />
+		<result column="docu_start_date" property="docuStartDate" />
+		<result column="docu_end_date" property="docuEndDate" />
+		<result column="docu_start_place" property="docuStartPlace" />
+		<result column="docu_end_place" property="docuEndPlace" />
+		<result column="docu_emergency_call" property="docuEmergencyCall" />
+		<result column="docu_annual_leave" property="docuAnnualLeave" />
+		<result column="docu_item" property="docuItem" />
+		<result column="docu_transport_cost" property="docuTransportCost" />
+		<result column="docu_fuel_cost" property="docuFuelCost" />
+		<result column="docu_food_cost" property="docuFoodCost" />
+		<result column="docu_room_cost" property="docuRoomCost" />
+		<result column="docu_etc_cost" property="docuEtcCost" />
+		<result column="docu_text" property="docuText" />
+		<result column="docu_text_note" property="docuTextNote" />
+		<result column="docu_count" property="docuCount" />
+		<result column="count" property="count"/>
+		<result column="mem_name" property="memName"/>
+		<result column="dept_name" property="memDeptName"/>
+		<result column="ref_dept_name" property="refDeptName"/>
+		<result column="ref_mem_name" property="refMemName"/>
+		<result column="docu_category_name" property="docuCategoryName" />
+		<result column="mem_sig_path" property="memSig" />
+		<result column="mem_grade" property="memGrade" />
+		<result column="mem_phone" property="memPhone" />
+		<result column="mid_reject_date" property="midRejectDate" />
+		<result column="final_reject_date" property="finalRejectDate" />
+		<result column="rNum" property="rowNum" />
+		
+		<collection resultMap="attachmentResultMap" property="attachList" />
+		
+	</resultMap>
 
 
 	<!-- 출근 시간 등록 -->
@@ -285,6 +352,73 @@ WHERE
 	   AND able_date = #{ableDate}
    
  </select>
+ 
+ <!-- 휴가 신청 내역 리스트 조회 -->
+	<select id="selectLeaveDocumentListCount" resultType="_int">
+		 select 
+        count(*)
+    from tb_document d
+    join tb_mem m on (d.mem_no = m.mem_no)
+    where  
+        (
+            (d.mem_no = #{memNo})
+            or (
+                d.dept_no = #{deptNo}
+                and '팀장' = #{memGrade}
+                and d.status != '3'
+            )
+            or (
+                d.status != '3'
+                and (d.mid_approve_status = 'Y' or mid_approver is null) 
+                and final_approver = #{memNo}
+            )
+            or (
+                d.ref_mem_no = #{memNo}
+                and d.status != '3'
+            )
+        )
+        and d.docu_category = 3  -- 휴가 신청서 조건 추가
+    order by docu_no desc
+	</select>
+	
+	<select id="selectLeaveDocumentList" resultMap="documentResultMap">
+    select ROW_NUMBER() OVER (ORDER BY d.docu_no ASC) AS rNum
+    		 , docu_no 
+         , dc.docu_category_name
+         , docu_title
+         , mem_name
+         , dept_name
+         , to_char(regist_date, 'YYYY-MM-DD') as regist_date
+         , d.status
+         , to_char(final_approve_date, 'YYYY-MM-DD') as final_approve_date
+     from tb_document d
+     left join tb_document_category dc on d.docu_category = dc.docu_category
+		 left join tb_mem m on (d.mem_no = m.mem_no)
+		 left join tb_department dp on (m.dept_no = dp.dept_no)
+		 where 
+		 			(
+			 		 	 (
+				      d.mem_no = #{memNo}
+						 )
+					or (
+				    	d.dept_no = #{deptNo}
+				    	and '팀장' = #{memGrade}
+				    	and d.status != '3'
+							)
+					or (
+							d.status != '3'
+							and (d.mid_approve_status = 'Y' or mid_approver is null) 
+							and final_approver = #{memNo}
+							)
+					or (
+							d.ref_mem_no = #{memNo}
+							and d.status != '3'
+							)
+					)
+					 and d.docu_category = 3  -- 휴가 신청서 조건 추가
+		 order
+		    by docu_no asc
+	</select>
 
 	
 	

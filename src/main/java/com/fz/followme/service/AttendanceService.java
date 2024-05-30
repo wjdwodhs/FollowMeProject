@@ -6,6 +6,8 @@ import java.util.Map;
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
+import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 public interface AttendanceService {
 
@@ -50,6 +52,12 @@ public interface AttendanceService {
 
 	// 잔여 연차 조회 서비스
 	int selectLeave(LeavepDto le);
+	
+	// 휴가 신청 내역 총 개수 조회 서비스
+	int selectLeaveDocumentListCount(MemberDto m);
+
+	// 휴가 신청 내역 리스트 조회 서비스
+	List<DocumentDto> selectLeaveDocumentList(PageInfoDto pi, MemberDto m);
 
 	
 }

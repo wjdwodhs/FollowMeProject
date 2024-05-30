@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
+import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -75,6 +78,20 @@ public class AttendanceDao {
 
 	public int selectLeave(LeavepDto le) {
 		return sqlSessionTemplate.selectOne("attendanceMapper.selectLeave",le);
+	}
+
+	public int selectLeaveDocumentListCount(MemberDto m) {
+		return sqlSessionTemplate.selectOne("attendanceMapper.selectLeaveDocumentListCount",m);
+	}
+
+	public List<DocumentDto> selectLeaveDocumentList(PageInfoDto pi, MemberDto m) {
+		
+		int limit = pi.getBoardLimit();
+		int offset= (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds= new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("attendanceMapper.selectLeaveDocumentList", m, rowBounds);
+		
 	}
 	
 	

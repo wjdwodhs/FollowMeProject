@@ -21,10 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 
 import com.fz.followme.dto.AttendanceDto;
+import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
 import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.AttendanceService;
+import com.fz.followme.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +40,87 @@ public class AttendanceController {
 	
 	private final AttendanceService attendanceService;
 	private final AlarmEchoHandler handler;
+	private final PagingUtil pagingUtil;
 
 	@RequestMapping("/attendance.page")
-	public ModelAndView attendancePage(ModelAndView mv, HttpSession session) {
+	public ModelAndView attendancePage(@RequestParam(value="page", defaultValue="1") int currentPage,
+										ModelAndView mv, HttpSession session) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+	    String memNo = loginUser.getMemNo();
+	    int ableDate = Year.now().getValue();
+
+	    // 월별 근무시간 및 평균 근무시간
+	    AttendanceDto attDto = attendanceService.monthAttendanceTime(memNo);
+	    
+	    // 총 근무시간 및 근무일수
+	    AttendanceDto totalDto = attendanceService.totalAttendanceTime(memNo);
+	    
+	    LeavepDto le = LeavepDto.builder()
+	    		.memNo(memNo)
+	    		.ableDate(ableDate)
+	    		.build();
+	    
+	    
+	    // 잔여 연차 정보 조회
+	    
+	    int defaultLeave = 12; 
+	    int leftLeave = attendanceService.selectLeave(le);
+	    
+	    if (leftLeave == 0) {
+	        leftLeave = defaultLeave;
+	    } 
+	   
+	    if (attDto == null) {
+	        attDto = new AttendanceDto();
+	        attDto.setWorkingDays(0); 
+	        attDto.setMonthWorkTime(0); 
+	        attDto.setAvgWorkTime(0); 
+	    }
+
+	    if (totalDto == null) {
+	        totalDto = new AttendanceDto();
+	        totalDto.setTotalWorkingDays(0); 
+	        totalDto.setTotalWorkTime(0); 
+	    }
+	    
+	    // 타입별 출석 데이터
+	    List<AttendanceDto> countList = attendanceService.countAttendanceByType(memNo);
+	    Map<String, Integer> countMap = new HashMap<>();
+
+        for (AttendanceDto attendance : countList) {
+            countMap.put(attendance.getType(), attendance.getCount());
+        }
+
+        for (String type : new String[]{"B", "C", "D", "E"}) {
+            countMap.putIfAbsent(type, 0);
+        }
+        
+        // 휴가 신청 내역 조회
+        MemberDto m = new MemberDto();
+        m.setMemNo(loginUser.getMemNo());
+		m.setDeptNo(loginUser.getDeptNo());
+		m.setMemGrade(loginUser.getMemGrade());
+		
+		int listCount = attendanceService.selectLeaveDocumentListCount(m);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		List<DocumentDto> list = attendanceService.selectLeaveDocumentList(pi, m);
+        
+        
+		mv.addObject("countMap",countMap)
+		  .addObject("attDto",attDto)
+		  .addObject("totalDto",totalDto)
+		  .addObject("leftLeave",leftLeave)
+		  .addObject("list",list)
+		  .addObject("pi",pi)
+		  .setViewName("attendance/attendance");
+		
+		return mv;
+	
+	}
+	
+	@RequestMapping("/attendanceCeo.page")
+	public ModelAndView attendanceCeoPage(ModelAndView mv, HttpSession session) {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
 	    String memNo = loginUser.getMemNo();
@@ -95,7 +176,7 @@ public class AttendanceController {
 		  .addObject("attDto",attDto)
 		  .addObject("totalDto",totalDto)
 		  .addObject("leftLeave",leftLeave)
-		  .setViewName("attendance/attendance");
+		  .setViewName("attendance/attendanceCeo");
 		
 		return mv;
 	
@@ -232,6 +313,7 @@ public class AttendanceController {
 	    return ResponseEntity.ok(data);
 	     
 	}
+
     
     
     

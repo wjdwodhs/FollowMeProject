@@ -10,6 +10,8 @@ import com.fz.followme.dao.CalendarDao;
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.DocumentDto;
 import com.fz.followme.dto.LeavepDto;
+import com.fz.followme.dto.MemberDto;
+import com.fz.followme.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -88,6 +90,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public int selectLeave(LeavepDto le) {
 		return attendanceDao.selectLeave(le);
+	}
+
+	@Override
+	public int selectLeaveDocumentListCount(MemberDto m) {
+		return attendanceDao.selectLeaveDocumentListCount(m);
+	}
+
+	@Override
+	public List<DocumentDto> selectLeaveDocumentList(PageInfoDto pi, MemberDto m) {
+		return attendanceDao.selectLeaveDocumentList(pi,m);
 	}
 	
 }

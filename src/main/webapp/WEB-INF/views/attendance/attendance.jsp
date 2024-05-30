@@ -95,6 +95,11 @@
         .mb-3 {
             margin-bottom: 20px;
         }
+        
+		    #leaveList tr,
+		    #leaveList td {
+		        text-align: center;
+		    }
       
         
 </style>
@@ -145,7 +150,7 @@
 											        </div>
 											    </div>
 	                        <!-- 근태현황 -->
-	                        <div class="row mb-4">
+	                        <div class="row mb-1">
 	                            <div class="col-md-12">
 	                                <div class="menu-item at-item">
 	                                    <span class="menu-icon at-icon"><i data-feather="list"></i></span>
@@ -177,7 +182,7 @@
 	                        </div>
 	                    
 	                        <!-- 근무현황 -->
-	                        <div class="row mb-4">
+	                        <div class="row mb-1">
 	                            <div class="col-md-12">
 	                                <div class="menu-item at-item">
 	                                    <span class="menu-icon at-icon"><i data-feather="list"></i></span>
@@ -207,7 +212,7 @@
 	                        </div>
 	                    
 	                        <!-- 주간 및 월간 근무시간 -->
-	                        <div class="row mb-4">
+	                        <div class="row mb-1">
 	                            <div class="col-md-12">
 	                                <div class="menu-item at-item">
 	                                    <span class="menu-icon at-icon"><i data-feather="clock"></i></span>
@@ -235,7 +240,7 @@
 	                        </div>
 	                        
 	                        <!-- 올해 휴가현황 -->
-	                        <div class="row mb-4">
+	                        <div class="row mb-1">
 	                            <div class="col-md-12">
 	                                <div class="menu-item at-item">
 	                                    <span class="menu-icon at-icon"><i data-feather="layers"></i></span>
@@ -248,14 +253,14 @@
 	                                                <tr>
 	                                                    <th>잔여 휴가</th>
 	                                                    <th>휴가 신청</th>
-	                                                    <th>휴가 신청 내역</th>
+	                                                   
 	                                                </tr>
 	                                            </thead>
 	                                            <tbody>
 	                                                <tr>
 	                                                    <td>${leftLeave}일</td>
 	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/insertForm'">휴가 신청</button></td>
-	                                                    <td><button type="button" class="btn vacation-btn" onclick="location.href='${contextPath}/document/list'">휴가 신청 내역</button></td>
+	                                                    
 	                                                </tr>
 	                                            </tbody>
 	                                        </table>
@@ -263,6 +268,82 @@
 	                                </div>
 	                            </div>
 	                        </div>
+	                         <!-- 휴가 신청 내역 -->
+	                        <div class="row mb-1">
+	                            <div class="col-md-12">
+	                                <div class="menu-item at-item">
+	                                    <span class="menu-icon at-icon"><i data-feather="layers"></i></span>
+	                                    <span class="menu-text at-text">휴가 신청 내역</span>
+	                                </div>
+	                                <div class="card">
+	                                    <div class="card-body">
+	                                        <table id="leaveList" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                                <thead>
+		                                                <tr>
+		                                                    <th>NO</th>
+		                                                    <th>문서유형</th>
+		                                                    <th>문서제목</th>
+		                                                    <th>기안일</th>
+		                                                    <th>결재상태</th>
+		                                                    <th>결재일</th>
+		
+		                                                </tr>
+		                                                </thead>
+		                                                <tbody>
+		                                                
+		                                                <c:choose>
+		                                                		<c:when test="${empty list}">
+		                                                				<tr>
+		                                                						<td colspan="8">존재하는 문서가 없습니다.</td>
+		                                                				</tr>
+						                                            </c:when>
+						                                            <c:otherwise>
+						                                            		<c:forEach var="d" items="${ list }">
+								                                                <tr onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';">
+								                                                    <td>${d.rowNum}</td>
+								                                                    <td>${d.docuCategoryName}</td>
+								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td>${d.registDate}</td>
+								                                                    <td>
+										                                                    <c:if test="${d.status eq '0'}">
+										                                                    		<span class="badge label-table bg-warning">진행중</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '1'}">
+										                                                    		<span class="badge label-table bg-success">승인</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '2'}">
+										                                                    		<span class="badge label-table bg-danger">반려</span>
+										                                                    </c:if>
+										                                                    <c:if test="${d.status eq '3'}">
+										                                                    		<span class="badge label-table bg-secondary">회수</span>
+										                                                    </c:if>
+								                                                    </td>
+								                                                    <td>${d.finalApproveDate}</td>
+								                                                </tr>
+								                                            </c:forEach>
+						                                            </c:otherwise>
+		                                                </c:choose>
+                                                </tbody>
+                                            </table>
+                                            <div id="pagingArea" style=" display: flex; justify-content: center; margin-top: 20px;">
+															                <ul class="pagination">
+															                    <li class="page-item ${ pi.currentPage == 1 ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/attendance/attendance.page?page=${pi.currentPage - 1}">Previous</a></li>
+															                    
+															                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+															                    <li class="page-item ${ pi.currentPage == p ? 'disabled':'' }"><a class="page-link" href="${ contextPath }/attendance/attendance.page?page=${p}">${ p }</a></li>
+															                    </c:forEach>
+															                    
+															                    <li class="page-item ${ pi.currentPage >= pi.maxPage ? 'disabled':''}" ><a class="page-link" href="${ contextPath }/attendance/attendance.page?page=${pi.currentPage + 1}">Next</a></li>
+															                </ul>
+														            	</div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        
+	                        
+	                        
+	                        
 	                    </div>
 														<!-- 근태관리 페이지 끝 -->
 														<script>

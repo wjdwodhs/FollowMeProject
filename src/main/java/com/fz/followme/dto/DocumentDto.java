@@ -57,6 +57,9 @@ public class DocumentDto {
 	private String docuCount;
 	private Date midRejectDate;
 	private Date finalRejectDate;
+	private int rowNum;
+	
+	
 	
 	private List<AttachmentDto> attachList;
 	
