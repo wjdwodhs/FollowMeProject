@@ -478,7 +478,7 @@
 		from tb_mem
 		left join tb_department on (tb_mem.dept_no = tb_department.dept_no)
 		where status in ('Y', 'R')
-      and mem_name = #{memName}
+      and mem_name like '%' || #{memName} || '%'
 		</select>
 		
 		

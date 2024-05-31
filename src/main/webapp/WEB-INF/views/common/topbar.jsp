@@ -290,37 +290,37 @@
             </li>
             
             <script>
-				        function searchEmployee() {
-				            const searchQuery = $('#top-search').val();
-				
-				            console.log(searchQuery);
-				            
-				            if (searchQuery) {
-				            	
-				            	// 새 창 열기
-                      const popupWindow = window.open('', 'memberInfoPopUp', 'width=600,height=400,left=' + (window.innerWidth / 2 - 300) + ',top=' + (window.innerHeight / 2 - 200));
-				            	
-				            	
-				                $.ajax({
-				                    url: '${contextPath}/memberSearchPopUp',
-				                    method: 'GET',
-				                    data: { memName: searchQuery },
-				                    success: function(response) {
-				                    		// 응답받은 HTML 내용을 팝업 창에 쓰기
-				                        popupWindow.document.open();
-				                        popupWindow.document.write(response);
-				                        popupWindow.document.close();
-				                    },
-				                    error: function() {
-				                        alert('직원 정보를 찾을 수 없습니다.');
-				                    }
-				                });
-				            } else {
-				                alert('직원 이름을 입력하세요.');
-				            }
-				
-				            return false; 
-				        }
+            function searchEmployee() {
+                const searchQuery = $('#top-search').val();
+
+                if (searchQuery) {
+                    $.ajax({
+                        url: '${contextPath}/memberSearchPopUp',
+                        method: 'GET',
+                        data: { memName: searchQuery },
+                        success: function(response) {
+                            if (response.member) {
+                                // JSON 데이터를 로컬 스토리지에 저장
+                                localStorage.setItem('member', JSON.stringify(response.member));
+
+                                // 팝업 창 열기
+                                const popupWindow = window.open('${contextPath}/member/memberInfoPopUp', 'memberInfoPopUp', 'width=600,height=400,left=' + (window.innerWidth / 2 - 300) + ',top=' + (window.innerHeight / 2 - 200));
+                            } else {
+                                alert(response.errorMessage);
+                            }
+                        },
+                        error: function() {
+                            alert('직원 정보를 찾을 수 없습니다.');
+                        }
+                    });
+                } else {
+                    alert('직원 이름을 입력하세요.');
+                }
+
+                return false;
+            }
+
+
 				    </script>
 
             <!-- Fullscreen Button -->

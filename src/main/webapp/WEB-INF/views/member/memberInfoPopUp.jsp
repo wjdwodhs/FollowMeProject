@@ -57,28 +57,45 @@
                         </div>
                         <!-- end page title -->
                         <!-- end page title -->
+					
+												<script>
+												document.addEventListener('DOMContentLoaded', function() {
+												    // 로컬 스토리지에서 멤버 데이터 가져오기
+												    const memberJson = localStorage.getItem('member');
+												    if (memberJson) {
+												        const member = JSON.parse(memberJson);
+												        
+												        // 멤버 정보를 페이지에 반영
+												        document.getElementById('profile-img').src = '${contextPath}' + member.profileImgPath;
+												        document.getElementById('memName').textContent = member.memName;
+												        document.getElementById('memNo').textContent = '@' + member.memNo;
+												        document.getElementById('deptName').textContent = member.deptName;
+												        document.getElementById('memGrade').textContent = member.memGrade;
+												        document.getElementById('extensionNumber').textContent = member.extensionNumber;
+												        document.getElementById('phone').textContent = member.phone;
+												        document.getElementById('memEmail').textContent = member.memEmail;
+												    } else {
+												        alert('멤버 정보를 로드할 수 없습니다.');
+												    }
+												});
+												</script>
+												
+
 
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card text-center">
                                     <div class="card-body">
-                                        <img src="${contextPath}${member.profileImgPath}" class="rounded-circle avatar-lg img-thumbnail"
-                                        alt="profile-image">
-
-                                        <h4 class="mb-0">${member.memName}</h4>
-                                        <p class="text-muted">@${member.memNo}</p>
+                                        <img id="profile-img" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+																				<h4 id="memName" class="mb-0"></h4>
+																				<p id="memNo" class="text-muted"></p>
 
                                         <div class="text-start mt-3">
-                                            
-                                            <p class="text-muted mb-2 font-13"><strong>소속부서 :</strong> <span class="ms-2">${member.deptName}</span></p>
-
-                                            <p class="text-muted mb-2 font-13"><strong>직급 :</strong> <span class="ms-2">${member.memGrade}</span></p>
-                                        
-                                            <p class="text-muted mb-2 font-13"><strong>내선번호 :</strong><span class="ms-2">${member.extensionNumber}</span></p>
-
-                                            <p class="text-muted mb-2 font-13"><strong>휴대폰번호 :</strong><span class="ms-2">${member.phone}</span></p>
-                                        
-                                            <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2">${member.memEmail }</span></p>
+                                            <p class="text-muted mb-2 font-13"><strong>소속부서 :</strong> <span class="ms-2" id="deptName"></span></p>
+																						<p class="text-muted mb-2 font-13"><strong>직급 :</strong> <span class="ms-2" id="memGrade"></span></p>
+																						<p class="text-muted mb-2 font-13"><strong>내선번호 :</strong><span class="ms-2" id="extensionNumber"></span></p>
+																						<p class="text-muted mb-2 font-13"><strong>휴대폰번호 :</strong><span class="ms-2" id="phone"></span></p>
+																						<p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2" id="memEmail"></span></p>
                                         </div>                                    
 
                                         
