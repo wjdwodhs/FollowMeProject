@@ -184,7 +184,7 @@
 			                          '<input type="hidden" id="sfNo-' + socialFeed.sfNo + '" name="sfNo" value="' + socialFeed.sfNo + '">' +
 			                          '<input type="hidden" class="memNo" name="memNo" value="${loginUser.memNo}">' +  // 사용자 회원 번호 설정
 			                          '<input type="hidden" class="sfMemNo" name="sfMemNo" value="' + socialFeed.memNo + '">' + 
-			                          '<div class="card-body">' +
+			                          '<div class="card-body" id="reply-box">' +
 			                            '<div class="d-flex align-items-start">' +
 			                              '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + socialFeed.profileImgPath + '" alt="user-image">' +
 			                              '<div class="w-100">' +
@@ -223,6 +223,9 @@
 			                        '</div>';
 
 			                      feedArea.append(feedHtml);
+			                      
+			                      
+
 
 			                      
 			                      // 댓글 리스트 추가
@@ -236,7 +239,7 @@
 			                      if (repliesForFeed.length > 0) {
 			                    	  	for (var k = 0; k < repliesForFeed.length; k++) {
 			                            var reply = repliesForFeed[k];
-			                        	  var isLastReply = (index === repliesForFeed.length - 1); //마지막댓글
+			                        	  var isLastReply = (k === repliesForFeed.length - 1); //마지막댓글
 			                            var commentBox = 
 			                              '<div class="post-user-comment-box mt-2" id="replyArea">' +
 			                                '<div class="d-flex align-items-start">' +
@@ -246,39 +249,39 @@
 			                                    reply.replyContent + '<br/>' +
 			                                  '</div>' +
 			                                '</div>' +
-			                                (isLastReply ? 
-			                                        '<div class="d-flex align-items-start mt-2">' +
-			                                          '<a class="pe-2" href="#">' +
-			                                            '<img src="' + contextPath + '${loginUser.profileImgPath}" class="rounded-circle" alt="Generic placeholder image" height="31">' +
-			                                          '</a>' +
-			                                          '<div class="w-100" style="display:flex;">' +
-			                                            '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
-			                                            '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
-			                                              '<i class="mdi mdi-send-outline me-1"></i>등록' +
-			                                            '</button>' +
-			                                          '</div>' +
-			                                        '</div>'
-			                                : '') +
 			                              '</div>';
+			                                
+			                                
+			                             
 
 			                            $('#replyList-' + reply.refBno).append(commentBox);
+			                            
+			                    	  	}
 			                          }
-			                        } else {
-			                            var noCommentBox = 
-			                                '<div class="d-flex align-items-start mt-2">' +
-			                                  '<img src="assets/images/users/user-1.jpg" height="32" class="align-self-start rounded me-2" alt="Arya Stark">' +
-			                                  '<div class="w-100" style="display:flex;">' +
-			                                    '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control form-control-light border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
-			                                    '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
-			                                      '<i class="mdi mdi-send-outline me-1"></i>등록' +
-			                                    '</button>' +
-			                                  '</div>' + 
-			                                '</div>';
+			                        	  
+			                        	  
+			                          
+			                          
+			                    	    var replyBox = 
+			                    	        '<div class="d-flex align-items-start mt-2">' +
+			                    	            '<a class="pe-2" href="#">' +  
+			                    	                '<img src="' + contextPath + '${loginUser.profileImgPath}" class="rounded-circle" alt="Generic placeholder image" height="31">' +
+			                    	            '</a>' +   
+			                    	            '<div class="w-100" style="display:flex;">' +
+			                    	                '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control form-control-light border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
+			                    	                '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
+			                    	                    '<i class="mdi mdi-send-outline me-1"></i>등록' +
+			                    	                '</button>' +
+			                    	            '</div>' + 
+			                    	        '</div>';
+			                    	        
+			                    	    $("#replyList-" + socialFeed.sfNo).append(replyBox);		                    	  	
+			                                
 
-			                          $('#replyList-' + socialFeed.sfNo).append(noCommentBox);
+			                                
 			                        }
 			                      }
-			                    }
+			                    
 			                  },
 			                  error: function(xhr, status, error) {
 			                    console.error('AJAX feedList failed:', status, error);
@@ -301,8 +304,10 @@
         				},
         				success:function(result){
         					if(result == "SUCCESS"){
+        						$("[id^='replyList-']").empty();
         						$("#replyContent-" + sfNo).val("");
-        						ajaxFeedList(sfNo); // 댓글 리스트 갱신 함수 호출
+        						ajaxFeedList(sfNo);
+        						
         					}else if(result == "FAIL"){
         	        	alert("댓글 작성 서비스", "다시 입력해주세요.");
         					}
@@ -317,6 +322,25 @@
         			alert("댓글 작성 서비스", "내용을 입력해주세요.");
         		}
         	}
+				  
+        	function appendNewReply(sfNo, replyContent) {
+        	    var contextPath = '${contextPath}';
+        	    var replyListElem = $('#replyList-' + sfNo);
+
+        	    var commentBox = 
+        	        '<div class="post-user-comment-box mt-2" id="replyArea">' +
+        	        '<div class="d-flex align-items-start">' +
+        	        '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + '${loginUser.profileImgPath}" alt="Generic placeholder image">' +
+        	        '<div class="w-100">' +
+        	        '<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + '${loginUser.memName}' + '</a> <small class="text-muted">현재</small></h5>' +
+        	        replyContent + '<br/>' +
+        	        '</div>' +
+        	        '</div>' +
+        	        '</div>';
+        	        
+        	    replyListElem.append(commentBox);
+        	}
+        	     
         	
 				  function frmFeed(num){
 					  $("#frm").attr("action", num==1 ? "${contextPath}/feed/modifyForm.page"

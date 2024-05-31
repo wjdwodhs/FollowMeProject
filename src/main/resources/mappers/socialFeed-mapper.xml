@@ -175,6 +175,12 @@
 		where reply_no = #{replyNo}
 	</update>
 	
+	<update id="updateReply">
+		update tb_reply
+		set reply_content
+		where reply_no = #{replyNo}
+	</update>
+	
 	<update id="deleteFeed">
 		update tb_socialfeed
 		set status = 'N'
