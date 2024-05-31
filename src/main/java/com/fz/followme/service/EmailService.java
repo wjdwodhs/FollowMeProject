@@ -3,6 +3,7 @@ package com.fz.followme.service;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -118,6 +119,37 @@ public class EmailService {
 		return emailDao.selectInBoxList(pi);
 	}
 	
+	// 휴지통 페이징
+	public int selectRecycleBinListCount() {
+		return emailDao.selectRecycleBinListCount();
+	}
+	
+	// 휴지통 목록
+	public List<EmailDto> selectRecycelBinList(PageInfoDto pi){
+		return emailDao.selectRecycelBinList(pi);
+	}
+	
+	
+	// 메일 복구
+	public int updateBackUpMails(List<Map<String, String>> checkMails) {
+		
+		int result = 0;
+		for( Map<String, String> mail : checkMails ) {
+			String emailNo = mail.get("emailNo");
+			String forder = mail.get("forder");
+			
+			if("INBOX".equals(forder) || "OUTBOX".equals(forder)) {
+				result += emailDao.updateBackUpMails(emailNo, forder);
+				}
+		}
+		return result;
+	}
+	
+	
+	// 메일 전체 삭제
+	public int deleteAllMails() {
+		return emailDao.deleteAllMails();
+	}
 	
 	
 }

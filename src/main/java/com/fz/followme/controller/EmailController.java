@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,6 +70,23 @@ public class EmailController {
 		return mv;
 	}
 
+	
+	// 체크된 메일 휴지통으로 이동
+	@PostMapping(value="/updatetrashinmail.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int ajaxUpdateInBoxMailStatusTrash(@RequestParam("checkMailStr") int[] checkMail) {
+		return emailService.updateMailStatusTrash(checkMail);
+	}
+	
+	
+	// 수신메일 상세조회
+	@GetMapping("/readreceivedmail.do")
+	public String emailreceivedRead(int no, Model model) {
+		
+		model.addAttribute("email", emailService.selectSendMail(no));
+		
+		return "/email/receivedDetail";
+	}
 	
 	
 	// =================================================================
@@ -154,11 +172,11 @@ public class EmailController {
 	
 	// 메일 상세내용 
 	@GetMapping("/readsendmail.do")
-	public String emailRead(int no, Model model) {
+	public String emailsendRead(int no, Model model) {
 		
 		model.addAttribute("email", emailService.selectSendMail(no));
 		
-		return "email/emailRead";
+		return "email/sendMailDetail";
 	}
 	
 	
@@ -180,6 +198,35 @@ public class EmailController {
 	
 	// ==========================================================
 
+	// 휴지통 목록
+	@RequestMapping("/recyclebin.do")
+	public ModelAndView recycleBin(@RequestParam(value="page", defaultValue="1") int currentPage
+			                       , ModelAndView mv){
+		int listCount = emailService.selectRecycleBinListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EmailDto> recycleList = emailService.selectRecycelBinList(pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("recycleList", recycleList)
+		  .setViewName("email/recycleBin");
+		
+		return mv;
+	}
+	
+	// 메일 복구
+	@ResponseBody	
+	@PostMapping("/backup.do")
+	public int ajaxBackUpMaeils(@RequestBody List<Map<String, String>> checkMails) {
+		return emailService.updateBackUpMails(checkMails);
+	}
+	
+	
+	// 휴지통 비우기(전체삭제)
+	@ResponseBody
+	@PostMapping("/empty.do")
+	public int ajaxAllDeleteMails() {
+		return emailService.deleteAllMails();
+	}
 	
 	
 }

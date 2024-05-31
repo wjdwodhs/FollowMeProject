@@ -114,6 +114,7 @@ public class Pop3EmailReceiver {
 			ed.setIsRead(0);
 			
 			emailDao.insertReceiveEmail(ed);
+			int emailNo = ed.getEmailNo();
 			
 			// 첨부파일이 있는 경우 저장 로직
 			if(message.getContent() instanceof Multipart) {
@@ -126,25 +127,38 @@ public class Pop3EmailReceiver {
 						String fileName = bodyPart.getFileName();
 						InputStream is = bodyPart.getInputStream();
 						
-						// InputStream을 MultipartFile로 변환
-						Map<String, String> map = fileUtil.fileUpload(is, fileName, "email");
+						try {
+							// 파일이름에 확장자가 없는 경우 예외 처리
+							if(fileName == null || fileName.trim().isEmpty() || fileName.lastIndexOf(".") == -1) {
+								throw new IllegalArgumentException("Filename does not contain an extension: " + fileName);
+							}
+							
+							// MIME 인코딩된 파일 이름 디코딩
+							fileName = decodeFileName(fileName);
+							
 						
-						// 첨부 파일 정보를 AttachmentDto 객체에 설정
-						AttachmentDto at = new AttachmentDto();
-						at.setFilePath(map.get("filePath"));
-						at.setOriginName(fileName);
-						at.setSystemName(map.get("filesystemName"));
-						at.setType("E");
-						at.setRefNo(ed.getEmailNo());
-						
-						// 첨부파일 DB에 추가
-						emailDao.insertAttachment(at);
+							// InputStream을 MultipartFile로 변환
+							Map<String, String> map = fileUtil.fileUpload(is, fileName, "email");
+							
+							// 첨부 파일 정보를 AttachmentDto 객체에 설정
+							AttachmentDto at = new AttachmentDto();
+							at.setFilePath(map.get("filePath"));
+							at.setOriginName(fileName);
+							at.setSystemName(map.get("filesystemName"));
+							at.setType("E");
+							at.setRefNo(emailNo);
+							
+							// 첨부파일 DB에 추가
+							emailDao.insertAttachment(at);
+						} catch (IllegalArgumentException e) {
+							 log.error("Error processing attachment: " + e.getMessage());
+                        }
 					}
 				}
 			}
 			
 		} catch(Exception e){
-			e.printStackTrace();
+			log.error("Error saving email to database: " + e.getMessage(), e);
 		}
 	}
 	
@@ -210,6 +224,21 @@ public class Pop3EmailReceiver {
 		}
 		return result.toString();
 	}
+	
+	
+	
+	// MIME 인코딩된 파일 이름 디코딩
+	private String decodeFileName(String fileName) {
+		try {
+			return MimeUtility.decodeText(fileName);
+		}catch (Exception e){
+			log.error("Error decoding filename: " + fileName, e);
+			return fileName;
+		}
+	}
+	
+	
+	
 	
 	
 }

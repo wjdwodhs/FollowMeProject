@@ -107,11 +107,9 @@
 	                                     style="background-color: #FFBE98; border: 1px solid #FFBE98;">전체메일</a>
 	
 	                                  <div class="mail-list mt-4">
-	                                      <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
-	                                      <a href="javascript: void(0);"><i class="dripicons-star me-2"></i>중요</a>
+	                                      <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일</a>
 	                                      <a href="${contextPath }/email/outbox.bo"><i class="dripicons-exit me-2"></i>보낸메일</a>
-	                                      <a href="javascript: void(0);"><i class="dripicons-document me-2"></i>임시보관함<span class="badge badge-soft-info float-end ms-2">32</span></a>
-	                                      <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
+	                                      <a href="${contextPath }/email/recyclebin.do"><i class="dripicons-trash me-2"></i>휴지통</a>
 	                                  </div>
 	
 	                              </div>
@@ -121,16 +119,6 @@
 	
 	                                  <div class="btn-group">
 	                                      <button type="button" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
-	                                  </div>
-	                                  <div class="btn-group">
-	                                      <button type="button" class="btn btn-sm btn-light dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
-	                                          <i class="mdi mdi-folder font-18"></i>
-	                                          <i class="mdi mdi-chevron-down"></i>
-	                                      </button>
-	                                      <div class="dropdown-menu">
-	                                          <span class="dropdown-header">이동</span>
-	                                          <a class="dropdown-item" href="javascript: void(0);">임시보관함</a>
-	                                      </div>
 	                                  </div>
 	                                  
 	                                  

@@ -165,7 +165,7 @@
 		 </foreach>
 </update>
 
-<!-- 받은메일 상세조회  -->
+<!-- 메일 상세조회  -->
 <select id="selectSendMail" resultMap="emailResult">
 	select
 	       email_no
@@ -220,9 +220,47 @@
 	    by regist_date desc
 </select>
 
+<!-- 휴지통 페이징 -->
+<select id="selectRecycleBinListCount" resultType="_int">
+	select count(*)
+	  from tb_email
+	 where forder = 'TRASH'
+	   and email_status = 'ACTIVE'
+</select>
 
+<!-- 휴지통 조회 -->
+<select id="selectRecycelBinList" resultMap="emailResult">
+	select
+	       email_no
+	     , email_from
+	     , email_to
+	     , subject
+	     , text
+	     , to_char(regist_date, 'YYYY.MM.DD HH24:MI') regist_date
+	     , email_status
+	     , forder
+	     , is_important
+	     , is_read
+	  from tb_email
+	 where forder = 'TRASH'
+	   and email_status = 'ACTIVE'
+	 order
+	    by regist_date desc
+</select>
 
+<!-- 휴지통에 있는 선택메일 복구 -->
+<update id="updateBackUpMails">
+	update tb_email
+	   set forder = #{forder}
+	 where email_no = #{emailNo}
+</update>
 
+<!-- 메일 전체 삭제  -->
+<delete id="deleteAllMails">
+	delete 
+	  from tb_email
+	 where forder = 'TRASH'
+</delete>
 
 
 </mapper>

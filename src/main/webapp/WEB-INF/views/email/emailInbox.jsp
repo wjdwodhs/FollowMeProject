@@ -40,6 +40,9 @@
      --ct-btn-hover-bg:#FA9A85;
      --ct-btn-hover-border-color:#FA9A85;   
   } 
+ .message-list li .unread {
+    font-weight: bold;
+}
  .message-list li .col-mail-2 .date {
     right: 0;
     width: 130px;
@@ -105,7 +108,7 @@
                           <div class="mail-list mt-4">
                               <a href="${contextPath }/email/email.page" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">${pi.listCount}</span></a>
                               <a href="${contextPath }/email/outbox.bo"><i class="dripicons-exit me-2"></i>보낸메일</a>
-                              <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
+                              <a href="${contextPath }/email/recyclebin.do"><i class="dripicons-trash me-2"></i>휴지통</a>
                           </div>
 
                       </div>
@@ -114,7 +117,7 @@
                       <div class="inbox-rightbar">
 
 	                      <div class="btn-group">
-	                          <button type="button" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
+	                          <button type="button" id="trach-btn" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
 	                      </div>
 
 
@@ -126,16 +129,18 @@
                             		</c:when>
                             		<c:otherwise>
                             			<c:forEach var="mail" items="${ inList }">
-	                                  <li class="${ mail.isRead  == 0 ? 'unread' : '' }">
+	                                  <li class="${mail.isRead == 0 ? 'unread' : ''}">
 	                                      <div class="col-mail col-mail-1">
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
 	                                              <label for="mailCheck_${mail.emailNo}" class="toggle"></label>
 	                                              <input type="hidden" id="mailNo" value="${ mail.emailNo }">
 	                                          </div>
-	                                          <div class="title"><c:out value="${mail.emailFrom}" escapeXml="false" /></div>
+	                                          <div class="title" onclick="location.href='${contextPath}/email/readreceivedmail.do?no=${mail.emailNo}';">
+	                                          	<c:out value="${mail.emailFrom}" escapeXml="false" />
+	                                          </div>
 	                                      </div>
-	                                      <div class="col-mail col-mail-2">
+	                                      <div class="col-mail col-mail-2" onclick="location.href='${contextPath}/email/readreceivedmail.do?no=${mail.emailNo}';">
 	                                          <div class="subject"><c:out value="${ mail.subject }" /></div>
 	                                          <div class="date" style="width:130px">${ mail.registDate }</div>
 	                                      </div>
@@ -191,6 +196,52 @@
 	
 
 			</div>
+
+
+	<script>
+		$(document).ready(function(){
+			$("#trach-btn").on("click", function(){
+				
+				var checkMails = [];
+				
+				$(".checkbox-wrapper-mail input[type='checkbox']:checked").each(function(){
+					var emailNo = $(this).closest("li").find("input[type='hidden']").val();
+					checkMails.push(emailNo);
+				});
+				
+				console.log("checkMails : ", checkMails );
+				
+				var checkMailStr = checkMails.join(",");
+				
+				$.ajax({
+					url:"${contextPath}/email/updatetrashinmail.do",
+					type:"post",
+					data:{checkMailStr:checkMailStr},
+					success:function(result){
+						if(result > 0){
+							console.log("휴지통으로 이동 성공");
+							location.reload();
+						}else{
+							console.log("이동실패");
+						}
+					},
+					error:function(){
+						console.log("휴지통으로 이동 ajax통신실패");
+					}
+				
+				})
+				
+			})		
+		})
+		
+	</script>
+
+
+
+
+
+
+
 
       <!-- ============================================================== -->
       <!-- <-- End Page Content

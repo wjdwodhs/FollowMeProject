@@ -1,6 +1,8 @@
 package com.fz.followme.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -74,6 +76,30 @@ public class EmailDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return sqlSessionTemplate.selectList("emailMapper.selectInBoxList", null, rowBounds);
+	}
+	
+	public int selectRecycleBinListCount() {
+		return sqlSessionTemplate.selectOne("emailMapper.selectRecycleBinListCount");
+	}
+	
+	public List<EmailDto> selectRecycelBinList(PageInfoDto pi){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() -1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSessionTemplate.selectList("emailMapper.selectRecycelBinList", null, rowBounds);
+	}
+	
+	public int updateBackUpMails(String emailNo, String forder) {
+		Map<String, Object> checkMails = new HashMap<>();
+		checkMails.put("emailNo", emailNo);
+		checkMails.put("forder", forder);
+		
+		return sqlSessionTemplate.update("emailMapper.updateBackUpMails", checkMails);
+	}
+	
+	public int deleteAllMails() {
+		return sqlSessionTemplate.delete("emailMapper.deleteAllMails");
 	}
 
 }

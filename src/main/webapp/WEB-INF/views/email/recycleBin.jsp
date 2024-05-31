@@ -29,17 +29,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	.a.nav-link.active{background-color:#FEBE98;}
-  .active>.page-link, .page-link.active {
+	
+  .active>.page-link, .page-link.active { 
    --ct-pagination-active-bg: #febe98;
+}
 
- 	.btn-group>button{
-    background-color: #FFBE98;
-     border: 1px solid #FFBE98; /* 테두리 */
-     --ct-btn-active-bg:#FA9A85;    
-     --ct-btn-active-border-color:#FA9A85;
-     --ct-btn-hover-bg:#FA9A85;
-     --ct-btn-hover-border-color:#FA9A85;   
-  } 
  .message-list li .col-mail-2 .date {
     right: 0;
     width: 130px;
@@ -103,9 +97,9 @@
                              style="background-color: #FFBE98; border: 1px solid #FFBE98;">메일작성</a>
 
                           <div class="mail-list mt-4">
-                              <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2"></span></a>
-                              <a href="${contextPath }/email/outbox.bo" class="text-primary fw-bold"><i class="dripicons-exit me-2"></i>보낸메일<span class="badge badge-soft-info float-end ms-2">${pi.listCount}</span></a>
-                              <a href="${contextPath }/email/recyclebin.do"><i class="dripicons-trash me-2"></i>휴지통</a>
+                              <a href="${contextPath }/email/email.page"><i class="dripicons-inbox me-2"></i>전체메일</a>
+                              <a href="${contextPath }/email/outbox.bo"><i class="dripicons-exit me-2"></i>보낸메일</a>
+                              <a href="${contextPath }/email/recyclebin.do" class="fw-bold"><i class="dripicons-trash me-2"></i>휴지통<span class="badge bg-warning float-end ms-2">${pi.listCount}</span></a>
                           </div>
 
                       </div>
@@ -113,30 +107,45 @@
 
                       <div class="inbox-rightbar">
 
-													<!-- 삭제버튼 -->
+													<!-- 복구버튼 -->
                           <div class="btn-group">
-                              <button type="button" id="trash-btn" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
+                              <button type="button" id="backUp-btn" class="btn btn-light waves-effect">복구하기</button>
                           </div>
-
+                          <div class="btn-group">
+                          		<button type="button" class="btn btn-danger waves-effect"
+                          		        data-bs-toggle="modal" data-bs-target="#resycleBinList-delMobal">비우기</button>
+													</div>
+													
                           <div class="mt-3">
                               <ul class="message-list">
                               	<c:choose>
-                              		<c:when test="${ empty outList }">
+                              		<c:when test="${ empty recycleList }">
                               		 <li>조회된 메일이 없습니다.</li>
                               		</c:when>
                               		<c:otherwise>
-	                                  <c:forEach var="mail" items="${ outList }">   
+	                                  <c:forEach var="mail" items="${ recycleList }">   
 	                                   <li>
 	                                      <div class="col-mail col-mail-1" >
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
 	                                              <label for="mailCheck_${mail.emailNo}" class="toggle"></label>
-	                                              <input type="hidden" id="emailNo" value="${ mail.emailNo }">
+	                                              <input type="hidden" name="emailNo" value="${ mail.emailNo }">
+	                                              <input type="hidden" id="forder" value="${mail.emailTo eq 'followme180624@gmail.com' ? 'INBOX' : 'OUTBOX'}">
 	                                          </div>
-	                                          <div class="title" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">${ mail.emailTo }</div>
+	                                          <!-- [보낸메일] or [받은메일] 메일주소 앞에 표시하기 -->
+	                                          <div class="title" style="width:300px; left:50px;">
+	                                          	<c:choose>
+	                                          		<c:when test="${mail.emailTo eq 'followme180624@gmail.com'}">
+	                                          			<c:out value="[받은메일] ${mail.emailFrom}" escapeXml="false" />
+	                                          		</c:when>
+	                                          		<c:otherwise>
+	                                          			[보낸메일] ${ mail.emailTo }
+	                                          		</c:otherwise>
+	                                          	</c:choose>
+	                                          </div>
 	                                      </div>
-	                                      <div class="col-mail col-mail-2" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
-									                            <div class="subject"><c:out value="${mail.subject}" /></div>
+	                                      <div class="col-mail col-mail-2">
+									                            <div class="subject" style="left:20px;"><c:out value="${mail.subject}" /></div>
 									                            <div class="date" style="width: 130px;">${mail.registDate}</div>
 	                                      </div>
 	                                  	</li>
@@ -190,45 +199,88 @@
 
 			</div>
 			
+		<!-- 메일비우기 모달 -->
+		<div id="resycleBinList-delMobal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title" id="standard-modalLabel">메일전체삭제</h4>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <p>삭제버튼을 누르시면 메일이 <b>전부</b> 삭제됩니다.</p>
+	                <p>휴지통을 비우시겠습니까?</p></div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn w-sm btn-light waves-effect" data-bs-dismiss="modal">취소</button>
+	                <button type="button" id="allDelete-btn" class="btn btn-primary" 
+	                        style="background-color: #FFBE98; border: none;">삭제</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	  </div>
+	<!-- 선택예약 삭제 모달 -->	
+			
+			
+			
+			
+			
+			
 			
 			
 	<script>
 	
-	// 선택한 메일 휴지통으로 이동
+	// 선택한 메일 복구하기
 	$(document).ready(function(){
-		$("#trash-btn").on("click", function(){
+		$("#backUp-btn").on("click", function(){
+			var checkMails = [];
 			
-				var checkMails = [];
-				
-				$(".checkbox-wrapper-mail input[type='checkbox']:checked").each(function(){
-					var emailNo = $(this).closest("li").find("input[type='hidden']").val();
-					checkMails.push(emailNo);
-				});
-				
-					console.log("checkMails :", checkMails);
-				
-				var checkMailStr = checkMails.join(",");
-				
+			$(".checkbox-wrapper-mail input[type='checkbox']:checked").each(function(){
+				var emailNo = $(this).closest("li").find("input[name='emailNo']").val();				
+				var forder = $(this).closest("li").find("#forder").val();
+				checkMails.push({emailNo:emailNo, forder:forder});
+			})
+			console.log(checkMails);
+			
+			
 			$.ajax({
-				url:"${contextPath}/email/updatetrash.do",
+				url:"${contextPath}/email/backup.do",
 				type:"post",
-				data:{checkMailStr:checkMailStr},
+				contentType:"application/json",
+				data: JSON.stringify(checkMails),
 				success:function(result){
-					if(result > 0){				
-						console.log("휴지통으로 이동 성공");
+					if(result > 0){
+						alert("선택하신 메일이 복구되었습니다.");
 						location.reload();
 					}else{
-						console.log("이동실패");
+						console.log("복구실패");
 					}
 				},
 				error:function(){
-					console.log("휴지통으로 이동 ajax통신 실패");
+					console.log("메일복구 ajax 실패");
 				}
-			})	
+			})
 			
-				
 		})
 	})
+	
+	
+	// 휴지통 비우기
+		$("#allDelete-btn").on("click", function(){
+			$.ajax({
+				url:"${contextPath}/email/empty.do",
+				type:"post",
+				success:function(result){
+					console.log(result);
+					if(result>0){
+						alert("휴지통에 있는 메일을 전부 비웠습니다.");
+						location.reload();
+					}
+				},
+				error:function(){
+					console.log("휴지통비우기 ajax실패");
+				}
+			})
+		})
 
 	
 	
