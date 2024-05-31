@@ -29,6 +29,7 @@ public class MemberDto {
 	private String address;
 	private String memEmail;
 	private String memGrade;
+	private String gradeLevel;
 	private String memRole;
 	private String extensionNumber;
 	private String phone;

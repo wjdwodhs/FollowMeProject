@@ -15,6 +15,7 @@
 		<result column="mem_address" property="address"/>
 		<result column="mem_email" property="memEmail"/>
 		<result column="mem_grade" property="memGrade"/>
+		<result column="grade_level" property="gradeLevel"/>
 		<result column="mem_role" property="memRole"/>
 		<result column="extension_number" property="extensionNumber"/>
 		<result column="phone" property="phone"/>
@@ -64,8 +65,8 @@
 			 	 profile_img_path, mem_gender, 
 			 	 mem_name, mem_securityno,
 			 	 mem_address, sig_img_path,
-			 	 mem_email, mem_grade, mem_role,
-			 	 extension_number, phone, 
+			 	 mem_email, mem_grade, grade_level, 
+			 	 mem_role, extension_number, phone, 
 			 	 enroll_Date, quit_date, mem_salary,
 			 	 account_no,
 			 	 mem_incentive, mem_certificate, mem_welfare,
