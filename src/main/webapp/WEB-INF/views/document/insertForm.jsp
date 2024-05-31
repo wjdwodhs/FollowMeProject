@@ -472,6 +472,20 @@ tr>th, tr>td {
           var foodCost = document.getElementById('foodCost');
           var roomCost = document.getElementById('roomCost');
           var etcCost = document.getElementById('etcCost');
+       
+          
+          if(transportCost.value.trim() === ''){
+        	  transportCost.value = '0';
+          }else if(fuelCost.value.trim() === ''){
+        	  fuelCost.value = '0';
+          }else if(foodCost.value.trim() === ''){
+        	  foodCost.value = '0';
+          }else if(roomCost.value.trim() === ''){
+        	  roomCost.value = '0';
+          }else if(etcCost.value.trim() === ''){
+        	  etcCost.value = '0';
+          }
+
 
           // 요소가 존재하고 값이 비어있지 않은 경우에만 계산
           if (transportCost && fuelCost && foodCost && roomCost && etcCost) {
@@ -484,8 +498,22 @@ tr>th, tr>td {
           }
       }
   
-      changeTotalCost();
-      
+      document.addEventListener("DOMContentLoaded", function() {
+          var inputs = ['transportCost', 'fuelCost', 'foodCost', 'roomCost', 'etcCost'];
+
+          inputs.forEach(function(id) {
+              var input = document.getElementById(id);
+              input.value = '0'; // 초기 값 설정
+              input.addEventListener('change', function() {
+                  if (input.value.trim() === '') {
+                      input.value = '0';
+                  }
+                  changeTotalCost();
+              });
+          });
+
+          changeTotalCost();
+      });      
   </script>
   
   <!-- 7. 협조문 날짜 선택 스크립트 -->

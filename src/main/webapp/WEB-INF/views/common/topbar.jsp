@@ -235,25 +235,7 @@
 						    }
 					    
 			        });
-		        }
-		        
-		        function deleteAlarm(){
-		        	$("#red").css("display", "none");
-		        	
-			        $.ajax({
-					    url: "${contextPath}/deleteAlarm",
-					    type: 'post',
-					    success: function(result){  
-					    	sock.send("delete list");
-					    	
-					    	 setTimeout(function() {
-					           alarmList();
-					       }, 500); // 필요에 따라 딜레이를 조정합니다.
-	                
-					    
-					    }
-			        });
-		        }
+        		}
 		        
 		        $(document).ready(function() {
 		            alarmList(); //알람리스트 호출
@@ -284,16 +266,14 @@
 		                            <h6 class="m-0 font-16 fw-semibold"> 알림</h6>
 		                        </div>
 		                        <div class="col-auto">
-		                            <a href="javascript: void(0);" class="text-dark text-decoration-underline" id="deleteAlarm">
-		                                <small>Clear All</small>
-		                            </a> 
+
 		                        </div>
 		                    </div>
 		                </div>
 		
 										<!-- 하단의 알람리스트는 AlaramController에 알람리스틑 조회하는 ajax용 controller 작성후 페이지 렌더링시 ajax실행시켜서 뿌리도록 -->
 										<div class="px-1" style="max-height: 300px;" id="alarmContainer" data-simplebar>
-										
+
 										</div>
 		            </div>
 		        </li>       

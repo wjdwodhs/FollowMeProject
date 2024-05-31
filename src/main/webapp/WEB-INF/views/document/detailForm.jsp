@@ -406,6 +406,10 @@ input:focus, td>textarea:focus {
 							        					document.getElementById('memGrade').innerText = '${document.memGrade}';
 								        				document.getElementById('memName').innerText =  '${document.memName}';
 																document.getElementById('approverInf').innerText = '${document.approverInf}';
+										            if('${document.midApproveStatus}' === 'Y'){
+										            	document.getElementById('midApproverSig').style.display = 'inline-block';
+																	document.getElementById('midApproverSig').src = '${contextPath}${document.midApproverSig}';
+										            }
 
 												      // 5번 양식 detail array list 불러오기 ajax
 															$.ajax({
@@ -451,23 +455,12 @@ input:focus, td>textarea:focus {
 																document.getElementById('docuStartPlace').innerText = '${document.docuStartPlace}';
 																document.getElementById('docuEndPlace').innerText = '${document.docuEndPlace}';
 																document.getElementById('date').innerText = '${document.docuStartDate}' + '  ~  ' + '${document.docuEndDate}';
-																document.getElementById('docuTransportCost').innerText = '${document.docuTransportCost}';
-																document.getElementById('docuFoodCost').innerText = '${document.docuFoodCost}';
-																document.getElementById('docuFuelCost').innerText = '${document.docuFuelCost}';
-																document.getElementById('docuRoomCost').innerText = '${document.docuRoomCost}';
-																document.getElementById('docuEtcCost').innerText = '${document.docuEtcCost}';
-																
-																var transportCost = parseInt(document.getElementById('docuTransportCost').innerText);
-																var foodCost = parseInt(document.getElementById('docuFoodCost').innerText);
-																var fuelCost = parseInt(document.getElementById('docuFuelCost').innerText);
-																var roomCost = parseInt(document.getElementById('docuRoomCost').innerText);
-																var etcCost = parseInt(document.getElementById('docuEtcCost').innerText);
-
-																// 숫자들을 합산합니다.
-																var totalCost = transportCost + foodCost + fuelCost + roomCost + etcCost;
-
-																// 합산된 값을 'docuCost' 요소의 innerText로 설정합니다.
-																document.getElementById('docuCost').innerText = totalCost + '원';
+																document.getElementById('docuTransportCost').innerText = '${document.docuTransportCost}' + ' 원';
+																document.getElementById('docuFoodCost').innerText = '${document.docuFoodCost}' + ' 원';
+																document.getElementById('docuFuelCost').innerText = '${document.docuFuelCost}' + ' 원';
+																document.getElementById('docuRoomCost').innerText = '${document.docuRoomCost}' + ' 원';
+																document.getElementById('docuEtcCost').innerText = '${document.docuEtcCost}' + ' 원';
+																document.getElementById('docuCost').innerText = '${document.docuCost}' + ' 원';
 							        				}else if(${document.docuCategory} == '7'){
 										            if('${document.midApproveStatus}' === 'Y'){
 										            	document.getElementById('midApproverSig').style.display = 'inline-block';

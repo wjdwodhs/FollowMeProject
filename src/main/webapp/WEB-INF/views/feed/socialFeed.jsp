@@ -85,13 +85,15 @@
 		                                  <!-- comment box -->
 		                                  <div class="border rounded">
 		                                      <form action="${contextPath}/feed/insert" method="post" class="comment-area-box" enctype="multipart/form-data">
-		                                      		<input type="hidden" name="memNo" id="memNo" value="${loginUser.memNo}">
-		                                      	
+		                                      		<input type="hidden" name="memNo" id="memNo" value="${loginUser.memNo}">		                                      	
 		                                          <textarea rows="6" class="form-control border-0" style="resize:none;" placeholder="내용을 입력하세요" required name="sfContent"></textarea>
 		                                          <div class="p-2 bg-light d-flex justify-content-between align-items-center">
-		                                              <div>
+		                                              <div style="display:flex;">
 		                                              		<input type="file" id="upfile" name="uploadFiles" style="display:none;" multiple>
 		                                                  <a href="#" class="btn btn-sm px-2 font-16 btn-light" onclick="$('#upfile').click();"><i class="mdi mdi-image-outline"></i></a>
+				                                              <div id="imagePreview" style="margin-left:20px;">
+				                                              	<!-- 이미지 넣는 영역 -->
+				                                              </div>
 		                                              </div>
 		                                              <button type="submit" class="btn btn-sm" style="background-color:#febe98; color:white;"><i class='mdi mdi-send-outline me-1'></i>등록하기</button>
 		                                          </div>
@@ -105,8 +107,37 @@
 		                  <!-- end new post -->
 				   
 				   				
+				   				
+				  <script>
+				    $(document).ready(function() {
+				        $('#upfile').on('change', function() {
+				            var files = $(this)[0].files;
+				            var imagePreview = $('#imagePreview');
+
+				            // 이미지를 보여줄 영역 비우기
+				            imagePreview.empty();
+
+				            // 파일이 선택되었을 때
+				            if (files.length > 0) {
+				                for (var i = 0; i < files.length; i++) {
+				                    var reader = new FileReader();
+				                    reader.onload = function(e) {
+				                        // 이미지 태그 생성하여 이미지 미리보기 추가
+				                        var img = $('<img>');
+				                        img.attr('src', e.target.result);
+				                        img.attr('style', 'max-width: 65px; max-height: 65px; margin-right: 5px;');
+				                        imagePreview.append(img);
+				                    }
+				                    reader.readAsDataURL(files[i]);
+				                }
+				            }
+				        });
+				    });
+				  </script>
 												
 				  <script>           		
+				  
+
 				  
 				  $(".memNo").val("${loginUser.memNo}");
 				  
@@ -145,24 +176,31 @@
 			                        });
 			                        attachments += '</div>';
 			                      }
-
+			                      console.log("socialFeed.memNo1: ", socialFeed.memNo);
 			                      var feedHtml = 
 			                        '<div class="card" style="width: 1040px;">' +
 			                          '<input type="hidden" id="sfNo-' + socialFeed.sfNo + '" name="sfNo" value="' + socialFeed.sfNo + '">' +
 			                          '<input type="hidden" class="memNo" name="memNo" value="${loginUser.memNo}">' +  // 사용자 회원 번호 설정
+			                          '<input type="hidden" class="sfMemNo" name="sfMemNo" value="' + socialFeed.memNo + '">' + 
 			                          '<div class="card-body">' +
 			                            '<div class="d-flex align-items-start">' +
 			                              '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + socialFeed.profileImgPath + '" alt="user-image">' +
 			                              '<div class="w-100">' +
-			                                '<div class="dropdown float-end text-muted">' +
-			                                  '<a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">' +
-			                                    '<i class="mdi mdi-dots-horizontal"></i>' +
-			                                  '</a>' +
-			                                  '<div class="dropdown-menu dropdown-menu-end">' +
-			                                    '<a href="javascript:void(0);" class="dropdown-item">수정하기</a>' +
-			                                    '<a href="javascript:void(0);" class="dropdown-item">삭제하기</a>' +
-			                                  '</div>' +
-			                                '</div>' +
+			                                '<div class="dropdown float-end text-muted">';
+			                                
+			                                if (${loginUser.memNo} === socialFeed.memNo) {
+
+			                                    feedHtml += '<a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">' +
+			                                            '<i class="mdi mdi-dots-horizontal"></i>' +
+			                                        '</a>' +
+			                                        '<div class="dropdown-menu dropdown-menu-end">' +
+			                                            '<a href="javascript:void(0);" class="dropdown-item">수정하기</a>' +
+			                                            '<a href="javascript:void(0);" class="dropdown-item">삭제하기</a>' +
+			                                        '</div>';
+			                                }
+						                      		console.log("socialFeed.memNo: ",socialFeed.memNo);
+			                                
+			                                feedHtml += '</div>' +
 			                                '<h5 class="m-0">' + socialFeed.memName + '</h5>' +
 			                                '<p class="text-muted"><small>' + socialFeed.enrollDate + '</small></p>' +
 			                              '</div>' +
@@ -179,7 +217,6 @@
 
 			                      feedArea.append(feedHtml);
 
-			                      
 			                      
 			                      // 댓글 리스트 추가
 			                      var repliesForFeed = replyList.filter(function(reply) {

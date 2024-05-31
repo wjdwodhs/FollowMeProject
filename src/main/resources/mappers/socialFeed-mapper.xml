@@ -90,6 +90,7 @@
 	<select id="selectList" resultMap="socialFeedResultMap">
 	<![CDATA[
 		select sf_no
+				 , s.mem_no
 				 , mem_name
 				 , profile_img_path
 				 , sf_content

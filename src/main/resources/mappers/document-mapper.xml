@@ -765,6 +765,7 @@
 				 		 where m.mem_no = d.final_approver) as final_approver_sig
 				 , (select dept_name || ' ' || mem_name || ' ' || mem_grade
 				      from tb_mem m
+				      join tb_department d on m.dept_no = d.dept_no
 				     where m.mem_no = d.final_approver) as approver_inf
 				 , (select dept_name
 				 			from tb_department
