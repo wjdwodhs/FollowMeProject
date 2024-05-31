@@ -42,7 +42,7 @@
  
 /* 버튼 E: 어두운 색상, 밝은 텍스트 */
 .btn-customE {
-    background-color: #8C3737; /* 어두운 색상 */
+    background-color: pink; /* 어두운 색상 */
     width: 265px;
     height: 37px;
     color: #ffffff; /* 흰색 텍스트 */
@@ -50,7 +50,7 @@
 }
 
 .btn-customE:hover {
-    background-color: #6F2E2E; /* 호버 시 배경색: 더 어둡게 */
+    background-color: #ffb6c1; /* 호버 시 배경색: 더 어둡게 */
 }
 
 /* 버튼 D: 중간 색상, 밝은 텍스트 */
@@ -210,16 +210,16 @@
 													    <select class="form-select" name="category" id="event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													                <option value="#BA6B6B">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													                <option value="#BA6B6B">부서</option>
 													                <option value="#FF7F7F">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -293,16 +293,16 @@
 													    <select class="form-select" name="category" id="modify-event-category" required>
 													        <c:choose>
 													            <c:when test="${loginUser.memGrade == '팀장'}">
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													                <option value="#BA6B6B">부서</option>
 													            </c:when>
 													            <c:when test="${loginUser.memGrade == '대표'}">
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													                <option value="#BA6B6B">부서</option>
 													                <option value="#FF7F7F">회사</option>
 													            </c:when>
 													            <c:otherwise>
-													                <option value="#8C3737" selected>개인</option>
+													                <option value="pink" selected>개인</option>
 													            </c:otherwise>
 													        </c:choose>
 													    </select>
@@ -377,7 +377,7 @@
 															<select
 																class="form-select" name="category" id="chk-event-category"
 																required>
-																<option value="#8C3737" selected>개인</option>
+																<option value="pink" selected>개인</option>
 																<option value="#BA6B6B">부서</option>
 																<option value="#FF7F7F">회사</option>
 															</select>
