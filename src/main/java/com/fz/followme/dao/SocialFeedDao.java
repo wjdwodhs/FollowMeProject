@@ -30,15 +30,42 @@ public class SocialFeedDao {
 		return sqlSessionTemplate.selectList("socialFeedMapper.selectList");
 	}
 	
-	// 댓글
-	
+	// 댓글리스트 조회
 	public List<ReplyDto> selectReplyList() {
 		return sqlSessionTemplate.selectList("socialFeedMapper.selectReplyList");	
 	}
 
+	// 댓글 작성
 	public int insertReply(ReplyDto reply) {
 		return sqlSessionTemplate.insert("socialFeedMapper.insertReply", reply);
 	}
+
+	// 피드게시글 조회
+	public SocialFeedDto selectFeed(int sfNo) {
+		return sqlSessionTemplate.selectOne("socialFeedMapper.selectFeed", sfNo);
+	}
+	
+	// 피드게시글 수정
+	public int updateFeed(SocialFeedDto socialFeed) {
+		return sqlSessionTemplate.update("socialFeedMapper.updateFeed", socialFeed);
+	}
+	
+	// 피드게시글, 첨부파일 삭제
+	public int deleteAttach(String[] delFileNo) {
+		return sqlSessionTemplate.delete("socialFeedMapper.deleteAttach", delFileNo);		
+	}
+	
+	public int deleteFeed(int sfNo) {
+		return sqlSessionTemplate.delete("socialFeedMapper.deleteFeed", sfNo);
+	}
+
+	public List<AttachmentDto> selectDelFileList(String[] delFileNo) {
+		return sqlSessionTemplate.selectList("socialFeedMapper.selectDelFileList", delFileNo);
+	}
+	
+	
+	
+	
 
 	/*
 	 * public int deleteReply(int replyNo) { return

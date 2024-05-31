@@ -109,12 +109,27 @@
          , file_no
          , file_path
          , system_name
+         , origin_name
 		  from tb_socialfeed s
 		  left join tb_mem m on s.mem_no = m.mem_no
-          left join tb_attachment on (type = 'S' and ref_no = sf_no)
+      left join tb_attachment on (type = 'S' and ref_no = sf_no)
 		 where s.status = 'Y'
 		 order by sf_no desc
 	 ]]>
+	</select>
+	
+	<select id="selectFeed" resultMap="socialFeedResultMap">
+		select sf_no
+				 , s.mem_no
+				 , sf_content
+				 , file_no
+				 , file_path
+				 , system_name
+				 , origin_name
+		  from tb_socialfeed s
+		  join tb_attachment on (type = 'S' and ref_no = sf_no)
+		 where s.status = 'Y'
+		   and sf_no = #{sfNo}
 	</select>
 	
 	<select id="selectReplyList" resultMap="replyResultMap">
@@ -159,6 +174,45 @@
 		set status = 'N'
 		where reply_no = #{replyNo}
 	</update>
+	
+	<update id="deleteFeed">
+		update tb_socialfeed
+		set status = 'N'
+		where sf_no = #{sfNo}
+	</update> 
+	
+	<select id="selectDelFileList" resultMap="attachmentResultMap">
+		select
+					 file_no
+				 , file_path
+				 , system_name
+				 , origin_name
+		  from tb_attachment
+			<where>
+				<foreach item="item" collection="array"
+								 open="file_no in (" separator="," close=")"> 
+					#{item}
+				</foreach>
+			</where>
+	</select>
+	
+	<update id="updateFeed">
+		update
+					 tb_socialfeed
+		   set sf_content = #{sfContent}
+		 where sf_no = #{sfNo}
+	</update>
+	
+	<delete id="deleteAttach">
+		delete
+		  from tb_attachment
+		 <where>
+		 	<foreach item="item" collection="array"
+		 					 open="file_no in (" separator="," close=")">  
+		 		#{item}
+		 	</foreach> 
+		 </where>
+	</delete>
 	
 
 

@@ -164,19 +164,21 @@
 								            </div>
 								          `);
 			                } else {
-			                    feedList.forEach(function(socialFeed) {
+			                		for (var i = 0; i < feedList.length; i++) {
+			                      var socialFeed = feedList[i];
 			                      var attachments = '';
 			                      if (socialFeed.attachList) {
 			                        attachments = '<div class="row">';
-			                        socialFeed.attachList.forEach(function(at) {
+			                        for (var j = 0; j < socialFeed.attachList.length; j++) {
+			                          var at = socialFeed.attachList[j];
 			                          attachments +=
 			                            '<div class="col-sm">' +
 			                              '<img src="' + contextPath + at.filePath + '/' + at.systemName + '" alt="post-img" class="rounded me-1 img-fluid mb-3">' +
 			                            '</div>';
-			                        });
+			                        }
 			                        attachments += '</div>';
 			                      }
-			                      console.log("socialFeed.memNo1: ", socialFeed.memNo);
+			                      
 			                      var feedHtml = 
 			                        '<div class="card" style="width: 1040px;">' +
 			                          '<input type="hidden" id="sfNo-' + socialFeed.sfNo + '" name="sfNo" value="' + socialFeed.sfNo + '">' +
@@ -188,17 +190,22 @@
 			                              '<div class="w-100">' +
 			                                '<div class="dropdown float-end text-muted">';
 			                                
-			                                if (${loginUser.memNo} === socialFeed.memNo) {
 
-			                                    feedHtml += '<a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">' +
-			                                            '<i class="mdi mdi-dots-horizontal"></i>' +
-			                                        '</a>' +
-			                                        '<div class="dropdown-menu dropdown-menu-end">' +
-			                                            '<a href="javascript:void(0);" class="dropdown-item">수정하기</a>' +
-			                                            '<a href="javascript:void(0);" class="dropdown-item">삭제하기</a>' +
-			                                        '</div>';
-			                                }
-						                      		console.log("socialFeed.memNo: ",socialFeed.memNo);
+			                               console.log("글번호:", socialFeed.sfNo);
+                            if(${loginUser.memNo} === parseInt(socialFeed.memNo)) {
+
+                                feedHtml +=
+                                	'<form id="frm" action="" method="get" align="center">' + 
+                                		'<input type="hidden" name="sfNo" value="' + socialFeed.sfNo + '">' +
+                                		'<a href="#" class="dropdown-toggle text-muted font-18" data-bs-toggle="dropdown" aria-expanded="false">' +
+                                        '<i class="mdi mdi-dots-horizontal"></i>' +
+                                    '</a>' +
+                                    '<div class="dropdown-menu dropdown-menu-end">' +
+                                        '<button type="submit" class="dropdown-item" onclick="frmFeed(1);">수정하기</a>' +
+                                        '<button type="submit" class="dropdown-item" onclick="frmFeed(2);">삭제하기</a>' +
+                                    '</div>' +
+                                  '</form>';
+                            }
 			                                
 			                                feedHtml += '</div>' +
 			                                '<h5 class="m-0">' + socialFeed.memName + '</h5>' +
@@ -227,7 +234,8 @@
 			                      $('#rcount-' + socialFeed.sfNo).text(repliesForFeed.length);
 			                      
 			                      if (repliesForFeed.length > 0) {
-			                          repliesForFeed.forEach(function(reply, index) {
+			                    	  	for (var k = 0; k < repliesForFeed.length; k++) {
+			                            var reply = repliesForFeed[k];
 			                        	  var isLastReply = (index === repliesForFeed.length - 1); //마지막댓글
 			                            var commentBox = 
 			                              '<div class="post-user-comment-box mt-2" id="replyArea">' +
@@ -254,7 +262,7 @@
 			                              '</div>';
 
 			                            $('#replyList-' + reply.refBno).append(commentBox);
-			                          });
+			                          }
 			                        } else {
 			                            var noCommentBox = 
 			                                '<div class="d-flex align-items-start mt-2">' +
@@ -269,7 +277,7 @@
 
 			                          $('#replyList-' + socialFeed.sfNo).append(noCommentBox);
 			                        }
-			                      });
+			                      }
 			                    }
 			                  },
 			                  error: function(xhr, status, error) {
@@ -310,16 +318,19 @@
         		}
         	}
         	
+				  function frmFeed(num){
+					  $("#frm").attr("action", num==1 ? "${contextPath}/feed/modifyForm.page"
+																						: "${contextPath}/feed/delete.do");
+				  }
+				  
+
+				  
      			$(document).ready(function(){
      				ajaxFeedList();
      				
      			})
 					 
      			</script>
-     			
-				
-				
-				
 		
 		                  
 		      </div>
