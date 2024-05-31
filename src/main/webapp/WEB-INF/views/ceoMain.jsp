@@ -290,7 +290,9 @@
 				                                       <c:forEach var="newList" items="${ latestNoticeList }">
 				                                        <tbody>
 				                                            <tr>
-				                                                <td>${newList.boardTitle}</td>
+				                                            		<td>
+				                                                	<a href="${contextPath}/board/detail.do?no=${newList.subNo}" style="color: inherit; text-decoration: none;">${newList.boardTitle}</a>
+				                                                </td>
 				                                                <td>${newList.enrollDate}</td>
 				                                            </tr>
 				                                        </tbody>
