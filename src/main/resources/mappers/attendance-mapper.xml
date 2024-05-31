@@ -416,6 +416,7 @@ WHERE
 							)
 					)
 					 and d.docu_category = 3  -- 휴가 신청서 조건 추가
+					 and m.mem_no = #{memNo}
 		 order
 		    by docu_no asc
 	</select>

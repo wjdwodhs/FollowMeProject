@@ -280,12 +280,12 @@
 	                                        <table id="leaveList" class="table table-bordered toggle-circle mb-0" data-page-size="7">
                                                 <thead>
 		                                                <tr>
-		                                                    <th>NO</th>
-		                                                    <th>문서유형</th>
-		                                                    <th>문서제목</th>
-		                                                    <th>기안일</th>
-		                                                    <th>결재상태</th>
-		                                                    <th>결재일</th>
+		                                                    <th style="width: 5%;">NO</th>
+																						            <th style="width: 15%;">문서유형</th>
+																						            <th style="width: 40%;">문서제목</th>
+																						            <th style="width: 15%;">기안일</th>
+																						            <th style="width: 15%;">결재상태</th>
+																						            <th style="width: 10%;">결재일</th>
 		
 		                                                </tr>
 		                                                </thead>
@@ -302,7 +302,7 @@
 								                                                <tr onclick="location.href='${contextPath}/document/detail?no=${d.docuNo}';">
 								                                                    <td>${d.rowNum}</td>
 								                                                    <td>${d.docuCategoryName}</td>
-								                                                    <td style="text-align: left;">${d.docuTitle}</td>
+								                                                    <td style="text-align: center;">${d.docuTitle}</td>
 								                                                    <td>${d.registDate}</td>
 								                                                    <td>
 										                                                    <c:if test="${d.status eq '0'}">
