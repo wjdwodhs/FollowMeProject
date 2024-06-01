@@ -389,35 +389,49 @@
                                   </div>
 			                            
 			                            <script>
-			                                $(document).ready(function() {
-			                                    $.ajax({
-			                                        url: '${contextPath}/chart/naverNews.do', 
-			                                        method: 'GET',
-			                                        success: function(response) {
-			                                            displayBlog(response, 'news-container');
-			                                        },
-			                                        error: function(xhr, status, error) {
-			                                            console.error('Error fetching blog:', error);
-			                                        }
-			                                    });
-			                                });
-			                                function displayBlog(newsData, containerId) {
-			                                    var newsContainer = document.getElementById(containerId);
-			                                    var newsHtml = '';
-			                                    if (!Array.isArray(newsData.items)) {
-			                                    	newsData.items = [newsData.items];
-			                                    }
-			                                    newsData.items.forEach(function(item) {
-			                                        if (item.title.includes('패션')) {
-			                                        	newsHtml += '<div class="blog-item">' +
-			                                                '<h5><a href="' + item.link + '" target="_blank">' + item.title + '</a></h5>' +
-			                                                '<p>' + item.description + '</p>' +
-			                                                '</div>';
-			                                        }
-			                                    });
-			                                    newsContainer.innerHTML = newsHtml;
-			                                }
-			                            </script>
+									                $(document).ready(function() {
+									                    fetchNewsWithRetry();
+									                });
+									
+									                function fetchNewsWithRetry(retries = 3, delay = 5000) {
+									                    $.ajax({
+									                        url: '${contextPath}/chart/naverNews.do',
+									                        method: 'GET',
+									                        success: function(response) {
+									                            displayBlog(response, 'news-container');
+									                        },
+									                        error: function(xhr, status, error) {
+									                            console.error('Error fetching news:', error);
+									                            if (retries > 0) {
+									                                console.log(`Retrying... (${retries} retries left)`);
+									                                setTimeout(function() {
+									                                    fetchNewsWithRetry(retries - 1, delay);
+									                                }, delay);
+									                            } else {
+									                                var newsContainer = document.getElementById('news-container');
+									                                newsContainer.innerHTML = '<p>뉴스를 불러오는 데 실패했습니다. 나중에 다시 시도해주세요.</p>';
+									                            }
+									                        }
+									                    });
+									                }
+									
+									                function displayBlog(newsData, containerId) {
+									                    var newsContainer = document.getElementById(containerId);
+									                    var newsHtml = '';
+									                    if (!Array.isArray(newsData.items)) {
+									                        newsData.items = [newsData.items];
+									                    }
+									                    newsData.items.forEach(function(item) {
+									                        if (item.title.includes('패션')) {
+									                            newsHtml += '<div class="blog-item">' +
+									                                '<h5><a href="' + item.link + '" target="_blank">' + item.title + '</a></h5>' +
+									                                '<p>' + item.description + '</p>' +
+									                                '</div>';
+									                        }
+									                    });
+									                    newsContainer.innerHTML = newsHtml;
+									                }
+									            </script>
 				                        </div>
 				                    </div>
 				                </div>	
