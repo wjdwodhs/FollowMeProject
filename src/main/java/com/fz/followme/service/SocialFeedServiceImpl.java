@@ -92,10 +92,10 @@ public class SocialFeedServiceImpl implements SocialFeedService {
 	}
 
 
+	@Override 
+	public int deleteReply(int replyNo){ 
+		 return socialFeedDao.deleteReply(replyNo); 
+	}
 	
-	/*
-	 * @Override public int deleteReply(int replyNo) { return
-	 * socialFeedDao.deleteReply(replyNo); }
-	 */
 
 }

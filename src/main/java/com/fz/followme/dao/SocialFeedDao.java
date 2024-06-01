@@ -50,25 +50,24 @@ public class SocialFeedDao {
 		return sqlSessionTemplate.update("socialFeedMapper.updateFeed", socialFeed);
 	}
 	
-	// 피드게시글, 첨부파일 삭제
+	// 피드 첨부파일 삭제
 	public int deleteAttach(String[] delFileNo) {
 		return sqlSessionTemplate.delete("socialFeedMapper.deleteAttach", delFileNo);		
 	}
 	
+	// 피드게시글 삭제
 	public int deleteFeed(int sfNo) {
 		return sqlSessionTemplate.delete("socialFeedMapper.deleteFeed", sfNo);
 	}
 
+	// 수정시 선택한 첨부파일 db에서 삭제
 	public List<AttachmentDto> selectDelFileList(String[] delFileNo) {
 		return sqlSessionTemplate.selectList("socialFeedMapper.selectDelFileList", delFileNo);
 	}
-	
-	
-	
-	
 
-	/*
-	 * public int deleteReply(int replyNo) { return
-	 * sqlSessionTemplate.update("socialFeedMapper.deleteReply", replyNo); }
-	 */
+	// 댓글 삭제
+	public int deleteReply(int replyNo) {
+		return sqlSessionTemplate.update("socialFeedMapper.deleteReply", replyNo);
+	}
+	
 }

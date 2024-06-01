@@ -31,10 +31,11 @@ public interface SocialFeedService {
 	// 피드게시글 삭제
 	int deleteFeed(int sfNo);
 
+	// 댓글 삭제
+	int deleteReply(int sfNo);
+
 	
-	/*
-	 * // 댓글삭제 서비스 int deleteReply(int replyNo);
-	 */
+
 	
 
 }

@@ -234,6 +234,7 @@
 			                      });
 			                      
 			                   		// 댓글 수 설정
+			                   		$('#rcount-' + socialFeed.sfNo).empty();
 			                      $('#rcount-' + socialFeed.sfNo).text(repliesForFeed.length);
 			                      
 			                      if (repliesForFeed.length > 0) {
@@ -242,52 +243,56 @@
 			                        	  var isLastReply = (k === repliesForFeed.length - 1); //마지막댓글
 			                            var commentBox = 
 			                              '<div class="post-user-comment-box mt-2" id="replyArea">' +
+			                              	'<input type="hidden" name="replyNo" value="' + reply.replyNo + '">' +
 			                                '<div class="d-flex align-items-start">' +
 			                                  '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + reply.profileImgPath + '" alt="Generic placeholder image">' +
-			                                  '<div class="w-100">' +
-			                                    '<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + reply.memName + '</a> <small class="text-muted">' + reply.enrollDate + '</small></h5>' +
+			                                  '<div class="w-100">' + 
+			                                  	'<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + reply.memName + '</a> <small class="text-muted">' + reply.enrollDate + '</small>';
+			                                  
+			                                  	console.log("replyNo: ", reply.replyNo);
+			                                  if(${loginUser.memNo} === parseInt(reply.memNo)) {
+			                                	  commentBox += '<div style="display:flex; margin-left: auto; margin-top:-20px;"><button type="button" class="btn btn-sm" style="background-color:#lightgray; margin-left:auto;" onclick="ajaxRemoveReply(' + reply.replyNo + ');">삭제</button></div>'; 
+			                                 	}
+			                                    
+			                                    commentBox +=
+			                                    	'</h5>' +
 			                                    reply.replyContent + '<br/>' +
 			                                  '</div>' +
 			                                '</div>' +
 			                              '</div>';
-			                                
-			                                
-			                             
+
 
 			                            $('#replyList-' + reply.refBno).append(commentBox);
 			                            
 			                    	  	}
-			                          }
-			                        	  
-			                        	  
-			                          
-			                          
-			                    	    var replyBox = 
-			                    	        '<div class="d-flex align-items-start mt-2">' +
-			                    	            '<a class="pe-2" href="#">' +  
-			                    	                '<img src="' + contextPath + '${loginUser.profileImgPath}" class="rounded-circle" alt="Generic placeholder image" height="31">' +
-			                    	            '</a>' +   
-			                    	            '<div class="w-100" style="display:flex;">' +
-			                    	                '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control form-control-light border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
-			                    	                '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
-			                    	                    '<i class="mdi mdi-send-outline me-1"></i>등록' +
-			                    	                '</button>' +
-			                    	            '</div>' + 
-			                    	        '</div>';
-			                    	        
-			                    	    $("#replyList-" + socialFeed.sfNo).append(replyBox);		                    	  	
-			                                
+	                          } 
+	                          
+	                    	    var replyBox = 
+	                    	        '<div class="d-flex align-items-start mt-2">' +
+	                    	            '<a class="pe-2" href="#">' +  
+	                    	                '<img src="' + contextPath + '${loginUser.profileImgPath}" class="rounded-circle" alt="Generic placeholder image" height="31">' +
+	                    	            '</a>' +   
+	                    	            '<div class="w-100" style="display:flex;">' +
+	                    	                '<input type="text" id="replyContent-' + socialFeed.sfNo + '" class="form-control form-control-light border-0 form-control-sm" style="width:85%;" placeholder="댓글을 작성해주세요." required>' +
+	                    	                '<button type="button" class="btn btn-sm" style="background-color:#febe98; color:white; width:80px; margin-left:5px;" onclick="ajaxInsertReply(' + socialFeed.sfNo + ');">' +
+	                    	                    '<i class="mdi mdi-send-outline me-1"></i>등록' +
+	                    	                '</button>' +
+	                    	            '</div>' + 
+	                    	        '</div>';
+	                    	        
+	                    	    $("#replyList-" + socialFeed.sfNo).append(replyBox);		                    	  	
+	                                
 
-			                                
-			                        }
-			                      }
-			                    
-			                  },
-			                  error: function(xhr, status, error) {
-			                    console.error('AJAX feedList failed:', status, error);
-			                  }
-			                });
-			              }
+	                                
+	                      }
+                     }
+                   
+                 },
+                 error: function(xhr, status, error) {
+                   console.error('AJAX feedList failed:', status, error);
+                 }
+             });
+          }
 				  
 				  // 댓글 ajax로 작성 요청하는 function
         	function ajaxInsertReply(sfNo){
@@ -309,7 +314,7 @@
         						ajaxFeedList(sfNo);
         						
         					}else if(result == "FAIL"){
-        	        	alert("댓글 작성 서비스", "다시 입력해주세요.");
+        	        	alert("다시 입력해주세요.");
         					}
         					
         				}, error:function(){
@@ -323,31 +328,35 @@
         		}
         	}
 				  
-        	function appendNewReply(sfNo, replyContent) {
-        	    var contextPath = '${contextPath}';
-        	    var replyListElem = $('#replyList-' + sfNo);
-
-        	    var commentBox = 
-        	        '<div class="post-user-comment-box mt-2" id="replyArea">' +
-        	        '<div class="d-flex align-items-start">' +
-        	        '<img class="me-2 avatar-sm rounded-circle" src="' + contextPath + '${loginUser.profileImgPath}" alt="Generic placeholder image">' +
-        	        '<div class="w-100">' +
-        	        '<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + '${loginUser.memName}' + '</a> <small class="text-muted">현재</small></h5>' +
-        	        replyContent + '<br/>' +
-        	        '</div>' +
-        	        '</div>' +
-        	        '</div>';
-        	        
-        	    replyListElem.append(commentBox);
-        	}
         	     
-        	
+        	// 피드글 수정/삭제
 				  function frmFeed(num){
 					  $("#frm").attr("action", num==1 ? "${contextPath}/feed/modifyForm.page"
 																						: "${contextPath}/feed/delete.do");
 				  }
 				  
+	        // 해당 댓글 삭제용 ajax요청
+				  function ajaxRemoveReply(replyNo){
+       			$.ajax({
+       				url:"${contextPath}/feed/removeReply.do",
+       				type:"get",
+       				data:{replyNo: replyNo},
+       				success:function(result){
+       					if(result == "SUCCESS"){
+       						$("[id^='replyList-']").empty();
+       						ajaxFeedList();
+       	          alert("댓글을 삭제했습니다.");
 
+       					}
+       				},
+       				error:function(){
+               	alert("댓글 삭제에 실패했습니다.");
+
+       				}
+       			
+       			});
+					   
+				  }
 				  
      			$(document).ready(function(){
      				ajaxFeedList();

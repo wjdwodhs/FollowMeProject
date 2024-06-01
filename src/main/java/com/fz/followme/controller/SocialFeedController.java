@@ -169,6 +169,7 @@ public class SocialFeedController {
 	
 	}
 	
+	
 	@GetMapping("/delete.do")
 	public String delete(int sfNo, RedirectAttributes redirectAttributes) {
 		
@@ -185,12 +186,13 @@ public class SocialFeedController {
 	}
 	
 	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @GetMapping("/removeReply.do") public String ajaxDeleteReply(int sfNo) {
-	 * return socialFeedService.deleteReply(sfNo) > 0 ? "SUCCESS" : "FAIL"; }
-	 */
+	
+	 @ResponseBody
+	 @GetMapping("/removeReply.do") 
+	 public String ajaxDeleteReply(int replyNo) {
+		 return socialFeedService.deleteReply(replyNo) > 0 ? "SUCCESS" : "FAIL"; 
+	 }
+	 
 	
 	
 	
