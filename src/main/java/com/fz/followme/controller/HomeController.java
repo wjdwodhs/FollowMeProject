@@ -1,14 +1,18 @@
 package com.fz.followme.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fz.followme.dto.AttendanceDto;
 import com.fz.followme.dto.BoardDto;
@@ -89,18 +93,26 @@ public class HomeController {
 	
 	// 상단바 검색창에서 직원 검색 시 직원 정보 조회
 	@GetMapping("/memberSearchPopUp")
-    public String getEmployeeInfo(@RequestParam("memName") String memName, Model model) {
-		log.debug("memName : {}", memName);
-        MemberDto member = memberService.searchMemberInfoByName(memName);
-        log.debug("member : {}", member);
-        
-        if (member != null) {
-            model.addAttribute("member", member);
-        } else {
-            model.addAttribute("errorMessage", "직원 정보를 찾을 수 없습니다.");
-        }
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> getEmployeeInfo(@RequestParam("memName") String memName) {
+	    log.debug("memName : {}", memName);
+	    MemberDto member = memberService.searchMemberInfoByName(memName);
+	    log.debug("member : {}", member);
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    if (member != null) {
+	        response.put("member", member);
+	    } else {
+	        response.put("errorMessage", "직원 정보를 찾을 수 없습니다.");
+	    }
 
-        return "member/memberInfoPopUp";
-    }
+	    return ResponseEntity.ok(response);
+	}
+	
+	// 상단바 검색창에서 직원 검색 시 팝업창 뜨게 하기
+	@RequestMapping("/member/memberInfoPopUp")
+	public String openMemberInfoPopUp() {
+	    return "member/memberInfoPopUp";
+	}
 
 }
