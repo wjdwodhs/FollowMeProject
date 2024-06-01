@@ -139,19 +139,19 @@ margin: 10px 0; /* 원하는 여백 추가 */
                                     <div class="card-body">
                                         <div class="row">
                                             
-                                            <h3><b>${ companyNews.boardTitle }</b></h3>
+                                            <h3><b>${ notice.boardTitle }</b></h3>
                                             <div class="info-area">
                                                 <span class="department">
-                                                    <p>${ companyNews.deptName }</p>
+                                                    <p>${ notice.deptName }</p>
                                                 </span>
                                                 <div class="info">
-                                                    <a id="myLink" href="">${ companyNews.memNo }</a>
-                                                    <span> ${ companyNews.enrollDate }</span>   
+                                                    <a id="myLink" href="">${ notice.memNo }</a>
+                                                    <span> ${ notice.enrollDate }</span>   
                                                 </div>
                                                 <div class="button">
                                                 	<button class="btn btn-primary btn-sm historyBack" onclick="historyBack();" >목록가기 </button>
                                                 	<form action="" method="post" id="Upd">
-                                                	<input type="hidden" name="no" value="${ companyNews.subNo }">
+                                                	<input type="hidden" name="no" value="${ notice.subNo }">
                                                 		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(1);">수정하기</button>
                                                 		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(2);">삭제하기</button>
                                                 	</form>
@@ -179,10 +179,10 @@ margin: 10px 0; /* 원하는 여백 추가 */
 											
 											      <!-- Modal body -->
 											      <div class="modal-body">
-											        직급: ${ companyNews.memGrade } <br>
-											        사원명: ${ companyNews.memNo } <br>
-											        부서: ${ companyNews.deptName } <br>
-											        Email: ${ companyNews.memEmail }
+											        직급: ${ notice.memGrade } <br>
+											        사원명: ${ notice.memNo } <br>
+											        부서: ${ notice.deptName } <br>
+											        Email: ${ notice.memEmail }
 											      </div>
 											
 											    </div>
@@ -193,13 +193,13 @@ margin: 10px 0; /* 원하는 여백 추가 */
                                                 <span class="editor_view">
                                                     <div class="content-view">
                                                     <p>
-                                                    	${ companyNews.boardContent }
+                                                    	${ notice.boardContent }
                                                     </p>
-                                                    	<c:forEach var="at" items="${ companyNews.attachList }">
+                                                    	<c:forEach var="at" items="${ notice.attachList }">
                                                     		<img src="${ contextPath }${ at.filePath }/${ at.systemName }">
                                                     	</c:forEach>
                                                     	
-                                                    	<c:forEach var="at" items="${ companyNews.attachList }">
+                                                    	<c:forEach var="at" items="${ notice.attachList }">
                                                     		<div>
                                                     			<a href="${ contextPath }${at.filePath}/${at.systemName}" download="${ at.originName }">${ at.originName }</a>
                                                     		</div>
@@ -213,7 +213,7 @@ margin: 10px 0; /* 원하는 여백 추가 */
                                                     <li>
                                                         <span class="reply ">댓글</span>
                                                         <span class="part">|</span>
-                                                        <span>조회수 ${ companyNews.readCount }</span>
+                                                        <span>조회수 ${ notice.readCount }</span>
                                                     </li>
                                                 </ul>
                                                 <div class="horizontal-line"></div>
@@ -836,7 +836,7 @@ margin: 10px 0; /* 원하는 여백 추가 */
 	      			
 	      			// 해당 댓글 삭제용 ajax요청
 	      			$.ajax({
-	      				url:"${contextPath}/companyNews/replyDelete.do",
+	      				url:"${contextPath}/notice/replyDelete.do",
 	      				type:"get",
 	      				data:"no=" + $(this).data("replyno"),
 	      				success:function(result){
@@ -854,11 +854,11 @@ margin: 10px 0; /* 원하는 여백 추가 */
 	      	function ajaxReplyInsert(){
 	      		if($("#replyContent").val().trim().length != 0){
 	      			$.ajax({
-	      				url: "${contextPath}/companyNews/replyInsert.do",
+	      				url: "${contextPath}/notice/replyInsert.do",
 	      				type: "post",
 	      				data:{
 	      					replyContent:$("#replyContent").val(),
-	      					refBno:${companyNews.subNo},
+	      					refBno:${notice.subNo},
 	      					
 	      				},
 	      				success:function(result){
@@ -889,9 +889,9 @@ margin: 10px 0; /* 원하는 여백 추가 */
 	      		// tbody 영역에 뿌리기 
 	      		// + 댓글 갯수도 수정
 	      		$.ajax({
-	      			url:"${contextPath}/companyNews/replyList.do",
+	      			url:"${contextPath}/board/replyList.do",
 	      			type:"get",
-	      			data:"no=${companyNews.subNo}",
+	      			data:"no=${notice.subNo}",
 	      			success:function(resData){ // [{}, {}, {}, ..]
 	      			
 	      				console.log("댓글 리스트:", resData)

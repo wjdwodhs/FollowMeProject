@@ -6,13 +6,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="boardDto" id="CompanyNewsResult">
 		<id column="board_no" property="boardNo"/>
+		<result column="sub_no" property="subNo"/>
 		<result column="board_title" property="boardTitle"/>
 		<result column="mem_name" property="memNo"/>
+		<result column="board_content" property="boardContent"/>
 		<result column="enroll_date" property="enrollDate"/>
 		<result column="read_count" property="readCount"/>
 		<result column="board_type" property="boardType"/>
 		<result column="attach_Count" property="attachCount"/>
+		<result column="must_read" property="mustRead"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="mem_grade" property="memGrade"/>
+		<result column="mem_email" property="memEmail"/>
+		<collection ofType="AttachmentDto" property="attachList">
+			<id column="file_no" property="fileNo"/>
+			<result column="file_path" property="filePath"/>
+			<result column="system_name" property="systemName"/>
+			<result column="origin_name" property="originName"/>
+			<result column="type" property="type"/>
+		</collection>	
 	</resultMap>
+	
+	
+	<resultMap type="AttachmentDto" id="attachmentResult">
+		<result column="file_no" property="fileNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="system_name" property="systemName"/>
+		<result column="origin_name" property="originName"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
+	<resultMap type="ReplyDto" id="replyResult">
+		<id column="reply_no" property="replyNo"/>		
+		<result column="mem_name" property="memNo"/>
+		<result column="ref_bno" property="refBno"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="status" property="status"/>
+		<result column="mem_grade" property="memGrade"/>		
+	</resultMap>
+	
+	
+	
 	
 	<!-- 사내소식 전체글 갯수 -->
 	<select id="selectCompanyNewsListCount" resultType="_int">
@@ -59,6 +94,87 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  where rownum between 1 and 5
 	
 	</select>
+	
+	<update id="updateIncreaseCount">
+		update tb_board
+	    set read_count = read_count + 1
+	    where
+	        (
+	            (board_no = 'NOTICE_' || #{boardNo} AND board_type = 'NO')
+	            OR
+	            (board_no = 'COMPANY_' || #{boardNo} AND board_type = 'CO')
+	            OR
+	            (sub_no = #{boardNo})
+	        )	
+	</update>
+	
+	<select id="selectCompanyNewsDetail" resultMap="CompanyNewsResult">
+		select
+				b.board_no
+			  , b.sub_no
+			  , b.board_type
+			  , b.board_title
+			  , mem_name
+			  , b.enroll_date
+			  , b.board_content
+			  , a.file_no
+			  , a.file_path
+			  , a.system_name
+			  , a.origin_name
+			  , dept_name
+			  , mem_grade
+			  , mem_email
+		  from tb_board b
+		  join tb_mem using (mem_no)
+		  join tb_department using (dept_no)
+		  left join tb_attachment a on type in('N','C')and a.ref_no = b.sub_no
+		  where b.board_no = CONCAT('COMPANY_', #{boardNo})		  				
+	</select>
+	
+	
+	<insert id="insertReply">
+		insert 
+		  into tb_reply
+		  (
+		  	reply_no
+		  , reply_content
+		  , ref_bno
+		  , ref_type
+		  , mem_no
+		  )
+		  values
+		  (
+		  	seq_replyno.nextval
+		  , #{replyContent}
+		  , #{refBno}
+		  , 'B'
+		  , #{memNo}
+		  )
+		  
+	</insert>
+	
+	<select id="selectReplyList" resultMap="replyResult">
+		select
+				r.reply_no
+			  , m.mem_grade
+			  , m.mem_name
+			  , r.reply_content
+			  , r.enroll_date
+		 from tb_reply r
+		 join tb_mem m on m.mem_no = r.mem_no
+		 join tb_board b on sub_no = ref_bno
+		 where r.status = 'Y'
+		   and ref_bno = #{subNo}
+		 order
+		 	by reply_no desc		  
+	</select>
+	
+	<update id="deleteReply">
+		update
+				   tb_reply
+			 set status = 'N'
+		 where reply_no = #{replyNo}
+	</update>
 	
 	
 

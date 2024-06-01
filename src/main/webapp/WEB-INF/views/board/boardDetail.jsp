@@ -857,7 +857,8 @@ margin: 10px 0; /* 원하는 여백 추가 */
 	      				type: "post",
 	      				data:{
 	      					replyContent:$("#replyContent").val(),
-	      					refBno:${board.subNo}	      					
+	      					refBno:${board.subNo},
+	      					
 	      				},
 	      				success:function(result){
 	      					if(result == "SUCCESS"){
@@ -900,12 +901,12 @@ margin: 10px 0; /* 원하는 여백 추가 */
 	      				let tr = "";
 	      				for(let i=0; i<resData.length; i++){
 	      					tr += "<tr>"
-	      								+	 "<th>" + resData[i].memGrade + resData[i].replyWriter + "</th>"
+	      								+	 "<th>" + resData[i].memGrade + resData[i].memNo + "</th>"
 	      								+	 "<td>" + resData[i].replyContent + "</td>"
 	      								+	 "<td>" + resData[i].enrollDate;
 	      					
 	 								// 현재로그인한 회원이 해당 댓글의 작성자일 경우
-	      					if(resData[i].replyWriter == '${loginUser.memName}')	{
+	      					if(resData[i].memNo == '${loginUser.memName}')	{
 	      						tr += "<button class='btn btn-sm btn-danger removeReply' data-replyno='" + resData[i].replyNo + "'>삭제</button>"
 	      					}		
 	      								

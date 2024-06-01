@@ -212,17 +212,30 @@
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="ac" items="${ allList }">
-		                                                				<tr>
-		                                                					<td class="list-item1">${ ac.boardNo }</td>
-		                                                					<td class="list-item2">${ ac.boardTitle }</td>
-		                                                					<td class="list-item3">${ ac.memNo }</td>
-		                                                					<td class="list-item4">${ ac.enrollDate }</td>
-		                                                					<td class="list-item5">${ ac.readCount }</td>
-		                                                				</tr>
+		                                                			<c:forEach var="ab" items="${ allList }">
+		                                                				<c:choose>
+		                                                					<c:when test="${ ab.mustRead == 1 }">
+				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/companyNews/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.boardNo}';">			                                               																										
+																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
+				                                                					<td class="list-item2">${ ab.boardTitle }</td>
+				                                                					<td class="list-item3">${ ab.memNo }</td>
+				                                                					<td class="list-item4">${ ab.enrollDate }</td>
+				                                                					<td class="list-item5">${ ab.readCount }</td>
+				                                                				</tr>
+			                                                				</c:when>
+			                                                				<c:otherwise>
+				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/companyNews/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.boardNo}';">			                                               																																																																																									
+																					<td class="list-item1">${ ab.boardNo }</td>																																									
+				                                                					<td class="list-item2">${ ab.boardTitle }</td>
+				                                                					<td class="list-item3">${ ab.memNo }</td>
+				                                                					<td class="list-item4">${ ab.enrollDate }</td>
+				                                                					<td class="list-item5">${ ab.readCount }</td>
+				                                                				</tr>
+			                                                				</c:otherwise>
+		                                                				</c:choose>
 		                                                			</c:forEach>
                                                 				</c:otherwise>
-                                                			</c:choose>             
+                                                			</c:choose>     
                                                         </tbody>
                                                         
                                                     </table>

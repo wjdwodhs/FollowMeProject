@@ -256,14 +256,6 @@ public class BoardController {
 	
 	
 	
-	
-	@RequestMapping("/organization.page")
-	public String organization() {
-		return "organizationChart/organizationChart";
-	}
-	
-	
-	
 
 	
 	

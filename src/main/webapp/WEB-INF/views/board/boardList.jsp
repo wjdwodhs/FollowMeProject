@@ -185,7 +185,7 @@
 		                                                			<c:forEach var="ab" items="${ allList }">
 		                                                				<c:choose>
 		                                                					<c:when test="${ ab.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																										
+				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																										
 																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
 				                                                					<td class="list-item2">${ ab.boardTitle }</td>
 				                                                					<td class="list-item3">${ ab.memNo }</td>
@@ -194,7 +194,7 @@
 				                                                				</tr>
 			                                                				</c:when>
 			                                                				<c:otherwise>
-				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==b.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																																																																																									
+				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																																																																																									
 																					<td class="list-item1">${ ab.subNo }</td>																																									
 				                                                					<td class="list-item2">${ ab.boardTitle }</td>
 				                                                					<td class="list-item3">${ ab.memNo }</td>

@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="ReplyDto" id="replyResult">
 		<id column="reply_no" property="replyNo"/>		
-		<result column="mem_name" property="replyWriter"/>
+		<result column="mem_name" property="memNo"/>
 		<result column="ref_bno" property="refBno"/>
 		<result column="reply_content" property="replyContent"/>
 		<result column="enroll_date" property="enrollDate"/>
@@ -278,7 +278,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  , r.reply_content
 			  , r.enroll_date
 		 from tb_reply r
-		 join tb_mem m on mem_no = reply_writer
+		 join tb_mem m on m.mem_no = r.mem_no
 		 join tb_board b on sub_no = ref_bno
 		 where r.status = 'Y'
 		   and ref_bno = #{subNo}
@@ -294,14 +294,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  	reply_no
 		  , reply_content
 		  , ref_bno
-		  , reply_writer
+		  , ref_type
+		  , mem_no
 		  )
 		  values
 		  (
 		  	seq_replyno.nextval
 		  , #{replyContent}
 		  , #{refBno}
-		  , #{replyWriter}
+		  , 'B'
+		  , #{memNo}
 		  )
 		  
 	</insert>

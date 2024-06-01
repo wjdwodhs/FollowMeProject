@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.dto.ReplyDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,5 +34,26 @@ public class CompanyNewsDao {
 	public List<BoardDto> selectLatestPostList(){
 		return sqlSessionTemplate.selectList("companyNewsMapper.selectLatestPostList");
 	}
+	
+	public int updateIncreaseCount(int boardNo) {
+		return sqlSessionTemplate.update("companyNewsMapper.updateIncreaseCount", boardNo);
+	}
+	
+	
+	public BoardDto selectCompanyNewsDetail(int boardNo) {
+		return sqlSessionTemplate.selectOne("companyNewsMapper.selectCompanyNewsDetail", boardNo);
+	}
+	
+	public int insertReply(ReplyDto reply) {
+		return sqlSessionTemplate.insert("companyNewsMapper.insertReply", reply);
+	}
+	public List<ReplyDto> selectReplyList(int boardNo){
+		return sqlSessionTemplate.selectList("companyNewsMapper.selectReplyList", boardNo);
+	}
+	public int deleteReply(int rNo) {
+		return sqlSessionTemplate.update("companyNewsMapper.deleteReply", rNo);
+	}
+	
+	
 	
 }

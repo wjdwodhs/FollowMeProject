@@ -8,6 +8,7 @@ import com.fz.followme.dao.CompanyNewsDao;
 import com.fz.followme.dao.NoticeDao;
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.dto.ReplyDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,36 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 	@Override
 	public List<BoardDto> selectLatestPostList() {
 		return companyNewsDao.selectLatestPostList();
+	}
+
+
+	@Override
+	public int updateIncreaseCount(int boardNo) {
+		return companyNewsDao.updateIncreaseCount(boardNo);
+	}
+
+
+	@Override
+	public BoardDto selectCompanyNewsDetail(int boardNo) {
+		return companyNewsDao.selectCompanyNewsDetail(boardNo);
+	}
+
+
+	@Override
+	public int insertReply(ReplyDto reply) {
+		return companyNewsDao.insertReply(reply);
+	}
+
+
+	@Override
+	public List<ReplyDto> selectReplyList(int boardNo) {
+		return companyNewsDao.selectReplyList(boardNo);
+	}
+
+
+	@Override
+	public int deleteReply(int rNo) {
+		return companyNewsDao.deleteReply(rNo);
 	}
 
 }

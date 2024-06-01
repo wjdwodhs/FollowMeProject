@@ -125,7 +125,7 @@
                                                         <option value="CO">사내소식</option>
                                                     </select>                                                                  
                                                 </span>
-                                                <c:if test="${ loginUser.authLevel != '0' }">
+                                                <c:if test="${ loginUser.gradeLevel != 'C' && loginUser.gradeLevel != 'D' }">
                                                 필독 <input type="checkbox" name="mustRead" value="1">
                                                 </c:if>
                                             </div>

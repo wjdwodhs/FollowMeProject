@@ -27,6 +27,7 @@ public class ReplyDto {
 	private String replyContent;
 	private String enrollDate;
 	private String status;
+	private String replyWriter;
 	
 	private String memName;
 	private String profileImgPath;

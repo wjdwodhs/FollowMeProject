@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.fz.followme.dao.NoticeDao;
 import com.fz.followme.dto.BoardDto;
 import com.fz.followme.dto.PageInfoDto;
+import com.fz.followme.dto.ReplyDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,31 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<BoardDto> selectLatestPostList() {
 		return noticeDao.selectLatestPostList();
+	}
+
+	@Override
+	public int updateIncreaseCount(int boardNo) {
+		return noticeDao.updateIncreaseCount(boardNo);
+	}
+
+	@Override
+	public BoardDto selectNoticeDetail(int boardNo) {
+		return noticeDao.selectNoticeDetail(boardNo);
+	}
+
+	@Override
+	public int insertReply(ReplyDto reply) {
+		return noticeDao.insertReply(reply);
+	}
+
+	@Override
+	public List<ReplyDto> selectReplyList(int boardNo) {
+		return noticeDao.selectReplyList(boardNo);
+	}
+
+	@Override
+	public int deleteReply(int rNo) {
+		return noticeDao.deleteReply(rNo);
 	}
 
 }
