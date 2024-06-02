@@ -34,6 +34,39 @@
 
 
 <style>
+ /* 로딩에니메이션 오버레이 */
+ .loader-overlay{
+ 	display: none;
+ 	position: fixed;
+ 	top: 0;
+ 	left:0;
+ 	width: 100%;
+ 	height: 100%;
+ 	background: rgba(0, 0, 0, 0.5);
+ 	z-index:9998;
+ }
+ /* 로딩애니메이션 */
+ .loader {
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  heigth: 120px;
+  border: 16px solid #f3f3f3; /* 전체색상지정 */
+  border-top: 16px solid #3498db; /* 로딩영역색상 */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 	.a.nav-link.active{background-color:#FEBE98;}
   .attach_box{
      border: 2px dashed #ddd;
@@ -51,11 +84,17 @@
     position: relative;
     margin-bottom: 10px;
  }
+ 
 </style>
 
 </head>
 
 <body>
+	<!-- 로딩 에니메이션 -->
+	<div class="loader-overlay">
+		<div class="loader"></div>
+	</div>
+	
 	<!-- Begin page -->
 	<div id="wrapper">
 
@@ -178,6 +217,7 @@
 	
 	      </div> <!-- content -->		
 	      
+	    
 	      	
 	<script>
     // Quill 에디터 초기화 함수
@@ -314,6 +354,11 @@
                 formData.append('uploadFiles[]', uploadFiles[i]);
             }
 
+            
+            // 로딩 에니메이션 표시
+            $(".loader-overlay").show();
+            $(".loader").show();
+            
             $.ajax({
                 url: "${contextPath}/email/sendemail.do",
                 type: "post",
@@ -322,12 +367,18 @@
                 contentType: false,
                 dataType: "json",
                 success: function(response){
+                		$(".loader-overlay").hide(); // 로딩에니메이션 숨기기
+                		$(".loader").hide(); 
+                		
                     if (response.redirect) { 
                         alert("메일이 전송 되었습니다.");
                         location.href = response.redirect;
                     }
                 },
                 error: function(xhr, status, error){
+                	$(".loader-overlay").hide(); // 로딩에니메이션 숨기기
+                	$(".loader").hide(); 
+                	
                     console.log("Error:", error);
                     console.log("XHR:", xhr);
                     console.log("Status:", status);

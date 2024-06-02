@@ -58,6 +58,9 @@ public class Pop3EmailReceiver {
 			properties.put("mail.pop3.socketFactory.fallback", "false"); // SSL 소켓 팩토리에서 실패시 다른 소켓 팩토리를 사용하지 않도록 설
 			properties.put("mail.pop3.socketFactory.port", "995");  // SSL 소켓 팩토리가 사용할 포트번호, Gmail의 SSL포트 995
 			
+			properties.put("mail.pop3.starttls.required", "true");
+			properties.put("mail.pop3.ssl.protocols", "TLSv1.2");
+			
 			
 			// 메일 세션 생성
 			Session emailSession = Session.getDefaultInstance(properties);
@@ -125,9 +128,9 @@ public class Pop3EmailReceiver {
 					
 					if(Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())) {
 						String fileName = bodyPart.getFileName();
-						InputStream is = bodyPart.getInputStream();
 						
-						try {
+						
+						try(InputStream is = bodyPart.getInputStream()) {
 							// 파일이름에 확장자가 없는 경우 예외 처리
 							if(fileName == null || fileName.trim().isEmpty() || fileName.lastIndexOf(".") == -1) {
 								throw new IllegalArgumentException("Filename does not contain an extension: " + fileName);

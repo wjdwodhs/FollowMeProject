@@ -241,6 +241,11 @@
 			})
 			console.log(checkMails);
 			
+			if(checkMails.length == 0){
+				alert("복구할 메일을 선택해주세요.");
+				return ;
+			}
+			
 			
 			$.ajax({
 				url:"${contextPath}/email/backup.do",
@@ -264,7 +269,7 @@
 	})
 	
 	
-	// 휴지통 비우기
+		// 휴지통 비우기
 		$("#allDelete-btn").on("click", function(){
 			$.ajax({
 				url:"${contextPath}/email/empty.do",
@@ -274,7 +279,9 @@
 					if(result>0){
 						alert("휴지통에 있는 메일을 전부 비웠습니다.");
 						location.reload();
-					}
+					}else{}
+						alert("삭제할 메일이 없습니다.");
+						$("#resycleBinList-delMobal").modal("hide");
 				},
 				error:function(){
 					console.log("휴지통비우기 ajax실패");
