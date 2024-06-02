@@ -27,6 +27,7 @@ import com.fz.followme.dto.MemberDto;
 import com.fz.followme.dto.PageInfoDto;
 import com.fz.followme.handler.AlarmEchoHandler;
 import com.fz.followme.service.AttendanceService;
+import com.fz.followme.service.MemberService;
 import com.fz.followme.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AttendanceController {
 	
 	private final AttendanceService attendanceService;
+	private final MemberService memberService;
 	private final AlarmEchoHandler handler;
 	private final PagingUtil pagingUtil;
 
@@ -313,7 +315,46 @@ public class AttendanceController {
 	    return ResponseEntity.ok(data);
 	     
 	}
+	
+	// 직원 근태 리스트 호출
+	@GetMapping("/allList")
+	@ResponseBody
+	public Map<String, Object> attendanceAllList(@RequestParam(value="pageNo", defaultValue="1") int currentPage) {
+		
+		int listCount = memberService.selectMemberListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+		
+		// 타입별 출석 데이터
+	    List<AttendanceDto> memberList = attendanceService.AllCountAttendanceByType(pi);
 
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("memberList", memberList);
+		response.put("pi", pi);
+		
+		return response;
+    }
+
+	
+	// 직원 근태 리스트 호출 - 검색처리
+	@GetMapping("/searchList")
+	@ResponseBody
+	public Map<String, Object> attendanceKeywordAllList(String keyword
+							   				, @RequestParam(value="pageNo", defaultValue="1") int currentPage) {
+		
+		int listCount = memberService.searchMemberListCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+		
+		// 타입별 출석 데이터
+	    List<AttendanceDto> memberList = attendanceService.AllKeywordCountAttendanceByType(keyword,pi);
+
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("memberList", memberList);
+		response.put("pi", pi);
+		
+		return response;
+    }
     
     
     

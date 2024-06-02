@@ -16,6 +16,35 @@
 		<result column="avgWorkTime" property="avgWorkTime"/>
 		<result column="totalWorkTime" property="totalWorkTime"/>
 		<result column="totalWorkingDays" property="totalWorkingDays"/>
+		<result column="mem_pwd" property="memPwd"/>
+		<result column="dept_no" property="deptNo"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="profile_img_path" property="profileImgPath"/>
+		<result column="sig_img_path" property="sigImgPath"/>
+		<result column="mem_gender" property="gender"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_securityno" property="securityNo"/>
+		<result column="mem_address" property="address"/>
+		<result column="mem_email" property="memEmail"/>
+		<result column="mem_grade" property="memGrade"/>
+		<result column="grade_level" property="gradeLevel"/>
+		<result column="mem_role" property="memRole"/>
+		<result column="extension_number" property="extensionNumber"/>
+		<result column="phone" property="phone"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="quit_date" property="quitDate"/>
+		<result column="mem_salary" property="memSalary"/>
+		<result column="account_no" property="accountNo"/>
+		<result column="mem_incentive" property="memIncentive"/>
+		<result column="mem_certificate" property="memCertificate"/>
+		<result column="mem_welfare" property="memWelfare"/>
+		<result column="authorization_level" property="authLevel"/>
+		<result column="status" property="status"/>
+		<result column="count_b" property="countB"/>
+		<result column="count_c" property="countC"/>
+		<result column="count_d" property="countD"/>
+		<result column="count_e" property="countE"/>
+		
 		
 	</resultMap>
 	
@@ -421,8 +450,184 @@ WHERE
 		    by docu_no asc
 	</select>
 
+	<!-- 직원 근태 관리  -->
+	<select id="AllCountAttendanceByType" resultMap="attendanceMap">
+	<![CDATA[
+		SELECT 
+    m.mem_no,
+    m.mem_pwd,
+    d.dept_name,
+    m.dept_no,
+    m.profile_img_path,
+    m.mem_gender,
+    m.mem_name,
+    m.mem_securityno,
+    m.mem_address,
+    m.sig_img_path,
+    m.mem_email,
+    m.mem_grade,
+    m.mem_role,
+    m.extension_number,
+    m.phone,
+    m.enroll_date,
+    m.quit_date,
+    m.mem_salary,
+    m.account_no,
+    m.mem_incentive,
+    m.mem_certificate,
+    m.mem_welfare,
+    m.authorization_level,
+    m.status,
+    NVL(a.count_b, 0) AS count_b,
+    NVL(a.count_c, 0) AS count_c,
+    NVL(a.count_d, 0) AS count_d,
+    NVL(a.count_e, 0) AS count_e,
+    NVL(att.monthWorkTime, 0) AS monthWorkTime
+FROM 
+    tb_mem m
+LEFT JOIN 
+    tb_department d ON m.dept_no = d.dept_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        COUNT(CASE WHEN type = 'B' THEN 1 END) AS count_b,
+        COUNT(CASE WHEN type = 'C' THEN 1 END) AS count_c,
+        COUNT(CASE WHEN type = 'D' THEN 1 END) AS count_d,
+        COUNT(CASE WHEN type = 'E' THEN 1 END) AS count_e
+    FROM 
+        tb_attendance
+    WHERE
+        trunc(att_date, 'MM') = trunc(sysdate, 'MM')
+    GROUP BY 
+        mem_no
+    ) a ON m.mem_no = a.mem_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        TO_CHAR(att_date, 'YYYY-MM') AS month,
+        TRUNC(SUM(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600) AS monthWorkTime
+    FROM 
+        tb_attendance
+    WHERE 
+        trunc(att_date, 'MM') = trunc(sysdate, 'MM')
+    GROUP BY 
+        mem_no, TO_CHAR(att_date, 'YYYY-MM')
+    ) att ON m.mem_no = att.mem_no
+WHERE 
+    m.status IN ('Y', 'R')
+ORDER BY 
+    m.mem_no ASC
+    ]]>
+		
+	</select>
 	
-	
+	<!-- 직원 근태 관리 - 검색  -->
+	<select id="AllKeywordCountAttendanceByType" resultMap="attendanceMap">
+	<![CDATA[
+		SELECT 
+    m.mem_no,
+    m.mem_pwd,
+    d.dept_name,
+    m.dept_no,
+    m.profile_img_path,
+    m.mem_gender,
+    m.mem_name,
+    m.mem_securityno,
+    m.mem_address,
+    m.sig_img_path,
+    m.mem_email,
+    m.mem_grade,
+    m.mem_role,
+    m.extension_number,
+    m.phone,
+    m.enroll_date,
+    m.quit_date,
+    m.mem_salary,
+    m.account_no,
+    m.mem_incentive,
+    m.mem_certificate,
+    m.mem_welfare,
+    m.authorization_level,
+    m.status,
+    NVL(a.count_b, 0) AS count_b,
+    NVL(a.count_c, 0) AS count_c,
+    NVL(a.count_d, 0) AS count_d,
+    NVL(a.count_e, 0) AS count_e,
+    NVL(att.monthWorkTime, 0) AS monthWorkTime
+FROM 
+    tb_mem m
+LEFT JOIN 
+    tb_department d ON m.dept_no = d.dept_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        COUNT(CASE WHEN type = 'B' THEN 1 END) AS count_b,
+        COUNT(CASE WHEN type = 'C' THEN 1 END) AS count_c,
+        COUNT(CASE WHEN type = 'D' THEN 1 END) AS count_d,
+        COUNT(CASE WHEN type = 'E' THEN 1 END) AS count_e
+    FROM 
+        tb_attendance
+    WHERE
+        trunc(att_date, 'MM') = trunc(sysdate, 'MM')
+    GROUP BY 
+        mem_no
+    ) a ON m.mem_no = a.mem_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        TO_CHAR(att_date, 'YYYY-MM') AS month,
+        TRUNC(SUM(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 3600) AS monthWorkTime
+    FROM 
+        tb_attendance
+    WHERE 
+        trunc(att_date, 'MM') = trunc(sysdate, 'MM')
+    GROUP BY 
+        mem_no, TO_CHAR(att_date, 'YYYY-MM')
+    ) att ON m.mem_no = att.mem_no
+WHERE 
+    m.status IN ('Y', 'R')
+     and (
+        m.mem_name like '%' || #{keyword} || '%'
+        or m.mem_no like '%' || #{keyword} || '%'
+        or d.dept_name like '%' || #{keyword} || '%'
+        or m.mem_grade like '%' || #{keyword} || '%'
+        or m.mem_role like '%' || #{keyword} || '%'
+        or m.mem_salary like '%' || #{keyword} || '%'
+        or m.enroll_date like '%' || #{keyword} || '%'
+        or m.status like '%' || #{keyword} || '%'
+    			)
+ORDER BY 
+    m.mem_no ASC
+    ]]>
+	</select>
 	
 	
 	
