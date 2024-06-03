@@ -47,9 +47,7 @@
     padding-left: 10px;
 } 
 
-.message-list li.unread {
-    font-weight: bold !important;
-}	
+
 </style>
 
 </head>
@@ -131,7 +129,7 @@
                             		</c:when>
                             		<c:otherwise>
                             			<c:forEach var="mail" items="${ inList }">
-	                                  <li class="${mail.isRead == 0 ? 'unread' : ''}">
+	                                  <li class="${mail.isRead == 0 ? 'read_N' : ''}">
 	                                      <div class="col-mail col-mail-1">
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
@@ -235,6 +233,9 @@
 				
 			})		
 		})
+		
+		// 안읽은 메일 표시
+		$(".message-list li.read_N").css("font-weight", "bold");
 		
 	</script>
 
