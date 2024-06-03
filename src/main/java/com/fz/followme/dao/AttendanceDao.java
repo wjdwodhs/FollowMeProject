@@ -93,6 +93,22 @@ public class AttendanceDao {
 		return sqlSessionTemplate.selectList("attendanceMapper.selectLeaveDocumentList", m, rowBounds);
 		
 	}
+
+	public List<AttendanceDto> AllCountAttendanceByType(PageInfoDto pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSessionTemplate.selectList("attendanceMapper.AllCountAttendanceByType", null, rowBounds);
+	}
+
+	public List<AttendanceDto> AllKeywordCountAttendanceByType(String keyword, PageInfoDto pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSessionTemplate.selectList("attendanceMapper.AllKeywordCountAttendanceByType", keyword, rowBounds);
+	}
 	
 	
 }

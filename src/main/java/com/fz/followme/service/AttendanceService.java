@@ -58,6 +58,12 @@ public interface AttendanceService {
 
 	// 휴가 신청 내역 리스트 조회 서비스
 	List<DocumentDto> selectLeaveDocumentList(PageInfoDto pi, MemberDto m);
+	
+	// 직원 전체 타입별 출석 조회 서비스
+	List<AttendanceDto> AllCountAttendanceByType(PageInfoDto pi);
+
+	// 직원 전체 타입별 출석 조회 서비스 - 검색기능
+	List<AttendanceDto> AllKeywordCountAttendanceByType(String keyword, PageInfoDto pi);
 
 	
 }

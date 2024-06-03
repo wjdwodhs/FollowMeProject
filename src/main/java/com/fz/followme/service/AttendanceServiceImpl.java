@@ -101,5 +101,15 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<DocumentDto> selectLeaveDocumentList(PageInfoDto pi, MemberDto m) {
 		return attendanceDao.selectLeaveDocumentList(pi,m);
 	}
+
+	@Override
+	public List<AttendanceDto> AllCountAttendanceByType(PageInfoDto pi) {
+		return attendanceDao.AllCountAttendanceByType(pi);
+	}
+
+	@Override
+	public List<AttendanceDto> AllKeywordCountAttendanceByType(String keyword, PageInfoDto pi) {
+		return attendanceDao.AllKeywordCountAttendanceByType(keyword,pi);
+	}
 	
 }

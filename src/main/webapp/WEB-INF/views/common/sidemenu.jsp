@@ -167,14 +167,21 @@
                     <span class="menu-text"> 소셜피드 </span>
                 </a>
             </li>
-					    <c:if test="${loginUser.memGrade ne '대표'}">
-					        <li class="menu-item">
-					            <a href="${contextPath}/attendance/attendance.page" class="menu-link">
-					                <span class="menu-icon"><i data-feather="check-square"></i></span>
-					                <span class="menu-text"> 근태관리 </span>
-					            </a>
-					        </li>
-					    </c:if>
+						   
+			        <li class="menu-item">
+			            <a href="${contextPath}/attendance/attendance.page" class="menu-link">
+			                <span class="menu-icon"><i data-feather="check-square"></i></span>
+			                <span class="menu-text"> 근태관리 </span>
+			            </a>
+			        </li>
+			      <c:if test="${loginUser.memGrade eq '대표' or loginUser.deptNo == 3}">
+			        <li class="menu-item">
+			            <a href="${contextPath}/attendance/attendanceCeo.page" class="menu-link">
+			                <span class="menu-icon"><i data-feather="grid"></i></span>
+			                <span class="menu-text"> 직원근태 </span>
+			            </a>
+			        </li>
+			   </c:if>
         </ul>
         <!--- End Menu -->
         <div class="clearfix"></div>
