@@ -69,7 +69,7 @@ public class BoardController {
 		mv.addObject("pi", pi)
 		  .addObject("allList", allList)
 		  .addObject("keyword", keyword)
-		  .setViewName("/board/boardList");
+		  .setViewName("board/boardList");
 		
 		return mv;
 		
@@ -222,6 +222,24 @@ public class BoardController {
 		
 	}
 	
+	@PostMapping("/boardRemove.do")
+	public String boardRemove(@RequestParam("no") int no
+							, RedirectAttributes redirectAttributes) {
+		
+		int result = boardService.boardRemove(no);
+		
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글이 성공적으로 삭제되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글 삭제에 실패하였습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+	
+	}
+		
+		return "redirect:/board/list.do";
+		
+	}
 	
 	
 	
@@ -257,7 +275,33 @@ public class BoardController {
 	
 	
 
+	@RequestMapping("/myWritingList.page")
+	public ModelAndView boardRemovePage(@RequestParam(value="page", defaultValue="1")int page, ModelAndView mv
+													, HttpSession session
+													, BoardDto board) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		board.setMemNo(loginUser.getMemNo());
+		int myWritingCount = boardService.selectMyWritingCount(board);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(myWritingCount, page, 5, 10);
+		List<BoardDto> myList = boardService.selectMyWritingList(pi, board);
+		log.debug("myList: {}", myList);
+		
+		mv.addObject("pi", pi)
+		  .addObject("myList", myList)
+		  .setViewName("/board/myWritingList");
+		
+		return mv;
+		
+		
+		
+		
+	}
 	
+	@RequestMapping("boardManagement.page")
+	public String boardManagement() {
+		return "board/boardManagement";
+	}
 	
 	
 	
