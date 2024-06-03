@@ -122,18 +122,13 @@ public class Pop3EmailReceiver {
 			// 첨부파일이 있는 경우 저장 로직
 			if(message.getContent() instanceof Multipart) {
 				Multipart multipart = (Multipart) message.getContent();
-				log.debug("multipart: {}",multipart);
 				
 				for(int i = 0; i < multipart.getCount(); i++) {
 					BodyPart bodyPart = multipart.getBodyPart(i);
 					
-					log.debug("bodyPart: {}",bodyPart);
-					log.debug("bodyPart.disposition: {}",bodyPart.getDisposition());
-					
 					if(Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())) {
 						String fileName = bodyPart.getFileName();
 						
-						log.debug("인코딩된 fileName: {}", fileName);
 						
 						//Multipart mul = bodyPart.getParent();
 						//log.debug("mul", mul);
@@ -224,22 +219,35 @@ public class Pop3EmailReceiver {
 	
 	
 	
-	// MimeMultipart에서 텍스트를 추출하는 메서드
+	// MimeMultipart에서 텍스트를 추출하는 메서드 , 내용이 두번 중복되어 출력되서 조건문 추가함
 	private String getTextFromMimeMultipart(MimeMultipart mimeMultipart) throws Exception{
 		
 		StringBuilder result = new StringBuilder();
+		String textPart = null;
+		String htmlPart = null;
+		
 		for(int i = 0; i < mimeMultipart.getCount(); i++) {
 			BodyPart bodyPart = mimeMultipart.getBodyPart(i);
 			
-			if(bodyPart.getContent() instanceof String) {
-				result.append(bodyPart.getContent());
-				
-				System.out.println("Email content : " + bodyPart.getContentType());
+			if(bodyPart.isMimeType("text/plain") && textPart == null) {
+				textPart = (String) bodyPart.getContent();
+			
+			}else if(bodyPart.isMimeType("text/html") && htmlPart == null) {
+				htmlPart = (String) bodyPart.getContent();
 				
 			}else if(bodyPart.getContent() instanceof MimeMultipart) {
-				result.append(getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent()));
+				String nestedPart = getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent());
+				if(nestedPart != null) {
+					result.append(nestedPart);
+				}
 			}
 		}
+		if(htmlPart != null) {
+			result.append(htmlPart);
+		}else if(textPart != null) {
+			result.append("<p>").append(textPart).append("</p>");
+		}
+		
 		return result.toString();
 	}
 	
