@@ -100,13 +100,36 @@
                     <span class="menu-icon"><i data-feather="users"></i></span>
                     <span class="menu-text"> 조직도 </span>
                 </a>
+                
             </li>
             <li class="menu-item">
-                <a href="${contextPath}/board/list.do" class="menu-link">
-                    <span class="menu-icon"><i data-feather="clipboard"></i></span>
-                    <span class="menu-text"> 게시판 </span>
-                </a>
-            </li>
+			    <a href="#menuBoard" data-bs-toggle="collapse" class="menu-link"> 
+			        <span class="menu-icon"><i data-feather="clipboard"></i></span>
+			        <span class="menu-text"> 게시판 </span>
+			        <span class="menu-arrow"></span>
+			    </a>
+			    <div class="collapse" id="menuBoard"> 
+			        <ul class="sub-menu">
+			            <li class="menu-item">
+			                <a href="${contextPath}/board/list.do" class="menu-link">
+			                    <span class="menu-text">게시글</span>
+			                </a>
+			            </li>
+			            <li class="menu-item">
+			                <a href="${contextPath}/board/myWritingList.page" class="menu-link">
+			                    <span class="menu-text">내가 쓴 사내글</span>
+			                </a>
+			            </li>
+			            <c:if test="${ loginUser.deptNo == 3 or loginUser.gradeLevel == 'A' }">
+			            	<li class="menu-item">
+				                <a href="${contextPath}/board/boardManagement.page" class="menu-link">
+				                    <span class="menu-text">게시글 관리</span>
+				                </a>
+			            	</li>			            	
+			            </c:if>
+			        </ul>
+			    </div>
+			</li>
             <li class="menu-item">
                 <a href="${contextPath}/calendar/calendar.page" class="menu-link">
                     <span class="menu-icon"><i data-feather="calendar"></i></span>
