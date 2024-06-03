@@ -299,8 +299,18 @@ public class BoardController {
 	}
 	
 	@RequestMapping("boardManagement.page")
-	public String boardManagement() {
-		return "board/boardManagement";
+	public ModelAndView boardManagementList(@RequestParam(value="page", defaultValue="1")int page, ModelAndView mv) {
+		
+		int boardListCount = boardService.selectBoardListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(boardListCount, page, 5, 20);
+		List<BoardDto> allList = boardService.selectBoardList(pi);
+		log.debug("allList: {}", allList);	
+		
+		mv.addObject("pi", pi)
+		  .addObject("allList", allList)
+		  .setViewName("/board/boardManagement");
+		
+		return mv;
 	}
 	
 	

@@ -93,6 +93,36 @@ margin: 10px 0; /* 원하는 여백 추가 */
     max-height: 800px;
 }
 
+
+.form-type{
+        margin: 10px 0;
+    }
+
+    .text_box{
+        width: 100%;
+    }
+
+    .attach_box{
+        border: 2px dashed #ddd;
+        padding: 8px 0;
+        box-sizing: border-box;
+        max-height: 200px;
+        width: 100%;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .table-width {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .cell-width {
+        width: 90%; 
+        margin: 8px 0;
+    }
+  
+
 </style>
 </head>
 <body>
@@ -198,12 +228,48 @@ margin: 10px 0; /* 원하는 여백 추가 */
                                                     	<c:forEach var="at" items="${ companyNews.attachList }">
                                                     		<img src="${ contextPath }${ at.filePath }/${ at.systemName }">
                                                     	</c:forEach>
-                                                    	
+                                                    </div>
+                                                    
+                                                    <hr>
+                                                    <div>
+                                                    	<table class="form-type table-width">
+                                                            <colgroup>
+                                                                <col width="130px">
+                                                                <col width="*">
+                                                            </colgroup>
+                                                            <tbody>
+                                                                
+                                                                <tr>
+                                                                    <th style="position: relative;">
+                                                                        <span style="position: absolute; top: 0; margin: 8px 0;">첨부파일</span>
+                                                                    </th>
+                                                                    <td>
+                                                                        <table class="table-width">
+                                                                            <td class="cell-width" >
+                                                                                <div class="attach_box" id="upfile"  style="border: 2px dashed #ddd;" >                                                                                  
+                                                                                    <div>
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <hr>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            
+                                                        </table>
+                                                    	                                                	
                                                     	<c:forEach var="at" items="${ companyNews.attachList }">
                                                     		<div>
                                                     			<a href="${ contextPath }${at.filePath}/${at.systemName}" download="${ at.originName }">${ at.originName }</a>
                                                     		</div>
                                                     	</c:forEach>
+                                                    		
                                                     </div>
                                                 </span>
                                             </article>

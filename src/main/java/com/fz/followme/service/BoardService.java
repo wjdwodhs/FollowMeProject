@@ -32,6 +32,8 @@ public interface BoardService {
 	List<AttachmentDto> selectDelFileList(String[] delFileNo); 
 	int updateBoard(BoardDto board, String[] delFileNo);
 	
+	// 게시글 삭제
+	int boardRemove(int boardNo);
 	
 	// 댓글 리스트
 	List<ReplyDto> selectReplyList(int boardNo);
@@ -41,4 +43,8 @@ public interface BoardService {
 	
 	// 댓글 삭제
 	int deleteReply(int rNo);
+	
+	// 내가 쓴 글
+	int selectMyWritingCount(BoardDto board);
+	List<BoardDto>selectMyWritingList(PageInfoDto pi, BoardDto board);
 }

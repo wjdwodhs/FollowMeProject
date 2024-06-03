@@ -81,6 +81,9 @@ public class BoardDao {
 		return sqlSessionTemplate.delete("boardMapper.deleteAttach", delFileNo);
 	}
 	
+	public int boardRemove(int boardNo) {
+		return sqlSessionTemplate.update("boardMapper.boardRemove", boardNo);
+	}
 	
 	
 	public List<ReplyDto> selectReplyList(int boardNo){
@@ -93,6 +96,20 @@ public class BoardDao {
 	
 	public int deleteReply(int rNo) {
 		return sqlSessionTemplate.update("boardMapper.deleteReply", rNo);
+	}
+	
+	public int selectMyWritingCount(BoardDto board) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectMyWritingCount", board);
+	}
+	
+	public List<BoardDto> selectMyWritingList(PageInfoDto pi, BoardDto board){
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return sqlSessionTemplate.selectList("boardMapper.selectMyWritingList", board, rowBounds);
 	}
 	
 }

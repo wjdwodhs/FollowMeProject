@@ -24,7 +24,7 @@
     .list-item3{ width: 10%; }
     .list-item4{ width: 10%; }
     .list-item5{ width: 5%; }
-    .list-item6{ width: 5%; }
+    .list-item6{ width: 8%; }
     
 .category a {
   color: black;
@@ -65,6 +65,10 @@
 
 .list-group:hover{
 	background-color: lightgray;
+}
+
+.click-detail button{
+	margin-right:5px;
 }
     
 </style>
@@ -123,7 +127,16 @@
                                     <div class="card-body">
                                     	
                                         
-                                        
+                                        <div class="col-2">
+                                    	<!-- search-bar (검색) -->
+                                    		<form action="${ contextPath }/board/search.do" id="searchForm" class="search-bar">
+                                    			<input type="hidden" name="page" value="1">
+					                            <div class="position-relative">
+					                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
+					                                <span class="mdi mdi-magnify"></span>
+					                            </div>
+					                        </form>
+                                    	</div>
                                         
                                         
                                         <div class="row" id="list-page">                                        
@@ -149,34 +162,34 @@
                                                         
                                                         <tbody>
                                                             <c:choose>
-                                                				<c:when test="${ empty myList }">
+                                                				<c:when test="${ empty allList }">
 		                                                			<tr>
 		                                                				<td colspan="6">조회된 공지글이 없습니다</td>
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                			<c:forEach var="m" items="${ myList }">
+		                                                			<c:forEach var="ab" items="${ allList }">
 		                                                				<c:choose>
-		                                                					<c:when test="${ m.mustRead == 1 }">
+		                                                					<c:when test="${ ab.mustRead == 1 }">
 				                                                				<tr class="click-detail" style="background-color: lightgray;">
 				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																										
 																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
-				                                                					<td class="list-item2">${ m.boardTitle }</td>
-				                                                					<td class="list-item3">${ m.memNo }</td>
-				                                                					<td class="list-item4">${ m.enrollDate }</td>
-				                                                					<td class="list-item5">${ m.readCount }</td>
-				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button></td>
+				                                                					<td class="list-item2">${ ab.boardTitle }</td>
+				                                                					<td class="list-item3">${ ab.memNo }</td>
+				                                                					<td class="list-item4">${ ab.enrollDate }</td>
+				                                                					<td class="list-item5">${ ab.readCount }</td>
+				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button><button class="btn btn-outline-warning btn-sm">수정</button></td>
 				                                                				</tr>
 			                                                				</c:when>
 			                                                				<c:otherwise>
 				                                                				<tr class="click-detail">
 				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																																																																																									
-																					<td class="list-item1">${ m.subNo }</td>																																									
-				                                                					<td class="list-item2">${ m.boardTitle }</td>
-				                                                					<td class="list-item3">${ m.memNo }</td>
-				                                                					<td class="list-item4">${ m.enrollDate }</td>
-				                                                					<td class="list-item5">${ m.readCount }</td>
-				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button></td>
+																					<td class="list-item1">${ ab.subNo }</td>																																									
+				                                                					<td class="list-item2">${ ab.boardTitle }</td>
+				                                                					<td class="list-item3">${ ab.memNo }</td>
+				                                                					<td class="list-item4">${ ab.enrollDate }</td>
+				                                                					<td class="list-item5">${ ab.readCount }</td>
+				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button><button class="btn btn-outline-warning btn-sm">수정</button></td>
 				                                                				</tr>
 			                                                				</c:otherwise>
 		                                                				</c:choose>
@@ -196,18 +209,18 @@
                                             
                                             <ul id="pagingBar" class="pagination pagination-rounded justify-content-end mb-0">
 	                                            <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}" aria-label="Previous">
+	                                                <a class="page-link" href="${ contextPath }/board/boardManagement.page?page=${pi.currentPage-1}" aria-label="Previous">
 	                                                    <span aria-hidden="true">«</span>
 	                                                    <span class="visually-hidden">Previous</span>
 	                                                </a>
 	                                            </li>
 	                                            
 	                                           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/board/list.do?page=${p}">${p}</a></li>
+	                                            <li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/board/boardManagement.page?page=${p}">${p}</a></li>
 	                                           </c:forEach>
 	                                           
 	                                            <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-	                                                <a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage+1}" aria-label="Next">
+	                                                <a class="page-link" href="${ contextPath }/board/boardManagement.page?page=${pi.currentPage+1}" aria-label="Next">
 	                                                    <span aria-hidden="true">»</span>
 	                                                    <span class="visually-hidden">Next</span>
 	                                                </a>

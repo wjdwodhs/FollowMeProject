@@ -150,11 +150,13 @@ margin: 10px 0; /* 원하는 여백 추가 */
                                                 </div>
                                                 <div class="button">
                                                 	<button class="btn btn-primary btn-sm historyBack" onclick="historyBack();" >목록가기 </button>
+                                                	<c:if test="${ loginUser.memName == board.memNo }">
                                                 	<form action="" method="post" id="Upd">
                                                 	<input type="hidden" name="no" value="${ board.subNo }">
                                                 		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(1);">수정하기</button>
                                                 		<button type="submit" class="btn btn-primary btn-sm" onclick="UpdSubmit(2);">삭제하기</button>
                                                 	</form>
+                                                	</c:if>
                                                 </div>
                                             </div>
                                             <hr>

@@ -75,23 +75,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDto selectBoardDetail(int boardNo ) {
 		return boardDao.selectBoardDetail(boardNo);
 	}
-
-
-	@Override
-	public List<ReplyDto> selectReplyList(int boardNo) {
-		return boardDao.selectReplyList(boardNo);
-	}
-
-	@Override
-	public int insertReply(ReplyDto reply) {
-		return boardDao.insertReply(reply);
-	}
-
-	@Override
-	public int deleteReply(int rNo) {
-		return boardDao.deleteReply(rNo);
-	}
-
+	
 	@Override
 	public List<AttachmentDto> selectDelFileList(String[] delFileNo) {
 		
@@ -123,6 +107,41 @@ public class BoardServiceImpl implements BoardService {
 							? 1 : -1;
 		
 	}
+
+	
+	@Override
+	public int boardRemove(int boardNo) {
+		return boardDao.boardRemove(boardNo);
+	}
+
+
+	@Override
+	public List<ReplyDto> selectReplyList(int boardNo) {
+		return boardDao.selectReplyList(boardNo);
+	}
+
+	@Override
+	public int insertReply(ReplyDto reply) {
+		return boardDao.insertReply(reply);
+	}
+
+	@Override
+	public int deleteReply(int rNo) {
+		return boardDao.deleteReply(rNo);
+	}
+
+	@Override
+	public int selectMyWritingCount(BoardDto board) {
+		return boardDao.selectMyWritingCount(board);
+	}
+
+	@Override
+	public List<BoardDto> selectMyWritingList(PageInfoDto pi, BoardDto board) {
+		return boardDao.selectMyWritingList(pi, board);
+	}
+
+	
+	
 
 	
 	
