@@ -112,7 +112,7 @@
                                             <li class="breadcrumb-item active">전체게시글</li>
                                         </ol>
                                     </div>                                  
-                                        <h4 class="page-title">게시글 관리</h4> 
+                                        <h4 class="page-title">내가 쓴 사내글</h4> 
                                     </div>
                                 </div>
                             </div>
@@ -126,9 +126,15 @@
                                 <div class="card">
                                     <div class="card-body">
                                     	
-                                        
-                                        
-                                        
+                                         <div class="col-2">
+                                        <form action="${ contextPath }/board/myWritingSearch.do" id="searchForm" class="search-bar">
+                                  			<input type="hidden" name="page" value="1">
+				                            <div class="position-relative">
+				                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
+				                                <span class="mdi mdi-magnify"></span>
+				                            </div>
+				                        </form>
+                                        </div>
                                         
                                         <div class="row" id="list-page">                                        
                                             <div class="col-lg-10">
@@ -162,7 +168,7 @@
 		                                                			<c:forEach var="m" items="${ myList }">
 		                                                				<c:choose>
 		                                                					<c:when test="${ m.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;">
+				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">
 				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																										
 																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
 				                                                					<td class="list-item2">${ m.boardTitle }</td>
@@ -173,14 +179,20 @@
 				                                                				</tr>
 			                                                				</c:when>
 			                                                				<c:otherwise>
-				                                                				<tr class="click-detail">
+				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">
 				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																																																																																									
 																					<td class="list-item1">${ m.subNo }</td>																																									
 				                                                					<td class="list-item2">${ m.boardTitle }</td>
 				                                                					<td class="list-item3">${ m.memNo }</td>
 				                                                					<td class="list-item4">${ m.enrollDate }</td>
 				                                                					<td class="list-item5">${ m.readCount }</td>
-				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button><button class="btn btn-outline-warning btn-sm">수정</button></td>
+				                                                					<td class="list-item6">
+				                                                					<form action="" method="post" id="Upd">
+								                                                	<input type="hidden" name="no" value="${ m.subNo }">
+								                                                		<button type="submit" class="btn btn-outline-danger btn-sm" onclick="UpdSubmit(2);">삭제</button>
+								                                                		<button type="submit" class="btn btn-outline-warning btn-sm" onclick="UpdSubmit(1);">수정</button>
+								                                                	</form>
+								                                                	</td>
 				                                                				</tr>
 			                                                				</c:otherwise>
 		                                                				</c:choose>
@@ -191,6 +203,12 @@
                                                         
                                                     </table>
                                             </div>
+                                            
+                                            <script>
+                                            	function UpdSubmit(num){
+                                            		$("#Upd").attr("action", num==1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/myWritingRemove.do");
+                                            	}
+                                            </script>
 
                                              <!-- end col-->
                                             

@@ -291,15 +291,54 @@ public class BoardController {
 		  .addObject("myList", myList)
 		  .setViewName("/board/myWritingList");
 		
-		return mv;
-		
-		
-		
+		return mv;	
 		
 	}
 	
+	@PostMapping("/myWritingRemove.do")
+	public String myWritingRemove(@RequestParam("no") int no
+							, RedirectAttributes redirectAttributes) {
+		
+		int result = boardService.boardRemove(no);
+		
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글이 성공적으로 삭제되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글 삭제에 실패하였습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
+	
+	}
+		
+		return "redirect:/board/myWritingList.page";
+		
+	}
+	
+	
+	@GetMapping("/myWritingSearch.do")
+	public ModelAndView myWritingSearchList(@RequestParam(value="page", defaultValue="1")int page,
+										@RequestParam String keyword, ModelAndView mv) {
+		
+		int searchBoardListCount = boardService.searchBoardListCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(searchBoardListCount, page, 5, 20);
+		List <BoardDto> myList = boardService.searchBoardList(keyword, pi);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("myList", myList)
+		  .addObject("keyword", keyword)
+		  .setViewName("board/myWritingList");
+		
+		return mv;
+		
+	}
+	
+	
+	
+	
 	@RequestMapping("boardManagement.page")
-	public ModelAndView boardManagementList(@RequestParam(value="page", defaultValue="1")int page, ModelAndView mv) {
+	public ModelAndView boardManagementList(@RequestParam(value="page", defaultValue="1")int page, ModelAndView mv
+										  ) {
 		
 		int boardListCount = boardService.selectBoardListCount();
 		PageInfoDto pi = pagingUtil.getPageInfoDto(boardListCount, page, 5, 20);
@@ -313,7 +352,42 @@ public class BoardController {
 		return mv;
 	}
 	
+	@PostMapping("/boardManagementRemove.do")
+	public String boardManagementRemove(@RequestParam("no") int no
+							, RedirectAttributes redirectAttributes) {
+		
+		int result = boardService.boardRemove(no);
+		
+		
+		if(result > 0) {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글이 성공적으로 삭제되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("alertMsg", "게시글 삭제에 실패하였습니다.");
+			redirectAttributes.addFlashAttribute("historyBackYN", "Y");
 	
+	}
+		
+		return "redirect:/board/boardManagement.page";
+		
+	}
+	
+	@GetMapping("/boardManagementSearch.do")
+	public ModelAndView boardManagementSearchList(@RequestParam(value="page", defaultValue="1")int page,
+										@RequestParam String keyword, ModelAndView mv) {
+		
+		int searchBoardListCount = boardService.searchBoardListCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(searchBoardListCount, page, 5, 20);
+		List <BoardDto> allList = boardService.searchBoardList(keyword, pi);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("allList", allList)
+		  .addObject("keyword", keyword)
+		  .setViewName("board/boardManagement");
+		
+		return mv;
+		
+	}
 	
 	
 	

@@ -129,13 +129,15 @@
                                         
                                         <div class="col-2">
                                     	<!-- search-bar (검색) -->
-                                    		<form action="${ contextPath }/board/search.do" id="searchForm" class="search-bar">
+                                    		<form action="${ contextPath }/board/boardManagementSearch.do" id="searchForm" class="search-bar">
                                     			<input type="hidden" name="page" value="1">
 					                            <div class="position-relative">
 					                                <input type="text" class="form-control" id="keyword" name="keyword" data-pageNo="1">
 					                                <span class="mdi mdi-magnify"></span>
 					                            </div>
 					                        </form>
+					                        
+					                        공지<input type="radio" name="category" value="NO"> 사내<input type="radio" name="category" value="CO" >
                                     	</div>
                                         
                                         
@@ -145,18 +147,15 @@
                                                 <table class="table">
                                                     
                                                     <table class="table table-hover">
-                                                    	
-                                                    	                                                        
-                                                        
-                                                        <thead>
+                                                         <thead>
                                                             <tr>
-                                                            	<th class="list-item0"><input type="checkbox"></th>
+                                                            	<th class="list-item0"><input type="checkbox" id="checkAll"></th>
                                                                 <th class="list-item1">번호</th>
                                                                 <th class="list-item2">제목</th>
                                                                 <th class="list-item3">작성자</th>
                                                                 <th class="list-item4">작성일</th>
                                                                 <th class="list-item5">조회수</th>
-                                                                <th><button class="btn btn-outline-danger btn-sm">삭제</button></th>
+                                                                <th><button class="btn btn-outline-danger btn-sm" id="deleteBtn">삭제</button></th>
                                                             </tr>
                                                         </thead>
                                                         
@@ -168,34 +167,74 @@
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
+		                                                		<form action="" method="post" id="commonForm">
 		                                                			<c:forEach var="ab" items="${ allList }">
-		                                                				<c:choose>
-		                                                					<c:when test="${ ab.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;">
-				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																										
-																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button><button class="btn btn-outline-warning btn-sm">수정</button></td>
-				                                                				</tr>
-			                                                				</c:when>
-			                                                				<c:otherwise>
-				                                                				<tr class="click-detail">
-				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																																																																																									
-																					<td class="list-item1">${ ab.subNo }</td>																																									
-				                                                					<td class="list-item2">${ ab.boardTitle }</td>
-				                                                					<td class="list-item3">${ ab.memNo }</td>
-				                                                					<td class="list-item4">${ ab.enrollDate }</td>
-				                                                					<td class="list-item5">${ ab.readCount }</td>
-				                                                					<td class="list-item6"><button class="btn btn-outline-danger btn-sm">삭제</button><button class="btn btn-outline-warning btn-sm">수정</button></td>
-				                                                				</tr>
-			                                                				</c:otherwise>
-		                                                				</c:choose>
-		                                                			</c:forEach>
+		                                                				
+																	      	<input type="hidden" name="no" value="${ ab.subNo }">
+																	    <c:choose>
+																	        <c:when test="${ ab.mustRead == 1 }">
+																	            <tr class="click-detail" style="background-color: lightgray;">
+																	            	
+																	                <td class="list-item0"><input type="checkbox" class="checkbox"></td>
+																	                <td class="list-item1"><i data-feather="alert-circle"></i></td>
+																	                <td class="list-item2">${ ab.boardTitle }</td>
+																	                <td class="list-item3">${ ab.memNo }</td>
+																	                <td class="list-item4">${ ab.enrollDate }</td>
+																	                <td class="list-item5">${ ab.readCount }</td>																	                
+																                    <td class="list-item6">
+																                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="UpdSubmit(${ ab.subNo }, 2);">삭제</button>
+																                        <button type="submit" class="btn btn-outline-warning btn-sm" onclick="UpdSubmit(${ ab.subNo }, 1);">수정</button>
+																                    </td>																	                
+																	            </tr>
+																	        </c:when>
+																	        <c:otherwise>
+																	            <tr class="click-detail">
+																	                <td class="list-item0"><input type="checkbox" class="checkbox"></td>
+																	                <td class="list-item1">${ ab.subNo }</td>
+																	                <td class="list-item2">${ ab.boardTitle }</td>
+																	                <td class="list-item3">${ ab.memNo }</td>
+																	                <td class="list-item4">${ ab.enrollDate }</td>
+																	                <td class="list-item5">${ ab.readCount }</td>																	                
+																	                    <td class="list-item6">
+																	                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="UpdSubmit(${ ab.subNo }, 2);">삭제</button>
+																	                        <button type="submit" class="btn btn-outline-warning btn-sm" onclick="UpdSubmit(${ ab.subNo }, 1);">수정</button>
+																	                    </td>
+																	                
+																	            </tr>
+																	        </c:otherwise>
+																	    </c:choose>
+																	</c:forEach>
+																	</form>
+						
                                                 				</c:otherwise>
                                                 			</c:choose>
+                                                			
+                                                			 <script>
+                                                			 	
+                                                			 $(document).ready(function() {
+				                                                    // 전체 선택/해제 체크박스가 클릭되었을 때의 동작 설정
+				                                                    $('#checkAll').click(function() {
+				                                                        // 전체 선택/해제 체크박스의 상태에 따라 tbody 내의 모든 체크박스 상태 변경
+				                                                        $('.checkbox').prop('checked', this.checked);
+				                                                    });
+				                                                 });
+                                             			 
+                                             			 
+				                                            	/* function UpdSubmit(num){
+				                                            		$("#Upd").attr("action", num==1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
+				                                            	} */
+				                                            	function UpdSubmit(num, action) {
+				                                                    var form = $("#commonForm");
+				                                                    form.attr("action", action == 1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
+				                                                    form.find("input[name='no']").val(num);
+				                                                    form.submit();
+				                                                }
+ 
+				                                            	
+				                                            	
+				                                            	
+				                                            </script>
+                                                			
                                                         </tbody>
                                                         
                                                     </table>
