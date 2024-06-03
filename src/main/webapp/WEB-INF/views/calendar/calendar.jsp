@@ -977,6 +977,9 @@
 	<!-- plugin js -->
 	<script src="${ contextPath }/assets/libs/moment/min/moment.min.js"></script>
 	
+	<!-- jquery UI -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	
 <script>
 
 	    var currentUserID = "${loginUser.memNo}";
@@ -1000,6 +1003,13 @@
 		            console.error("일정 리스트 조회 실패:", error);
 		        }
 		    });
+		    
+		    $(".modal-dialog").draggable({
+		        handle: ".modal-header"
+		     });
+		    
+		    
+		    
 		});
 		
 	// 캘린더 생성 함수 
