@@ -83,6 +83,7 @@ public class EmailController {
 	@GetMapping("/readreceivedmail.do")
 	public String emailreceivedRead(int no, Model model) {
 		
+		int result = emailService.updateReadMail(no);
 		model.addAttribute("email", emailService.selectSendMail(no));
 		
 		return "/email/receivedDetail";

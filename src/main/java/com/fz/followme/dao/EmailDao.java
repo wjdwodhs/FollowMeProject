@@ -101,5 +101,10 @@ public class EmailDao {
 	public int deleteAllMails() {
 		return sqlSessionTemplate.delete("emailMapper.deleteAllMails");
 	}
+	
+	public int updateReadMail(int no) {
+		return sqlSessionTemplate.update("emailMapper.updateReadMail", no);
+	}
+	
 
 }

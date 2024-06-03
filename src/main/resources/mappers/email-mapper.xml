@@ -262,5 +262,11 @@
 	 where forder = 'TRASH'
 </delete>
 
+<!-- 읽은 메일 상태 변경 -->
+<update id="updateReadMail">
+	update tb_email
+	   set is_read = 1
+	 where email_no = #{no}
+</update>
 
 </mapper>

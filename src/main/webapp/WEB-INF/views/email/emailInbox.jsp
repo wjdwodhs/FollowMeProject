@@ -40,14 +40,16 @@
      --ct-btn-hover-bg:#FA9A85;
      --ct-btn-hover-border-color:#FA9A85;   
   } 
- .message-list li .unread {  /* 읽지 않은 메일 표시 */
-    font-weight: bold;
-}
+
  .message-list li .col-mail-2 .date {
     right: 0;
     width: 130px;
     padding-left: 10px;
-} 	
+} 
+
+.message-list li.unread {
+    font-weight: bold !important;
+}	
 </style>
 
 </head>

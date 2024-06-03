@@ -151,5 +151,10 @@ public class EmailService {
 		return emailDao.deleteAllMails();
 	}
 	
+	// 읽은메일 상태 변경
+	public int updateReadMail(int no) {
+		return emailDao.updateReadMail(no);
+	}
+	
 	
 }

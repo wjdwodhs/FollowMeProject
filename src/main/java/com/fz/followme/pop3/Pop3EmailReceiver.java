@@ -122,25 +122,40 @@ public class Pop3EmailReceiver {
 			// 첨부파일이 있는 경우 저장 로직
 			if(message.getContent() instanceof Multipart) {
 				Multipart multipart = (Multipart) message.getContent();
+				log.debug("multipart: {}",multipart);
 				
 				for(int i = 0; i < multipart.getCount(); i++) {
 					BodyPart bodyPart = multipart.getBodyPart(i);
 					
+					log.debug("bodyPart: {}",bodyPart);
+					log.debug("bodyPart.disposition: {}",bodyPart.getDisposition());
+					
 					if(Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())) {
 						String fileName = bodyPart.getFileName();
+						
+						log.debug("인코딩된 fileName: {}", fileName);
+						
+						//Multipart mul = bodyPart.getParent();
+						//log.debug("mul", mul);
 						
 						
 						try(InputStream is = bodyPart.getInputStream()) {
 							// 파일이름에 확장자가 없는 경우 예외 처리
-							if(fileName == null || fileName.trim().isEmpty() || fileName.lastIndexOf(".") == -1) {
-								throw new IllegalArgumentException("Filename does not contain an extension: " + fileName);
-							}
+							//if(fileName == null || fileName.trim().isEmpty() || fileName.lastIndexOf(".") == -1) {
+							//	throw new IllegalArgumentException("파일에 확장자가 없습니다: " + fileName);
+							//}
 							
 							// MIME 인코딩된 파일 이름 디코딩
 							fileName = decodeFileName(fileName);
+							log.debug("디코딩된 fileName: {}", fileName);
 							
 						
-							// InputStream을 MultipartFile로 변환
+							/* MultipartFile은 Spring Framework에서 제공하는 인터페이스로 javax.mail 라이브러리는 Spring에 의존하지 않으며,
+							 InputStream은 자바 표준 라이브러리에서 제공하는 클래스
+							 Spring에 종속되지 않는 방식으로 파일을 다루기 위해 InputStream을 사용하는 것이 더 일반적.
+							*/
+							
+							// InputStream을 MultipartFile로 변환 
 							Map<String, String> map = fileUtil.fileUpload(is, fileName, "email");
 							
 							// 첨부 파일 정보를 AttachmentDto 객체에 설정
@@ -154,14 +169,14 @@ public class Pop3EmailReceiver {
 							// 첨부파일 DB에 추가
 							emailDao.insertAttachment(at);
 						} catch (IllegalArgumentException e) {
-							 log.error("Error processing attachment: " + e.getMessage());
+							 log.error("첨부파일 처리중 오류발생: " + e.getMessage());
                         }
 					}
 				}
 			}
 			
 		} catch(Exception e){
-			log.error("Error saving email to database: " + e.getMessage(), e);
+			log.error("DB저장중 오류: " + e.getMessage(), e);
 		}
 	}
 	
