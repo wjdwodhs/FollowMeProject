@@ -190,8 +190,6 @@
 			                              '<div class="w-100">' +
 			                                '<div class="dropdown float-end text-muted">';
 			                                
-
-			                               console.log("글번호:", socialFeed.sfNo);
                             if(${loginUser.memNo} === parseInt(socialFeed.memNo)) {
 
                                 feedHtml +=
@@ -215,8 +213,7 @@
 			                            '<p>' + socialFeed.sfContent + '</p>' +
 			                            attachments +
 			  		                  		'<div class="mt-2" id="countArea">' +
-					                      		'<a href="javascript: void(0);" class="btn btn-sm btn-link text-muted ps-0"><i class="mdi mdi-heart text-danger"></i> 30 좋아요</a> ' + 
-					                      		'<a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i>댓글 <span id="rcount-' + socialFeed.sfNo + '"></span>개</a>' +
+					                      		'<a href="javascript: void(0);" class="btn btn-sm btn-link text-muted"><i class="mdi mdi-comment-multiple-outline"></i> 댓글 <span id="rcount-' + socialFeed.sfNo + '"></span>개</a>' +
 					                  			'</div>' + 
 			                            '<div class="reply-list" id="replyList-' + socialFeed.sfNo + '"></div>' +
 			                          '</div>' +
@@ -249,7 +246,6 @@
 			                                  '<div class="w-100">' + 
 			                                  	'<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + reply.memName + '</a> <small class="text-muted">' + reply.enrollDate + '</small>';
 			                                  
-			                                  	console.log("replyNo: ", reply.replyNo);
 			                                  if(${loginUser.memNo} === parseInt(reply.memNo)) {
 			                                	  commentBox += '<div style="display:flex; margin-left: auto; margin-top:-20px;"><button type="button" class="btn btn-sm" style="background-color:#lightgray; margin-left:auto;" onclick="ajaxRemoveReply(' + reply.replyNo + ');">삭제</button></div>'; 
 			                                 	}
