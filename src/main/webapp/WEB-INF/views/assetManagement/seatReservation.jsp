@@ -101,7 +101,7 @@
 	                    <div class="card">
 	                        <div class="card-body">
 	                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3"><b>사무실 좌석배치도</b> | <small> Seating Chart</small></h5>
-	                            
+	                            * 좌석예약은 1일 1석만 가능합니다.
 	                            <div style="border: 1px solid lightgray; width: 100%; height: 700px; box-sizing:border-box;">
 	
 	                                <div style=" height: 10%; display: flex; align-items: center; justify-content: space-evenly; box-sizing:border-box;">

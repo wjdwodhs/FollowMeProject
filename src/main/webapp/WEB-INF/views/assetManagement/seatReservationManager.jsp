@@ -306,24 +306,27 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>	
 	
-	// 좌석 클릭하면 자리 상태 설정에 좌석 번호 표시
-	$(document).ready(function(){
-		$("#seatingNum td").click(function() {
+	
+	//$(document).ready(function(){
+		
+		// 좌석 클릭하면 자리 상태 설정에 좌석 번호 표시
+		$(".seatingNum td").on("click",function() {
 			let no = $(this).text();
 			$("#seat-no").val(no);
+			console.log(no);
 			$("#seat-no-label").html('<b>' + no + '</b>');
 		})
+		
 		
 		// 상태변경은 이전날짜 선택 안되도록
 		var today = new Date().toISOString().split('T')[0];
 		$("#modifyDate").attr('min', today);		
+
 		
-		
-	})
+	//})
 	
 	
-	// 선택 날짜 예약내역 조회, 선택좌석 상세조회
-	$(document).ready(function(){
+		// 선택 날짜 예약내역 조회, 선택좌석 상세조회
 		$("#searchListSeat-Btn").on("click", function(){
 			
 			// 변경 버튼 클릭시 모달에 조회한 날짜 표시
@@ -340,11 +343,13 @@
 					$(".seatingNum td").each(function(){
 						var seat = $(this);
 						var seatNo = seat.text().trim();
+						
 						//console.log("좌석번호:", seatNo);
 						
 						// 스타일 초기화
 						seat.css("background-color", "transparent");
 						seat.removeClass("searchListSeat no-hover");
+						
 						
 						// 예약된 좌석인지 확인
 						var reservation = slist.filter(function(reservation){
@@ -358,27 +363,29 @@
 						
 							// 예약된 좌석 클릭시 상세조회
 							seat.off("click").on("click", function(){
-							$("#reservationList-table tbody").empty();
+								$("#reservationList-table tbody").empty();
 								
-							reservation.forEach(function(rsvn){
-								var tr = $("<tr align='center'></tr>");
-									tr.append("<td>" + rsvn.rsvnName + "</td>");
-									tr.append("<td>" + rsvn.deptName + "</td>");
-									tr.append("<td>" + rsvn.assetName + "</td>");
-									tr.append("<td>" + rsvn.rsvnDate + "</td>");
-									tr.append("<td>" + rsvn.startDivision 
-											             + " " + rsvn.startDate  
-											             + " ~ " + rsvn.endDivision  
-											             + " " + rsvn.endDate + "</td>");
-									tr.append("<td>" + rsvn.rsvnContent + "</td>");
 									
-									$("#reservationList-table tbody").append(tr);
+								reservation.forEach(function(rsvn){
+									var tr = $("<tr align='center'></tr>");
+										tr.append("<td>" + rsvn.rsvnName + "</td>");
+										tr.append("<td>" + rsvn.deptName + "</td>");
+										tr.append("<td>" + rsvn.assetName + "</td>");
+										tr.append("<td>" + rsvn.rsvnDate + "</td>");
+										tr.append("<td>" + rsvn.startDivision 
+												             + " " + rsvn.startDate  
+												             + " ~ " + rsvn.endDivision  
+												             + " " + rsvn.endDate + "</td>");
+										tr.append("<td>" + rsvn.rsvnContent + "</td>");
+										
+										$("#reservationList-table tbody").append(tr);
+									
+								});
 								
-							});
-							
-							 $("input[name='rsvnName'], input[name='deptName'], input[name='assetName'], input[name='rsvnTime'], input[name='rsvnContent']").val('');
-							 $("#statusModify-btn").prop("disabled", true); 
-							
+								 $("input[name='rsvnName'], input[name='deptName'], input[name='assetName'], input[name='rsvnTime'], input[name='rsvnContent']").val('');
+								 $("#statusModify-btn").prop("disabled", true); 
+								 
+								
 							})
 						}else {
 							seat.removeClass("searchListSeat no-hover");
@@ -403,6 +410,8 @@
 			})
 		})
 		
+		
+		// 선택좌석 상태 변경
 		$("#updateSeat-Btn").on("click", function(){
 			
 			var modifyDateForm = $("#modifyDate").val();
@@ -444,8 +453,7 @@
 		
 		
 		
-		
-	})
+
 	
 
 		
