@@ -127,7 +127,7 @@
 				 , system_name
 				 , origin_name
 		  from tb_socialfeed s
-		  join tb_attachment on (type = 'S' and ref_no = sf_no)
+		  left join tb_attachment on (type = 'S' and ref_no = sf_no)
 		 where s.status = 'Y'
 		   and sf_no = #{sfNo}
 	</select>

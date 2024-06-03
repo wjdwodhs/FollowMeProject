@@ -39,6 +39,7 @@
 				<mapping path="/message/messagePage" />
 				<mapping path="/member/mypage.do" />
 				<mapping path="/member/empManagement.page" />
+				<mapping path="/feed/**" />
 			<beans:bean class="com.fz.followme.interceptor.LoginCheckInterceptor" id="loginCheckInterceptor" />
 		</interceptor>
 	</interceptors>
