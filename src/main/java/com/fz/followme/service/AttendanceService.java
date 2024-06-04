@@ -64,6 +64,9 @@ public interface AttendanceService {
 
 	// 직원 전체 타입별 출석 조회 서비스 - 검색기능
 	List<AttendanceDto> AllKeywordCountAttendanceByType(String keyword, PageInfoDto pi);
+	
+	// 월별 직원 전체 타입별 출석 조회 서비스
+	List<AttendanceDto> monthAllCountAttendanceByType(AttendanceDto att, PageInfoDto pi);
 
 	
 }

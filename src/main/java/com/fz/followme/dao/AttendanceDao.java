@@ -109,6 +109,15 @@ public class AttendanceDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return sqlSessionTemplate.selectList("attendanceMapper.AllKeywordCountAttendanceByType", keyword, rowBounds);
 	}
+
+	public List<AttendanceDto> monthAllCountAttendanceByType(AttendanceDto att, PageInfoDto pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSessionTemplate.selectList("attendanceMapper.monthAllCountAttendanceByType", att, rowBounds);
+	}
 	
 	
 }

@@ -111,5 +111,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public List<AttendanceDto> AllKeywordCountAttendanceByType(String keyword, PageInfoDto pi) {
 		return attendanceDao.AllKeywordCountAttendanceByType(keyword,pi);
 	}
+
+	@Override
+	public List<AttendanceDto> monthAllCountAttendanceByType(AttendanceDto att, PageInfoDto pi) {
+		return attendanceDao.monthAllCountAttendanceByType(att,pi);
+	}
 	
 }

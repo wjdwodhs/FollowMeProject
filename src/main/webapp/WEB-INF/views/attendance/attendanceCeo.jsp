@@ -49,7 +49,7 @@
     background-color: transparent; /* 버튼 배경 숨김 */
     border: none; /* 테두리 제거 */
     color: black; /* 텍스트 색상 변경 */
-    pointer-events: none; /* 클릭 이벤트 비활성화 */
+    /* pointer-events: none; /* 클릭 이벤트 비활성화 */ */
 }
 .filter-row span {
     margin: 0 10px;
@@ -57,18 +57,7 @@
     font-weight: bold;
     color: black; /* 텍스트 색상 변경 */
 }
-.filter-row button:hover,
-.filter-row button:focus,
-.filter-row button:active {
-    background-color: transparent; /* 호버 및 클릭 시 배경색 투명으로 유지 */
-    color: black; /* 텍스트 색상 유지 */
-    outline: none; /* 포커스시 외곽선 제거 */
-    cursor: default; /* 기본 커서로 설정하여 클릭 및 호버 이벤트 비활성화 */
-}
 
-.filter-row button:disabled {
-    opacity: 1; /* 비활성화된 상태에서도 투명도를 조정하지 않도록 설정 */
-}
 /* 사원 테이블 스타일 */
 #products-datatable {
     border-collapse: collapse;
@@ -176,7 +165,9 @@
                             <div class="col-12">
                                 <div class="filter-row">
 													        <div class="col text-center" style="margin-bottom:20px;">
-													            <span id="yearMonthDisplay">2024년 5월</span>
+													          <button id="prevMonth" class="btn btn-secondary" onclick="prev();">&lt;</button>
+											            		<span id="yearMonthDisplay">2024년 5월</span>
+											              <button id="nextMonth" class="btn btn-secondary" onclick="next();">&gt;</button>
 													        </div>
 													    </div>
                             </div>
@@ -288,6 +279,18 @@
 										        var pageNo = $(this).data('page');
 										        searchList(pageNo);
 										    });
+										    
+										    /*
+										    $(document).on('click','#searchPage3',function(){
+										        var pageNo = $(this).text();
+										        monthSearchList(pageNo,year,month);
+										    });
+
+										    $(document).on('click','#searchPage4',function(){
+										        var pageNo = $(this).data('page');
+										        monthSearchList(pageNo,year,month);
+										    });
+										    */
 									});
 								
 								
@@ -310,6 +313,26 @@
 									    $.ajax({
 									        type: "get",
 									        url: "${contextPath}/attendance/searchList",
+									        data: {
+									            keyword: keyword,
+									            pageNo: pageNo
+									        },
+									        timeout: 5000,
+									        success: function(response) {
+									            displayUserList(response);
+									        },
+									        error: function(xhr, status, error) {
+									            console.error("Ajax 오류:", error);
+									        }
+									    });
+									}
+									
+									function monthSearchList(pageNo) {
+									    var keyword = $("#keyword").val();
+
+									    $.ajax({
+									        type: "get",
+									        url: "${contextPath}/attendance/monthSearchList",
 									        data: {
 									            keyword: keyword,
 									            pageNo: pageNo
@@ -388,6 +411,71 @@
 					
 							    $("#pageBar").html(paginationHtml);
 							}
+                
+                function monthdisplayUserList(response) {
+								    let value = "";
+								    // 유저 정보
+								    for (let i = 0; i < response.memberList.length; i++) {
+							
+								        value += "<tr>" +
+								        		"<input type='hidden' class='deptNo' value='" + response.memberList[i].deptNo + "'>" +
+								        		"<input type='hidden' class='statusValue' value='" + response.memberList[i].status + "'>" +
+								            "<td class='table-user'><img src='${ contextPath }" + response.memberList[i].profileImgPath + "' class='me-2 rounded-circle'>" +
+								            "<a href='javascript:void(0);' class='text-body fw-semibold'>" + response.memberList[i].memName + "</a></td>" +
+								            "<td> " + response.memberList[i].memNo + "</td>" +
+								            "<td> " + response.memberList[i].deptName + "</td>" +
+								            "<td> " + response.memberList[i].memGrade + "</td>" +
+								            "<td> " + response.memberList[i].countB + "회</td>" + // 출근
+								            "<td> " + response.memberList[i].countE + "회</td>" + // 지각
+								            "<td> " + response.memberList[i].countC + "회</td>" + // 조퇴
+								            "<td> " + response.memberList[i].countD + "회</td>" + // 결근
+								            "<td> " + response.memberList[i].monthWorkTime + "시간</td>" + // 월근무시간
+								            "<td><span class='badge " + (response.memberList[i].status == 'Y' ? 'bg-success' : 'bg-danger') + "'>" + (response.memberList[i].status == 'Y' ? "재직" : "휴직") + "</span></td>" +
+								            "</tr>";
+								    }
+						
+								    
+								    $('#products-datatable tbody').html(value);
+						
+								    var paginationHtml = "";
+								    if (response.pi.currentPage == 1) {
+								        paginationHtml += "<li class='page-item disabled'>" +
+								            "<a class='page-link' href='#' aria-label='Previous'>" +
+								            "<span aria-hidden='true'>«</span>" +
+								            "<span class='visually-hidden'>Previous</span>" +
+								            "</a>" +
+								            "</li>";
+								    } else {
+								        paginationHtml += "<li class='page-item'>" +
+								            "<a class='page-link' href='#' aria-label='Previous' id='searchPage3' data-page='" + (response.pi.currentPage - 1) + "'>" +
+								            "<span aria-hidden='true'>«</span>" +
+								            "<span class='visually-hidden'>Previous</span>" +
+								            "</a>" +
+								            "</li>";
+								    }
+						
+								    for (var p = response.pi.startPage; p <= response.pi.endPage; p++) {
+								        paginationHtml += "<li class='page-item " + (response.pi.currentPage == p ? 'active' : '') + "'><a class='page-link' onclick='loadMonthData(" + currentYear + "," + currentMonth + ", " + p +")'>" + p + "</a></li>";
+								    }
+						
+								    if (response.pi.currentPage == response.pi.maxPage) {
+								        paginationHtml += "<li class='page-item disabled'>" +
+								            "<a class='page-link' href='#' aria-label='Next'>" +
+								            "<span aria-hidden='true'>»</span>" +
+								            "<span class='visually-hidden'>Next</span>" +
+								            "</a>" +
+								            "</li>";
+								    } else {
+								        paginationHtml += "<li class='page-item'>" +
+								            "<a class='page-link' href='#' aria-label='Next' id='searchPage4' data-page='" + (response.pi.currentPage + 1) + "'>" +
+								            "<span aria-hidden='true'>»</span>" +
+								            "<span class='visually-hidden'>Next</span>" +
+								            "</a>" +
+								            "</li>";
+								    }
+						
+								    $("#pageBar").html(paginationHtml);
+								}
  </script>    
  
  <script>
@@ -395,18 +483,19 @@
 				    var currentYear;
 				    var currentMonth;
 				    
-				    function loadMonthData(year, month) {
+				    function loadMonthData(year, month, page) {
 		            $.ajax({
-		                url: "${contextPath}/attendance/attlist.do",
+		                url: "${contextPath}/attendance/monthList",
 		                method: 'GET',
 		                data: {
 		                    year: year,
-		                    month: month
+		                    month: month,
+		                    pageNo:page
 		                },
-		                success: function(data) {
+		                success: function(response) {
 		                		
 		                		console.log('성공');
-		               
+		                		monthdisplayUserList(response);
 
 		                },
 		                error: function(error) {
@@ -425,6 +514,7 @@
 				        }
 				        updateYearMonthDisplay();
 				        loadMonthData(currentYear, currentMonth);
+				        
 				    }
 				
 				    // 다음 월 함수
