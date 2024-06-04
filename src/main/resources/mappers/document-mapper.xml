@@ -21,8 +21,8 @@
 		<result column="mem_no" property="memNo" />
 		<result column="dept_no" property="deptNo" />
 		<result column="regist_date" property="registDate" />
-		<result column="ref_mem_no" property="refMemName" />
-		<result column="ref_dept_no" property="refDeptName" />
+		<result column="ref_mem_no" property="refMemNo" />
+		<result column="ref_dept_no" property="refDeptNo" />
 		<result column="mid_approver" property="midApprover" />
 		<result column="mid_approve_date" property="midApproveDate" />
 		<result column="mid_approver_sig" property="midApproverSig" />
@@ -90,9 +90,7 @@
 					 count(*)
 		  from tb_document d
 		  join tb_mem m on (d.mem_no = m.mem_no)
-		 where (
-			      d.mem_no = #{memNo}
-					 )
+		 where  d.mem_no = #{memNo}
 				or (
 			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
@@ -103,7 +101,11 @@
 						and d.mid_approve_status = 'Y'
 						and '대표' = #{memGrade}
 						and final_approver = #{memNo}
-						)			 
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status != '3'
+						)
 	</select>
 	
 	<select id="selectDocumentList" resultMap="documentResultMap">
@@ -133,6 +135,10 @@
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status != '3'
+						)
 		 order
 		    by docu_no desc
 	</select>
@@ -157,6 +163,10 @@
 						d.status != '3'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status != '3'
 						)
 	</select>
 	
@@ -188,6 +198,10 @@
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status != '3'
+						)
 		 order
 		    by d.docu_no desc
 	</select>
@@ -200,21 +214,23 @@
 		  left join tb_mem m on (d.mem_no = m.mem_no)
 		  left join tb_department dp on (d.dept_no = dp.dept_no)
 	 	where ${condition} like '%' || #{keyword} || '%'
-		   and (
-		   			d.mem_no = #{memNo}
-		   			and d.status = #{status}
-					 )
-				or (
+		 	and	 	d.status = #{status}
+		 	or (
+			      d.mem_no = #{memNo}
+					)
+			or (
 			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
-			    	and d.status = #{status}
-			    	and d.status != '3'
-						)
-				or (
+					)
+			or (
 						d.status != '3'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
-						)
+					)
+			or (
+						d.ref_mem_no = #{memNo}
+				 		and d.status = #{status}
+				 	)
 	</select>
 	
 	<select id="statusSearchList" resultMap="documentResultMap">
@@ -231,21 +247,23 @@
 		 left join tb_mem m on (d.mem_no = m.mem_no)
 		 left join tb_department dp on (m.dept_no = dp.dept_no)
 		where ${condition} like '%' ||#{keyword}||'%'
-		 	and	 	
-		 		 	 (
+		 	and	 	d.status = #{status}
+		 	or (
 			      d.mem_no = #{memNo}
-			      and d.status = #{status}
-					 )
-				or (
+					)
+			or (
 			    	d.dept_no = #{deptNo}
 			    	and '팀장' = #{memGrade}
-			    	and d.status = #{status}
-						)
-				or (
-						d.status != '3'
+					)
+			or (
+						d.status = #{status}
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
-						)
+					)
+			or (
+						d.ref_mem_no = #{memNo}
+				 		and d.status = #{status}
+				 	)
 		 order
 		    by docu_no desc
 	</select>
@@ -266,14 +284,15 @@
 			    	and '팀장' = #{memGrade}
 						)
 				or (
-						d.status != '3'
+						d.status = '0'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '0'
+						)
 	</select>
-	
-	
-	
 	
 	<select id="selectPendList" resultMap="documentResultMap">
     select docu_no 
@@ -298,12 +317,15 @@
 			    	and '팀장' = #{memGrade}
 						)
 				or (
-						d.status != '3'
+			    	d.status = '0'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
 						)
-		 order
-		    by docu_no desc
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '0'
+						)
+		 order by docu_no desc
 	</select>
 
 	<!-- 승인 리스트 조회 -->
@@ -322,9 +344,13 @@
 			    	and '팀장' = #{memGrade}
 						)
 				or (
-						d.status != '3'
+						d.status = '1'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '1'
 						)
 	</select>
 	
@@ -351,9 +377,13 @@
 			    	and '팀장' = #{memGrade}
 						)
 				or (
-						d.status != '3'
+			    	d.status = '1'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '1'
 						)
 		 order
 		    by docu_no desc
@@ -378,6 +408,10 @@
 						d.status != '3'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '2'
 						)
 	</select>
 	
@@ -404,9 +438,13 @@
 			    	and '팀장' = #{memGrade}
 						)
 				or (
-						d.status != '3'
+			    	d.status = '2'
 						and (d.mid_approve_status = 'Y' or mid_approver is null) 
 						and final_approver = #{memNo}
+						)
+				or (
+						d.ref_mem_no = #{memNo}
+						and d.status = '2'
 						)
 		 order
 		    by docu_no desc
@@ -420,7 +458,6 @@
 		  join tb_mem m on (d.mem_no = m.mem_no)
 		 where d.status = '3'
 			     and d.mem_no = #{memNo}
-					 
 
 	</select>
 	
@@ -700,8 +737,8 @@
 		select docu_no, docu_category, d.mem_no, m.mem_name, m.mem_grade, d.dept_no, dept_name, to_char(regist_date, 'YYYY-MM-DD') as regist_date
 				 , mid_approver, mid_approve_date, final_approver, final_approve_date, docu_title, docu_content, docu_cost, docu_remark, m.phone as mem_phone
 				 , docu_start_date, docu_end_date, docu_start_place, docu_end_place, docu_emergency_call, docu_annual_leave, docu_item, docu_etc_cost
-				 , docu_count, docu_transport_cost, docu_fuel_cost, docu_food_cost, docu_room_cost, docu_text, docu_text_note
-				 , (select mem_name 
+				 , docu_count, docu_transport_cost, docu_fuel_cost, docu_food_cost, docu_room_cost, docu_text, docu_text_note, ref_mem_no 
+				 , (select dept_name || ' ' || mem_name || ' ' || mem_grade
 				      from tb_mem m 
 				     where m.mem_no = ref_mem_no) as ref_mem_name
 				 , (select sig_img_path
@@ -761,6 +798,7 @@
 			 set final_approve_status = 'Y'
 			   , status = '1'
 			   , final_approve_date = sysdate
+			   , process_reason = #{processReason}
 		 where docu_no = #{docuNo}
 	</update>	
 	
@@ -779,6 +817,7 @@
 					 tb_document
 			 set final_approve_status = 'N'
 			 	 , status = '2'
+			   , process_reason = #{processReason}		 
 		 where docu_no = #{docuNo}
 	</update>	
 	
