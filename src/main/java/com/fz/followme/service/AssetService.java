@@ -44,7 +44,14 @@ public interface AssetService {
 	
 	// 좌석 상태변경(관리자)
 	int updateStatusSeat(AssetDto ad);
-
 	
+	// 잔여좌석 갯수
+	int selectSeatCount();
+	
+	// 좌석예약삭제
+	int deleteReservationSeat(int no);
+
+	// 좌석 기존 예약 확인
+	int hasReservation(AssetReservationDto ard);
 	
 }

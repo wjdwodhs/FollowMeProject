@@ -89,6 +89,24 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
+	@Override
+	public int selectSeatCount() {
+		return 0;
+	}
+
+
+	@Override
+	public int deleteReservationSeat(int no) {
+		return assetDao.deleteReservationSeat(no);
+	}
+
+
+	@Override
+	public int hasReservation(AssetReservationDto ard) {
+		return assetDao.hasReservation(ard);
+	}
+
+
 	
 
 	

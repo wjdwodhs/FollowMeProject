@@ -386,7 +386,7 @@
 							seat.off("click").on("click", function(){
 								
 								var tr = "<tr align='conter'>"
-								       + "<td colspan='5'>" + "조회된 예약이 없습니다." + "</td>"
+								       + "<td colspan='6'>" + "조회된 예약이 없습니다." + "</td>"
 								       + "</tr>";
 								$("#reservationList-table tbody").html(tr);
 								

@@ -32,6 +32,7 @@ public class AssetReservationDto {
 	// 관리자페이지 예약조회를 위한 필드
 	private String assetName;
 	private String deptName;
+	private String memNo;
 	
 	// 예약관리 선택 번호
 	private int[] checkedRsvn;

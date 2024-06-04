@@ -27,6 +27,7 @@
 	<result column="STATUS" property="status"></result>
 	<result column="ASSET_NAME" property="assetName"></result>
 	<result column="DEPT_NAME" property="deptName"></result>
+	<result column="MEM_NO " property="memNo"></result>
 </resultMap>
 
 <!-- 법인차량 리스ㅡ 조회 -->
@@ -96,13 +97,15 @@
 	select
 	       count(*)
 	  from tb_asset_rsvn 
+	  join tb_asset using (asset_no)
+	 where asset_type = 'C'
 </select>
 
 
 <!-- 차량 이용내역 조회  -->
 <select id="selectCarReservationList" resultMap="assetReservationResult">
 	SELECT
-	       RSVN_NO 
+	       RSVN_NO
 	     , ASSET_NAME 
 	     , to_char(rsvn_Date,'YYYY/MM/DD') rsvn_Date
 	     , START_DIVISION 
@@ -141,7 +144,7 @@
 
 
 <!-- 차량예약 -->
-<insert id="insertRsvnCar" parameterType="AssetReservationDto">
+<insert id="insertRsvn" parameterType="AssetReservationDto">
 insert
   into tb_asset_rsvn
   (
@@ -172,7 +175,7 @@ insert
 </insert>
 
 
-<!-- 예약 신청시 중복체크(트랜잭션) -->
+<!-- 차량 예약 신청시 중복체크(트랜잭션) -->
 <select id="doublecheckReservation" resultType="_int"  parameterType="com.fz.followme.dto.AssetReservationDto">
   <![CDATA[
   select count(*)
@@ -181,13 +184,17 @@ insert
      and r.asset_no = (select a.asset_no 
                          from tb_asset a
                         where a.asset_name = #{assetName})
-     and (
-      (r.start_date <= to_date(#{startDate},'YYYY-MM-DD HH24') and r.end_date >= to_date(#{startDate},'YYYY-MM-DD HH24'))
-      or 
-      (r.start_date <= to_date(#{endDate},'YYYY-MM-DD HH24') and r.end_date >= to_date(#{endDate}, 'YYYY-MM-DD HH24')) 
-      or
-      (r.start_date >= to_date(#{startDate}, 'YYYY-MM-DD HH24') and r.end_date <= to_date(#{endDate},'YYYY-MM-DD HH24'))
-     )
+		 and (
+			 (r.start_date < to_date(#{startDate},'YYYY/MM/DD HH24:MI') and r.end_date > to_date(#{startDate},'YYYY/MM/DD HH24:MI'))
+			 or 
+			 (r.start_date < to_date(#{endDate},'YYYY/MM/DD HH24:MI') and r.end_date > to_date(#{endDate}, 'YYYY/MM/DD HH24:MI')) 
+			 or
+			 (r.start_date >= to_date(#{startDate}, 'YYYY/MM/DD HH24:MI') and r.end_date <= to_date(#{endDate},'YYYY/MM/DD HH24:MI'))
+			 or
+			 (r.end_date = to_date(#{startDate}, 'YYYY/MM/DD HH24:MI')) 
+       or
+       (r.start_date = to_date(#{endDate}, 'YYYY/MM/DD HH24:MI'))		
+					)     
   ]]>   
 </select>
 
@@ -218,7 +225,7 @@ insert
 <!-- 차량 예약 조회(사용자) -->
 <select id="selectDateList" resultMap="assetReservationResult">
 	SELECT
-		       RSVN_NO 
+		       RSVN_NO
 		     , ASSET_NAME 
 		     , TO_CHAR(RSVN_DATE,'YYYY/MM/DD') RSVN_DATE
 		     , START_DIVISION 
@@ -233,7 +240,7 @@ insert
 		  LEFT JOIN TB_MEM M ON (A.RSVN_NAME = M.MEM_NAME )
 		  LEFT JOIN TB_DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
 		 WHERE ASSET_TYPE = 'C'
-	     AND RSVN_DATE = TO_DATE(#{rsvnDate}, 'YYYY-MM-DD')
+	     AND RSVN_DATE = TO_DATE(#{rsvnDate}, 'YYYY/MM/DD')
 	     AND A.STATUS = 'Y'
 </select>
 
@@ -251,6 +258,7 @@ insert
 <select id="selectSeatList" resultMap="assetReservationResult">
 	SELECT
 	       RSVN_NO
+	     , MEM_NO
 	     , ASSET_NAME
 	     , RSVN_NAME
 	     , DEPT_NAME
@@ -278,6 +286,32 @@ insert
 		 where asset_name = #{assetName}
 </update>
 
+
+<!-- 좌석 잔여석 조회 -->
+<select id="selectSeatCount" resultType="_int">
+	select
+	       count(*)
+	  from tb_asset
+	 where asset_type = 'S'
+</select>
+
+
+<!-- 좌석 예약 삭제  -->
+<delete id="deleteReservationSeat">
+delete
+  from tb_asset_rsvn
+ where rsvn_no = #{no}
+</delete>
+
+<!-- 좌석 기존 예약 있는지 확인 -->
+<select id="hasReservation" resultMap="assetReservationResult">
+select count(*)
+   from tb_asset_rsvn r
+   join tb_asset a on (r.asset_no = a.asset_no) 
+  where rsvn_name = #{revnName}
+    and asset_type = 'S'
+    and rsvn_date = to_date(#{rsvnDate}, 'YYYY/MM/DD')
+</select>
 
 
 

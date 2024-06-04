@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -272,8 +273,8 @@ public class AssetController {
 	// * 사무실 자리 상태 변경 (관리자)
 	@PostMapping("/modifyseat.bo")
 	@ResponseBody
-	public int updateStatusSeat(AssetDto ad) {
-		log.debug("ad : {}", ad);
+	public int ajaxUpdateStatusSeat(AssetDto ad) {
+		//log.debug("ad : {}", ad);
 		int result =  assetService.updateStatusSeat(ad);
 		return result;
 	}
@@ -288,9 +289,58 @@ public class AssetController {
 	
 	// * 사용자 사무실자리예약 ---------------------------------------------------
 	@RequestMapping("/seatReservation.page")
-	public String seatReservation() {
+	public String seatReservation(HttpServletRequest request, HttpSession session) {
+		MemberDto loginUser = (MemberDto)request.getSession().getAttribute("loginUser");
+		session.setAttribute("loginUser", loginUser);
 		return "assetManagement/seatReservation";
 	}
+	
+	
+	
+	// * 예약내역 조회
+	@GetMapping(value="/selectlistseat.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<AssetReservationDto> selectReservationList(String rsvnDate){
+		
+		List<AssetReservationDto> rlist = assetService.selectSeatList(rsvnDate);
+		//int seatCount = assetService.selectSeatCount();
+		return rlist;
+	}
+	
+	// * 좌석예약
+	@PostMapping(value="/insertrsvnseat.do", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public ResponseEntity<Integer> insertRsvnSeat(@RequestBody AssetReservationDto ard) {
+		
+		// 사용자의 예약 여부 확인
+		int hasReservation = assetService.hasReservation(ard);
+		if(hasReservation > 0) { // 기존 예약이 있는 경우
+			return new ResponseEntity<>(HttpStatus.CONFLICT);  // 예약이 이미 존재함을 클라이언트에게 알림
+		}
+		
+		// 없을경우 예약 처리
+		int result = reservationService.addReservation(ard);
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	
+	// * 좌석삭제
+	@GetMapping("/deletereservationseat.do")
+	public String deleteReservationSeat(int no, RedirectAttributes redirectattributes) {
+		int result = assetService.deleteReservationSeat(no);
+		
+		if(result > 0) {
+			redirectattributes.addFlashAttribute("alertMsg", "예약이 성공적으로 삭제되었습니다.");
+		}else {
+			redirectattributes.addFlashAttribute("alsertMsg", "예약삭제에 실패하였습니다.");
+		}
+		
+		return "redirect:/asset/seatReservation.page";
+	}
+	
+	
 	// -------------------------------------------------------------------
 	
 	

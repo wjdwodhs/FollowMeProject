@@ -62,8 +62,8 @@ public class AssetDao {
 		return sqlSessionTemplate.delete("assetMapper.deleteRsvnList", checkedRsvn);
 	}
 	
-	public int insertRsvnCar(AssetReservationDto ard) {
-		return sqlSessionTemplate.insert("assetMapper.insertRsvnCar", ard);
+	public int insertRsvn(AssetReservationDto ard) {
+		return sqlSessionTemplate.insert("assetMapper.insertRsvn", ard);
 	}
 	
 	
@@ -97,5 +97,16 @@ public class AssetDao {
 		return sqlSessionTemplate.update("assetMapper.updateStatusSeat", ad);
 	}
 	
+	public int selectSeatCount() {
+		return sqlSessionTemplate.selectOne("assetMapper.selectSeatCount");
+	}
+	
+	public int deleteReservationSeat(int no) {
+		return sqlSessionTemplate.delete("assetMapper.deleteReservationSeat", no);
+	}
+	
+	public int hasReservation(AssetReservationDto ard) {
+		return sqlSessionTemplate.selectOne("assetMapper.hasReservation", ard);
+	}
 	
 }

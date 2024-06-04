@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fz.followme.dao.AssetDao;
-import com.fz.followme.dto.AssetDto;
 import com.fz.followme.dto.AssetReservationDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -19,6 +20,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Transactional
 	@Override
 	public int addReservation(AssetReservationDto ard) throws DataAccessException {
+		
 		// 중복예약확인
 		if(assetDao.doublecheckReservation(ard) > 0) {
 			throw new DataAccessException("예약이 중복 되었습니다.") {
@@ -27,7 +29,7 @@ public class ReservationServiceImpl implements ReservationService {
 	  }
 	
 		// 중복 없을시 예약 정보 insert
-		return assetDao.insertRsvnCar(ard);
+		return assetDao.insertRsvn(ard);
 	}
 
 	@Override
@@ -46,7 +48,6 @@ public class ReservationServiceImpl implements ReservationService {
 		return assetDao.updateStatusSeat(ad);
 	}
 	*/
-
 
 
 	
