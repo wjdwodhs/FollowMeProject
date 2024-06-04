@@ -411,7 +411,7 @@ WHERE
 	</select>
 	
 	<select id="selectLeaveDocumentList" resultMap="documentResultMap">
-    select ROW_NUMBER() OVER (ORDER BY d.docu_no ASC) AS rNum
+    select ROW_NUMBER() OVER (ORDER BY d.docu_no DESC) AS rNum
     		 , docu_no 
          , dc.docu_category_name
          , docu_title
@@ -447,7 +447,7 @@ WHERE
 					 and d.docu_category = 3  -- 휴가 신청서 조건 추가
 					 and m.mem_no = #{memNo}
 		 order
-		    by docu_no asc
+		    by docu_no desc
 	</select>
 
 	<!-- 직원 근태 관리  -->
