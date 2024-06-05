@@ -14,7 +14,7 @@
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" /> -->
 		
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="url" value="jdbc:log4jdbc:oracle:thin:@14.36.141.71:17600:xe" />
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" />
 		
 		<property name="username" value="followme" />
 		<property name="password" value="followme" />
@@ -73,9 +73,9 @@
 		<!-- 구글 SMTP 메일 서버 포트  -->
 		<property name="port" value="587" />
 		
-		<property name="username" value="mjeee624@gmail.com" />
+		<property name="username" value="followme180624@gmail.com" />
 		<!-- 구글의 경우 계정 비밀번호가 아닌 발급받은 16자리 앱비밀번호  -->
-		<property name="password" value="zexy lgnn qoif rzqt" />
+		<property name="password" value="q z k n b d n e q q o b w g r o" />
 		
 		<!-- 메일 전달 프로토콜 세부 속성 설정 -->
 		<property name="javaMailProperties">

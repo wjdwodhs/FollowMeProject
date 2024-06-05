@@ -26,7 +26,7 @@
 
 <!-- Icons css -->
 <link href="${ contextPath }/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 	.a.nav-link.active{background-color:#FEBE98;}
   .active>.page-link, .page-link.active {
@@ -40,6 +40,11 @@
      --ct-btn-hover-bg:#FA9A85;
      --ct-btn-hover-border-color:#FA9A85;   
   } 
+ .message-list li .col-mail-2 .date {
+    right: 0;
+    width: 130px;
+    padding-left: 10px;
+} 
 </style>
 
 </head>
@@ -110,9 +115,12 @@
 
                       <div class="inbox-rightbar">
 
+													<!-- 삭제버튼 -->
                           <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
+                              <button type="button" id="trash-btn" class="btn btn-sm btn-light waves-effect"><i class="mdi mdi-delete-variant font-18"></i></button>
                           </div>
+                          
+                          <!-- 이동버튼  -->
                           <div class="btn-group">
                               <button type="button" class="btn btn-sm btn-light dropdown-toggle waves-effect" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="mdi mdi-folder font-18"></i>
@@ -132,19 +140,18 @@
                               		</c:when>
                               		<c:otherwise>
 	                                  <c:forEach var="mail" items="${ outList }">   
-	                                   <li class="unread">
-	                                      <div class="col-mail col-mail-1">
+	                                   <li onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
+	                                      <div class="col-mail col-mail-1" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
 	                                              <label for="mailCheck_${mail.emailNo}" class="toggle"></label>
 	                                              <input type="hidden" id="emailNo" value="${ mail.emailNo }">
 	                                          </div>
-	                                          <span class="star-toggle far fa-star text-warning"></span>
-	                                          <a href="" class="title">${ mail.emailTo }</a>
+	                                          <div class="title">${ mail.emailTo }</div>
 	                                      </div>
-	                                      <div class="col-mail col-mail-2">
-									                            <a href="" class="subject"><c:out value="${mail.subject}" /></a>
-									                            <div class="date">${mail.registDate}</div>
+	                                      <div class="col-mail col-mail-2" onclick="location.href='${contextPath}/email/readsendmail.do?no=${mail.emailNo}';">
+									                            <div class="subject"><c:out value="${mail.subject}" /></div>
+									                            <div class="date" style="width: 130px;">${mail.registDate}</div>
 	                                      </div>
 	                                  	</li>
                               			</c:forEach>
@@ -154,7 +161,8 @@
                           </div>
                           <!-- end .mt-4 -->
                           <br><br>
-                          
+
+													                          
                           <!-- 페이징 -->
                           <ul class="pagination pagination-rounded justify-content-end mb-0">
 												    <li class="page-item ${pi.currentPage == 1 ? 'disabled' : ''}">
@@ -163,9 +171,11 @@
 												            <span class="visually-hidden">Previous</span>
 												        </a>
 												    </li>
-												    <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-												        <li class="page-item ${pi.currentPage == p ? 'active' : ''}"><a class="page-link" href="${contextPath}/email/outbox.bo?page=${p}">${p}</a></li>
-												    </c:forEach>
+												    
+                            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                            	<li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/email/outbox.bo?page=${p}">${ p }</a></li>
+                            </c:forEach>
+												    
 												    <li class="page-item ${pi.currentPage == pi.maxPage ? 'disabled' : ''}">
 												        <a class="page-link" href="${contextPath}/email/outbox.bo?page=${pi.currentPage + 1}" aria-label="Next">
 												            <span aria-hidden="true">»</span>
@@ -193,6 +203,56 @@
 	
 
 			</div>
+			
+			
+			
+	<script>
+	
+	// 선택한 메일 휴지통으로 이동
+	$(document).ready(function(){
+		$("#trash-btn").on("click", function(){
+			
+				var checkMails = [];
+				
+				$(".checkbox-wrapper-mail input[type='checkbox']:checked").each(function(){
+					var emailNo = $(this).closest("li").find("input[type='hidden']").val();
+					checkMails.push(emailNo);
+				});
+				
+					console.log("checkMails :", checkMails);
+				
+				var checkMailStr = checkMails.join(",");
+				
+			$.ajax({
+				url:"${contextPath}/email/updatetrash.do",
+				type:"post",
+				data:{checkMailStr:checkMailStr},
+				success:function(result){
+					if(result > 0){				
+						console.log("휴지통으로 이동 성공");
+						location.reload();
+					}else{
+						console.log("이동실패");
+					}
+				},
+				error:function(){
+					console.log("휴지통으로 이동 ajax통신 실패");
+				}
+			})	
+			
+				
+		})
+	})
+
+	
+	
+	
+	</script>			
+			
+			
+			
+			
+			
 
       <!-- ============================================================== -->
       <!-- <-- End Page Content

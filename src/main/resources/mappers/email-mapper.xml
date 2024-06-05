@@ -14,6 +14,8 @@
 		<result column="forder" property="forder" />
 		<result column="is_important" property="isImportant" />
 		<result column="is_read" property="isRead" />
+		
+		<collection resultMap="attachmentResult" property="attachList" />
 	</resultMap>
 	
 	<resultMap id="memberResult" type="MemberDto">
@@ -124,14 +126,40 @@
 	     , is_important
 	     , is_read
 	  from tb_email
-	 where email_status = 'ACTIVE'
-	   and email_from = 'mjeee624@gmail.com'
+	 where forder = 'OUTBOX'
+	   and email_from = 'followme180624@gmail.com'
 	 order
 	    by regist_date desc
 </select>
 
+<!-- 선택 메일 휴지통으로 이동 -->
+<update id="updateMailStatusTrash">
+	 update tb_email
+	    set forder = 'TRASH'
+	  where email_no in
+	  <foreach item="checkMail" collection="array" open="(" separator="," close=")">
+		 		#{checkMail}
+		 </foreach>
+</update>
 
-
+<!-- 받은메일 상세조회  -->
+<select id="selectSendMail" resultMap="emailResult">
+	select
+	       email_no
+	     , email_from
+	     , email_to
+	     , subject
+	     , text
+	     , to_char(regist_date, 'YYYY.MM.DD HH24:MI') regist_date
+	     , file_no
+	     , file_path
+	     , system_name
+	     , origin_name
+	  from tb_email
+	  left join tb_attachment on (type = 'E' and ref_no = email_no)
+	 where email_status = 'ACTIVE'
+	   and email_no = #{no}
+</select>
 
 
 </mapper>

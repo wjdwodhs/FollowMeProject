@@ -46,5 +46,13 @@ public class EmailDao {
 		
 		return sqlSessionTemplate.selectList("emailMapper.selectOutBoxList", null, rowBounds);
 	}
+	
+	public int updateMailStatusTrash(int[] checkMail) {
+		return sqlSessionTemplate.update("emailMapper.updateMailStatusTrash", checkMail);
+	}
+	
+	public EmailDto selectSendMail(int no) {
+		return sqlSessionTemplate.selectOne("emailMapper.selectSendMail", no);
+	}
 
 }

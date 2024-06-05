@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -108,18 +110,30 @@ public class EmailController {
 		  .addObject("outList", outList)
 		  .setViewName("email/emailOutbox");
 		
+		log.debug("outList : {}" , outList);
 		
 		return mv;
 	}
 	
 	
+	// 보낸메일함에서 선택된 메일 휴지통으로 이동
+	@ResponseBody
+	@PostMapping(value="/updatetrash.do", produces="application/json; charset=utf-8")
+	public int updateMailStatusTrash(@RequestParam("checkMailStr") int[] checkMail) {
+		log.debug("checkMail:{}", checkMail);
+		
+		return emailService.updateMailStatusTrash(checkMail);
+	}
 	
 	
 	// ==========================================================
 	
 	// 메일 상세내용 수정해야함
-	@RequestMapping("/readMail.do")
-	public String emailRead() {
+	@GetMapping("/readsendmail.do")
+	public String emailRead(int no, Model model) {
+		
+		model.addAttribute("email", emailService.selectSendMail(no));
+		
 		return "email/emailRead";
 	}
 	

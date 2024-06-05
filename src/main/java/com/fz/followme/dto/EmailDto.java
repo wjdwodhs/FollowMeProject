@@ -38,4 +38,7 @@ public class EmailDto {
 	private String status;
 
 	private List<AttachmentDto> attachList;
+	
+	// 메일선택 번호
+	private int[] checkMail;
 }

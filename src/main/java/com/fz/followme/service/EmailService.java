@@ -93,5 +93,15 @@ public class EmailService {
 		return emailDao.selectOutBoxList(pi);
 	}
 	
+	// 휴지통으로 이동
+	public int updateMailStatusTrash(int[] checkMail) {
+		return emailDao.updateMailStatusTrash(checkMail);
+	}
+	
+	// 보낸메일 상세조회
+	public EmailDto selectSendMail(int no) {
+		return emailDao.selectSendMail(no);
+	}
+	
 	
 }

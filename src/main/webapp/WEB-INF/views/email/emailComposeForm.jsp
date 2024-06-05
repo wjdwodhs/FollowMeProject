@@ -137,7 +137,7 @@
 	                                  <div class="mt-4" >
 	                                      <form id="mailSend-form" enctype="multipart/form-data">
 	                                          <div class="mb-3 mail-box">
-																						    <input type="hidden" id="emailFrom" name="emailFrom" value="mjeee624@gmail.com">
+																						    <input type="hidden" id="emailFrom" name="emailFrom" value="followme180624@gmail.com">
 																						    받는사람
 																						    <div id="emailToContainer" class="form-control" style="border: 1px solid #ccc; padding: 5px; min-height: 30px;">
 																						        <input type="text" id="emailTo" style="border: none; outline: none; width: 100%;" placeholder="이메일 주소를 입력하세요">
