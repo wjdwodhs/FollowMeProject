@@ -169,7 +169,7 @@
 	                                            </thead>
 	                                            <tbody>
 	                                                <tr>
-	                                                		<td>${countMap.B}회</td>
+	                                                		<td>${countMap.B+countMap.A}회</td>
 	                                                    <td>${countMap.E}회</td>
 	                                                    <td>${countMap.C}회</td>
 	                                                    <td>${countMap.D}회</td>

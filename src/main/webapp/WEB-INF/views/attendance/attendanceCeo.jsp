@@ -268,7 +268,7 @@
 										        if (e.keyCode === 13) {
 										            e.preventDefault(); // 엔터키 눌렀을 때 기본 동작 막기
 										        }
-										    });
+										    }); 
 									        
 									      $(document).on('click','#searchPage',function(){
 										        var pageNo = $(this).text();

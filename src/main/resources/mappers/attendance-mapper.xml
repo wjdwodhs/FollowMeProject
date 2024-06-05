@@ -194,7 +194,7 @@
      AND 
          trunc(att_date, 'MM') = trunc(sysdate, 'MM')
      AND 
-         type IN ('B', 'C', 'D', 'E') 
+         type IN ('A','B', 'C', 'D', 'E') 
      GROUP BY 
          type
  </select>
