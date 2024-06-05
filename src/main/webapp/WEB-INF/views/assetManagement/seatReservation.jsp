@@ -34,10 +34,6 @@
   cursor: pointer; 
 }
 
-.content-page .allday { 
-    background-color: #DDDDDD !important;
-    pointer-events: none;
-}
 .content-page .morning { 
      background-color: #DFCCFB !important;
 }
@@ -47,6 +43,10 @@
 
 .content-page .myreservation { 
 		background-color: #FEBE98 !important;
+}
+.content-page .allday { 
+    background-color: #DDDDDD !important;
+    pointer-events: none;
 }
 </style>
 
