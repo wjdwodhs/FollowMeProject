@@ -137,6 +137,7 @@ public class DocumentServiceImpl implements DocumentService {
 		return result1 * result2;
 	}
 
+	// 글 상세보기
 	@Override
 	public DocumentDto selectDocument(int docuNo) {
 		
@@ -146,7 +147,7 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	
-	// 글 회수하기
+	// 글 회수하기 기능
 	@Override
 	public int recallDocument(DocumentDto document) {
 		
@@ -219,38 +220,56 @@ public class DocumentServiceImpl implements DocumentService {
 		return result;
 	}
 
-	@Override
-	public int updateRegistReason(DocumentDto document) {
-		int result = 0;
-		
-		try {
-			result = documentDao.updateRegistReason(document);			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
+	// 결재 처리 - 컨트롤러 단에서 사용됨. 로그인한 사원의 사원번호와 중간결재자의 사원번호가 일치한지 확인
 	@Override
 	public String selectMidApprover(DocumentDto document) {
 		return documentDao.selectMidApprover(document);
 	}
-
+	
+	// 결재 처리 - 컨트롤러 단에서 사용됨. 로그인한 사원의 사원번호와 최종결재자의 사원번호가 일치한지 확인
 	@Override
 	public String selectFinalApprover(DocumentDto document) {
 		return documentDao.selectFinalApprover(document);
 	}
 
+	// 클라이언트단에서 ajax로 첨부파일 조회 기능
 	@Override
 	public List<AttachmentDto> selectAttachmentList(int docuNo) {
 		return documentDao.selectAttachmentList(docuNo);
 	}
 
+	// 클라이언트단에서 ajax로 사원 리스트 조회 기능 (전자문서 작성 시 '참조인 조회'로 사용)
 	@Override
 	public List<MemberDto> selectMemberList() {
 		return documentDao.selectMemberList();
 	}
+
+	/**
+	 * 메인화면 오늘의 전자결재 문서의 개수를 반환하는 메소드 (본인이 조회권한이 있을 경우만 count)
+	 * @param count 전자문서의 갯수
+	 * @param loginUser : session 로그인한 사원 정보가 담겨있는 Member 객체
+	 * @author 이주리 
+	 */
+	@Override // 미처리 갯수
+	public int notDoneCount(MemberDto m) {
+		return documentDao.notDoneCount(m);
+	}
+
+	@Override // 진행중 갯수
+	public int pendCount(MemberDto m) {
+		return documentDao.pendCount(m);
+	}
+
+	@Override // 오늘의 승인 갯수
+	public int approvalCount(MemberDto m) {
+		return documentDao.approvalCount(m);
+	}
+
+	@Override // 오늘의 반려 갯수
+	public int rejectCount(MemberDto m) {
+		return documentDao.rejectCount(m);
+	}
+
 
 
 	

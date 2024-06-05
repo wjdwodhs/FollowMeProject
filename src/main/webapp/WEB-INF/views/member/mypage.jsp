@@ -102,6 +102,9 @@
 		}
 		
 		
+		// 계좌실명 인증 완료 여부 변수
+		var accountVerified = false;
+		
 		// 계좌실명 인증
 		function checkAccount() {
 			
@@ -136,13 +139,33 @@
 	        document.getElementById('accountHolder').value = data.bankHolderInfo;
 	        // 알람창으로 예금주명 띄우기
 	        alert('예금주명: ' + data.bankHolderInfo + '\n\n확인되었습니다.');
+	        
+	     		// 인증 완료 시 변수 업데이트
+	        accountVerified = true;
 	    })
 	    .catch(function(error) {
 	        console.error('오류가 발생했습니다', error);
 	        alert('계좌 인증에 실패하였습니다.');
+	        
+	        // 인증 실패 시 변수 업데이트
+	        accountVerified = false;
 	    });
 	   
 	}
+		
+		
+		// 폼 제출 버튼 클릭 이벤트 핸들러
+		document.addEventListener('DOMContentLoaded', function() {
+		    var updateForm = document.getElementById('updateMypageForm'); 
+		    
+		    updateForm.addEventListener('submit', function(event) {
+		        // 계좌 실명 인증 상태 확인
+		        if (!accountVerified) {
+		            event.preventDefault(); // 폼 제출 막기
+		            alert('계좌 실명 인증을 먼저 완료해주세요.');
+		        }
+		    });
+		});
 			
 		
 	    // 은행명 선택시 value가 '은행명'으로 넘어가게 하는 함수(숫자 말고)

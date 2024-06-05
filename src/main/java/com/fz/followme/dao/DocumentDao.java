@@ -173,10 +173,6 @@ public class DocumentDao {
 		return sqlSessionTemplate.update("documentMapper.updateFinalReject", document);
 	}
 
-	public int updateRegistReason(DocumentDto document) {
-		return sqlSessionTemplate.update("documentMapper.updateProcessReason", document);
-	}
-
 	public String selectMidApprover(DocumentDto document) {
 		return sqlSessionTemplate.selectOne("documentMapper.selectMidApprover", document);
 	}
@@ -191,6 +187,29 @@ public class DocumentDao {
 
 	public List<MemberDto> selectMemberList() {
 		return sqlSessionTemplate.selectList("documentMapper.selectMemberList");
+	}
+
+	
+	/**
+	 * 메인화면 오늘의 전자결재 문서의 개수를 반환하는 메소드 (본인이 조회권한이 있을 경우만 count)
+	 * @param count 전자문서의 갯수
+	 * @param loginUser : session 로그인한 사원 정보가 담겨있는 Member 객체
+	 * @author 이주리 
+	 */
+	public int notDoneCount(MemberDto m) { // 미처리
+		return sqlSessionTemplate.selectOne("selectNotDoneListCount", m);
+	}
+
+	public int pendCount(MemberDto m) { // 진행중
+		return sqlSessionTemplate.selectOne("selectPendListCount", m);
+	}
+
+	public int approvalCount(MemberDto m) { // 오늘의 승인건
+		return sqlSessionTemplate.selectOne("approvalCount", m);
+	}
+
+	public int rejectCount(MemberDto m) { // 오늘의 반려건
+		return sqlSessionTemplate.selectOne("rejectCount", m);
 	}
 
 
