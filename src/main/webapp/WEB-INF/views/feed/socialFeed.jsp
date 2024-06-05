@@ -66,7 +66,7 @@
 		          <!-- end page title -->
 		
 		          <div class="row">
-		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1" id="feedArea">
+		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1">
 		                  <!-- new post -->
 		                  <div class="card" style="width: 1040px;">
 		                      <div class="card-body p-0">
@@ -104,8 +104,14 @@
 		                          </div> <!-- end tab-content-->
 		                      </div>
 		                  </div>
-		                  <!-- end new post -->
+		              </div>
+		          </div>
+		          <!-- end new post -->
 				   
+				   		<div class="row">
+		              <div class="col-xl-6 col-lg-12 order-lg-2 order-xl-1" id="feedArea">
+		              </div>
+		          
 				   				
 				   				
 				  <script>
@@ -281,6 +287,7 @@
 
 	                                
 	                      }
+			                	
                      }
                    
                  },
@@ -305,9 +312,11 @@
         				},
         				success:function(result){
         					if(result == "SUCCESS"){
+        						$("#feedArea").empty();
         						$("[id^='replyList-']").empty();
+           					ajaxFeedList();
+
         						$("#replyContent-" + sfNo).val("");
-        						ajaxFeedList(sfNo);
         						
         					}else if(result == "FAIL"){
         	        	alert("다시 입력해주세요.");
@@ -339,6 +348,7 @@
        				data:{replyNo: replyNo},
        				success:function(result){
        					if(result == "SUCCESS"){
+       						$("#feedArea").empty();
        						$("[id^='replyList-']").empty();
        						ajaxFeedList();
        	          alert("댓글을 삭제했습니다.");

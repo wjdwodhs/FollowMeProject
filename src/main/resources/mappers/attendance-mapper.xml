@@ -411,7 +411,7 @@ WHERE
 	</select>
 	
 	<select id="selectLeaveDocumentList" resultMap="documentResultMap">
-    select ROW_NUMBER() OVER (ORDER BY d.docu_no ASC) AS rNum
+    select ROW_NUMBER() OVER (ORDER BY d.docu_no DESC) AS rNum
     		 , docu_no 
          , dc.docu_category_name
          , docu_title
@@ -447,13 +447,13 @@ WHERE
 					 and d.docu_category = 3  -- 휴가 신청서 조건 추가
 					 and m.mem_no = #{memNo}
 		 order
-		    by docu_no asc
+		    by docu_no desc
 	</select>
 
 	<!-- 직원 근태 관리  -->
 	<select id="AllCountAttendanceByType" resultMap="attendanceMap">
 	<![CDATA[
-		SELECT 
+	SELECT 
     m.mem_no,
     m.mem_pwd,
     d.dept_name,
@@ -482,7 +482,7 @@ WHERE
     NVL(a.count_c, 0) AS count_c,
     NVL(a.count_d, 0) AS count_d,
     NVL(a.count_e, 0) AS count_e,
-    NVL(att.monthWorkTime, 0) AS monthWorkTime
+    ROUND(MOD(NVL(att.monthWorkTime, 0), 3600) / 60, 1) AS monthWorkTime
 FROM 
     tb_mem m
 LEFT JOIN 
@@ -519,7 +519,7 @@ LEFT JOIN
                     EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
                     EXTRACT(SECOND FROM (end_time - start_time))
             END
-        ) / 3600) AS monthWorkTime
+        ) / 60) AS monthWorkTime
     FROM 
         tb_attendance
     WHERE 
@@ -567,7 +567,7 @@ ORDER BY
     NVL(a.count_c, 0) AS count_c,
     NVL(a.count_d, 0) AS count_d,
     NVL(a.count_e, 0) AS count_e,
-    NVL(att.monthWorkTime, 0) AS monthWorkTime
+    ROUND(MOD(NVL(att.monthWorkTime, 0), 3600) / 60, 1) AS monthWorkTime
 FROM 
     tb_mem m
 LEFT JOIN 
@@ -604,7 +604,7 @@ LEFT JOIN
                     EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
                     EXTRACT(SECOND FROM (end_time - start_time))
             END
-        ) / 3600) AS monthWorkTime
+        ) / 60) AS monthWorkTime
     FROM 
         tb_attendance
     WHERE 
@@ -627,6 +627,93 @@ WHERE
 ORDER BY 
     m.mem_no ASC
     ]]>
+	</select>
+	
+	<!-- 직원 근태 관리 월별 조회 -->
+	<select id="monthAllCountAttendanceByType" resultMap="attendanceMap">
+	<![CDATA[
+	SELECT 
+    m.mem_no,
+    m.mem_pwd,
+    d.dept_name,
+    m.dept_no,
+    m.profile_img_path,
+    m.mem_gender,
+    m.mem_name,
+    m.mem_securityno,
+    m.mem_address,
+    m.sig_img_path,
+    m.mem_email,
+    m.mem_grade,
+    m.mem_role,
+    m.extension_number,
+    m.phone,
+    m.enroll_date,
+    m.quit_date,
+    m.mem_salary,
+    m.account_no,
+    m.mem_incentive,
+    m.mem_certificate,
+    m.mem_welfare,
+    m.authorization_level,
+    m.status,
+    NVL(a.count_b, 0) AS count_b,
+    NVL(a.count_c, 0) AS count_c,
+    NVL(a.count_d, 0) AS count_d,
+    NVL(a.count_e, 0) AS count_e,
+    ROUND(MOD(NVL(att.monthWorkTime, 0), 3600) / 60, 1) AS monthWorkTime
+FROM 
+    tb_mem m
+LEFT JOIN 
+    tb_department d ON m.dept_no = d.dept_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        COUNT(CASE WHEN type = 'B' THEN 1 END) AS count_b,
+        COUNT(CASE WHEN type = 'C' THEN 1 END) AS count_c,
+        COUNT(CASE WHEN type = 'D' THEN 1 END) AS count_d,
+        COUNT(CASE WHEN type = 'E' THEN 1 END) AS count_e
+    FROM 
+        tb_attendance
+    WHERE
+        EXTRACT(YEAR FROM att_date) = #{currentYear}
+        AND EXTRACT(MONTH FROM att_date) = #{currentMonth}
+    GROUP BY 
+        mem_no
+    ) a ON m.mem_no = a.mem_no
+LEFT JOIN 
+    (SELECT 
+        mem_no,
+        TO_CHAR(att_date, 'YYYY-MM') AS month,
+        TRUNC(SUM(
+            CASE 
+                WHEN EXTRACT(HOUR FROM start_time) < 12 AND EXTRACT(HOUR FROM end_time) >= 13 THEN
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time)) -
+                    3600 
+                ELSE
+                    EXTRACT(DAY FROM (end_time - start_time)) * 24 * 3600 +
+                    EXTRACT(HOUR FROM (end_time - start_time)) * 3600 +
+                    EXTRACT(MINUTE FROM (end_time - start_time)) * 60 +
+                    EXTRACT(SECOND FROM (end_time - start_time))
+            END
+        ) / 60) AS monthWorkTime
+    FROM 
+        tb_attendance
+    WHERE 
+        EXTRACT(YEAR FROM att_date) = #{currentYear}
+        AND EXTRACT(MONTH FROM att_date) = #{currentMonth}
+    GROUP BY 
+        mem_no, TO_CHAR(att_date, 'YYYY-MM')
+    ) att ON m.mem_no = att.mem_no
+WHERE 
+    m.status IN ('Y', 'R')
+ORDER BY 
+    m.mem_no ASC
+    ]]>
+		
 	</select>
 	
 	

@@ -212,16 +212,16 @@
                                   <div style="display: flex; justify-content: center;">
 
                                       <div style="border:none; background-color: #FFF8C9; width: 50px; height: 50px; margin-right: 12px;"> </div> 
-                                      <label style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;오전<br> 이용가능 </label> <br>
-                                      <label id="afternoon-label" style="margin-top: 5px;"><br> (<b>n</b>석) </label>
+                                    	<label style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;오전<br> 이용가능 </label> <br>
+                                     <!--  <label id="afternoon-label" style="margin-top: 5px;"><br> (<b>n</b>석) </label>  -->
                                       
                                       <div style="border:none; background-color: #DFCCFB; width: 50px; height: 50px; margin-right: 12px; margin-left: 10px;"> </div> 
                                       <label style="margin-top: 5px;">&nbsp;&nbsp;&nbsp;오후<br> 이용가능 </label> <br>
-                                      <label id="morning-label" style="margin-top: 5px;"><br> (<b>n</b>석) </label>
+                                      <!-- <label id="morning-label" style="margin-top: 5px;"><br> (<b>n</b>석) </label> -->
                                       
                                       <div style="border:none; background-color: lightgray; width: 50px; height: 50px; margin-right: 12px; margin-left: 15px;"></div>
                                       <label style="margin-top: 12px;">이용불가</label>
-                                      <label id="allday-label" style="margin-top: 12px;"> (<b>n</b>석)</label>
+                                      <!-- <label id="allday-label" style="margin-top: 12px;"> (<b>n</b>석)</label>  -->
 
                                   </div>
                                   <br><br>
@@ -444,6 +444,8 @@
 						// 모든 좌석 초기화
 						$(".seatingNum td").removeClass("myreservation allday morning afternoon");
 						
+						
+						
 						// 좌석배치도에 예약 표시
 						rlist.forEach(function(r){
 							$(".seatingNum td").each(function(){	
@@ -479,9 +481,12 @@
 
 						})
 						
+						/*
 						$("#allday-label").html( " (" + "<b>" + allDayCount + "</b>" + " 석)");
 						$("#morning-label").html("<br>" + " (" + "<b>" + morningCount + "</b>" + " 석)");
 						$("#afternoon-label").html("<br>" +  " (" + "<b>" + afternoonCount + "</b>" + " 석)");
+						*/
+						
 						
 						// 자리 클릭시 예약 상세 조회
 						$(".seatingNum td").click(function() {

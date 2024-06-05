@@ -76,7 +76,7 @@ public class AttendanceController {
 	    if (attDto == null) {
 	        attDto = new AttendanceDto();
 	        attDto.setWorkingDays(0); 
-	        attDto.setMonthWorkTime(0); 
+	        attDto.setMonthWorkTime("0"); 
 	        attDto.setAvgWorkTime(0); 
 	    }
 
@@ -152,7 +152,7 @@ public class AttendanceController {
 	    if (attDto == null) {
 	        attDto = new AttendanceDto();
 	        attDto.setWorkingDays(0); 
-	        attDto.setMonthWorkTime(0); 
+	        attDto.setMonthWorkTime("0"); 
 	        attDto.setAvgWorkTime(0); 
 	    }
 
@@ -290,7 +290,7 @@ public class AttendanceController {
 	    if (attDto == null) {
 	        attDto = new AttendanceDto();
 	        attDto.setWorkingDays(0); 
-	        attDto.setMonthWorkTime(0); 
+	        attDto.setMonthWorkTime("0"); 
 	        attDto.setAvgWorkTime(0); 
 	    }
 	    
@@ -356,9 +356,53 @@ public class AttendanceController {
 		return response;
     }
     
+	
+	//  월별 직원 근태 리스트 호출
+		@GetMapping("/monthList")
+		@ResponseBody
+		public Map<String, Object> monthAttendanceAllList(@RequestParam(value="pageNo", defaultValue="1") int currentPage,
+													 @RequestParam String year, 
+													 @RequestParam String month) {
+			
+			int listCount = memberService.selectMemberListCount();
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+			
+			AttendanceDto att = AttendanceDto.builder()
+	                .currentYear(year)
+	                .currentMonth(month)
+	                .build();
+			
+			// 타입별 출석 데이터
+		    List<AttendanceDto> memberList = attendanceService.monthAllCountAttendanceByType(att,pi);
+
+			
+			Map<String, Object> response = new HashMap<>();
+			response.put("memberList", memberList);
+			response.put("pi", pi);
+			
+			return response;
+	    }
     
     
-    
+		// 직원 근태 리스트 호출 - 검색처리
+		@GetMapping("/monthSearchList")
+		@ResponseBody
+		public Map<String, Object> monthAttendanceKeywordAllList(String keyword
+								   				, @RequestParam(value="pageNo", defaultValue="1") int currentPage) {
+			
+			int listCount = memberService.searchMemberListCount(keyword);
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 7);
+			
+			// 타입별 출석 데이터
+		    List<AttendanceDto> memberList = attendanceService.AllKeywordCountAttendanceByType(keyword,pi);
+
+			
+			Map<String, Object> response = new HashMap<>();
+			response.put("memberList", memberList);
+			response.put("pi", pi);
+			
+			return response;
+	    }
     
     
     

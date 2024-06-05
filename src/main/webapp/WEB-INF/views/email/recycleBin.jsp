@@ -112,19 +112,19 @@
                               <button type="button" id="backUp-btn" class="btn btn-light waves-effect">복구하기</button>
                           </div>
                           <div class="btn-group">
-                          		<button type="button" class="btn btn-danger waves-effect"
-                          		        data-bs-toggle="modal" data-bs-target="#resycleBinList-delMobal">비우기</button>
+                          		<button type="button" class="btn btn-danger waves-effect" id="empty-btn"
+                          		        data-bs-toggle="modal" >비우기</button>
 													</div>
 													
                           <div class="mt-3">
                               <ul class="message-list">
                               	<c:choose>
                               		<c:when test="${ empty recycleList }">
-                              		 <li>조회된 메일이 없습니다.</li>
+                              		 <li class="emptyMessage-list">조회된 메일이 없습니다.</li>
                               		</c:when>
                               		<c:otherwise>
 	                                  <c:forEach var="mail" items="${ recycleList }">   
-	                                   <li>
+	                                   <li class="hasMessage-list">
 	                                      <div class="col-mail col-mail-1" >
 	                                          <div class="checkbox-wrapper-mail">
 	                                              <input type="checkbox" id="mailCheck_${mail.emailNo}">
@@ -266,10 +266,19 @@
 			})
 			
 		})
-	})
+
 	
 	
 		// 휴지통 비우기
+		
+		$("#empty-btn").on("click", function(){
+			if($(".emptyMessage-list").length > 0){
+				alert("삭제할 메일이 없습니다.");
+			}else{
+				$("#resycleBinList-delMobal").modal('show');
+			}
+		})
+		
 		$("#allDelete-btn").on("click", function(){
 			$.ajax({
 				url:"${contextPath}/email/empty.do",
@@ -279,17 +288,17 @@
 					if(result>0){
 						alert("휴지통에 있는 메일을 전부 비웠습니다.");
 						location.reload();
-					}else{}
-						alert("삭제할 메일이 없습니다.");
-						$("#resycleBinList-delMobal").modal("hide");
+					}
 				},
 				error:function(){
 					console.log("휴지통비우기 ajax실패");
 				}
 			})
 		})
+		
+		
 
-	
+	})
 	
 	
 	</script>			

@@ -306,8 +306,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>	
 	
-	
-	//$(document).ready(function(){
 		
 		// 좌석 클릭하면 자리 상태 설정에 좌석 번호 표시
 		$(".seatingNum td").on("click",function() {
@@ -322,8 +320,6 @@
 		var today = new Date().toISOString().split('T')[0];
 		$("#modifyDate").attr('min', today);		
 
-		
-	//})
 	
 	
 		// 선택 날짜 예약내역 조회, 선택좌석 상세조회
@@ -367,6 +363,15 @@
 								
 									
 								reservation.forEach(function(rsvn){
+									console.log("조건식 전", rsvn.rsvnContent);
+									
+									// 예약 내역중 null값 변경
+									rsvn.rsvnName = rsvn.Name == null ? '대기발령' : revn.Name;
+									rsvn.rsvnContent = rsvn.rsvnContent == null ? '' : rsvn.rsvnContent;
+									
+									console.log("조건식 후", rsvn.rsvnContent);
+									
+									// 예약 상세조회테이블
 									var tr = $("<tr align='center'></tr>");
 										tr.append("<td>" + rsvn.rsvnName + "</td>");
 										tr.append("<td>" + rsvn.deptName + "</td>");
@@ -434,9 +439,15 @@
 				success:function(result){
 					
 					if(result > 0){
-						$("#selectCarList-delMobal").modal('hide');
+						$("#seatStatusModify-modal").modal('hide');
 						alert("성공적으로 변경 되었습니다.");
-						location.reload();
+						
+						if(seatStatusForm == "N"){
+							$(".seatingNum td:contains(" + seatNoForm + ")").addClass("searchListSeat no-hover");
+						} else if(seatStatusForm == 'Y'){
+							$(".seatingNum td:contains(" + seatNoForm + ")").removeClass("searchListSeat no-hover");
+						}
+						
 						
 					}else{
 						alert("변경에 실패하였습니다. 입력내용을 확인하시고 다시 시도해주세요.");
