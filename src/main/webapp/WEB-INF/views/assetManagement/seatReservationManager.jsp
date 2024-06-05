@@ -366,7 +366,7 @@
 									console.log("조건식 전", rsvn.rsvnContent);
 									
 									// 예약 내역중 null값 변경
-									rsvn.rsvnName = rsvn.Name == null ? '대기발령' : revn.Name;
+									//rsvn.rsvnName = rsvn.Name == null ? '대기발령' : revn.Name;
 									rsvn.rsvnContent = rsvn.rsvnContent == null ? '' : rsvn.rsvnContent;
 									
 									console.log("조건식 후", rsvn.rsvnContent);
