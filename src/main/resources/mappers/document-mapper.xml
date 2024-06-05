@@ -751,7 +751,12 @@
 				 , mid_approver, mid_approve_date, final_approver, final_approve_date, docu_title, docu_content, docu_cost, docu_remark, m.phone as mem_phone
 				 , docu_start_date, docu_end_date, docu_start_place, docu_end_place, docu_emergency_call, docu_annual_leave, docu_item, docu_etc_cost
 				 , docu_count, docu_transport_cost, docu_fuel_cost, docu_food_cost, docu_room_cost, docu_text, docu_text_note, ref_mem_no 
-				 , (select dept_name || ' ' || mem_name || ' ' || mem_grade
+				 , (select 
+				 					CASE 
+							        WHEN ref_mem_no = '000001' 
+							        THEN mem_name || ' ' || mem_grade 
+							        ELSE dept_name || ' ' || mem_name || ' ' || mem_grade 
+							     END
 				      from tb_mem m 
 				     where m.mem_no = ref_mem_no) as ref_mem_name
 				 , (select sig_img_path
@@ -763,9 +768,14 @@
 				 , (select sig_img_path	
 				 			from tb_mem m
 				 		 where m.mem_no = d.final_approver) as final_approver_sig
-				 , (select dept_name || ' ' || mem_name || ' ' || mem_grade
+				 , (select 
+							    CASE 
+							        WHEN d.final_approver = '000001' 
+							        THEN mem_name || ' ' || mem_grade 
+							        ELSE dept_name || ' ' || mem_name || ' ' || mem_grade 
+							     END
 				      from tb_mem m
-				      join tb_department d on m.dept_no = d.dept_no
+				      join tb_department dp on m.dept_no = dp.dept_no
 				     where m.mem_no = d.final_approver) as approver_inf
 				 , (select dept_name
 				 			from tb_department
