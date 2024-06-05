@@ -276,7 +276,7 @@ insert
 <update id="updateStatusSeat">
 		update tb_asset
 		   set status = #{status}
-		     , modify_date = sysdate
+		     , modify_date = #{modifyDate}
 		 where asset_name = #{assetName}
 </update>
 
