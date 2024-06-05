@@ -23,6 +23,9 @@ public interface ReservationService {
 	
 	// 좌석상태 변경
 	//int updateSeatStatus(AssetDto ad);
+	
+	// 좌석 기존 예약 확인
+	int hasReservation(AssetReservationDto ard);
 
 
 

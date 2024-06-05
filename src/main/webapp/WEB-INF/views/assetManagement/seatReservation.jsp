@@ -30,7 +30,7 @@
 <style>
 .a.nav-link.active{backgroun-color:#FEBE98;}
 .seatingNum td:hover {
-  background-color: #FEBE98 !important;
+  background-color: #FAF0D7 !important;
   cursor: pointer; 
 }
 
@@ -39,12 +39,10 @@
     pointer-events: none;
 }
 .content-page .morning { 
-     background-color: #FFF8C9 !important;
-     pointer-events: none;
+     background-color: #DFCCFB !important;
 }
 .content-page .afternoon { 
-     background-color: #DFCCFB !important;
-     pointer-events: none;
+     background-color: #FFF8C9 !important;
 }
 
 .content-page .myreservation { 
@@ -261,26 +259,7 @@
 			                                    </td>
 			                                    <th>선택좌석</th>
 			                                    <td>
-			                                        <select class="reservation-select" name="assetName" required style="border: 0.5px solid lightgray; border-radius: 3px; height: 30px; width: 80px; color: gray;">
-			                                            <option value="01">01</option>
-			                                            <option value="02">02</option>
-			                                            <option value="03">03</option>
-			                                            <option value="04">04</option>
-			                                            <option value="05">05</option>
-			                                            <option value="06">06</option>
-			                                            <option value="07">07</option>
-			                                            <option value="08">08</option>
-			                                            <option value="09">09</option>
-			                                            <option value="10">10</option>
-			                                            <option value="11">11</option>
-			                                            <option value="12">12</option>
-			                                            <option value="13">13</option>
-			                                            <option value="14">14</option>
-			                                            <option value="15">15</option>
-			                                            <option value="16">16</option>
-			                                            <option value="17">17</option>
-			                                            <option value="18">18</option>
-			                                        </select>  
+			                                        <input type="text" id="clickNum" name="assetName" class="form-control" style="height: 30px;" required >
 			                                    </td>
 			                                </tr>
 			                                <tr>
@@ -440,6 +419,12 @@
 				$(this).attr('max', maxDateStr);
 			})
 
+			// 선택좌석 클릭
+			$(".seatingNum td").click(function(){
+				var seatingNum = $(this).text().trim();
+				$("input[name='assetName']").val(seatingNum);
+				
+			})
 		
 			// 예약 조회
 			$("#selectListSeat-btn").on("click", function(){
@@ -465,24 +450,28 @@
 								if($(this).text() == r.assetName ){
 									var startHour = parseInt(r.startDate.split(':')[0]);
 									var endHour = parseInt(r.endDate.split(':')[0]);
+									var startHourDivision = r.startDivision;
+									var endHourDivision = r.endDivision;
 									
 									if('${loginUser.memName}' == r.rsvnName){
 											$(this).addClass("myreservation");
-									}else{
-										if(startHour == 9 && endHour == 6){
+									}else{ // 종일 예약 (9시~18시 or 9시~14시 , 14시~18시)
+										if((startHour == 9 && startHourDivision == '오전' && endHour == 6 && endHourDivision == '오후') ||
+										   (startHour == 9 && startHourDivision == '오전' && endHour == 2 && endHourDivision == '오후' && rlist.some(function(r2){
+											   return r2.assetName == r.assetName &&
+											   				parseInt(r2.startDate.split(':')[0]) == 2 && r2.startDivision == '오후' &&
+											   				parseInt(r2.endDate.split(':')[0]) == 6 && r2.endDivision == '오후';
+											}))){
 											$(this).addClass("allday");
 											allDayCount++;
 											
-										}else if(startHour == 9 && endHour == 2){
+										}else if(startHour == 9 && startHourDivision == '오전' && endHour == 2 && endHourDivision == '오후'){ // 9시 ~ 14시
 											$(this).addClass("morning");
 											morningCount++;
 											
-										}else if(startHour == 2 && endHour == 6){
+										}else if(startHour == 2 && startHourDivision == '오후' && endHour == 6 && endHourDivision== '오후' ){ // 14시 ~ 18시
 											$(this).addClass("afternoon");
 											afternoonCount++;
-										}else{
-											$(this).addClass("allday");
-											allDayCount++;
 										}
 									}
 								}
@@ -509,22 +498,17 @@
 									$("#field-4").val(rlist[i].rsvnDate);
 									$("#field-5").val(rlist[i].startDivision + rlist[i].startDate + ' ~ ' + rlist[i].endDivision + rlist[i].endDate);
 									$("#field-7").val(rlist[i].rsvnContent);
+									$("#reservationSeat-delMobal-btn").show();
 									found = true;
 
+									$("#seatReservation").modal("show");
 									break;
 								}
 							}
-							if(!found){
-								$("#field-6").val(no);
-								$("#field-1").val('');
-								$("#field-2").val('');
-								$("#field-4").val('');
-								$("#field-5").val('');
-								$("#field-7").val('');
-							}
-						$("#seatReservation").modal("show");
 						
 					})			
+							$("#rsvnDate-input").val(rsvnDate);
+					
 					},
 					error:function(){
 						console.log("예약조회 ajax통신실패");
@@ -542,31 +526,50 @@
 			
 			var formData = $(this).serializeArray(); // 폼데이터 직렬화
 			
-			var rsvnDate = formData.find(item => item.name == 'rsvnDate').value // 선택한 예약값
-			var rsvnTime = formData.find(item => item.name == 'rsvnTime').value // 선택한 예약시간
-			
-			// 예약 날짜 분할
-			var [year, month, day] = rsvnDate.split('-');
-			
-			// 예약 시간 추출
-			var [startHour, endHour] = rsvnTime.split('~').map(time => parseInt(time.trim().split(':')[0]));
-			var startDivision = startHour < 12 ? '오전' : '오후';
-			var endDivision = endHour < 12 ? '오전' : '오후';
-			
-			var startDate = year + '-' + month + '-' + day + ' ' + startHour.toString().padStart(2,'0');
-			var endDate = year + '-' + month + '-' + day + ' ' + endHour.toString().padStart(2,'0');
-			
-			// formData에 속성 추가
-			formData.push({name:'startDivision', value:startDivision});
-			formData.push({name:'endDivision', value:endDivision});
-			formData.push({name:'startDate', value:startDate});
-			formData.push({name:'endDate', value:endDate});
-			
+			var rsvnDate = formData.find(item => item.name == 'rsvnDate').value; // 선택한 예약 날짜
+	    var rsvnTime = formData.find(item => item.name == 'rsvnTime').value; // 선택한 예약 시간
+	    
+	    // 예약 날짜 분할
+	    var [year, month, day] = rsvnDate.split('-');
+	    
+	    // 예약 시간 추출
+	    var [startTime, endTime] = rsvnTime.split('~').map(time => time.trim());
+	    
+	    // 시작시간과 종료시간을 시간과 분으로 분리
+	    var [startHour, startMinute] = startTime.split(':').map(time => parseInt(time)); // 시작시간의 시간과 분
+	    var [endHour, endMinute] = endTime.split(':').map(time => parseInt(time)); // 종료시간의 시간과 분
+	    
+	    var startDivision = startHour < 12 ? '오전' : '오후';
+	    var endDivision = endHour < 12 ? '오전' : '오후';
+	    
+	    var startDate = new Date(year, month - 1, day, startHour, startMinute);
+	    var endDate = new Date(year, month - 1, day, endHour, endMinute);
+	    
+	    // 종료시간에 1분을 차감
+	    endDate.setMinutes(endDate.getMinutes() - 1);
+	    
+	    function formatDate(date){
+	    	var year = date.getFullYear();
+	    	var month = ('0' + (date.getMonth() + 1)).slice(-2);
+	    	var day = ('0' + date.getDate()).slice(-2);
+	    	var hour = ('0' + date.getHours()).slice(-2);
+	    	var minute = ('0' + date.getMinutes()).slice(-2);
+	    	return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+	    }
+	    
+	    // formData에 속성 추가
+	    formData.push({name:'startDivision', value:startDivision});
+	    formData.push({name:'endDivision', value:endDivision});
+	    formData.push({name:'startDate', value:formatDate(startDate) });
+	    formData.push({name:'endDate', value:formatDate(endDate) });
+	    
 			// 폼 데이터 객체로 변환
 			var data = {};
 			formData.forEach(function(item){
 				data[item.name] = item.value;
 			});
+			
+			console.log("Sending data: ", JSON.stringify(data));
 			
 			$.ajax({
 				url: "${contextPath}/asset/insertrsvnseat.do",
@@ -576,21 +579,17 @@
 				contentType:"application/json; charset=utf-8",
 				success:function(result){
 					
-					if(result > 0){
-						alert("선택좌석 예약에 성공하였습니다.");
-					}else{
-						alert("선택좌석에 실패하였습니다. 예약정보를 다시 확인해주세요.");
-					}
-					
+					alert(result.message);
 					location.reload();
 					
 				},
 				error:function(xhr, textStatus, errorThrown){
+								var errorMessage = JSON.parse(xhr.responseText).message;
 		            if (xhr.status === 409) {
 		                alert("이미 예약이 존재합니다. 예약정보를 확인하시고 다시 시도해주세요.");
 		            } else {
 		                console.error("좌석 예약 ajax 통신 실패");
-		                alert("예약이 중복 되었습니다. 예약정보를 확인하시고 다시 예약해주세요.");
+		                alert(errorMessage);
 		            }
 				}
 			})

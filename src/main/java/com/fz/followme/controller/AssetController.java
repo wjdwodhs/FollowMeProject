@@ -1,7 +1,9 @@
 package com.fz.followme.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -310,21 +313,38 @@ public class AssetController {
 	// * 좌석예약
 	@PostMapping(value="/insertrsvnseat.do", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public ResponseEntity<Integer> insertRsvnSeat(@RequestBody AssetReservationDto ard) {
-		
-		// 사용자의 예약 여부 확인
-		int hasReservation = assetService.hasReservation(ard);
-		if(hasReservation > 0) { // 기존 예약이 있는 경우
-			return new ResponseEntity<>(HttpStatus.CONFLICT);  // 예약이 이미 존재함을 클라이언트에게 알림
-		}
-		
-		// 없을경우 예약 처리
-		int result = reservationService.addReservation(ard);
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
+	public ResponseEntity<Map<String,String>> addReservation(@RequestBody AssetReservationDto ard) {
+		Map<String, String> response = new HashMap<>();
+	    try {
+	        // 사용자의 예약 여부 확인
+	    	 System.out.println("Checking reservation for: " + ard);
+	        int hasReservation = reservationService.hasReservation(ard);
+	        System.out.println("Reservation check result: " + hasReservation);
+	        
+	        if (hasReservation > 0) { // 기존 예약이 있는 경우
+	        	response.put("message", "이미 예약이 존재합니다."); // 예약이 이미 존재함을 클라이언트에게 알림
+	            return new ResponseEntity<>(response, HttpStatus.CONFLICT); 
+	        }
+	        
+	        // 없을경우 예약 처리
+	        int result = reservationService.addReservation(ard);
+	        System.out.println("Reservation add result: " + result);
+	        response.put("message", "예약에 성공하였습니다.");
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	        
+	    } catch (DataAccessException e) {
+	    	e.printStackTrace();
+	    	response.put("message", "중복된 예약이 있습니다.");
+	        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+	        
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	response.put("message", "예약 처리 중 오류가 발생했습니다.");
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
-	
-	
+		
+
 	
 	// * 좌석삭제
 	@GetMapping("/deletereservationseat.do")

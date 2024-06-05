@@ -21,7 +21,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int addReservation(AssetReservationDto ard) throws DataAccessException {
 		
-		// 중복예약확인
+		// 중복 예약 확인
+		System.out.println("Checking for duplicate reservation");
 		if(assetDao.doublecheckReservation(ard) > 0) {
 			throw new DataAccessException("예약이 중복 되었습니다.") {
 			private static final long serialVersionUID = 1L;
@@ -29,6 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
 	  }
 	
 		// 중복 없을시 예약 정보 insert
+		 System.out.println("No duplicate found, inserting reservation");
 		return assetDao.insertRsvn(ard);
 	}
 
@@ -40,6 +42,11 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public int updateAssetstartDateStatus() {
 		return assetDao.updateAssetstartDateStatus();
+	}
+
+	@Override
+	public int hasReservation(AssetReservationDto ard) {
+		return assetDao.hasReservation(ard);
 	}
 
 	/*

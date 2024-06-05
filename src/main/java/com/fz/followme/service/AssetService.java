@@ -51,7 +51,6 @@ public interface AssetService {
 	// 좌석예약삭제
 	int deleteReservationSeat(int no);
 
-	// 좌석 기존 예약 확인
-	int hasReservation(AssetReservationDto ard);
+
 	
 }

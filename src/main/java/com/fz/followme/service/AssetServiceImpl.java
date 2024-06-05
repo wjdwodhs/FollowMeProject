@@ -101,10 +101,7 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 
-	@Override
-	public int hasReservation(AssetReservationDto ard) {
-		return assetDao.hasReservation(ard);
-	}
+
 
 
 	

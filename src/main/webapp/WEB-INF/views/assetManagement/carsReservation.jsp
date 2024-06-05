@@ -195,7 +195,7 @@
 	                                  <tr> 
 	                                      <th>예약날짜</th>
 	                                      <td colspan="4">
-	                                          <input type="date" id="rsvnDate" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
+	                                          <input type="date" class="rsvnDate-input" id="rsvnDate" name="rsvnDate" min="" style="border: 0.5px solid lightgray; 
 	                                                 border-radius: 3px; color: gray; height: 30px;">
 	                                      </td>
 	                                  </tr>
@@ -301,14 +301,6 @@
 	<!-- 선택예약 삭제 모달 -->
   
   
-  
-  
-  
-  
-  
-
-
-
 
 
    <script>
@@ -342,57 +334,35 @@
 			var endDivision = document.getElementById("endDivision").value;
 			var endDt = document.getElementById("endDate").value;
 
-			// startDate에 합치기
-			var startDate = rsvnDate + " ";
-			if(startDivision == "오전" ){
-				if(startDt == "12"){
-					startDate += "00";  // 12시는 00으로 변경
-				}else{
-					startDate += startDt.padStart(2, '0'); // 한자리수 시간 앞에 0추가
-				}
-			}else if(startDivision == "오후"){
-				if(startDt != "12"){
-					startDate += (parseInt(startDt) + 12).toString().padStart(2,'0');
-				}else{
-					startDate += startDt; // 12시는 그대로 유지
-				}
+			// startDate 생성
+			var startDate = new Date(rsvnDate);
+			if(startDivision == "오전"){
+				startDate.setHours(startDt == "12" ? 0 : parseInt(startDt), 0, 0,0);
+			}else{
+				startDate.setHours(startDt == "12" ? 12 : parseInt(startDt) + 12, 0, 0, 0);
 			}
 			
-			var endDate = rsvnDate + " ";
+			// endDate 생성
+			var endDate = new Date(rsvnDate);
 			if(endDivision == "오전"){
-				if(endDt == "12"){
-					endDate += "00";
-				}else{
-					endDate += endDt.padStart(2,'0');
-				}
-			}else if(endDivision == "오후"){
-				if(endDt != "12"){
-					endDate += (parseInt(endDt) + 12).toString().padStart(2,'0');
-				}else{
-					endDate += endDt;
-				}
+				endDate.setHours(endDt == "12" ? 0 : parseInt(endDt), 0, 0, 0);
+			}else{
+				endDate.setHours(endDt == "12" ? 12 : parseInt(endDt) + 12, 0, 0, 0);
+			}
+			endDate.setMinutes(endDate.getMinutes() - 1); // 1분 차감
+			
+			// YYYY-MM-DD HH:MM 으로 변환
+			function formatDate(date){
+				var yyyy = date.getFullYear();
+				var mm = String(date.getMonth() + 1).padStart(2, '0');
+				var dd = String(date.getDate()).padStart(2, '0');
+				var hh = String(date.getHours()).padStart(2, '0');
+				var min = String(date.getMinutes()).padStart(2, '0');
+				return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min;
 			}
 			
-			/*
-			// startDate input hidden생성
-		  var hiddenStartDate = $('<input>').attr({
-				type:'hidden',
-				name:'startDate',
-				value:startDate
-		  });
-		  
-			// endDate input hidden생성
-			var hiddenEndDate = $('<input>').arrt({
-				type:'hidden',
-				name:'endDate',
-				value:endDate
-			});
-			
-			// 폼에 hidden input 생성
-			$(this).append(hiddenStartDate);
-			$(this).append(hiddenEndDate);
-			*/
-			
+			var formatStartDate = formatDate(startDate);
+			var formatEndDate = formatDate(endDate);
 			
 			// 폼 데이터 객체로 변환
 			var formData = $(this).serializeArray();
@@ -401,8 +371,8 @@
 				data[item.name] = item.value;
 			});
 			
-			data.startDate = startDate;
-			data.endDate = endDate;
+			data.startDate = formatStartDate;
+			data.endDate = formatEndDate;
 			
 			console.log(data);
 			
@@ -438,11 +408,13 @@
 		
 		// 예약 조회
 		$("#selectCarList-btn").off("click").on("click", function(){
-				
+			
+			var rsvnDate = $("#selectCarList-date").val();
+			
 			$.ajax({
 					url:"${contextPath}/asset/reservationlist.do",
 					type:"get",
-					data:{ rsvnDate : $("#selectCarList-date").val() },
+					data:{ rsvnDate : rsvnDate },
 					success:function(dList){
 						
 						console.log(Array.isArray(dList));
@@ -494,6 +466,8 @@
 								$("#selectCarList-delMobal-btn").prop("disabled", true);
 							}
 						})
+						
+						$(".rsvnDate-input").val(rsvnDate);
 
 					},
 					error:function(){
