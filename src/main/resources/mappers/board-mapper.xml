@@ -137,30 +137,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<insert id="insertBoard" >
-		insert
-		  into tb_board
-		  (
-		    board_no
-		  , sub_no
-		  , board_title
-		  , mem_no
-		  , board_content
-		  , board_type
-		  , must_read
-		  )
-		  values
-		  (
-		    case
-		    	when #{boardType} = 'NO' then 'NOTICE_' || seq_nno.nextval
-		    	when #{boardType} = 'CO' then 'COMPANY_' || seq_cno.nextval
-		    end
-		    , seq_bno.nextval
-		    , #{boardTitle}
-		    , #{memNo}
-		    , #{boardContent}
-		    , #{boardType}
-		    , #{mustRead}	
-		  )
+		insert into tb_board
+				(
+				  board_no,
+				  sub_no,
+				  board_title,
+				  mem_no,
+				  board_content,
+				  board_type,
+				  must_read
+				)
+				values
+				(
+				  case
+				    when #{boardType} = 'NO' then 'NOTICE_' || seq_nno.nextval
+				    when #{boardType} = 'CO' then 'COMPANY_' || seq_cno.nextval
+				  end,
+				  seq_bno.nextval,
+				  case
+				    when #{boardType} = 'NO' then '[공지] ' || #{boardTitle}
+				    when #{boardType} = 'CO' then '[사내] ' || #{boardTitle}
+				  end,
+				  #{memNo},
+				  #{boardContent},
+				  #{boardType},
+				  #{mustRead}
+				)
 		    
 	</insert>
 	
@@ -351,6 +353,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  join tb_mem using (mem_no)
 			 where b.status = 'Y'
                 and mem_no = #{memNo}
+                and b.board_type = 'CO'
 			 order
 			 	by must_read desc, sub_no desc
 	

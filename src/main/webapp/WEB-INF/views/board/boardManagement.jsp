@@ -137,29 +137,29 @@
 					                            </div>
 					                        </form>
 					                        
-					                        공지<input type="radio" name="category" value="NO"> 사내<input type="radio" name="category" value="CO" >
+					                        
                                     	</div>
                                         
                                         
-                                        <div class="row" id="list-page">                                        
+                                        <div class="row" id="list-page">    
+                                        <form action="일괄삭제url" method="post" id="commonForm">                                    
                                             <div class="col-lg-10">
                                                 
                                                 <table class="table">
                                                     
                                                     <table class="table table-hover">
                                                          <thead>
-                                                            <tr>
-                                                            	<th class="list-item0"><input type="checkbox" id="checkAll"></th>
+                                                            <tr>                                                          	
                                                                 <th class="list-item1">번호</th>
                                                                 <th class="list-item2">제목</th>
                                                                 <th class="list-item3">작성자</th>
                                                                 <th class="list-item4">작성일</th>
-                                                                <th class="list-item5">조회수</th>
-                                                                <th><button class="btn btn-outline-danger btn-sm" id="deleteBtn">삭제</button></th>
+                                                                <th class="list-item5">조회수</th>                                                               
                                                             </tr>
                                                         </thead>
                                                         
                                                         <tbody>
+                                                        	
                                                             <c:choose>
                                                 				<c:when test="${ empty allList }">
 		                                                			<tr>
@@ -167,15 +167,13 @@
 		                                                			</tr>
 		                                                		</c:when>
 		                                                		<c:otherwise>
-		                                                		<form action="" method="post" id="commonForm">
+		                                                		
+															      	<input type="hidden" name="no" value="">
 		                                                			<c:forEach var="ab" items="${ allList }">
 		                                                				
-																	      	<input type="hidden" name="no" value="${ ab.subNo }">
 																	    <c:choose>
 																	        <c:when test="${ ab.mustRead == 1 }">
-																	            <tr class="click-detail" style="background-color: lightgray;">
-																	            	
-																	                <td class="list-item0"><input type="checkbox" class="checkbox"></td>
+																	            <tr class="click-detail" style="background-color: lightgray;">																	            																		                
 																	                <td class="list-item1"><i data-feather="alert-circle"></i></td>
 																	                <td class="list-item2">${ ab.boardTitle }</td>
 																	                <td class="list-item3">${ ab.memNo }</td>
@@ -188,8 +186,7 @@
 																	            </tr>
 																	        </c:when>
 																	        <c:otherwise>
-																	            <tr class="click-detail">
-																	                <td class="list-item0"><input type="checkbox" class="checkbox"></td>
+																	            <tr class="click-detail">																	           
 																	                <td class="list-item1">${ ab.subNo }</td>
 																	                <td class="list-item2">${ ab.boardTitle }</td>
 																	                <td class="list-item3">${ ab.memNo }</td>
@@ -204,41 +201,35 @@
 																	        </c:otherwise>
 																	    </c:choose>
 																	</c:forEach>
-																	</form>
 						
                                                 				</c:otherwise>
                                                 			</c:choose>
+																
                                                 			
-                                                			 <script>
-                                                			 	
-                                                			 $(document).ready(function() {
-				                                                    // 전체 선택/해제 체크박스가 클릭되었을 때의 동작 설정
-				                                                    $('#checkAll').click(function() {
-				                                                        // 전체 선택/해제 체크박스의 상태에 따라 tbody 내의 모든 체크박스 상태 변경
-				                                                        $('.checkbox').prop('checked', this.checked);
-				                                                    });
-				                                                 });
-                                             			 
-                                             			 
-				                                            	/* function UpdSubmit(num){
-				                                            		$("#Upd").attr("action", num==1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
-				                                            	} */
-				                                            	function UpdSubmit(num, action) {
-				                                                    var form = $("#commonForm");
-				                                                    form.attr("action", action == 1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
-				                                                    form.find("input[name='no']").val(num);
-				                                                    form.submit();
-				                                                }
- 
-				                                            	
-				                                            	
-				                                            	
-				                                            </script>
+                                                			 
                                                 			
                                                         </tbody>
                                                         
                                                     </table>
                                             </div>
+                                            </form>
+                                            
+                                            <script>
+                                    			 
+                                            	/* function UpdSubmit(num){
+                                            		$("#Upd").attr("action", num==1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
+                                            	} */
+                                            	function UpdSubmit(num, action) {
+                                                    var form = $("#commonForm");
+                                                    form.attr("action", action == 1 ? "${contextPath}/board/boardModify.Page" : "${contextPath}/board/boardManagementRemove.do");
+                                                    form.find("input[name='no']").val(num);
+                                                    form.submit();
+                                                }
+
+                                            	
+                                            	
+                                            	
+                                            </script>
 
                                              <!-- end col-->
                                             

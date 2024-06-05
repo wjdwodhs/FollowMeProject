@@ -146,14 +146,12 @@
                                                     	                                                        
                                                         
                                                         <thead>
-                                                            <tr>
-                                                            	<th class="list-item0"><input type="checkbox"></th>
+                                                            <tr>                                                        	
                                                                 <th class="list-item1">번호</th>
                                                                 <th class="list-item2">제목</th>
                                                                 <th class="list-item3">작성자</th>
                                                                 <th class="list-item4">작성일</th>
-                                                                <th class="list-item5">조회수</th>
-                                                                <th><button class="btn btn-outline-danger btn-sm">삭제</button></th>
+                                                                <th class="list-item5">조회수</th>                                                                
                                                             </tr>
                                                         </thead>
                                                         
@@ -168,8 +166,7 @@
 		                                                			<c:forEach var="m" items="${ myList }">
 		                                                				<c:choose>
 		                                                					<c:when test="${ m.mustRead == 1 }">
-				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">
-				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																										
+				                                                				<tr class="click-detail" style="background-color: lightgray;" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">				                                                								                                               																										
 																					<td class="list-item1"><i data-feather="alert-circle"></i></td>																																																																																																						
 				                                                					<td class="list-item2">${ m.boardTitle }</td>
 				                                                					<td class="list-item3">${ m.memNo }</td>
@@ -179,8 +176,7 @@
 				                                                				</tr>
 			                                                				</c:when>
 			                                                				<c:otherwise>
-				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">
-				                                                					<td class="list-item0"><input type="checkbox"></td>			                                               																																																																																									
+				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/detail.do?no=${m.subNo}'">		                                               																																																																																									
 																					<td class="list-item1">${ m.subNo }</td>																																									
 				                                                					<td class="list-item2">${ m.boardTitle }</td>
 				                                                					<td class="list-item3">${ m.memNo }</td>
