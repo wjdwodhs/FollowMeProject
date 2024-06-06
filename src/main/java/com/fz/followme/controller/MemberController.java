@@ -79,16 +79,20 @@ public class MemberController {
 						
 		
 		log.debug("m: {}", m);
-		MemberDto loginUser = memberService.selectMember(m);
-		AttendanceDto userAtt = attendanceService.selectAttendance(loginUser.getMemNo());
-		log.debug("att: {}",userAtt);
-		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		
-		out.println("<script>");
-		
-		if (loginUser != null) {
+	    MemberDto loginUser = memberService.selectMember(m);
+
+	    response.setContentType("text/html; charset=utf-8");
+	    PrintWriter out = response.getWriter();
+	    
+	    out.println("<script>");
+
+	    if (loginUser == null) {
+	        out.println("alert('존재하지 않는 회원입니다.');");
+	        out.println("history.back();");
+	    } else {
+	        AttendanceDto userAtt = attendanceService.selectAttendance(loginUser.getMemNo());
+	        log.debug("att: {}", userAtt);
+
 	        if ("N".equals(loginUser.getStatus())) {
 	            out.println("alert('퇴사한 직원은 로그인할 수 없습니다.');");
 	            out.println("history.back();");
@@ -118,8 +122,10 @@ public class MemberController {
 	            out.println("alert('로그인에 실패했습니다. 사번 및 비밀번호를 다시 확인해주세요.');");
 	            out.println("history.back();");
 	        }
-	    } 
+	    }
+
 	    out.println("</script>");
+	    out.flush();
 	}
 	
 	// 마이페이지로 이동
