@@ -188,7 +188,6 @@
 			                      var feedHtml = 
 			                        '<div class="card" style="width: 1040px;">' +
 			                          '<input type="hidden" id="sfNo-' + socialFeed.sfNo + '" name="sfNo" value="' + socialFeed.sfNo + '">' +
-			                          '<input type="hidden" class="memNo" name="memNo" value="${loginUser.memNo}">' +  // 사용자 회원 번호 설정
 			                          '<input type="hidden" class="sfMemNo" name="sfMemNo" value="' + socialFeed.memNo + '">' + 
 			                          '<div class="card-body" id="reply-box">' +
 			                            '<div class="d-flex align-items-start">' +
@@ -196,7 +195,7 @@
 			                              '<div class="w-100">' +
 			                                '<div class="dropdown float-end text-muted">';
 			                                
-                            if(${loginUser.memNo} === parseInt(socialFeed.memNo)) {
+                            if("${loginUser.memNo}" === socialFeed.memNo) {	
 
                                 feedHtml +=
                                 	'<form id="frm" action="" method="get" align="center">' + 
@@ -252,7 +251,7 @@
 			                                  '<div class="w-100">' + 
 			                                  	'<h5 class="mt-0"><a href="contacts-profile.html" class="text-reset">' + reply.memName + '</a> <small class="text-muted">' + reply.enrollDate + '</small>';
 			                                  
-			                                  if(${loginUser.memNo} === parseInt(reply.memNo)) {
+			                                  if("${loginUser.memNo}" === reply.memNo) {
 			                                	  commentBox += '<div style="display:flex; margin-left: auto; margin-top:-20px;"><button type="button" class="btn btn-sm" style="background-color:#lightgray; margin-left:auto;" onclick="ajaxRemoveReply(' + reply.replyNo + ');">삭제</button></div>'; 
 			                                 	}
 			                                    
