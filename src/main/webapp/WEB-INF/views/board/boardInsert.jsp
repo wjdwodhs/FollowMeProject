@@ -179,7 +179,7 @@
                                                         <div class="mb-3">
 				                                            <label for="product-description" class="form-label">내용<span class="text-danger">*</span></label>
 				                                            <input type="hidden" id="boardContent" name="boardContent" value="">
-				                                            <div id="snow-editor" style="height: 150px;">
+				                                            <div id="snow-editor" style="height: 150px;" required>
 				                                            	
 				                                            </div> <!-- end Snow-editor-->
                                         				</div>

@@ -66,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        mem_name,
 	        b.enroll_date,
 	        read_count,
+	        must_read,
 	        (
 	            select count(*)
 	            from tb_attachment

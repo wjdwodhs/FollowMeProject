@@ -190,10 +190,7 @@
                                                         	}
                                                         </script>
                                                         
-                                                        <select name="" id="" style="float:right">
-                                                            <option value="">20</option>
-                                                            <option value="">40</option>
-                                                        </select>
+                                                        
                                                         <thead>
                                                             <tr>
                                                                 <th class="list-item1">번호</th>

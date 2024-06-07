@@ -160,10 +160,7 @@
                                                     	</button>
                                                     	</div>
                                                     	                                                        
-                                                        <select name="" id="" style="float:right">
-                                                            <option value="">20</option>
-                                                            <option value="">40</option>
-                                                        </select>
+                                                        
                                                         <thead>
                                                             <tr>
                                                                 <th class="list-item1">번호</th>
@@ -194,8 +191,13 @@
 				                                                				</tr>
 			                                                				</c:when>
 			                                                				<c:otherwise>
-				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">			                                               																																																																																									
-																					<td class="list-item1">${ ab.subNo }</td>																																									
+				                                                				<tr class="click-detail" onclick="location.href='${contextPath}/board/${loginUser.memName==ab.memNo ? 'detail.do' : 'increase.do'}?no=${ab.subNo}';">
+				                                                					<c:if test="${not empty ab.attachList}">			                                               																																																																																									
+																						<td class="list-item1"><i data-feather="alert-circle"></i>${ ab.subNo }</td>
+																					</c:if>
+																					<c:if test="${empty ab.attachList}">			                                               																																																																																									
+																						<td class="list-item1">${ ab.subNo }</td>
+																					</c:if>																																										
 				                                                					<td class="list-item2">${ ab.boardTitle }</td>
 				                                                					<td class="list-item3">${ ab.memNo }</td>
 				                                                					<td class="list-item4">${ ab.enrollDate }</td>
