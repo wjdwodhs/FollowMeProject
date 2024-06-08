@@ -21,9 +21,9 @@ public class EmailSender {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-            messageHelper.setTo(email.getToEmail());
+            messageHelper.setTo(email.getEmailTo());
             messageHelper.setText(email.getText());
-            messageHelper.setFrom(email.getFromEmail());
+            messageHelper.setFrom(email.getEmailFrom());
             messageHelper.setSubject(email.getSubject());	// 메일제목은 생략 가능
 
             mailSender.send(message);

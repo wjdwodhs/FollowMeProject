@@ -63,11 +63,11 @@
                       <div class="page-title-right">
                           <ol class="breadcrumb m-0">
                           		<li class="breadcrumb-item"><a href="javascript: void(0);">FOLLOW ME</a></li>
-                              <li class="breadcrumb-item"><a href="javascript: void(0);">이메일</a></li>
-                              <li class="breadcrumb-item active">메일함</li>
+                              <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+                              <li class="breadcrumb-item active">받은메일함</li>
                           </ol>
                       </div>
-                      <h4 class="page-title">이메일</h4>
+                      <h4 class="page-title">Email</h4>
                   </div>
               </div>
           </div>
@@ -87,10 +87,10 @@
                              style="background-color: #FFBE98; border: 1px solid #FFBE98;">메일작성</a>
 
                           <div class="mail-list mt-4">
-                              <a href="javascript: void(0);" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
+                              <a href="${contextPath }/email/email.page" class="text-danger fw-bold"><i class="dripicons-inbox me-2"></i>전체메일<span class="badge badge-soft-danger float-end ms-2">7</span></a>
                               <a href="javascript: void(0);"><i class="dripicons-star me-2"></i>중요</a>
+                              <a href="${contextPath }/email/outbox.bo"><i class="dripicons-exit me-2"></i>보낸메일</a>
                               <a href="javascript: void(0);"><i class="dripicons-document me-2"></i>임시보관함<span class="badge badge-soft-info float-end ms-2">32</span></a>
-                              <a href="javascript: void(0);"><i class="dripicons-exit me-2"></i>보낸메일</a>
                               <a href="javascript: void(0);"><i class="dripicons-trash me-2"></i>휴지통</a>
                           </div>
 

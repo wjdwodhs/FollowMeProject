@@ -1,6 +1,7 @@
 package com.fz.followme.dto;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,15 +19,23 @@ import lombok.ToString;
 public class EmailDto {
 	
 	private int emailNo;
-	private String toEmail;
-	private String fromEmail;
+	private String emailTo;
+	private String emailFrom;
 	private String subject;
 	private String cc;
 	private String text;
-	private Date regist_date;
-	private String status;
+	private String registDate;
+	private String emailStatus;
 	private String forder;
 	private int isImportant;
 	private int isRead;
+	
+	// 직원 조회용
+	private String memNo;
+	private String deptName;
+	private String memName;
+	private String memEmail;
+	private String status;
 
+	private List<AttachmentDto> attachList;
 }

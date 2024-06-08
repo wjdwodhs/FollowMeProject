@@ -184,8 +184,8 @@ public class MemberController {
 	        if (isMember.getMemEmail().equals(memEmail)) {
 
 	            EmailDto email = EmailDto.builder()
-	                    .fromEmail("chennychat@gmail.com")
-	                    .toEmail(memEmail)
+	                    .emailFrom("chennychat@gmail.com")
+	                    .emailTo(memEmail)
 	                    .subject("[Follow Me] 임시 비밀번호가 발급되었습니다.")
 	                    .text(String.format("안녕하세요 %s님\n 발급된 임시 비밀번호는 %d입니다.", isMember.getMemName(), tempPwd))
 	                    .build();

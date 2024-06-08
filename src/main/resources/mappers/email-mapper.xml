@@ -2,4 +2,136 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="emailMapper">
 
+	<resultMap id="emailResult" type="EmailDto">
+		<id column="email_no" property="emailNo" />
+		<result column="email_to" property="emailTo" />
+		<result column="email_from" property="emailFrom" />
+		<result column="subject" property="subject" />
+		<result column="email_cc" property="cc" />
+		<result column="text" property="text" />
+		<result column="regist_date" property="registDate" />
+		<result column="email_status" property="emailStatus" />
+		<result column="forder" property="forder" />
+		<result column="is_important" property="isImportant" />
+		<result column="is_read" property="isRead" />
+	</resultMap>
+	
+	<resultMap id="memberResult" type="MemberDto">
+		<id column="mem_no" property="memNo" />
+		<result column="dept_name" property="deptName" />
+		<result column="mem_name" property="memName" />
+		<result column="mem_email" property="memEmail" />
+		<result column="status" property="status" />
+	</resultMap>
+	
+	<resultMap id="attachmentResult" type="AttachmentDto">
+		<id column="file_no" property="fileNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="origin_name" property="originName"/>
+		<result column="system_name" property="systemName"/>
+		<result column="type" property="type"/>
+		<result column="ref_no" property="refNo"/>
+		<result column="upload_date" property="uploadDate"/>
+	</resultMap>
+
+<!-- 메일 작성시 직원 메일 조회 -->
+<select id="selectMemberList" resultMap="memberResult">
+	select 
+	       mem_no
+	     , dept_name
+	     , mem_name
+	     , mem_email
+	     , status
+	  from tb_mem m
+	  left join tb_department d on (m.dept_no = d.dept_no)
+	 where status = 'Y'
+	 order
+      by mem_no asc
+</select>
+
+<!-- 보낸메일 db 저장 -->
+<insert id="insertEmail">
+	insert
+	  into tb_email
+	  (
+	    email_no
+	  , email_from
+	  , email_to
+	  , subject
+	  , text
+	  , forder
+	  )
+	  values
+	  (
+	    seq_emailno.nextval
+	  , #{emailFrom}
+	  , #{emailTo}
+	  , #{subject}
+	  , #{text}
+	  , 'OUTBOX'
+	  )
+</insert>
+
+<!-- 보낸메일의 첨부파일 -->
+<insert id="insertAttachment">
+		insert into tb_attachment 
+		(
+			file_no
+		,	file_path
+		,	origin_name
+		,	system_name
+		,	type
+		,	ref_no
+		) 
+		values 
+		(
+			seq_fileno.nextval
+		,	#{filePath}
+		,	#{originName}
+		,	#{systemName}
+		,	#{type}
+		,
+			<choose>
+				<when test="refNo == 0">
+					seq_emailno.currval
+				</when>
+				<otherwise>
+					#{refNo}
+				</otherwise>
+			</choose>
+		)
+</insert>
+
+<!-- 보낸메일함 페이징 -->
+<select id="selectOutBoxListCount" resultType="_int">
+	select count(*)
+	  from tb_email
+	 where forder = 'OUTBOX'
+	   and email_status = 'ACTIVE'
+</select>
+
+<!-- 보낸메일함 조회 -->
+<select id="selectOutBoxList" resultMap="emailResult">
+	select
+	       email_no
+	     , email_from
+	     , email_to
+	     , subject
+	     , text
+	     , to_char(regist_date, 'YYYY.MM.DD HH24:MI') regist_date
+	     , email_status
+	     , forder
+	     , is_important
+	     , is_read
+	  from tb_email
+	 where email_status = 'ACTIVE'
+	   and email_from = 'mjeee624@gmail.com'
+	 order
+	    by regist_date desc
+</select>
+
+
+
+
+
 </mapper>
