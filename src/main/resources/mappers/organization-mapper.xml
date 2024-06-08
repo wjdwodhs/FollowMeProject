@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="organizationMapper">
+<resultMap type="OrganizationDto" id="OrganizationResult">
+	<result column="mem_no" property="memNo"/>
+	<result column="mem_name" property="memName"/>
+	<result column="dept_no" property="deptNo"/>
+	<result column="dept_name" property="deptName"/>
+	<result column="authorization_level" property="autLevel"/>
+	<result column="mem_grade" property="memGrade"/>
+	<result column="enroll_date" property="enrollDate"/>
+	<result column="email" property="email"/>
+	<result column="phone" property="phone"/>
+
+</resultMap>
+
+
+	<select id="selectOrganizationList" resultMap="OrganizationResult">
+		select
+		        m.mem_no
+		      , m.mem_name
+		      , m.dept_no
+		      , dept_name
+		      , m.authorization_level
+		      , m.mem_grade
+		      , m.enroll_date
+		      , m.phone
+		      , m.mem_email
+		from  tb_mem m
+		join tb_department d on (m.dept_no = d.dept_no)
+		where status = 'Y'
+	
+	</select>
+
+
+
+
+</mapper>
