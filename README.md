@@ -43,3 +43,82 @@
 
 ### DB구성
 <img width="461" alt="FollowMe_ERD" src="https://github.com/Lee-Da-Ye/FollowMeProject/assets/148595981/e2b0fbfc-5fb6-4bd9-9056-62629cd42be9">
+
+### 구현화면
+
+1. 로그인화면
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/767bede4-852d-46a0-89be-80fee0f18793" alt="로그인페이지" width="700px">
+  <br>
+  1) 로그인 전 [비밀번호 재설정] 버튼 클릭을 통해 임시 비밀번호 발급 가능<br>
+  2) [사번 저장]을 통해 한번 로그인 한 사용자의 사번을 저장 가능
+</div>
+  <br>
+
+2. 메인페이지
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/2ff92289-f3a3-4c83-9fcb-736671581226" alt="메인페이지" width="700px">
+  <br>
+  1) 로그인 시 메인 페이지에서 근태관리, 최근 공지글 확인, 오늘의 뉴스 등을 확인<br>
+  2) 근태관리, 오늘의 결재 건으로 이동, 오늘의 To-do 등록 등의 기능을 수행 가능함
+</div>
+  <br>
+
+3. 좌석 예약
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/0e2e0a01-8185-489e-b269-6ba409e40a90" alt="예약페이지" width="700px">
+  <br>
+  1) 직원은 좌석 예약 가능 여부 조회 및 예약 신청을 할 수 있음<br>
+  2) 대표는 좌석 예약 상세 조회가 가능하며, 좌석별 상태 변경을 할 수 있음
+</div>
+  <br>
+
+4. 전자결재
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/0ca76fcb-6fd4-4dcc-84e1-4aa159433139" alt="전자결재페이지" width="700px">
+  <br>
+  1) 전자결재는 진행중/승인/반려/회수/참조/미처리 결재함으로 구분됨<br>
+  2) 작성 문서에 따라 자동으로 결재라인이 지정되며, 최종 결재자만 의견 작성 가능함
+</div>
+  <br>
+
+5. 일정관리
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/4143e701-1f9e-45e0-a627-4b0ba78ecc0c" alt="일정관리페이지" width="700px">
+  <br>
+  1) 일정관리 페이지에서는 전체/회사/부서/개인 일정을 구분해서 조회/수정/삭제 가능함<br>
+  2) 구글 공휴일 캘린더를 연동해 일정에서 공휴일을 확인할 수 있게 함
+</div>
+  <br>
+
+6. 전자게시판
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/dac3c356-2f5d-4a18-8a5a-88cc906c6cf8" alt="게시판페이지" width="700px">
+  <br>
+  1) 전체글/공지사항/사내소식으로 구분해 게시글 조회 가능함<br>
+  2) 오른쪽 상단에 최신 공지글은 별도로 확인할 수 있게 구분하였음
+</div>
+  <br>
+
+7. 개인근태
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/b5edead8-fa06-4152-8db7-285a93ae5346" alt="게시판페이지" width="700px">
+  <br>
+  1) 개인의 근태현황을 월별로 확인 할 수 있고 총 근무시간, 휴가현황, 휴가신청 내역 확인<br>
+  2) 메인페이지에서 출퇴근 버튼을 통해 출근현황 기록 시 근태페이지에서 확인 가능
+</div>
+  <br>
+
+8. 직원근태
+<div>
+  <img src="https://github.com/wjdwodhs/FollowMeProject/assets/48401391/17d96ead-a9e9-41aa-9ed6-e2bed24c9b83" alt="게시판페이지" width="700px">
+  <br>
+  1) 대표, 경영지원팀이 별도의 페이지를 통해 직원들의 근태현황을 월별 조회 가능<br>
+  2) 월근무시간도 확인 가능하고 특정 사원 검색을 통해 확인 가능
+</div>
+  <br>
+
+
+
+
+
