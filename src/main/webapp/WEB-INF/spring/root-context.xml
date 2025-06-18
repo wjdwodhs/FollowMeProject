@@ -19,7 +19,8 @@
 		<property name="username" value="followme" />
 		<property name="password" value="followme" />
 	</bean>
-		
+	
+	<!-- MyBatis -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionfactory" >
 		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
 		<property name="dataSource" ref="dataSource"/>
