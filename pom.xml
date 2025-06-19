@@ -293,6 +293,7 @@
 		
 	</dependencies>
     <build>
+		<finalName>followme</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
