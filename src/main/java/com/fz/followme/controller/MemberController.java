@@ -90,8 +90,8 @@ public class MemberController {
 	        out.println("alert('존재하지 않는 회원입니다.');");
 	        out.println("history.back();");
 	    } else {
-	        AttendanceDto userAtt = attendanceService.selectAttendance(loginUser.getMemNo());
-	        log.debug("att: {}", userAtt);
+				//AttendanceDto userAtt = attendanceService.selectAttendance(loginUser.getMemNo());
+				//log.debug("att: {}", userAtt);
 
 	        if ("N".equals(loginUser.getStatus())) {
 	            out.println("alert('퇴사한 직원은 로그인할 수 없습니다.');");
@@ -101,7 +101,7 @@ public class MemberController {
 	            out.println("history.back();");
 	        } else if (bcryptPwdEncoder.matches(m.getMemPwd(), loginUser.getMemPwd())) {
 	            request.getSession().setAttribute("loginUser", loginUser);
-	            request.getSession().setAttribute("userAtt", userAtt);
+	            //request.getSession().setAttribute("userAtt", userAtt);
 
 	            // 로그인 시 사번 저장 (쿠키 저장)
 	            if ("SAVE".equals(request.getParameter("memNoSaveCheck"))) {

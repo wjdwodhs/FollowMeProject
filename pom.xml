@@ -10,6 +10,8 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.27</org.springframework-version>
 		<org.aspectj-version>1.9.19</org.aspectj-version>
@@ -314,6 +316,7 @@
                     <!-- 항상 자바 버전 수정해두기 -->
                     <source>${java-version}</source>
                     <target>${java-version}</target>
+					<encoding>UTF-8</encoding>
                     
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
