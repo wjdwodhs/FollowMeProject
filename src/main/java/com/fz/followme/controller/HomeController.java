@@ -54,7 +54,7 @@ public class HomeController {
 	public String ceoMainPage(Model model, HttpSession session) {
 		
 		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
-		AttendanceDto userAtt = (AttendanceDto)session.getAttribute("userAtt");
+		//AttendanceDto userAtt = (AttendanceDto)session.getAttribute("userAtt");
 		
 		
 
@@ -63,30 +63,30 @@ public class HomeController {
 		m.setDeptNo(loginUser.getDeptNo());
 		m.setMemGrade(loginUser.getMemGrade());
 		
-		// 본인이 결재권자일때, 미처리 결재건의 갯수
-		int notDoneCount = documentService.notDoneCount(m);
-		// 본인이 조회할 권한이 있는 문서 중, '진행중'인 문서의 모든 갯수
-		int pendCount = documentService.pendCount(m);
-		// 본인이 조회할 권한이 있는 문서 중, 오늘자로 최종 승인 처리된 문서의 갯수
-		int approvalCount = documentService.approvalCount(m);
-		// 본인이 조회할 권한이 있는 문서 중, 오늘자로 반려 처리된 문서의 갯수
-		int rejectCount = documentService.rejectCount(m);
+		// // 본인이 결재권자일때, 미처리 결재건의 갯수
+		// int notDoneCount = documentService.notDoneCount(m);
+		// // 본인이 조회할 권한이 있는 문서 중, '진행중'인 문서의 모든 갯수
+		// int pendCount = documentService.pendCount(m);
+		// // 본인이 조회할 권한이 있는 문서 중, 오늘자로 최종 승인 처리된 문서의 갯수
+		// int approvalCount = documentService.approvalCount(m);
+		// // 본인이 조회할 권한이 있는 문서 중, 오늘자로 반려 처리된 문서의 갯수
+		// int rejectCount = documentService.rejectCount(m);
 
-		model.addAttribute("notDoneCount", notDoneCount);
-	    model.addAttribute("pendCount", pendCount);
-	    model.addAttribute("approvalCount", approvalCount);
-	    model.addAttribute("rejectCount", rejectCount);
+		// model.addAttribute("notDoneCount", notDoneCount);
+	    // model.addAttribute("pendCount", pendCount);
+	    // model.addAttribute("approvalCount", approvalCount);
+	    // model.addAttribute("rejectCount", rejectCount);
 		
-		OrderDto revenueList = orderService.selectRevenue();
-		OrderDto todayInfo = orderService.selectTodayInfo();
+		// OrderDto revenueList = orderService.selectRevenue();
+		// OrderDto todayInfo = orderService.selectTodayInfo();
 
-		model.addAttribute("userAtt",userAtt);
-		model.addAttribute("revenueList", revenueList);	
-		model.addAttribute("todayInfo", todayInfo);
+		// model.addAttribute("userAtt",userAtt);
+		// model.addAttribute("revenueList", revenueList);	
+		// model.addAttribute("todayInfo", todayInfo);
 		
-		List<BoardDto> latestNoticeList = noticeService.selectLatestPostList();
+		// List<BoardDto> latestNoticeList = noticeService.selectLatestPostList();
 		
-		model.addAttribute("latestNoticeList", latestNoticeList);
+		// model.addAttribute("latestNoticeList", latestNoticeList);
 		
 		return "ceoMain";
 	}
