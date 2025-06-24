@@ -66,7 +66,7 @@
                             <div class="auth-brand">
                                 <a href="" class="logo logo-dark text-center">
                                     <span class="logo-lg">
-                                        <img src="${ contextPath }/assets/images/sesac.png" alt="" height="30">
+                                        <img src="${ contextPath }/assets/images/logo-follow.png" alt="" height="30">
                                         <div>z</div>
                                     </span>
                                 </a>
