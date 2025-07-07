@@ -9,6 +9,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+	<!-- MySQL용 DBCP 설정  -->
 	<!-- <bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
 		
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
@@ -17,6 +18,7 @@
 		<property name="username" value="followme" />
 		<property name="password" value="followme" />
 	</bean>  -->
+
 	<!-- MySQL용 DBCP 설정  -->
 	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
