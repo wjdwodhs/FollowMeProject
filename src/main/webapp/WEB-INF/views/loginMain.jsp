@@ -55,11 +55,11 @@
 
         <body class="auth-fluid-pages pb-0">
 
-            <div class="auth-fluid">
-                <!--Auth fluid left content -->
-                <div class="auth-fluid-form-box" style="background-color: #BDE47A;">
-                    <div class="align-items-center d-flex h-100">
-                        <div class="p-3">
+        <div class="auth-fluid">
+            <!--Auth fluid left content -->
+            <div class="auth-fluid-form-box" style="background-color: #BDE47A;">
+                <div class="align-items-center d-flex h-100">
+                    <div class="p-3">
 
                             <!-- Logo -->
                             <div class="auth-brand text-center text-lg-start">
