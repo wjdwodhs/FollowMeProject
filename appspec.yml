@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+
+files:
+  - source: output/ROOT.war
+    destination: /opt/tomcat9/webapps/
+
+hooks:
+  ApplicationStart:
+    - location: scripts/start_tomcat.sh
+      timeout: 300
+      runas: ec2-user
