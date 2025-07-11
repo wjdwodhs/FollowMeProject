@@ -17,11 +17,9 @@ phases:
     commands:
       - echo Build completed on `date`
       - mkdir -p output/scripts
-      - echo "== [scripts 디렉토리 내용] =="
-      - ls -al scripts/
-      - cp scripts/*.sh output/scripts/ || echo "No script files found"
-      - echo "== [output/scripts 복사 결과] =="
-      - ls -al output/scripts/
+      - cp target/followme.war output/ROOT.war
+      - cp appspec.yml output/
+      - cp scripts/*.sh output/scripts/
 
 artifacts:
   files:
