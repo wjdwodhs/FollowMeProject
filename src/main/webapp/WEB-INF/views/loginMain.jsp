@@ -57,7 +57,7 @@
 
         <div class="auth-fluid">
             <!--Auth fluid left content -->
-            <div class="auth-fluid-form-box" style="background-color: blue;">
+            <div class="auth-fluid-form-box" style="background-color: green;">
                 <div class="align-items-center d-flex h-100">
                     <div class="p-3">
 
