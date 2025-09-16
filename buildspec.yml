@@ -7,12 +7,10 @@ phases:
     commands:
       - echo Installing dependencies...
       - mvn --version
-
   build:
     commands:
       - echo Build started on `date`
       - mvn clean install
-
   post_build:
     commands:
       - echo Build completed on `date`
@@ -20,7 +18,6 @@ phases:
       - cp target/followme.war output/ROOT.war
       - cp appspec.yml output/
       - cp scripts/*.sh output/scripts/
-
 artifacts:
   files:
     - output/ROOT.war
